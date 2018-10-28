@@ -34,7 +34,7 @@ public class ProfileFragment extends BaseFragment {
         return R.layout.fragment_profile;
     }
 
-    @OnClick(R.id.bt_profile)
+    @OnClick(R.id.bt_mycreation)
     void myCreation() {
         Intent intent = new Intent(getActivity(), MyCreationActivity.class);
         startActivity(intent);

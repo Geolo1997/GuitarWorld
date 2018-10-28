@@ -1,5 +1,7 @@
 package pers.jieao.guitarworld;
 
+import pers.jieao.guitarworld.model.User;
+
 public class LoginManager {
 
     private LoginManager() {
@@ -14,6 +16,7 @@ public class LoginManager {
     }
 
     private LoginStatus mLoginStatus;
+    private User mLoginUser;
     /**
      * 获取登录状态
      *
@@ -27,5 +30,14 @@ public class LoginManager {
         } else {
             return false;
         }*/
+    }
+
+    public void setLoginStatus(LoginStatus loginStatus, String id, String password) {
+        mLoginStatus = loginStatus;
+        mLoginUser = new User(id, password);
+    }
+
+    public String getUserId() {
+        return mLoginUser.getId();
     }
 }

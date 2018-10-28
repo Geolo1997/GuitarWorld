@@ -3,8 +3,11 @@ package pers.jieao.guitarworld.network;
 import java.io.IOException;
 
 import okhttp3.Call;
+import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
+import okio.BufferedSource;
 import pers.jieao.guitarworld.model.Message;
 
 public class Network {
@@ -15,7 +18,7 @@ public class Network {
     }
 
 
-    public static void loginRequest(String id, String password, final Callback callback) {
+    public static void loginRequest(final String id, final String password, final Callback callback) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -24,9 +27,21 @@ public class Network {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                callback.onSuccess();
+                if (id.equals("Jieao") && password.equals("Jieao")) {
+                    callback.onSuccess();
+                } else {
+                    callback.onFailure();
+                }
             }
         }).start();
 
+    }
+
+    public static void getCreationList(String userId, okhttp3.Callback callback) {
+        try {
+            callback.onResponse(null, null);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -3,6 +3,7 @@
     package="pers.jieao.guitarworld">
 
     <application
+        android:name=".base.BaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -18,7 +19,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.LoginActivity" />
-        <activity android:name=".activity.MyCreationActivity"></activity>
+        <activity android:name=".activity.MyCreationActivity" />
+        <activity android:name=".activity.CreationDetailActivity"></activity>
     </application>
 
 </manifest>

@@ -1,28 +1,28 @@
 package pers.jieao.guitarworld.model;
 
-public abstract class User {
+public class User {
 
-    protected long id;
+    protected String id;
     protected String password;
 
 
 
     public User() {
-        this.id = 0;
+        this.id = null;
         this.password = null;
 
     }
 
-    public User(long id, String password) {
+    public User(String id, String password) {
         this.id = id;
         this.password = password;
     }
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

@@ -4,27 +4,27 @@ import java.util.Date;
 
 public class Message {
 
-    private long senderId;
-    private long receiverId;
+    private String senderId;
+    private String receiverId;
     private MessageContent content;
     private Date sendTime;
 
-    public Message(long senderId, long receiverId, MessageContent content, Date sendtime) {
+    public Message(String senderId, String receiverId, MessageContent content, Date sendtime) {
         this.senderId = senderId;
         this.receiverId = receiverId;
         this.content = content;
         this.sendTime = sendtime;
     }
-    public long getSenderId() {
+    public String getSenderId() {
         return senderId;
     }
-    public void setSenderId(long senderId) {
+    public void setSenderId(String senderId) {
         this.senderId = senderId;
     }
-    public long getReceiverId() {
+    public String getReceiverId() {
         return receiverId;
     }
-    public void setReceiverId(long receiverId) {
+    public void setReceiverId(String receiverId) {
         this.receiverId = receiverId;
     }
     public MessageContent getContent() {

@@ -5,6 +5,7 @@
 
 
     <RelativeLayout
+        android:id="@+id/rl_profile"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:background="#a5eb9f">
@@ -35,5 +36,24 @@
             android:layout_height="match_parent"
             android:background="@android:color/transparent" />
 
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/rl_mycreation"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/rl_profile"
+        android:background="#dd7ed4e3"
+        android:layout_margin="10dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="我的创作"/>
+        <Button
+            android:id="@+id/bt_mycreation"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent" />
     </RelativeLayout>
 </RelativeLayout>
