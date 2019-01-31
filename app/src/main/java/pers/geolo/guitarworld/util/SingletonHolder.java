@@ -23,12 +23,12 @@ public class SingletonHolder {
                 if (instance == null) {
                     try {
                         instance = clazz.newInstance();
+                        instanceHolder.put(clazz, instance);
                     } catch (IllegalAccessException e) {
                         e.printStackTrace();
                     } catch (InstantiationException e) {
                         e.printStackTrace();
                     }
-                    instanceHolder.put(clazz, instance);
                 }
             }
         }

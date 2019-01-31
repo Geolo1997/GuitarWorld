@@ -59,12 +59,12 @@ public class MyProfileActivity extends BaseActivity {
             @Override
             public void onError(String message) {
                 Log.d(TAG, message);
-                startActivity(NetworkErrorActivity.class);
             }
 
             @Override
             public void onFailure() {
                 Log.d(TAG, "网络错误！");
+                startActivity(NetworkErrorActivity.class);
             }
         });
     }

@@ -1,5 +1,6 @@
 package pers.geolo.guitarworld.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,20 +11,18 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 import pers.geolo.guitarworld.R;
+import pers.geolo.guitarworld.activity.AttentionAndFansActivity;
+import pers.geolo.guitarworld.activity.MyWorksActivity;
 import pers.geolo.guitarworld.activity.MyProfileActivity;
-import pers.geolo.guitarworld.activity.NetworkErrorActivity;
 import pers.geolo.guitarworld.base.BaseFragment;
-import pers.geolo.guitarworld.model.User;
-import pers.geolo.guitarworld.network.BaseCallback;
-import pers.geolo.guitarworld.network.HttpUtils;
 import pers.geolo.guitarworld.util.LoginManager;
 import pers.geolo.guitarworld.util.SingletonHolder;
 
 public class ProfileFragment extends BaseFragment {
+
+    private String username;
 
     @BindView(R.id.tv_username)
     TextView tvUsername;
@@ -42,7 +41,7 @@ public class ProfileFragment extends BaseFragment {
                              @Nullable Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
         // 设置用户名
-        String username = SingletonHolder.getInstance(LoginManager.class).getLoginUser().getUsername();
+        username = SingletonHolder.getInstance(LoginManager.class).getLoginUser().getUsername();
         tvUsername.setText(username);
         return view;
     }
@@ -52,29 +51,24 @@ public class ProfileFragment extends BaseFragment {
         return R.layout.fragment_profile;
     }
 
-
-    //    @OnClick(R.id.bt_myProfile)
-    public void getMyProfile() {
-        startActicity(MyProfileActivity.class);
-
-    }
-
-
     @OnClick(R.id.bt_myProfile)
     public void onBtMyProfileClicked() {
-        startActicity(MyProfileActivity.class);
+        startActivity(MyProfileActivity.class);
     }
 
     @OnClick(R.id.bt_myWorks)
     public void onBtMyWorksClicked() {
-
+        startActivity(MyWorksActivity.class);
     }
 
-    @OnClick(R.id.bt_myFans)
-    public void onBtMyFansClicked() {
-    }
-
-    @OnClick(R.id.bt_myAttention)
-    public void onBtMyAttentionClicked() {
+    @OnClick({R.id.bt_myAttention, R.id.bt_myFans})
+    public void onBtMyAttentionOrMyFansClicked(View view) {
+        int id = view.getId();
+        Log.d(TAG, String.valueOf(id));
+        Intent intent = new Intent(getActivity(), AttentionAndFansActivity.class);
+        intent.putExtra("tag", id == R.id.bt_myAttention ? "attention" : "fans");
+        intent.putExtra("permission", "admin");
+        intent.putExtra("username", username);
+        startActivity(intent);
     }
 }

@@ -22,10 +22,11 @@
         <activity android:name=".activity.LoginActivity"/>
         <activity android:name=".activity.RegisterActivity"/>
         <activity android:name=".activity.MainActivity"/>
-        <activity android:name=".activity.MyCreationActivity"/>
-        <activity android:name=".activity.CreationDetailActivity"/>
+        <activity android:name=".activity.MyWorksActivity"/>
         <activity android:name=".activity.NetworkErrorActivity"/>
         <activity android:name=".activity.MyProfileActivity"/>
+        <activity android:name=".activity.AttentionAndFansActivity">
+        </activity>
     </application>
 
 </manifest>

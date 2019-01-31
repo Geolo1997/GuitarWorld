@@ -39,7 +39,7 @@ public abstract class BaseFragment extends Fragment {
         unbinder.unbind();
     }
 
-    public void startActicity(Class<? extends Activity> clazz) {
+    public void startActivity(Class<? extends Activity> clazz) {
         Intent intent = new Intent(getActivity(), clazz);
         startActivity(intent);
     }

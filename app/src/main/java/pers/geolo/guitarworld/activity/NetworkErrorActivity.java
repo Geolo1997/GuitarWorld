@@ -1,10 +1,10 @@
 package pers.geolo.guitarworld.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import pers.geolo.guitarworld.R;
+import pers.geolo.guitarworld.base.BaseActivity;
 
-public class NetworkErrorActivity extends AppCompatActivity {
+public class NetworkErrorActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
