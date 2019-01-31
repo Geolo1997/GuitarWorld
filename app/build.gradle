@@ -1,10 +1,11 @@
 apply plugin: 'com.android.application'
+//apply plugin: 'com.jakewharton.butterknife'
 
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "pers.jieao.guitarworld"
-        minSdkVersion 21
+        applicationId "pers.geolo.guitarworld"
+        minSdkVersion 26
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -28,9 +29,13 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'com.squareup.okhttp3:okhttp:3.7.0'
-    //butterknife
+    //butterKnife
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     //圆形图片控件
     implementation 'de.hdodenhof:circleimageview:2.1.0'
+    // retrofit 网络框架
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-scalars:2.3.0'//ConverterFactory的String依赖包
 }

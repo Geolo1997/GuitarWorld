@@ -10,4 +10,25 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="login">登录</string>
+    <string name="register">注册</string>
+
+    <string name="username">用户名</string>
+    <string name="password">密码</string>
+    <string name="email">邮箱</string>
+
+    <string name="dynamic">动态</string>
+    <string name="tools">工具</string>
+    <string name="shop">商城</string>
+    <string name="profile">我的</string>
+    <string name="myProfile">我的资料</string>
+    <string name="myWorks">我的作品</string>
+    <string name="myFans">我的粉丝</string>
+    <string name="myAttention">我的关注</string>
+    <string name="sex">性别</string>
+    <string name="birthday">生日</string>
+    <string name="hometown">居住地</string>
+    <string name="edit">编辑</string>
+    <string name="save">保存</string>
 </resources>
