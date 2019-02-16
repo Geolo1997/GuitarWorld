@@ -70,4 +70,16 @@ public class Works<T> {
     public void setComments(List<Comment> comments) {
         this.comments = comments;
     }
+
+    @Override
+    public String toString() {
+        return "Works{" +
+                "id=" + id +
+                ", anthor='" + anthor + '\'' +
+                ", createTime=" + createTime +
+                ", title='" + title + '\'' +
+                ", content=" + content +
+                ", comments=" + comments +
+                '}';
+    }
 }

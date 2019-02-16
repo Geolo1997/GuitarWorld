@@ -7,10 +7,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
 import pers.geolo.guitarworld.R;
-import pers.geolo.guitarworld.base.BaseFragment;
+import pers.geolo.guitarworld.activity.PublishActivity;
 
 public class DynamicFragment extends BaseFragment {
 
@@ -19,12 +21,18 @@ public class DynamicFragment extends BaseFragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+       return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     @Override
     protected int getContentView() {
         return R.layout.fragment_dynamic;
+    }
+
+    @OnClick(R.id.publishWorks)
+    public void publishWorks() {
+        startActivity(PublishActivity.class);
     }
 }

@@ -27,6 +27,10 @@
         <activity android:name=".activity.MyProfileActivity"/>
         <activity android:name=".activity.AttentionAndFansActivity">
         </activity>
+        <activity android:name=".activity.WorksDetailActivity">
+        </activity>
+        <activity android:name=".activity.PublishActivity">
+        </activity>
     </application>
 
 </manifest>

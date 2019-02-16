@@ -7,12 +7,11 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.OnClick;
 import pers.geolo.guitarworld.R;
-import pers.geolo.guitarworld.base.BaseActivity;
 import pers.geolo.guitarworld.model.SimpleUser;
 import pers.geolo.guitarworld.model.User;
 import pers.geolo.guitarworld.network.BaseCallback;
 import pers.geolo.guitarworld.network.HttpUtils;
-import pers.geolo.guitarworld.util.LoginManager;
+import pers.geolo.guitarworld.service.UserService;
 import pers.geolo.guitarworld.util.SingletonHolder;
 
 public class MyProfileActivity extends BaseActivity {
@@ -45,8 +44,6 @@ public class MyProfileActivity extends BaseActivity {
         HttpUtils.getMyProfile(new BaseCallback<User>() {
             @Override
             public void onSuccess(User data) {
-                LoginManager loginManager = SingletonHolder.getInstance(LoginManager.class);
-                loginManager.setLoginUser(data);
                 if (data instanceof SimpleUser) {
                     SimpleUser simpleUser = (SimpleUser) data;
                     tvUsername.setText(simpleUser.getUsername());
@@ -75,10 +72,10 @@ public class MyProfileActivity extends BaseActivity {
         setProfileEditEnable(true);
     }
 
+    // TODO
     @OnClick(R.id.bt_save)
     public void onBtSaveClicked() {
-        setProfileEditEnable(false);
-        User user = SingletonHolder.getInstance(LoginManager.class).getLoginUser();
+        User user = new User();
         HttpUtils.saveMyProfile(user, new BaseCallback<Void>() {
 
             @Override

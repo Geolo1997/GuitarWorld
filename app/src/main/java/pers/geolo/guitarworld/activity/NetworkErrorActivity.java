@@ -2,7 +2,6 @@ package pers.geolo.guitarworld.activity;
 
 import android.os.Bundle;
 import pers.geolo.guitarworld.R;
-import pers.geolo.guitarworld.base.BaseActivity;
 
 public class NetworkErrorActivity extends BaseActivity {
 

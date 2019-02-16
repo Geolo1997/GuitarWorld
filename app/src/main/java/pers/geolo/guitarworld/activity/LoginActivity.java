@@ -3,16 +3,20 @@ package pers.geolo.guitarworld.activity;
 import android.os.Bundle;
 
 import android.util.Log;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.OnClick;
-import pers.geolo.guitarworld.util.LoginManager;
+import okhttp3.*;
 import pers.geolo.guitarworld.R;
-import pers.geolo.guitarworld.base.BaseActivity;
+import pers.geolo.guitarworld.model.User;
+import pers.geolo.guitarworld.service.UserService;
 import pers.geolo.guitarworld.util.SingletonHolder;
 import pers.geolo.guitarworld.network.BaseCallback;
 import pers.geolo.guitarworld.network.HttpUtils;
+
+import java.io.IOException;
 
 
 public class LoginActivity extends BaseActivity {
@@ -23,26 +27,37 @@ public class LoginActivity extends BaseActivity {
     protected EditText etPassword;
     @BindView(R.id.tv_loginHint)
     protected TextView tvLoginHint;
+    @BindView(R.id.cb_rememberPassword)
+    protected CheckBox cbRememberPassword;
+    @BindView(R.id.cb_autoLogin)
+    protected CheckBox cbAutoLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        User user = userService.getUser();
+        etUsername.setText(user.getUsername());
+        String password = user.getPassword();
+        if (password != null) {
+            etPassword.setText(password);
+            cbRememberPassword.setChecked(true);
+        }
     }
 
     @OnClick(R.id.bt_login)
     protected void login() {
-        final String username = etUsername.getText().toString();
+        // 获取控件值
+        String username = etUsername.getText().toString();
         String password = etPassword.getText().toString();
-        HttpUtils.login(username, password, new BaseCallback<Void>() {
+        boolean isAutoLogin = cbAutoLogin.isChecked();
+        boolean isRememberPassword = cbRememberPassword.isChecked();
+        UserService userService = SingletonHolder.getInstance(UserService.class);
+        userService.setState(username, password, isAutoLogin, isRememberPassword);
+        userService.login(new BaseCallback<Void>() {
             @Override
             public void onSuccess(Void data) {
-                Log.d(TAG, "登录成功");
-                // 将登录用户存入LoginManager
-                SingletonHolder.getInstance(LoginManager.class).getLoginUser().setUsername(username);
-                // 跳转至主活动
-                startActivity(MainActivity.class);
-                finish();
+                startActivityAndFinish(MainActivity.class);
             }
 
             @Override

@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import pers.geolo.guitarworld.R;
-import pers.geolo.guitarworld.base.BaseFragment;
 
 public class ShopFragment extends BaseFragment {
 

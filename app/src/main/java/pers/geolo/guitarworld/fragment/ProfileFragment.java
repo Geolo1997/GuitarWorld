@@ -14,10 +14,10 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.activity.AttentionAndFansActivity;
+import pers.geolo.guitarworld.activity.LoginActivity;
 import pers.geolo.guitarworld.activity.MyWorksActivity;
 import pers.geolo.guitarworld.activity.MyProfileActivity;
-import pers.geolo.guitarworld.base.BaseFragment;
-import pers.geolo.guitarworld.util.LoginManager;
+import pers.geolo.guitarworld.service.UserService;
 import pers.geolo.guitarworld.util.SingletonHolder;
 
 public class ProfileFragment extends BaseFragment {
@@ -41,7 +41,7 @@ public class ProfileFragment extends BaseFragment {
                              @Nullable Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
         // 设置用户名
-        username = SingletonHolder.getInstance(LoginManager.class).getLoginUser().getUsername();
+        username = SingletonHolder.getInstance(UserService.class).getUsername();
         tvUsername.setText(username);
         return view;
     }
@@ -70,5 +70,12 @@ public class ProfileFragment extends BaseFragment {
         intent.putExtra("permission", "admin");
         intent.putExtra("username", username);
         startActivity(intent);
+    }
+
+    @OnClick(R.id.bt_logout)
+    public void onLogout() {
+        SingletonHolder.getInstance(UserService.class).logout();
+        startActivity(LoginActivity.class);
+        getActivity().finish();
     }
 }

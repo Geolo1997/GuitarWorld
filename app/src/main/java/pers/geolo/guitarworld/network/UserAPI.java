@@ -8,7 +8,7 @@ import retrofit2.http.*;
 /**
  * @author 桀骜(Geolo)
  */
-public interface UserService {
+public interface UserAPI {
 
     /**
      * 登录

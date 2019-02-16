@@ -9,25 +9,24 @@ import android.widget.Button;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.model.Works;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class WorksViewAdapter extends RecyclerView.Adapter<WorksViewAdapter.ViewHolder> {
-
-    private OnItemListener onItemListener;
+public class WorksViewAdapter extends BaseRecyclerViewAdapter<WorksViewAdapter.ViewHolder> {
 
     private List<Works> worksList;
 
     public WorksViewAdapter(List<Works> worksList) {
-        this.worksList = worksList;
+        super(worksList);
     }
 
-    public void setOnItemListener(OnItemListener onItemListener) {
-        this.onItemListener = onItemListener;
+    public WorksViewAdapter() {
+        this(null);
     }
+
 
     @NonNull
     @Override
@@ -40,13 +39,13 @@ public class WorksViewAdapter extends RecyclerView.Adapter<WorksViewAdapter.View
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
         Works works = worksList.get(i);
         viewHolder.tvAuthor.setText(works.getAnthor());
-        viewHolder.tvCreateTime.setText(works.getCreateTime().toString());
+//        viewHolder.tvCreateTime.setText(works.getCreateTime().toString());
         viewHolder.tvTitle.setText(works.getTitle());
         viewHolder.tvContent.setText((CharSequence) works.getContent());
         viewHolder.btDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onItemListener.onItemClickListener(v, i);
+                onItemListener.onItemClick(v, i);
             }
         });
     }
@@ -75,10 +74,6 @@ public class WorksViewAdapter extends RecyclerView.Adapter<WorksViewAdapter.View
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
-    }
-
-    public interface OnItemListener {
-        void onItemClickListener(View view, int postion);
     }
 
 }

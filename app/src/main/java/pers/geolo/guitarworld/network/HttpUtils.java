@@ -5,38 +5,36 @@ import pers.geolo.guitarworld.util.SingletonHolder;
 import pers.geolo.guitarworld.model.User;
 import retrofit2.Call;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class HttpUtils {
 
-    private static ServiceFatory serviceFatory = SingletonHolder.getInstance(ServiceFatory.class);
-    private static UserService userService = serviceFatory.getService(UserService.class);
-    private static WorksService worksService = serviceFatory.getService(WorksService.class);
+    private static APIFactory APIFactory = SingletonHolder.getInstance(APIFactory.class);
+    private static UserAPI userAPI = APIFactory.getAPI(UserAPI.class);
+    private static WorksAPI worksAPI = APIFactory.getAPI(WorksAPI.class);
 
     public static void login(String username, String password, BaseCallback<Void> callback) {
-        Call<ResponseBody<Void>> call = userService.login(username, password);
+        Call<ResponseBody<Void>> call = userAPI.login(username, password);
         call.enqueue(callback);
     }
 
     public static void register(String username, String password, String email, BaseCallback<Void> callback) {
-        Call<ResponseBody<Void>> call = userService.register(username, password, email);
+        Call<ResponseBody<Void>> call = userAPI.register(username, password, email);
         call.enqueue(callback);
     }
 
     public static void getMyProfile(BaseCallback<User> callback) {
-        Call<ResponseBody<User>> call = userService.getMyProfile();
+        Call<ResponseBody<User>> call = userAPI.getMyProfile();
         call.enqueue(callback);
     }
 
     public static void saveMyProfile(User user, BaseCallback<Void> callback) {
-        Call<ResponseBody<Void>> call = userService.saveMyProfile(user);
+        Call<ResponseBody<Void>> call = userAPI.saveMyProfile(user);
         call.enqueue(callback);
     }
 
-    public static void getWorksList(String anthor, BaseCallback<List<Works>> callback) {
-        Call<ResponseBody<List<Works>>> call = worksService.getWorksList(anthor);
+    public static void getWorksList(String author, BaseCallback<List<Works>> callback) {
+        Call<ResponseBody<List<Works>>> call = worksAPI.getWorksList(author);
         call.enqueue(callback);
 
 //        //---------------test--------------------
@@ -46,7 +44,7 @@ public class HttpUtils {
 //                List<Works> worksList = new ArrayList<>();
 //                for (int i = 0; i < 50; i++) {
 //                    Works works = new Works();
-//                    works.setAnthor(i + "号作者");
+//                    works.setAuthor(i + "号作者");
 //                    works.setCreateTime(new Date());
 //                    works.setTitle("钢铁是怎样炼成的");
 //                    works.setContent("   " +
@@ -63,5 +61,15 @@ public class HttpUtils {
 //        }).start();
 //
 //        //-----------------end test-----------------
+    }
+
+    public static void getWorks(int id, BaseCallback<Works> callback) {
+        Call<ResponseBody<Works>> call = worksAPI.getWorks(id);
+        call.enqueue(callback);
+    }
+
+    public static void publishWorks(Works works, BaseCallback<Void> callback) {
+        Call<ResponseBody<Void>> call = worksAPI.publishWorks(works);
+        call.enqueue(callback);
     }
 }

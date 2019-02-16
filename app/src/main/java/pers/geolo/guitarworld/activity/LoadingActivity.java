@@ -5,9 +5,10 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.widget.TextView;
 import butterknife.BindView;
-import pers.geolo.guitarworld.util.LoginManager;
+import pers.geolo.guitarworld.network.BaseCallback;
+import pers.geolo.guitarworld.network.HttpUtils;
 import pers.geolo.guitarworld.R;
-import pers.geolo.guitarworld.base.BaseActivity;
+import pers.geolo.guitarworld.service.UserService;
 import pers.geolo.guitarworld.util.SingletonHolder;
 import pers.geolo.guitarworld.model.User;
 
@@ -30,22 +31,27 @@ public class LoadingActivity extends BaseActivity {
 
             @Override
             public void onFinish() {
+                UserService userService = SingletonHolder.getInstance(UserService.class);
+                if (userService.isAutoLogin()) {
+                    userService.login(new BaseCallback<Void>() {
+                        @Override
+                        public void onSuccess(Void data) {
+                            startActivityAndFinish(MainActivity.class);
+                        }
 
-                // 自动登录
-                LoginManager loginManager = SingletonHolder.getInstance(LoginManager.class);
+                        @Override
+                        public void onError(String message) {
+                            startActivityAndFinish(LoginActivity.class);
+                        }
 
-                //-----------test--------------
-                User user = new User();
-                user.setUsername("桀骜");
-                loginManager.setLoginUser(user);
-                //-------------end test-----------
-
-                if (loginManager.isLogged()) {
-                    startActivity(MainActivity.class);
+                        @Override
+                        public void onFailure() {
+                            startActivityAndFinish(LoginActivity.class);
+                        }
+                    });
                 } else {
-                    startActivity(LoginActivity.class);
+                    startActivityAndFinish(LoginActivity.class);
                 }
-                finish();
             }
         }.start();
     }

@@ -1,6 +1,5 @@
 package pers.geolo.guitarworld.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -9,7 +8,6 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.OnClick;
 import pers.geolo.guitarworld.R;
-import pers.geolo.guitarworld.base.BaseActivity;
 import pers.geolo.guitarworld.network.BaseCallback;
 import pers.geolo.guitarworld.network.HttpUtils;
 

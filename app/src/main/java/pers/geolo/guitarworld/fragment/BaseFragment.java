@@ -1,4 +1,4 @@
-package pers.geolo.guitarworld.base;
+package pers.geolo.guitarworld.fragment;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -42,5 +43,9 @@ public abstract class BaseFragment extends Fragment {
     public void startActivity(Class<? extends Activity> clazz) {
         Intent intent = new Intent(getActivity(), clazz);
         startActivity(intent);
+    }
+
+    public void toast(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 }

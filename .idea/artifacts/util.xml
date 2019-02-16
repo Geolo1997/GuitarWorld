@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="util">
+    <output-path>$PROJECT_DIR$/build/classes/artifacts/util</output-path>
+    <root id="archive" name="util.jar">
+      <element id="dir-copy" path="$PROJECT_DIR$/app/build/intermediates/classes/debug/pers/geolo/guitarworld/util" />
+    </root>
+  </artifact>
+</component>

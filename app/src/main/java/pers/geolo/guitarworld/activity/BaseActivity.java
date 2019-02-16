@@ -1,4 +1,4 @@
-package pers.geolo.guitarworld.base;
+package pers.geolo.guitarworld.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -14,14 +14,21 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Toast;
 import butterknife.ButterKnife;
+import pers.geolo.guitarworld.model.User;
+import pers.geolo.guitarworld.service.UserService;
+import pers.geolo.guitarworld.util.SingletonHolder;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
     protected final String TAG = this.getClass().getSimpleName();
 
+    protected UserService userService;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // 获取UserService
+        userService = SingletonHolder.getInstance(UserService.class);
     }
 
     @Override
@@ -48,6 +55,11 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void startActivity(Class<? extends Activity> clazz) {
         Intent intent = new Intent(this, clazz);
         startActivity(intent);
+    }
+
+    protected void startActivityAndFinish(Class<? extends Activity> clazz) {
+        startActivity(clazz);
+        finish();
     }
 
     protected void setFragment(int viewId, Fragment fragment) {
