@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 为这个mapper指定一个唯一的namespace，namespace的值习惯上设置成包名+sql映射文件名，这样就能够保证namespace的值是唯一的
+例如namespace="me.gacl.mapping.userMapper"就是me.gacl.mapping(包名)+userMapper(userMapper.xml文件去除后缀)
+-->
+<mapper namespace="pers.geolo.guitarworldserver.dao.UserDAO">
+    <insert id="add" parameterType="pers.geolo.guitarworldserver.entity.User">
+        INSERT INTO User(username, password, email) VALUES (#{username}, #{password}, #{email})
+    </insert>
+
+    <select id="getUser" parameterType="string" resultType="pers.geolo.guitarworldserver.entity.User">
+        SELECT username, password, email FROM User WHERE username = #{username};
+    </select>
+
+    <update id="update" parameterType="pers.geolo.guitarworldserver.entity.User">
+        UPDATE User SET password = #{password}, email = #{email} WHERE username = #{username};
+    </update>
+
+    <delete id="remove" parameterType="string">
+        DELETE User WHERE username = #{username};
+    </delete>
+
+</mapper>

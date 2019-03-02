@@ -1,12 +1,16 @@
 package pers.geolo.guitarworldserver.dao;
 
-import pers.geolo.guitarworldserver.bean.User;
+import org.springframework.stereotype.Repository;
+import pers.geolo.guitarworldserver.entity.User;
 
+@Repository
 public interface UserDAO {
 
-    void save(User user);
+    void add(User user);
 
     void update(User user);
 
     User getUser(String username);
+
+    void remove(String username);
 }
