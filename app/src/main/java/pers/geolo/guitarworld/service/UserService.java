@@ -2,14 +2,12 @@ package pers.geolo.guitarworld.service;
 
 import pers.geolo.guitarworld.dao.DAOFactory;
 import pers.geolo.guitarworld.dao.UserDAO;
-import pers.geolo.guitarworld.model.User;
+import pers.geolo.guitarworld.entity.User;
 import pers.geolo.guitarworld.network.*;
 import pers.geolo.guitarworld.util.SingletonHolder;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import java.io.IOException;
 
 public class UserService {
 
@@ -24,13 +22,13 @@ public class UserService {
     public void setState(String username, String password, boolean isAutoLogin, boolean isRememberPassword) {
         if (isAutoLogin) { // 自动登录
             userDAO.setAutoLogin(true);
-            userDAO.save(username, password);
+            userDAO.add(username, password);
         } else {
             userDAO.setAutoLogin(false);
             if (isRememberPassword) { // 记住密码
-                userDAO.save(username, password);
+                userDAO.add(username, password);
             } else {
-                userDAO.save(username);
+                userDAO.add(username);
             }
         }
     }
@@ -72,4 +70,12 @@ public class UserService {
         userAPI.register(username, password, email).enqueue(callback);
     }
 
+    public void saveMyProfile(User user, BaseCallback<Void> baseCallback) {
+        HttpUtils.saveMyProfile(user, baseCallback);
+
+    }
+
+    public void update(User data) {
+        userDAO.update(data);
+    }
 }

@@ -5,7 +5,7 @@ import android.widget.EditText;
 import butterknife.BindView;
 import butterknife.OnClick;
 import pers.geolo.guitarworld.R;
-import pers.geolo.guitarworld.model.Works;
+import pers.geolo.guitarworld.entity.Works;
 import pers.geolo.guitarworld.network.BaseCallback;
 import pers.geolo.guitarworld.network.HttpUtils;
 import pers.geolo.guitarworld.service.UserService;
@@ -30,7 +30,7 @@ public class PublishActivity extends BaseActivity {
     public void publish() {
         Works works = new Works();
         String username = SingletonHolder.getInstance(UserService.class).getUsername();
-        works.setAnthor(username);
+        works.setAuthor(username);
         works.setCreateTime(new Date());
         works.setTitle(etTitle.getText().toString());
         works.setContent(etContent.getText().toString());
@@ -53,7 +53,7 @@ public class PublishActivity extends BaseActivity {
 
             @Override
             public void onFailure() {
-
+                toast("失败！");
             }
         });
     }

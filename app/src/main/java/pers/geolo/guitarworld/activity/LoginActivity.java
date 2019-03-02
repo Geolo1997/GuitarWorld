@@ -8,15 +8,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.OnClick;
-import okhttp3.*;
 import pers.geolo.guitarworld.R;
-import pers.geolo.guitarworld.model.User;
+import pers.geolo.guitarworld.entity.User;
 import pers.geolo.guitarworld.service.UserService;
 import pers.geolo.guitarworld.util.SingletonHolder;
 import pers.geolo.guitarworld.network.BaseCallback;
-import pers.geolo.guitarworld.network.HttpUtils;
-
-import java.io.IOException;
 
 
 public class LoginActivity extends BaseActivity {

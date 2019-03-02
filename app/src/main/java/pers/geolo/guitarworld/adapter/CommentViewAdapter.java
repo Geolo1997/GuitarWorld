@@ -9,7 +9,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import pers.geolo.guitarworld.R;
-import pers.geolo.guitarworld.model.Comment;
+import pers.geolo.guitarworld.entity.Comment;
 
 import java.util.List;
 

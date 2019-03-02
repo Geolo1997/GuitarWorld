@@ -1,6 +1,6 @@
 package pers.geolo.guitarworld.util;
 
-import pers.geolo.guitarworld.model.User;
+import pers.geolo.guitarworld.entity.User;
 
 public class LoginManager {
 

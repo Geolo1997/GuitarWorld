@@ -1,7 +1,7 @@
 package pers.geolo.guitarworld.network;
 
-import org.json.JSONObject;
-import pers.geolo.guitarworld.model.User;
+import pers.geolo.guitarworld.entity.User;
+
 import retrofit2.Call;
 import retrofit2.http.*;
 
@@ -56,8 +56,7 @@ public interface UserAPI {
      * @param user
      * @return
      */
-    @FormUrlEncoded
-    @POST("saveMyProfile")
+    @POST("updateMyProfile")
     Call<ResponseBody<Void>> saveMyProfile(@Body User user);
 
     /**

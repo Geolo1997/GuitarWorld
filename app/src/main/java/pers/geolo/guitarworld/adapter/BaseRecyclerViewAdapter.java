@@ -12,9 +12,6 @@ import java.util.List;
 public abstract class BaseRecyclerViewAdapter<T extends RecyclerView.ViewHolder>
         extends RecyclerView.Adapter<T> {
 
-    public BaseRecyclerViewAdapter(List list) {
-
-    }
 
     protected OnItemListener onItemListener;
 

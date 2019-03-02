@@ -13,7 +13,7 @@ public abstract class BaseCallback<T> implements Callback<ResponseBody<T>> {
     @Override
     public final void onResponse(Call<ResponseBody<T>> call, Response<ResponseBody<T>> response) {
         ResponseBody<T> responseBody = response.body();
-       Headers headers = response.headers();
+        Headers headers = response.headers();
 
         if (responseBody == null) {
             Log.d(TAG, "网络错误");

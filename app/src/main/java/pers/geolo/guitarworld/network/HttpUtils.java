@@ -1,8 +1,8 @@
 package pers.geolo.guitarworld.network;
 
-import pers.geolo.guitarworld.model.Works;
+import pers.geolo.guitarworld.entity.Works;
 import pers.geolo.guitarworld.util.SingletonHolder;
-import pers.geolo.guitarworld.model.User;
+import pers.geolo.guitarworld.entity.User;
 import retrofit2.Call;
 
 import java.util.List;

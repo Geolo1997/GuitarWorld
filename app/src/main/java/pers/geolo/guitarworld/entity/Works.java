@@ -1,4 +1,4 @@
-package pers.geolo.guitarworld.model;
+package pers.geolo.guitarworld.entity;
 
 import java.util.Date;
 import java.util.List;
@@ -10,7 +10,7 @@ public class Works<T> {
     // 作品编号
     private int id;
     // 作者
-    private String anthor;
+    private String author;
     //创作时间
     private Date createTime;
     // 标题
@@ -31,12 +31,12 @@ public class Works<T> {
         this.id = id;
     }
 
-    public String getAnthor() {
-        return anthor;
+    public String getAuthor() {
+        return author;
     }
 
-    public void setAnthor(String anthor) {
-        this.anthor = anthor;
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     public Date getCreateTime() {
@@ -75,7 +75,7 @@ public class Works<T> {
     public String toString() {
         return "Works{" +
                 "id=" + id +
-                ", anthor='" + anthor + '\'' +
+                ", author='" + author + '\'' +
                 ", createTime=" + createTime +
                 ", title='" + title + '\'' +
                 ", content=" + content +

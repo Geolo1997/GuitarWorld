@@ -1,22 +1,16 @@
 package pers.geolo.guitarworld.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.adapter.CommentViewAdapter;
-import pers.geolo.guitarworld.adapter.WorksViewAdapter;
-import pers.geolo.guitarworld.model.Comment;
-import pers.geolo.guitarworld.model.Works;
+import pers.geolo.guitarworld.entity.Comment;
+import pers.geolo.guitarworld.entity.Works;
 import pers.geolo.guitarworld.network.BaseCallback;
 import pers.geolo.guitarworld.network.HttpUtils;
 
@@ -75,12 +69,12 @@ public class WorksDetailActivity extends BaseActivity {
         HttpUtils.getWorks(worksId, new BaseCallback<Works>() {
             @Override
             public void onSuccess(Works data) {
-                tvAuthor.setText(data.getAnthor());
+                tvAuthor.setText(data.getAuthor());
 //                tvCreateTime.setText(data.getCreateTime().toString());
                 tvTitle.setText(data.getTitle());
                 tvContent.setText(data.getContent().toString());
                 comments.clear();
-                comments.addAll(data.getComments());
+//                comments.addAll(data.getComments());
                 commentViewAdapter.notifyDataSetChanged();
 //                swipeRefreshLayout.setRefreshing(false);
             }

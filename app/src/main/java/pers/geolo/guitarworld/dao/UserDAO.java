@@ -1,13 +1,13 @@
 package pers.geolo.guitarworld.dao;
 
-import pers.geolo.guitarworld.model.User;
+import pers.geolo.guitarworld.entity.User;
 
 public interface UserDAO {
-    void save(User user);
+    void add(User user);
 
-    void save(String username, String password);
+    void add(String username, String password);
 
-    void save(String username);
+    void add(String username);
 
     void setAutoLogin(boolean checked);
 
@@ -16,4 +16,6 @@ public interface UserDAO {
     boolean isAutoLogin();
 
     void clearPassword();
+
+    void update(User user);
 }

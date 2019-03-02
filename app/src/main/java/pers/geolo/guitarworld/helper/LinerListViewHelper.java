@@ -1,22 +1,16 @@
 package pers.geolo.guitarworld.helper;
 
-import android.content.Context;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
-import android.widget.BaseAdapter;
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.adapter.BaseRecyclerViewAdapter;
-import pers.geolo.guitarworld.model.Works;
 import pers.geolo.guitarworld.network.BaseCallback;
-import pers.geolo.guitarworld.network.HttpUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @param <T> 列表视图适配器中的元素类型

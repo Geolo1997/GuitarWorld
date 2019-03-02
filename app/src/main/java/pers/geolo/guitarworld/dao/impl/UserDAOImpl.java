@@ -4,7 +4,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import pers.geolo.guitarworld.base.BaseApplication;
 import pers.geolo.guitarworld.dao.UserDAO;
-import pers.geolo.guitarworld.model.User;
+import pers.geolo.guitarworld.entity.User;
 import pers.geolo.guitarworld.util.EncryptionUtils;
 
 public class UserDAOImpl implements UserDAO {
@@ -18,12 +18,12 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public void save(User user) {
-        save(user.getUsername(), user.getPassword());
+    public void add(User user) {
+        add(user.getUsername(), user.getPassword());
     }
 
     @Override
-    public void save(String username, String password) {
+    public void add(String username, String password) {
         editor = preferences.edit();
         editor.putString("username", username);
         String encryptedPassword = EncryptionUtils.encrypt(password);
@@ -32,7 +32,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public void save(String username) {
+    public void add(String username) {
         editor = preferences.edit();
         editor.putString("username", username);
         editor.apply();
@@ -63,5 +63,10 @@ public class UserDAOImpl implements UserDAO {
         editor = preferences.edit();
         editor.putString("password", null);
         editor.apply();
+    }
+
+    @Override
+    public void update(User user) {
+        add(user);
     }
 }

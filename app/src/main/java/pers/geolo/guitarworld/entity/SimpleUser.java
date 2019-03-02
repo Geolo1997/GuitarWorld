@@ -1,4 +1,4 @@
-package pers.geolo.guitarworld.model;
+package pers.geolo.guitarworld.entity;
 
 import java.util.Date;
 import java.util.List;

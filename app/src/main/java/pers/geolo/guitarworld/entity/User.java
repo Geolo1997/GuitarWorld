@@ -1,4 +1,4 @@
-package pers.geolo.guitarworld.model;
+package pers.geolo.guitarworld.entity;
 
 public class User {
 
