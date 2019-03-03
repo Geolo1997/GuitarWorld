@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<!-- 为这个mapper指定一个唯一的namespace，namespace的值习惯上设置成包名+sql映射文件名，这样就能够保证namespace的值是唯一的
-例如namespace="me.gacl.mapping.userMapper"就是me.gacl.mapping(包名)+userMapper(userMapper.xml文件去除后缀)
--->
+
 <mapper namespace="pers.geolo.guitarworldserver.dao.WorksDAO">
     <insert id="add" parameterType="pers.geolo.guitarworldserver.entity.Works" useGeneratedKeys="true"
             keyProperty="id">
-      INSERT INTO Works(author,create_time, title, content) VALUES(#{author}, #{createTime}, #{title}, #{content});
+        INSERT INTO Works(author, create_time, title, content)
+        VALUES (#{author}, #{createTime}, #{title}, #{content});
     </insert>
 
     <select id="getWorks" parameterType="int" resultType="pers.geolo.guitarworldserver.entity.Works">
-        SELECT id, author, create_time AS createTime, title, content FROM Works WHERE id = #{id};
+        SELECT id, author, create_time AS createTime, title, content
+        FROM Works
+        WHERE id = #{id};
     </select>
 
     <select id="listWorks" parameterType="string" resultType="pers.geolo.guitarworldserver.entity.Works">
-        SELECT id, author, create_time AS createTime, title, content FROM Works WHERE author = #{author};
+        SELECT id, author, create_time AS createTime, title, content
+        FROM Works
+        WHERE author = #{author};
     </select>
 
 </mapper>

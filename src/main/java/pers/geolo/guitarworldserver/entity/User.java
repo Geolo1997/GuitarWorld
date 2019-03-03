@@ -2,12 +2,19 @@ package pers.geolo.guitarworldserver.entity;
 
 import pers.geolo.guitarworldserver.value.LogState;
 
+import java.util.List;
+
 public class User {
 
     private String username;
     private String password;
     private String email;
     private LogState logState;
+
+    // 我的关注者（粉丝）
+    private List<String> followingUsername;
+    // 我关注的（关注）
+    private List<String> followerUsername;
 
     public User() {
     }
@@ -52,5 +59,21 @@ public class User {
 
     public void setLogState(LogState logState) {
         this.logState = logState;
+    }
+
+    public List<String> getFollowingUsername() {
+        return followingUsername;
+    }
+
+    public void setFollowingUsername(List<String> followingUsername) {
+        this.followingUsername = followingUsername;
+    }
+
+    public List<String> getFollowerUsername() {
+        return followerUsername;
+    }
+
+    public void setFollowerUsername(List<String> followerUsername) {
+        this.followerUsername = followerUsername;
     }
 }

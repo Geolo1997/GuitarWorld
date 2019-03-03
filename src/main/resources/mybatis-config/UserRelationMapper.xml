@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="pers.geolo.guitarworldserver.dao.UserRelationDAO">
+    <insert id="add" parameterType="userRelation">
+        INSERT INTO UserRelation(following_username, follower_username)
+            VALUE (#{followingUsername}, #{followerUsername});
+    </insert>
+
+    <delete id="remove" parameterType="userRelation">
+        DELETE
+        FROM UserRelation
+        WHERE following_username = #{followingUsername}
+          AND follower_username = #{followerUsername};
+    </delete>
+
+    <select id="exist" parameterType="userRelation" resultType="boolean">
+        <![CDATA[
+        SELECT COUNT(*)
+        WHERE followingUsername = #{followingUsername}
+          AND followerUsername = #{followerUsername} ]]>;
+    </select>
+
+    <select id="listFollowingUsername" parameterType="string" resultType="string">
+        SELECT following_username
+        FROM UserRelation
+        WHERE follower_username = #{followerUsername};
+    </select>
+
+    <select id="listFollowerUsername" parameterType="string" resultType="string">
+        SELECT follower_username
+        FROM UserRelation
+        WHERE following_username = #{followingUsername};
+    </select>
+
+
+</mapper>

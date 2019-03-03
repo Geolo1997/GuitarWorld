@@ -45,4 +45,15 @@ public class WorksController {
         responseJSONBody.setData(worksList);
         return responseJSONBody;
     }
+
+    @RequestMapping(value = "/getWorks", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseJSONBody<Works> getWorksList(int id) {
+        logger.debug("收到获取作品请求:" + id);
+        Works works = worksService.getWorks(id);
+        ResponseJSONBody<Works> responseJSONBody = new ResponseJSONBody<>();
+        responseJSONBody.setCode(0);
+        responseJSONBody.setData(works);
+        return responseJSONBody;
+    }
 }

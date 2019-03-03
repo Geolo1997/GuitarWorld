@@ -13,12 +13,16 @@ public class WorksService {
     @Autowired
     WorksDAO worksDAO;
 
+    public int publishWorks(Works works) {
+        worksDAO.add(works);
+        return 0;
+    }
+
     public List<Works> getWorksList(String author) {
         return worksDAO.listWorks(author);
     }
 
-    public int publishWorks(Works works) {
-        worksDAO.add(works);
-        return 0;
+    public Works getWorks(int id) {
+        return worksDAO.getWorks(id);
     }
 }
