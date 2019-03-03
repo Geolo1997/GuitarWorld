@@ -21,7 +21,7 @@ public class AttentionAndFansActivity extends BaseActivity {
         ButterKnife.bind(this);
         // 设置默认碎片
         String tag = getIntent().getStringExtra("tag");
-        selectedButton = findViewById("attention".equals(tag) ? R.id.bt_attention : R.id.bt_fans);
+        selectedButton = findViewById("following".equals(tag) ? R.id.bt_attention : R.id.bt_fans);
         // 将选中按钮变色
         selectedButton.setBackgroundColor(getApplicationContext().getColor(R.color.colorPrimary));
     }

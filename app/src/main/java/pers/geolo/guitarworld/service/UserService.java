@@ -9,6 +9,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import java.util.List;
+
 public class UserService {
 
     UserAPI userAPI;
@@ -77,5 +79,13 @@ public class UserService {
 
     public void update(User data) {
         userDAO.update(data);
+    }
+
+    public void following(String followerUsername, BaseCallback<Void> baseCallback) {
+        userAPI.following(followerUsername).enqueue(baseCallback);
+    }
+
+    public void getAllUsers(BaseCallback<List<User>> listBaseCallback) {
+        userAPI.getAllUsers().enqueue(listBaseCallback);
     }
 }

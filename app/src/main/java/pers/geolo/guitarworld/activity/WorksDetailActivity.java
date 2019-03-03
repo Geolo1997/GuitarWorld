@@ -13,6 +13,7 @@ import pers.geolo.guitarworld.entity.Comment;
 import pers.geolo.guitarworld.entity.Works;
 import pers.geolo.guitarworld.network.BaseCallback;
 import pers.geolo.guitarworld.network.HttpUtils;
+import pers.geolo.guitarworld.util.DateUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,7 +71,7 @@ public class WorksDetailActivity extends BaseActivity {
             @Override
             public void onSuccess(Works data) {
                 tvAuthor.setText(data.getAuthor());
-//                tvCreateTime.setText(data.getCreateTime().toString());
+                tvCreateTime.setText(DateUtils.toString(data.getCreateTime()));
                 tvTitle.setText(data.getTitle());
                 tvContent.setText(data.getContent().toString());
                 comments.clear();

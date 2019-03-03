@@ -1,10 +1,15 @@
 package pers.geolo.guitarworld.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class User {
 
     protected String username;
     protected String password;
     protected String email;
+
+    protected List<User> following;
 
     public User() {
     }
@@ -44,4 +49,11 @@ public class User {
         this.email = email;
     }
 
+    public List<User> getFollowing() {
+        return following;
+    }
+
+    public void setFollowing(List<User> following) {
+        this.following = following;
+    }
 }

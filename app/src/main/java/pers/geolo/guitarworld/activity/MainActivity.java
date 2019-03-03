@@ -5,12 +5,10 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Button;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import pers.geolo.guitarworld.R;
-import pers.geolo.guitarworld.fragment.DynamicFragment;
-import pers.geolo.guitarworld.fragment.ProfileFragment;
-import pers.geolo.guitarworld.fragment.ShopFragment;
-import pers.geolo.guitarworld.fragment.ToolsFragment;
+import pers.geolo.guitarworld.fragment.*;
 import pers.geolo.guitarworld.util.SingletonHolder;
 
 public class MainActivity extends BaseActivity {
@@ -31,6 +29,11 @@ public class MainActivity extends BaseActivity {
     @OnClick(R.id.bt_dynamic)
     public void onBtDynamicClicked() {
         setFragment(R.id.ll_fragment, SingletonHolder.getInstance(DynamicFragment.class));
+    }
+
+    @OnClick(R.id.bt_discover)
+    public void onViewClicked() {
+        setFragment(R.id.ll_fragment, SingletonHolder.getInstance(DiscoverFragment.class));
     }
 
     @OnClick(R.id.bt_tools)
@@ -55,4 +58,6 @@ public class MainActivity extends BaseActivity {
         selectedButton = (Button) view;
         selectedButton.setBackgroundColor(getApplicationContext().getColor(R.color.colorPrimary));
     }
+
+
 }

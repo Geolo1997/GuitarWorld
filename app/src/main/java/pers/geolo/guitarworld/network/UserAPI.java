@@ -5,6 +5,8 @@ import pers.geolo.guitarworld.entity.User;
 import retrofit2.Call;
 import retrofit2.http.*;
 
+import java.util.List;
+
 /**
  * @author 桀骜(Geolo)
  */
@@ -75,8 +77,27 @@ public interface UserAPI {
      * @return
      */
     @FormUrlEncoded
-    @POST("attention")
-    Call<ResponseBody<Void>> attention(@Field("username") String username);
+    @POST("following")
+    Call<ResponseBody<Void>> following(@Field("username") String username);
+
+    /**
+     * 获取关注我的用户
+     * @return
+     */
+    @FormUrlEncoded
+    @GET
+    Call<ResponseBody<List<User>>> getMyFollowing();
+
+
+    // test
+
+    /**
+     * 获取所有注册用户
+     * @return
+     */
+    @FormUrlEncoded
+    @GET
+    Call<ResponseBody<List<User>>> getAllUsers();
 
 
 }

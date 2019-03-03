@@ -66,7 +66,7 @@ public class ProfileFragment extends BaseFragment {
         int id = view.getId();
         Log.d(TAG, String.valueOf(id));
         Intent intent = new Intent(getActivity(), AttentionAndFansActivity.class);
-        intent.putExtra("tag", id == R.id.bt_myAttention ? "attention" : "fans");
+        intent.putExtra("tag", id == R.id.bt_myAttention ? "following" : "fans");
         intent.putExtra("permission", "admin");
         intent.putExtra("username", username);
         startActivity(intent);

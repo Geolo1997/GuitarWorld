@@ -11,6 +11,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.entity.Works;
+import pers.geolo.guitarworld.util.DateUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -36,11 +37,10 @@ public class WorksViewAdapter extends BaseRecyclerViewAdapter<WorksViewAdapter.V
         Works works = worksList.get(i);
         viewHolder.tvAuthor.setText(works.getAuthor());
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date createTime = works.getCreateTime();
         String dateString = "";
         if (createTime != null) {
-            dateString = dateFormat.format(createTime);
+            dateString = DateUtils.toString(createTime);
         }
         viewHolder.tvCreateTime.setText(dateString);
         viewHolder.tvTitle.setText(works.getTitle());
