@@ -14,6 +14,8 @@ import pers.geolo.guitarworldserver.entity.User;
 import pers.geolo.guitarworldserver.service.UserService;
 import pers.geolo.guitarworldserver.util.ControllerUtils;
 
+import java.util.List;
+
 
 @Controller
 public class UserController {
@@ -21,7 +23,7 @@ public class UserController {
     Logger logger = Logger.getLogger(UserController.class);
 
     @Autowired
-    private UserService userService;
+    UserService userService;
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     @ResponseBody
@@ -50,12 +52,10 @@ public class UserController {
          User user = userService.getProfile(username);
          ResponseJSONBody<User> responseJSONBody = new ResponseJSONBody<>();
          if (user != null) {
-             responseJSONBody.setCode(0);
-             responseJSONBody.setData(user);
+             return new ResponseJSONBody<>(0, user, null);
          } else {
-             responseJSONBody.setCode(1);
+             return new ResponseJSONBody<>(1);
          }
-        return responseJSONBody;
     }
 
     @RequestMapping(value = "/updateMyProfile", method = RequestMethod.POST)
@@ -77,5 +77,13 @@ public class UserController {
         logger.debug("收到用户" + username + "的注销登录请求");
         int code = userService.logout(username);
         return new ResponseJSONBody<>(code);
+    }
+
+    //-------test--------
+    @RequestMapping(value = "/getAllUsers", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseJSONBody<List<User>> getAllUsers() {
+        List<User> userList = userService.getAllUsers();
+        return new ResponseJSONBody<>(0, userList, null);
     }
 }

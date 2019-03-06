@@ -3,6 +3,8 @@ package pers.geolo.guitarworldserver.dao;
 import org.springframework.stereotype.Repository;
 import pers.geolo.guitarworldserver.entity.User;
 
+import java.util.List;
+
 @Repository
 public interface UserDAO {
 
@@ -13,4 +15,7 @@ public interface UserDAO {
     User getUser(String username);
 
     void remove(String username);
+
+    // ------------test------------
+    List<User> getAllUsers();
 }

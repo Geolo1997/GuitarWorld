@@ -26,4 +26,11 @@
         WHERE username = #{username};
     </delete>
 
+
+    <!-- test -->
+    <select id="getAllUsers" resultType="user">
+        SELECT username, password, email
+        FROM User;
+    </select>
+
 </mapper>

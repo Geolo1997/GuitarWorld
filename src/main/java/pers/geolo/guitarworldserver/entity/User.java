@@ -13,7 +13,7 @@ public class User {
 
     // 我的关注者（粉丝）
     private List<String> followingUsername;
-    // 我关注的（关注）
+    // 我关注的（偶像）
     private List<String> followerUsername;
 
     public User() {

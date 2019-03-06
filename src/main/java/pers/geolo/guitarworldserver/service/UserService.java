@@ -6,6 +6,8 @@ import pers.geolo.guitarworldserver.entity.User;
 import pers.geolo.guitarworldserver.dao.UserDAO;
 import pers.geolo.guitarworldserver.value.LogState;
 
+import java.util.List;
+
 @Service
 public class UserService {
 
@@ -59,5 +61,9 @@ public class UserService {
             userDAO.update(user);
             return 0;
         }
+    }
+
+    public List<User> getAllUsers() {
+        return userDAO.getAllUsers();
     }
 }
