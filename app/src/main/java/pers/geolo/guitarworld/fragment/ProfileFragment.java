@@ -11,17 +11,21 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import pers.geolo.guitarworld.R;
-import pers.geolo.guitarworld.activity.AttentionAndFansActivity;
+import pers.geolo.guitarworld.activity.FollowActivity;
 import pers.geolo.guitarworld.activity.LoginActivity;
-import pers.geolo.guitarworld.activity.MyWorksActivity;
 import pers.geolo.guitarworld.activity.MyProfileActivity;
-import pers.geolo.guitarworld.service.UserService;
-import pers.geolo.guitarworld.util.SingletonHolder;
+import pers.geolo.guitarworld.activity.MyWorksActivity;
+import pers.geolo.guitarworld.base.BaseFragment;
 
 public class ProfileFragment extends BaseFragment {
 
+    @BindView(R.id.bt_logout)
+    Button btLogout;
+    Unbinder unbinder;
     private String username;
 
     @BindView(R.id.tv_username)
@@ -39,16 +43,10 @@ public class ProfileFragment extends BaseFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = super.onCreateView(inflater, container, savedInstanceState);
-        // 设置用户名
-        username = SingletonHolder.getInstance(UserService.class).getUsername();
+        View view =  inflater.inflate(R.layout.fragment_profile, container, false);
+        unbinder = ButterKnife.bind(this, view);
         tvUsername.setText(username);
         return view;
-    }
-
-    @Override
-    protected int getContentView() {
-        return R.layout.fragment_profile;
     }
 
     @OnClick(R.id.bt_myProfile)
@@ -65,7 +63,7 @@ public class ProfileFragment extends BaseFragment {
     public void onBtMyAttentionOrMyFansClicked(View view) {
         int id = view.getId();
         Log.d(TAG, String.valueOf(id));
-        Intent intent = new Intent(getActivity(), AttentionAndFansActivity.class);
+        Intent intent = new Intent(getActivity(), FollowActivity.class);
         intent.putExtra("tag", id == R.id.bt_myAttention ? "following" : "fans");
         intent.putExtra("permission", "admin");
         intent.putExtra("username", username);
@@ -74,8 +72,14 @@ public class ProfileFragment extends BaseFragment {
 
     @OnClick(R.id.bt_logout)
     public void onLogout() {
-        SingletonHolder.getInstance(UserService.class).logout();
+
         startActivity(LoginActivity.class);
         getActivity().finish();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 }

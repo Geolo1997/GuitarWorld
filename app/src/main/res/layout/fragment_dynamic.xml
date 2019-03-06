@@ -10,7 +10,7 @@
         android:text="动态"/>
 
     <Button
-        android:id="@+id/publishWorks"
+        android:id="@+id/publish_works"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/publish"/>

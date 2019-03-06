@@ -8,52 +8,45 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import pers.geolo.guitarworld.R;
+import pers.geolo.guitarworld.base.BaseActivity;
 import pers.geolo.guitarworld.fragment.*;
-import pers.geolo.guitarworld.util.SingletonHolder;
 
 public class MainActivity extends BaseActivity {
 
     @BindView(R.id.bt_dynamic)
-    protected Button selectedButton;
+    Button selectedButton;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        // 默认动态页碎片
-        onBtDynamicClicked();
-        // 将选中按钮变色
-        selectedButton.setBackgroundColor(getApplicationContext().getColor(R.color.colorPrimary));
+        ButterKnife.bind(this);
+        // 默认选中动态页碎片
+        onButtonClicked(selectedButton);
     }
 
-    @OnClick(R.id.bt_dynamic)
-    public void onBtDynamicClicked() {
-        setFragment(R.id.ll_fragment, SingletonHolder.getInstance(DynamicFragment.class));
-    }
-
-    @OnClick(R.id.bt_discover)
-    public void onViewClicked() {
-        setFragment(R.id.ll_fragment, SingletonHolder.getInstance(DiscoverFragment.class));
-    }
-
-    @OnClick(R.id.bt_tools)
-    public void onBtToolsClicked() {
-        setFragment(R.id.ll_fragment, SingletonHolder.getInstance(ToolsFragment.class));
-    }
-
-    @OnClick(R.id.bt_shop)
-    public void onBtShopClicked() {
-        setFragment(R.id.ll_fragment, SingletonHolder.getInstance(ShopFragment.class));
-    }
-
-    @OnClick(R.id.bt_profile)
-    public void onBtProfileClicked() {
-        setFragment(R.id.ll_fragment, SingletonHolder.getInstance(ProfileFragment.class));
-    }
-
-
-    @OnClick({R.id.bt_dynamic, R.id.bt_tools, R.id.bt_shop, R.id.bt_profile})
+    // 底部导航栏
+    @OnClick({R.id.bt_dynamic, R.id.bt_discover, R.id.bt_tools, R.id.bt_shop, R.id.bt_profile})
     public void onButtonClicked(View view) {
+        switch (view.getId()) {
+            case R.id.bt_dynamic:
+                setFragment(R.id.ll_fragment, DynamicFragment.class);
+                break;
+            case R.id.bt_discover:
+                setFragment(R.id.ll_fragment, DiscoverFragment.class);
+                break;
+            case R.id.bt_tools:
+                setFragment(R.id.ll_fragment, ToolsFragment.class);
+                break;
+            case R.id.bt_shop:
+                setFragment(R.id.ll_fragment, ShopFragment.class);
+                break;
+            case R.id.bt_profile:
+                setFragment(R.id.ll_fragment, ProfileFragment.class);
+                break;
+            default:
+        }
+        // 改变颜色
         selectedButton.setBackgroundColor(getApplicationContext().getColor(R.color.white));
         selectedButton = (Button) view;
         selectedButton.setBackgroundColor(getApplicationContext().getColor(R.color.colorPrimary));

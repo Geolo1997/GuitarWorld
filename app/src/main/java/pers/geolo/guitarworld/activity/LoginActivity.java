@@ -2,17 +2,19 @@ package pers.geolo.guitarworld.activity;
 
 import android.os.Bundle;
 
-import android.util.Log;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import pers.geolo.guitarworld.R;
-import pers.geolo.guitarworld.entity.User;
-import pers.geolo.guitarworld.service.UserService;
-import pers.geolo.guitarworld.util.SingletonHolder;
-import pers.geolo.guitarworld.network.BaseCallback;
+import pers.geolo.guitarworld.base.BaseActivity;
+import pers.geolo.guitarworld.dao.DAOService;
+import pers.geolo.guitarworld.entity.LogInfo;
+import pers.geolo.guitarworld.network.HttpService;
+import pers.geolo.guitarworld.network.api.UserAPI;
+import pers.geolo.guitarworld.network.callback.BaseCallback;
 
 
 public class LoginActivity extends BaseActivity {
@@ -23,8 +25,8 @@ public class LoginActivity extends BaseActivity {
     protected EditText etPassword;
     @BindView(R.id.tv_loginHint)
     protected TextView tvLoginHint;
-    @BindView(R.id.cb_rememberPassword)
-    protected CheckBox cbRememberPassword;
+    @BindView(R.id.cb_savePassword)
+    protected CheckBox cbSavePassword;
     @BindView(R.id.cb_autoLogin)
     protected CheckBox cbAutoLogin;
 
@@ -32,13 +34,20 @@ public class LoginActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        User user = userService.getUser();
-        etUsername.setText(user.getUsername());
-        String password = user.getPassword();
-        if (password != null) {
-            etPassword.setText(password);
-            cbRememberPassword.setChecked(true);
+        ButterKnife.bind(this);
+        // 加载保存的登录信息
+        loadingLogInfo();
+    }
+
+    private void loadingLogInfo() {
+        LogInfo logInfo = DAOService.getInstance().getCurrentLogInfo();
+        if (logInfo == null) {
+            return;
         }
+        etUsername.setText(logInfo.getUsername());
+        etPassword.setText(logInfo.getPassword());
+        cbSavePassword.setChecked(logInfo.isSavePassword());
+        cbAutoLogin.setChecked(logInfo.isAutoLogin());
     }
 
     @OnClick(R.id.bt_login)
@@ -47,27 +56,29 @@ public class LoginActivity extends BaseActivity {
         String username = etUsername.getText().toString();
         String password = etPassword.getText().toString();
         boolean isAutoLogin = cbAutoLogin.isChecked();
-        boolean isRememberPassword = cbRememberPassword.isChecked();
-        UserService userService = SingletonHolder.getInstance(UserService.class);
-        userService.setState(username, password, isAutoLogin, isRememberPassword);
-        userService.login(new BaseCallback<Void>() {
-            @Override
-            public void onSuccess(Void data) {
-                startActivityAndFinish(MainActivity.class);
-            }
+        boolean isSavePassword = cbSavePassword.isChecked();
+        // 构建登录信息对象
+        LogInfo logInfo = new LogInfo(username, password, isSavePassword, isAutoLogin);
+        // 登录
+        HttpService.getInstance().getAPI(UserAPI.class)
+                .login(username, password)
+                .enqueue(new BaseCallback<Void>() {
+                    @Override
+                    public void onSuccess(Void responseData) {
+                        DAOService.getInstance().saveLogInfo(logInfo);
+                        startActivityAndFinish(MainActivity.class);
+                    }
 
-            @Override
-            public void onError(String message) {
-                Log.d(TAG, "登录失败，错误信息为：" + message);
-                tvLoginHint.setText(message);
-            }
+                    @Override
+                    public void onError(int errorCode, String errorMessage) {
+                        tvLoginHint.setText(errorMessage);
+                    }
 
-            @Override
-            public void onFailure() {
-                Log.d(TAG, "网络错误");
-                tvLoginHint.setText("网络错误!");
-            }
-        });
+                    @Override
+                    public void onFailure() {
+                        tvLoginHint.setText("网络错误");
+                    }
+                });
     }
 
     @OnClick(R.id.bt_register)

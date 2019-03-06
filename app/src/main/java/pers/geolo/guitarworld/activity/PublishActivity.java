@@ -3,13 +3,15 @@ package pers.geolo.guitarworld.activity;
 import android.os.Bundle;
 import android.widget.EditText;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import pers.geolo.guitarworld.R;
+import pers.geolo.guitarworld.base.BaseActivity;
+import pers.geolo.guitarworld.dao.DAOService;
 import pers.geolo.guitarworld.entity.Works;
-import pers.geolo.guitarworld.network.BaseCallback;
-import pers.geolo.guitarworld.network.HttpUtils;
-import pers.geolo.guitarworld.service.UserService;
-import pers.geolo.guitarworld.util.SingletonHolder;
+import pers.geolo.guitarworld.network.HttpService;
+import pers.geolo.guitarworld.network.api.WorksAPI;
+import pers.geolo.guitarworld.network.callback.BaseCallback;
 
 import java.util.Date;
 
@@ -24,37 +26,35 @@ public class PublishActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_publish);
+        ButterKnife.bind(this);
     }
 
     @OnClick(R.id.bt_publish)
     public void publish() {
         Works works = new Works();
-        String username = SingletonHolder.getInstance(UserService.class).getUsername();
+        String username = DAOService.getInstance().getCurrentLogInfo().getUsername();
         works.setAuthor(username);
         works.setCreateTime(new Date());
         works.setTitle(etTitle.getText().toString());
         works.setContent(etContent.getText().toString());
-        HttpUtils.publishWorks(works, new BaseCallback<Void>() {
-            @Override
-            public void onSuccess(Void data) {
-                toast("发布成功！");
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                finish();
-            }
 
-            @Override
-            public void onError(String message) {
-                toast(message);
-            }
+        HttpService.getInstance().getAPI(WorksAPI.class)
+                .publishWorks(works)
+                .enqueue(new BaseCallback<Void>() {
+                    @Override
+                    public void onSuccess(Void responseData) {
+                        finish();
+                    }
 
-            @Override
-            public void onFailure() {
-                toast("失败！");
-            }
-        });
+                    @Override
+                    public void onError(int errorCode, String errorMessage) {
+                        showToast(errorMessage);
+                    }
+
+                    @Override
+                    public void onFailure() {
+
+                    }
+                });
     }
 }

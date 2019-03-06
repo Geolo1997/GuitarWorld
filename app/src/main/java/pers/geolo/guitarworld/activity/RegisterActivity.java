@@ -2,14 +2,16 @@ package pers.geolo.guitarworld.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import pers.geolo.guitarworld.R;
-import pers.geolo.guitarworld.network.BaseCallback;
-import pers.geolo.guitarworld.network.HttpUtils;
+import pers.geolo.guitarworld.base.BaseActivity;
+import pers.geolo.guitarworld.network.HttpService;
+import pers.geolo.guitarworld.network.api.UserAPI;
+import pers.geolo.guitarworld.network.callback.BaseCallback;
 
 public class RegisterActivity extends BaseActivity {
 
@@ -26,32 +28,30 @@ public class RegisterActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        ButterKnife.bind(this);
     }
 
     @OnClick(R.id.bt_register)
     protected void register() {
-        String username = etUsername.getText().toString();
-        String password = etPassword.getText().toString();
-        String email = etEmail.getText().toString();
-        HttpUtils.register(username, password, email, new BaseCallback<Void>() {
-            @Override
-            public void onSuccess(Void data) {
-                Log.d(TAG, "注册成功");
-                startActivity(MainActivity.class);
-                finish();
-            }
+        HttpService.getInstance().getAPI(UserAPI.class)
+                .register(etUsername.getText().toString(),
+                        etPassword.getText().toString(),
+                        etEmail.getText().toString())
+                .enqueue(new BaseCallback<Void>() {
+                    @Override
+                    public void onSuccess(Void responseData) {
+                        startActivityAndFinish(MainActivity.class);
+                    }
 
-            @Override
-            public void onError(String message) {
-                Log.d(TAG, "注册失败，错误信息为：" + message);
-                tvRegisterHint.setText(message);
-            }
+                    @Override
+                    public void onError(int errorCode, String errorMessage) {
+                        tvRegisterHint.setText(errorMessage);
+                    }
 
-            @Override
-            public void onFailure() {
-                Log.d(TAG, "网络错误");
-                tvRegisterHint.setText("网络错误!");
-            }
-        });
+                    @Override
+                    public void onFailure() {
+                        tvRegisterHint.setText("网络错误");
+                    }
+                });
     }
 }

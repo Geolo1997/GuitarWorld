@@ -1,6 +1,7 @@
-package pers.geolo.guitarworld.network;
+package pers.geolo.guitarworld.network.api;
 
 import pers.geolo.guitarworld.entity.Works;
+import pers.geolo.guitarworld.network.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;

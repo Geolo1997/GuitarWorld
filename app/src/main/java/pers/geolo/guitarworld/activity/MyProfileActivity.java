@@ -1,29 +1,26 @@
 package pers.geolo.guitarworld.activity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import pers.geolo.guitarworld.R;
+import pers.geolo.guitarworld.base.BaseActivity;
+import pers.geolo.guitarworld.dao.DAOService;
+import pers.geolo.guitarworld.entity.LogInfo;
 import pers.geolo.guitarworld.entity.User;
-import pers.geolo.guitarworld.network.BaseCallback;
-import pers.geolo.guitarworld.network.HttpUtils;
-import pers.geolo.guitarworld.service.UserService;
-import pers.geolo.guitarworld.util.SingletonHolder;
-
-import java.util.ArrayList;
-import java.util.List;
+import pers.geolo.guitarworld.network.HttpService;
+import pers.geolo.guitarworld.network.api.UserAPI;
+import pers.geolo.guitarworld.network.callback.BaseCallback;
+import pers.geolo.guitarworld.util.ViewUtils;
 
 public class MyProfileActivity extends BaseActivity {
 
-    UserService userService;
-
     @BindView(R.id.tv_username)
     TextView tvUsername;
-    @BindView(R.id.et_password)
-    EditText etPassword;
     @BindView(R.id.et_email)
     EditText etEmail;
     @BindView(R.id.et_sex)
@@ -32,96 +29,73 @@ public class MyProfileActivity extends BaseActivity {
     EditText etBirthday;
     @BindView(R.id.et_hometown)
     EditText etHometown;
-
-//    List<EditText> editTexts;
+    @BindView(R.id.edit_texts)
+    LinearLayout linearLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_profile);
-        userService = SingletonHolder.getInstance(UserService.class);
-        update();
-        setProfileEditEnable(false);
+        ButterKnife.bind(this);
+        // 更新个人资料
+        updateProfile();
+        // 禁用编辑控件
+        ViewUtils.setViewGroupEnabled(linearLayout, false);
     }
 
-//    private void setEditTexts() {
-//        editTexts = new ArrayList<>();
-//        editTexts.add(etPassword);
-//        editTexts.add(etEmail);
-////        editTexts.add(etSex);
-////        editTexts.add()
-//    }
+    protected void updateProfile() {
+        HttpService.getInstance()
+                .getAPI(UserAPI.class)
+                .getMyProfile()
+                .enqueue(new BaseCallback<User>() {
+                    @Override
+                    public void onSuccess(User responseData) {
+                        tvUsername.setText(responseData.getUsername());
+                        etEmail.setText(responseData.getEmail());
+                    }
 
-    private void setProfileEditEnable(final boolean isEnable) {
-//        editTexts.forEach(editText -> editText.setEnabled(isEnable));
-        etPassword.setEnabled(isEnable);
-        etEmail.setEnabled(isEnable);
-        etSex.setEnabled(isEnable);
-        etBirthday.setEnabled(isEnable);
-        etHometown.setEnabled(isEnable);
-    }
+                    @Override
+                    public void onError(int errorCode, String errorMessage) {
+                    }
 
-    protected void update() {
-        HttpUtils.getMyProfile(new BaseCallback<User>() {
-            @Override
-            public void onSuccess(User data) {
-//                if (data instanceof SimpleUser) {
-//                    SimpleUser simpleUser = (SimpleUser) data;
-                    tvUsername.setText(data.getUsername());
-                    etPassword.setText(data.getPassword());
-                    etEmail.setText(data.getEmail());
-//                    etSex.setText(simpleUser.getSex());
-//                    etBirthday.setText((CharSequence) simpleUser.getBirthday());
-//                    etHometown.setText(simpleUser.getHometown());
-//                }
-            }
-
-            @Override
-            public void onError(String message) {
-                Log.d(TAG, message);
-            }
-
-            @Override
-            public void onFailure() {
-                Log.d(TAG, "网络错误！");
-                startActivity(NetworkErrorActivity.class);
-            }
-        });
+                    @Override
+                    public void onFailure() {
+                        startActivity(NetworkErrorActivity.class);
+                    }
+                });
     }
 
 
     @OnClick(R.id.bt_edit)
     public void onBtEditClicked() {
-        setProfileEditEnable(true);
+        ViewUtils.setViewGroupEnabled(linearLayout, true);
     }
 
     // TODO
     @OnClick(R.id.bt_save)
     public void onBtSaveClicked() {
+        LogInfo logInfo = DAOService.getInstance().getCurrentLogInfo();
         User user = new User();
-        user.setUsername(tvUsername.getText().toString());
-        user.setPassword(etPassword.getText().toString());
+        user.setUsername(logInfo.getUsername());
+        user.setPassword(logInfo.getPassword());
         user.setEmail(etEmail.getText().toString());
-        userService.saveMyProfile(user, new BaseCallback<Void>() {
+        HttpService.getInstance().getAPI(UserAPI.class)
+                .saveMyProfile(user)
+                .enqueue(new BaseCallback<Void>() {
+                    @Override
+                    public void onSuccess(Void responseData) {
+                        ViewUtils.setViewGroupEnabled(linearLayout, false);
+                    }
 
-            @Override
-            public void onSuccess(Void data) {
-                Log.d(TAG, "保存成功！");
-                userService.update(user);
-                setProfileEditEnable(false);
-            }
+                    @Override
+                    public void onError(int errorCode, String errorMessage) {
+                        showToast("保存失败！");
+                    }
 
-            @Override
-            public void onError(String message) {
-                Log.d(TAG, "保存失败！");
-                toast("保存失败！");
-            }
-
-            @Override
-            public void onFailure() {
-                Log.d(TAG, "网络错误！");
-                toast("网络错误!");
-            }
-        });
+                    @Override
+                    public void onFailure() {
+                        startActivity(NetworkErrorActivity.class);
+                    }
+                });
     }
 }

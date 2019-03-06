@@ -7,7 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.adapter.BaseRecyclerViewAdapter;
-import pers.geolo.guitarworld.network.BaseCallback;
+import pers.geolo.guitarworld.network.callback.BaseCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,24 +29,24 @@ public abstract class LinerListViewHelper<T> {
     // 数据列表
     private List<T> list;
     // 回调接口
-    private BaseCallback<List<T>> callback = new BaseCallback<List<T>>() {
-        @Override
-        public void onSuccess(List<T> data) {
-            list.clear();
-            list.addAll(data);
-            recyclerViewAdapter.notifyDataSetChanged();
-            swipeRefreshLayout.setRefreshing(false);
-        }
-
-        @Override
-        public void onError(String message) {
-
-        }
-
-        @Override
-        public void onFailure() {
-        }
-    };
+//    private BaseCallback<List<T>> callback = new BaseCallback<List<T>>() {
+//        @Override
+//        public void onSuccess(List<T> data) {
+//            list.clear();
+//            list.addAll(data);
+//            recyclerViewAdapter.notifyDataSetChanged();
+//            swipeRefreshLayout.setRefreshing(false);
+//        }
+//
+//        @Override
+//        public void onError(String message) {
+//
+//        }
+//
+//        @Override
+//        public void onFailure() {
+//        }
+//    };
 
     public LinerListViewHelper(View linerListView) {
         this.linerListView = linerListView;
@@ -57,7 +57,7 @@ public abstract class LinerListViewHelper<T> {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                onUpdate(callback);
+//                onUpdate(callback);
             }
         });
 
@@ -96,7 +96,7 @@ public abstract class LinerListViewHelper<T> {
     }
 
     public void update() {
-        onUpdate(callback);
+//        onUpdate(callback);
     }
 
     public List<T> getList() {

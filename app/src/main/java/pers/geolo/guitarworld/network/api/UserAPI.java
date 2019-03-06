@@ -1,7 +1,8 @@
-package pers.geolo.guitarworld.network;
+package pers.geolo.guitarworld.network.api;
 
 import pers.geolo.guitarworld.entity.User;
 
+import pers.geolo.guitarworld.network.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.*;
 
@@ -42,7 +43,8 @@ public interface UserAPI {
      */
     @FormUrlEncoded
     @POST("register")
-    Call<ResponseBody<Void>> register(@Field("username") String username, @Field("password") String password, @Field("email") String email);
+    Call<ResponseBody<Void>> register(@Field("username") String username, @Field("password") String password, @Field(
+            "email") String email);
 
     /**
      * 获取我的资料
@@ -55,6 +57,7 @@ public interface UserAPI {
 
     /**
      * 保存我的资料
+     *
      * @param user
      * @return
      */
@@ -71,32 +74,14 @@ public interface UserAPI {
     @POST("getPublicProfile/{username}")
     Call<ResponseBody<User>> getPublicProfile(@Path("username") String username);
 
-    /**
-     * 关注用户
-     * @param username 被关注的用户
-     * @return
-     */
-    @FormUrlEncoded
-    @POST("following")
-    Call<ResponseBody<Void>> following(@Field("username") String username);
-
-    /**
-     * 获取关注我的用户
-     * @return
-     */
-    @FormUrlEncoded
-    @GET
-    Call<ResponseBody<List<User>>> getMyFollowing();
-
-
     // test
 
     /**
      * 获取所有注册用户
+     *
      * @return
      */
-    @FormUrlEncoded
-    @GET
+    @GET("getAllUsers")
     Call<ResponseBody<List<User>>> getAllUsers();
 
 

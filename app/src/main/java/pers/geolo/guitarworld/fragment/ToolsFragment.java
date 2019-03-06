@@ -8,17 +8,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import pers.geolo.guitarworld.R;
+import pers.geolo.guitarworld.base.BaseFragment;
 
 public class ToolsFragment extends BaseFragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
-    }
-
-    @Override
-    protected int getContentView() {
-        return R.layout.fragment_tools;
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_tools, container, false);
+        return view;
     }
 }

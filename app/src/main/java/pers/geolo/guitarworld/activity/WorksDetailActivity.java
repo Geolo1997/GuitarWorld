@@ -4,21 +4,24 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.widget.TextView;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.adapter.CommentViewAdapter;
+import pers.geolo.guitarworld.base.BaseActivity;
 import pers.geolo.guitarworld.entity.Comment;
 import pers.geolo.guitarworld.entity.Works;
-import pers.geolo.guitarworld.network.BaseCallback;
-import pers.geolo.guitarworld.network.HttpUtils;
+import pers.geolo.guitarworld.network.HttpService;
+import pers.geolo.guitarworld.network.api.WorksAPI;
+import pers.geolo.guitarworld.network.callback.BaseCallback;
 import pers.geolo.guitarworld.util.DateUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class WorksDetailActivity extends BaseActivity {
+
 
     int worksId;
 
@@ -43,6 +46,7 @@ public class WorksDetailActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_works_detail);
+        ButterKnife.bind(this);
         // 接收活动传来的作品id
         worksId = getIntent().getIntExtra("id", 0);
 
@@ -67,29 +71,31 @@ public class WorksDetailActivity extends BaseActivity {
     }
 
     private void loadingWorks() {
-        HttpUtils.getWorks(worksId, new BaseCallback<Works>() {
-            @Override
-            public void onSuccess(Works data) {
-                tvAuthor.setText(data.getAuthor());
-                tvCreateTime.setText(DateUtils.toString(data.getCreateTime()));
-                tvTitle.setText(data.getTitle());
-                tvContent.setText(data.getContent().toString());
-                comments.clear();
+
+        HttpService.getInstance().getAPI(WorksAPI.class)
+                .getWorks(worksId)
+                .enqueue(new BaseCallback<Works>() {
+                    @Override
+                    public void onSuccess(Works responseData) {
+                        tvAuthor.setText(responseData.getAuthor());
+                        tvCreateTime.setText(DateUtils.toString(responseData.getCreateTime()));
+                        tvTitle.setText(responseData.getTitle());
+                        tvContent.setText(responseData.getContent().toString());
+                        comments.clear();
 //                comments.addAll(data.getComments());
-                commentViewAdapter.notifyDataSetChanged();
+                        commentViewAdapter.notifyDataSetChanged();
 //                swipeRefreshLayout.setRefreshing(false);
-            }
+                    }
 
-            @Override
-            public void onError(String message) {
-                Log.d(TAG, message);
-                toast(message);
-            }
+                    @Override
+                    public void onError(int errorCode, String errorMessage) {
+                        showToast(errorMessage);
+                    }
 
-            @Override
-            public void onFailure() {
-                Log.d(TAG, "网络错误！");
-            }
-        });
+                    @Override
+                    public void onFailure() {
+
+                    }
+                });
     }
 }

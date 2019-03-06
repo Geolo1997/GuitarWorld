@@ -3,14 +3,16 @@ package pers.geolo.guitarworld.activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import pers.geolo.guitarworld.R;
-import pers.geolo.guitarworld.fragment.AttentionFragment;
-import pers.geolo.guitarworld.fragment.FansFragment;
-import pers.geolo.guitarworld.util.SingletonHolder;
+import pers.geolo.guitarworld.base.BaseActivity;
+import pers.geolo.guitarworld.fragment.FollowerFragment;
+import pers.geolo.guitarworld.fragment.FollowingFragment;
 
-public class AttentionAndFansActivity extends BaseActivity {
+public class FollowActivity extends BaseActivity {
 
     protected Button selectedButton;
 
@@ -26,19 +28,17 @@ public class AttentionAndFansActivity extends BaseActivity {
         selectedButton.setBackgroundColor(getApplicationContext().getColor(R.color.colorPrimary));
     }
 
-    @OnClick(R.id.bt_attention)
-    public void onBtAttentionClicked() {
-        setFragment(R.id.ll_fragment, SingletonHolder.getInstance(AttentionFragment.class));
-    }
-
-    @OnClick(R.id.bt_fans)
-    public void onBtFansClicked() {
-        setFragment(R.id.ll_fragment, SingletonHolder.getInstance(FansFragment.class));
-    }
-
-
     @OnClick({R.id.bt_attention, R.id.bt_fans})
     public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.bt_attention:
+                setFragment(R.id.ll_fragment, FollowingFragment.class);
+                break;
+            case R.id.bt_fans:
+                setFragment(R.id.ll_fragment, FollowerFragment.class);
+                break;
+            default:
+        }
         selectedButton.setBackgroundColor(getApplicationContext().getColor(R.color.white));
         selectedButton = findViewById(view.getId());
         selectedButton.setBackgroundColor(getApplicationContext().getColor(R.color.colorPrimary));
