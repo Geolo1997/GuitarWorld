@@ -9,38 +9,32 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import pers.geolo.guitarworld.R;
+import pers.geolo.guitarworld.base.BaseActivity;
+import pers.geolo.guitarworld.base.BaseRecyclerViewAdapter;
 import pers.geolo.guitarworld.entity.Comment;
 
 import java.util.List;
 
-public class CommentViewAdapter extends RecyclerView.Adapter<CommentViewAdapter.ViewHolder> {
+public class CommentViewAdapter extends BaseRecyclerViewAdapter<Comment, CommentViewAdapter.ViewHolder> {
 
-    List<Comment> comments;
 
-    public CommentViewAdapter(List<Comment> comments) {
-        this.comments = comments;
+    public CommentViewAdapter(BaseActivity activity) {
+        super(activity);
     }
 
-    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_comments_view, viewGroup, false);
-        return new ViewHolder(view);
+    public int getItemViewId() {
+        return R.layout.item_comments_view;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        Comment comment = comments.get(i);
+        Comment comment = getDataList().get(i);
         viewHolder.tvCommentAuthor.setText(comment.getAuthor());
         viewHolder.tvComment.setText(comment.getComment());
     }
 
-    @Override
-    public int getItemCount() {
-        return comments.size();
-    }
-
-    static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends BaseRecyclerViewAdapter.BaseViewHolder {
 
         @BindView(R.id.tv_commentAuthor)
         TextView tvCommentAuthor;
@@ -49,8 +43,6 @@ public class CommentViewAdapter extends RecyclerView.Adapter<CommentViewAdapter.
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
         }
-
     }
 }
