@@ -10,7 +10,10 @@ public class NetworkErrorActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_network_error);
-        ButterKnife.bind(this);
+    }
+
+    @Override
+    protected int getContentView() {
+        return R.layout.activity_network_error;
     }
 }

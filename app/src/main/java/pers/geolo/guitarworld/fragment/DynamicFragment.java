@@ -25,26 +25,14 @@ public class DynamicFragment extends BaseFragment {
     Button publishWorks;
     @BindView(R.id.liner_list_srl)
     SwipeRefreshLayout linerListSrl;
-    Unbinder unbinder;
 
-
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_dynamic, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        return view;
+    protected int getContentView() {
+        return R.layout.fragment_dynamic;
     }
 
     @OnClick(R.id.publish_works)
     public void publishWorks() {
-        startActivity(PublishActivity.class);
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
+       getBaseActivity(). startActivity(PublishActivity.class);
     }
 }

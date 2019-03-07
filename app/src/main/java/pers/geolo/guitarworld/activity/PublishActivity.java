@@ -25,8 +25,11 @@ public class PublishActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_publish);
-        ButterKnife.bind(this);
+    }
+
+    @Override
+    protected int getContentView() {
+        return R.layout.activity_publish;
     }
 
     @OnClick(R.id.bt_publish)

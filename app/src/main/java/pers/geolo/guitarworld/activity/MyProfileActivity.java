@@ -35,12 +35,15 @@ public class MyProfileActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_profile);
-        ButterKnife.bind(this);
         // 更新个人资料
         updateProfile();
         // 禁用编辑控件
         ViewUtils.setViewGroupEnabled(linearLayout, false);
+    }
+
+    @Override
+    protected int getContentView() {
+        return R.layout.activity_my_profile;
     }
 
     protected void updateProfile() {

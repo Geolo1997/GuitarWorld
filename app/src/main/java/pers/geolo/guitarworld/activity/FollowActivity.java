@@ -19,13 +19,16 @@ public class FollowActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_attention_and_fans);
-        ButterKnife.bind(this);
         // 设置默认碎片
         String tag = getIntent().getStringExtra("tag");
         selectedButton = findViewById("following".equals(tag) ? R.id.bt_attention : R.id.bt_fans);
         // 将选中按钮变色
         selectedButton.setBackgroundColor(getApplicationContext().getColor(R.color.colorPrimary));
+    }
+
+    @Override
+    protected int getContentView() {
+        return R.layout.activity_attention_and_fans;
     }
 
     @OnClick({R.id.bt_attention, R.id.bt_fans})

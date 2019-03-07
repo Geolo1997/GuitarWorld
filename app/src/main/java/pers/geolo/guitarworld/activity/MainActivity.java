@@ -19,10 +19,13 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
         // 默认选中动态页碎片
         onButtonClicked(selectedButton);
+    }
+
+    @Override
+    protected int getContentView() {
+        return R.layout.activity_main;
     }
 
     // 底部导航栏

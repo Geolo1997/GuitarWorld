@@ -20,29 +20,31 @@ import java.util.List;
 
 public class SearchResultActivity extends BaseActivity {
 
-
-    List<String> usernameList;
-    UserListAdapter adapter;
+   private UserListAdapter adapter;
 
     @BindView(R.id.rv)
     RecyclerView rv;
 
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_result);
-        ButterKnife.bind(this);
 
         // 设置RecyclerView管理器
         rv.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL,
                 false));
         // 设置添加或删除item时的动画，这里使用默认动画
         rv.setItemAnimator(new DefaultItemAnimator());
-        usernameList = new ArrayList<>();
-        adapter = new UserListAdapter(usernameList);
+        adapter = new UserListAdapter(this);
         rv.setAdapter(adapter);
 
         update();
+    }
+
+    @Override
+    protected int getContentView() {
+        return R.layout.activity_search_result;
     }
 
     private void update() {
@@ -52,8 +54,8 @@ public class SearchResultActivity extends BaseActivity {
                 .enqueue(new BaseCallback<List<User>>() {
                     @Override
                     public void onSuccess(List<User> responseData) {
-                        usernameList.clear();
-                        responseData.forEach(user -> usernameList.add(user.getUsername()));
+                        adapter.getDataList().clear();
+                        responseData.forEach(user -> adapter.getDataList().add(user.getUsername()));
                         adapter.notifyDataSetChanged();
                     }
 

@@ -20,66 +20,64 @@ import pers.geolo.guitarworld.activity.LoginActivity;
 import pers.geolo.guitarworld.activity.MyProfileActivity;
 import pers.geolo.guitarworld.activity.MyWorksActivity;
 import pers.geolo.guitarworld.base.BaseFragment;
+import pers.geolo.guitarworld.dao.DAOService;
 
 public class ProfileFragment extends BaseFragment {
 
-    @BindView(R.id.bt_logout)
-    Button btLogout;
-    Unbinder unbinder;
-    private String username;
+
 
     @BindView(R.id.tv_username)
     TextView tvUsername;
-    @BindView(R.id.bt_myProfile)
+    @BindView(R.id.bt_my_profile)
     Button btMyProfile;
-    @BindView(R.id.bt_myWorks)
+    @BindView(R.id.bt_my_works)
     Button btMyWorks;
-    @BindView(R.id.bt_myFans)
+    @BindView(R.id.bt_my_fans)
     Button btMyFans;
-    @BindView(R.id.bt_myAttention)
+    @BindView(R.id.bt_my_attention)
     Button btMyAttention;
+    @BindView(R.id.bt_logout)
+    Button btLogout;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view =  inflater.inflate(R.layout.fragment_profile, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        tvUsername.setText(username);
+        View view = super.onCreateView(inflater, container, savedInstanceState);
+        tvUsername.setText(DAOService.getInstance().getCurrentLogInfo().getUsername());
         return view;
     }
 
-    @OnClick(R.id.bt_myProfile)
+    @Override
+    protected int getContentView() {
+        return R.layout.fragment_profile;
+    }
+
+    @OnClick(R.id.bt_my_profile)
     public void onBtMyProfileClicked() {
-        startActivity(MyProfileActivity.class);
+        getBaseActivity().startActivity(MyProfileActivity.class);
     }
 
-    @OnClick(R.id.bt_myWorks)
+    @OnClick(R.id.bt_my_works)
     public void onBtMyWorksClicked() {
-        startActivity(MyWorksActivity.class);
+        getBaseActivity().startActivity(MyWorksActivity.class);
     }
 
-    @OnClick({R.id.bt_myAttention, R.id.bt_myFans})
+    @OnClick({R.id.bt_my_attention, R.id.bt_my_fans})
     public void onBtMyAttentionOrMyFansClicked(View view) {
         int id = view.getId();
         Log.d(TAG, String.valueOf(id));
         Intent intent = new Intent(getActivity(), FollowActivity.class);
-        intent.putExtra("tag", id == R.id.bt_myAttention ? "following" : "fans");
+        intent.putExtra("tag", id == R.id.bt_my_attention ? "following" : "fans");
         intent.putExtra("permission", "admin");
-        intent.putExtra("username", username);
+        intent.putExtra("username", DAOService.getInstance().getCurrentLogInfo().getUsername());
         startActivity(intent);
     }
 
     @OnClick(R.id.bt_logout)
     public void onLogout() {
-
-        startActivity(LoginActivity.class);
+        getBaseActivity().startActivity(LoginActivity.class);
         getActivity().finish();
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
 }

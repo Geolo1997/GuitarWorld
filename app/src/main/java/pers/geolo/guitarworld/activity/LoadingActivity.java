@@ -39,10 +39,14 @@ public class LoadingActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_loading);
-        ButterKnife.bind(this);
         // 启动倒计时
-        loadingCountDownTimer.start();
+//        loadingCountDownTimer.start();
+        autoLogin();
+    }
+
+    @Override
+    protected int getContentView() {
+        return R.layout.activity_loading;
     }
 
     private void autoLogin() {

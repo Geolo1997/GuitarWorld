@@ -27,8 +27,11 @@ public class RegisterActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
-        ButterKnife.bind(this);
+    }
+
+    @Override
+    protected int getContentView() {
+        return R.layout.activity_register;
     }
 
     @OnClick(R.id.bt_register)

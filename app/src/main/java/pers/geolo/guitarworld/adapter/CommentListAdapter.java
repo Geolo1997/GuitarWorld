@@ -1,24 +1,17 @@
 package pers.geolo.guitarworld.adapter;
 
 import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.base.BaseActivity;
 import pers.geolo.guitarworld.base.BaseRecyclerViewAdapter;
 import pers.geolo.guitarworld.entity.Comment;
 
-import java.util.List;
+public class CommentListAdapter extends BaseRecyclerViewAdapter<Comment, CommentListAdapter.ViewHolder> {
 
-public class CommentViewAdapter extends BaseRecyclerViewAdapter<Comment, CommentViewAdapter.ViewHolder> {
-
-
-    public CommentViewAdapter(BaseActivity activity) {
+    public CommentListAdapter(BaseActivity activity) {
         super(activity);
     }
 
@@ -34,7 +27,7 @@ public class CommentViewAdapter extends BaseRecyclerViewAdapter<Comment, Comment
         viewHolder.tvComment.setText(comment.getComment());
     }
 
-    public static class ViewHolder extends BaseRecyclerViewAdapter.BaseViewHolder {
+    public  class ViewHolder extends BaseRecyclerViewAdapter.BaseViewHolder {
 
         @BindView(R.id.tv_commentAuthor)
         TextView tvCommentAuthor;

@@ -12,12 +12,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.activity.WorksDetailActivity;
-import pers.geolo.guitarworld.adapter.WorksViewAdapter;
+import pers.geolo.guitarworld.adapter.WorksListAdapter;
 import pers.geolo.guitarworld.base.BaseFragment;
 import pers.geolo.guitarworld.entity.Works;
 import pers.geolo.guitarworld.network.HttpService;
@@ -36,12 +33,8 @@ import java.util.List;
  */
 public class WorksListFragment extends BaseFragment {
 
-    Unbinder unbinder;
-    Unbinder unbinder1;
-    // 作品列表
-    private List<Works> worksList;
     // RecyclerView适配器
-    private WorksViewAdapter adapter;
+    private WorksListAdapter adapter;
     // 保存传入参数
     private Bundle bundle;
 
@@ -50,25 +43,22 @@ public class WorksListFragment extends BaseFragment {
     @BindView(R.id.liner_list_rv)
     RecyclerView rvMyWorks;
 
+    @Override
+    protected int getContentView() {
+        return R.layout.view_group_liner_list_view;
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.view_group_liner_list_view, container, false);
-        unbinder1 = ButterKnife.bind(this, view);
+        View view = super.onCreateView(inflater, container, savedInstanceState);
         // 设置RecyclerView管理器
         rvMyWorks.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        // 初始化适配器
-        worksList = new ArrayList<>();
-        adapter = new WorksViewAdapter(worksList);
-        adapter.setOnItemListener((view1, position) -> {
-            // 跳转到作品详情页
-            Intent intent = new Intent(getContext(), WorksDetailActivity.class);
-            intent.putExtra("id", worksList.get(position).getId());
-            startActivity(intent);
-        });
         // 设置添加或删除item时的动画，这里使用默认动画
         rvMyWorks.setItemAnimator(new DefaultItemAnimator());
+        // 初始化适配器
+        adapter = new WorksListAdapter(getBaseActivity());
         // 设置适配器
         rvMyWorks.setAdapter(adapter);
 
@@ -83,22 +73,20 @@ public class WorksListFragment extends BaseFragment {
         return view;
     }
 
+
     public void updateWorksList(String author) {
-        SingletonHolder.getInstance(HttpService.class)
-                .getAPI(WorksAPI.class)
+        SingletonHolder.getInstance(HttpService.class).getAPI(WorksAPI.class)
                 .getWorksList(author)
                 .enqueue(new BaseCallback<List<Works>>() {
                     @Override
                     public void onSuccess(List<Works> responseData) {
-                        worksList.clear();
-                        worksList.addAll(responseData);
-                        adapter.notifyDataSetChanged();
+                        adapter.setDataList(responseData);
                         srlUpdate.setRefreshing(false);
                     }
 
                     @Override
                     public void onError(int errorCode, String errorMessage) {
-                        showToast(errorMessage);
+                        getBaseActivity().showToast(errorMessage);
                     }
 
                     @Override
@@ -108,9 +96,4 @@ public class WorksListFragment extends BaseFragment {
                 });
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
 }

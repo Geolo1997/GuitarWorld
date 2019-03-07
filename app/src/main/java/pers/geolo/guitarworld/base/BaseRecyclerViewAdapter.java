@@ -1,14 +1,11 @@
-package pers.geolo.guitarworld.recyclerview;
+package pers.geolo.guitarworld.base;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import pers.geolo.guitarworld.base.BaseActivity;
+import butterknife.ButterKnife;
 import pers.geolo.guitarworld.util.GenericUtils;
 
 import java.lang.reflect.Constructor;
@@ -75,10 +72,11 @@ public abstract class BaseRecyclerViewAdapter<ListType, ViewHolder extends BaseR
         return DATA_LIST.size();
     }
 
-    public static class BaseViewHolder extends RecyclerView.ViewHolder {
+    public class BaseViewHolder extends RecyclerView.ViewHolder {
 
         public BaseViewHolder(@NonNull View itemView) {
             super(itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 

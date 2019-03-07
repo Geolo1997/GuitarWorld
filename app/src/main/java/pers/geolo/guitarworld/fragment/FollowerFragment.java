@@ -16,20 +16,9 @@ import pers.geolo.guitarworld.base.BaseFragment;
 public class FollowerFragment extends BaseFragment {
     @BindView(R.id.ss)
     TextView ss;
-    Unbinder unbinder;
-
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_follower, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        return view;
-    }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
+    protected int getContentView() {
+        return R.layout.fragment_follower;
     }
 }
