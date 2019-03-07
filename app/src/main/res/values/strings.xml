@@ -24,19 +24,19 @@
     <string name="profile">我的</string>
     <string name="myProfile">我的资料</string>
     <string name="myWorks">我的作品</string>
-    <string name="myFans">我的粉丝</string>
-    <string name="myAttention">我的关注</string>
+    <string name="my_follower">我的粉丝</string>
+    <string name="my_following">我的关注</string>
     <string name="sex">性别</string>
     <string name="birthday">生日</string>
     <string name="hometown">居住地</string>
     <string name="edit">编辑</string>
     <string name="save">保存</string>
     <string name="timer">倒计时</string>
-    <string name="attention">关注</string>
-    <string name="fans">粉丝</string>
+    <string name="following">关注</string>
+    <string name="follower">粉丝</string>
     <string name="network_error_message">对不起，网络开小差了QAQ</string>
     <string name="author">作者</string>
-    <string name="createTime">创作时间</string>
+    <string name="create_time">创作时间</string>
     <string name="title">标题</string>
     <string name="content">内容</string>
     <string name="send">发送</string>
@@ -44,4 +44,7 @@
     <string name="publish">发布</string>
     <string name="discover">发现</string>
     <string name="search">搜索</string>
+    <string name="add_following">+关注</string>
+    <string name="followed">已关注</string>
+    <string name="follow_each_other">互相关注</string>
 </resources>

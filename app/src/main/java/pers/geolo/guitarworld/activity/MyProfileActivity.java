@@ -47,25 +47,23 @@ public class MyProfileActivity extends BaseActivity {
     }
 
     protected void updateProfile() {
-        HttpService.getInstance()
-                .getAPI(UserAPI.class)
-                .getMyProfile()
-                .enqueue(new BaseCallback<User>() {
-                    @Override
-                    public void onSuccess(User responseData) {
-                        tvUsername.setText(responseData.getUsername());
-                        etEmail.setText(responseData.getEmail());
-                    }
+        HttpService.getInstance().getAPI(UserAPI.class)
+                .getMyProfile().enqueue(new BaseCallback<User>() {
+            @Override
+            public void onSuccess(User responseData) {
+                tvUsername.setText(responseData.getUsername());
+                etEmail.setText(responseData.getEmail());
+            }
 
-                    @Override
-                    public void onError(int errorCode, String errorMessage) {
-                    }
+            @Override
+            public void onError(int errorCode, String errorMessage) {
+            }
 
-                    @Override
-                    public void onFailure() {
-                        startActivity(NetworkErrorActivity.class);
-                    }
-                });
+            @Override
+            public void onFailure() {
+                startActivity(NetworkErrorActivity.class);
+            }
+        });
     }
 
 

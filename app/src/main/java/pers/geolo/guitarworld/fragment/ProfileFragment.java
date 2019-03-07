@@ -11,9 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.activity.FollowActivity;
 import pers.geolo.guitarworld.activity.LoginActivity;
@@ -32,9 +30,9 @@ public class ProfileFragment extends BaseFragment {
     Button btMyProfile;
     @BindView(R.id.bt_my_works)
     Button btMyWorks;
-    @BindView(R.id.bt_my_fans)
+    @BindView(R.id.bt_my_follower)
     Button btMyFans;
-    @BindView(R.id.bt_my_attention)
+    @BindView(R.id.bt_my_following)
     Button btMyAttention;
     @BindView(R.id.bt_logout)
     Button btLogout;
@@ -63,12 +61,12 @@ public class ProfileFragment extends BaseFragment {
         getBaseActivity().startActivity(MyWorksActivity.class);
     }
 
-    @OnClick({R.id.bt_my_attention, R.id.bt_my_fans})
+    @OnClick({R.id.bt_my_following, R.id.bt_my_follower})
     public void onBtMyAttentionOrMyFansClicked(View view) {
         int id = view.getId();
         Log.d(TAG, String.valueOf(id));
         Intent intent = new Intent(getActivity(), FollowActivity.class);
-        intent.putExtra("tag", id == R.id.bt_my_attention ? "following" : "fans");
+        intent.putExtra("tag", id == R.id.bt_my_following ? "following" : "follower");
         intent.putExtra("permission", "admin");
         intent.putExtra("username", DAOService.getInstance().getCurrentLogInfo().getUsername());
         startActivity(intent);

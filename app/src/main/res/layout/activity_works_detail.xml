@@ -22,7 +22,7 @@
             android:id="@+id/tv_createTime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/createTime"/>
+            android:text="@string/create_time"/>
 
         <TextView
             android:id="@+id/tv_title"

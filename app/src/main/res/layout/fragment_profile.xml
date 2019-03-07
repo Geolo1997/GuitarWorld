@@ -20,16 +20,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/myWorks"/>
+
     <Button
-        android:id="@+id/bt_my_fans"
+        android:id="@+id/bt_my_following"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/myFans"/>
+        android:text="@string/my_following"/>
     <Button
-        android:id="@+id/bt_my_attention"
+        android:id="@+id/bt_my_follower"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/myAttention"/>
+        android:text="@string/my_follower"/>
+
 
     <Button
         android:id="@+id/bt_logout"

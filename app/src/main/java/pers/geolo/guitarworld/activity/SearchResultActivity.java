@@ -6,25 +6,22 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import pers.geolo.guitarworld.R;
-import pers.geolo.guitarworld.adapter.UserListAdapter;
+import pers.geolo.guitarworld.adapter.UsernameListAdapter;
 import pers.geolo.guitarworld.base.BaseActivity;
 import pers.geolo.guitarworld.entity.User;
 import pers.geolo.guitarworld.network.HttpService;
 import pers.geolo.guitarworld.network.api.UserAPI;
 import pers.geolo.guitarworld.network.callback.BaseCallback;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SearchResultActivity extends BaseActivity {
 
-   private UserListAdapter adapter;
+    private UsernameListAdapter adapter;
 
     @BindView(R.id.rv)
     RecyclerView rv;
-
 
 
     @Override
@@ -36,7 +33,7 @@ public class SearchResultActivity extends BaseActivity {
                 false));
         // 设置添加或删除item时的动画，这里使用默认动画
         rv.setItemAnimator(new DefaultItemAnimator());
-        adapter = new UserListAdapter(this);
+        adapter = new UsernameListAdapter(this);
         rv.setAdapter(adapter);
 
         update();
@@ -50,24 +47,21 @@ public class SearchResultActivity extends BaseActivity {
     private void update() {
 
         HttpService.getInstance().getAPI(UserAPI.class)
-                .getAllUsers()
-                .enqueue(new BaseCallback<List<User>>() {
-                    @Override
-                    public void onSuccess(List<User> responseData) {
-                        adapter.getDataList().clear();
-                        responseData.forEach(user -> adapter.getDataList().add(user.getUsername()));
-                        adapter.notifyDataSetChanged();
-                    }
+                .getAllUsers().enqueue(new BaseCallback<List<User>>() {
+            @Override
+            public void onSuccess(List<User> responseData) {
+                adapter.getDataList().clear();
+                responseData.forEach(user -> adapter.getDataList().add(user.getUsername()));
+                adapter.notifyDataSetChanged();
+            }
 
-                    @Override
-                    public void onError(int errorCode, String errorMessage) {
+            @Override
+            public void onError(int errorCode, String errorMessage) {
+            }
 
-                    }
-
-                    @Override
-                    public void onFailure() {
-
-                    }
-                });
+            @Override
+            public void onFailure() {
+            }
+        });
     }
 }

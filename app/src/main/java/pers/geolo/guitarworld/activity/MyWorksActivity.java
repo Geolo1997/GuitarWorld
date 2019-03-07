@@ -51,24 +51,23 @@ public class MyWorksActivity extends BaseActivity {
     public void updateWorksList() {
         String author = DAOService.getInstance().getCurrentLogInfo().getUsername();
         HttpService.getInstance().getAPI(WorksAPI.class)
-                .getWorksList(author)
-                .enqueue(new BaseCallback<List<Works>>() {
-                    @Override
-                    public void onSuccess(List<Works> responseData) {
-                        adapter.setDataList(responseData);
-                        swipeRefreshLayout.setRefreshing(false);
-                    }
+                .getWorksList(author).enqueue(new BaseCallback<List<Works>>() {
+            @Override
+            public void onSuccess(List<Works> responseData) {
+                adapter.setDataList(responseData);
+                swipeRefreshLayout.setRefreshing(false);
+            }
 
-                    @Override
-                    public void onError(int errorCode, String errorMessage) {
+            @Override
+            public void onError(int errorCode, String errorMessage) {
 
-                    }
+            }
 
-                    @Override
-                    public void onFailure() {
+            @Override
+            public void onFailure() {
 
-                    }
-                });
+            }
+        });
     }
 
 

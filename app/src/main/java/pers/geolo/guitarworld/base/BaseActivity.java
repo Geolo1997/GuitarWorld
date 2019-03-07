@@ -41,6 +41,15 @@ public abstract class BaseActivity extends AppCompatActivity {
         transaction.commit();
     }
 
+    public void setFragment(int viewId, Class<? extends BaseFragment> fragmentClass, Bundle bundle) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        BaseFragment baseFragment = SingletonHolder.getInstance(fragmentClass);
+        baseFragment.setArguments(bundle);
+        transaction.replace(viewId, baseFragment);
+        transaction.commit();
+    }
+
     public void showToast(String message) {
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
