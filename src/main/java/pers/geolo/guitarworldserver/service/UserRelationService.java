@@ -42,10 +42,9 @@ public class UserRelationService {
      * @param username
      * @return
      */
-    public List<String> getFollowings(String username) {
-        return userRelationDAO.listFollowingUsername(username);
+    public List<String> getFollowers(String username) {
+        return userRelationDAO.listFollowerUsername(username);
     }
-
 
     /**
      * 获取用户偶像
@@ -53,8 +52,8 @@ public class UserRelationService {
      * @param username
      * @return
      */
-    public List<String> getFollowers(String username) {
-        return userRelationDAO.listFollowerUsername(username);
+    public List<String> getFollowings(String username) {
+        return userRelationDAO.listFollowingUsername(username);
     }
 
     /**
@@ -64,10 +63,10 @@ public class UserRelationService {
      * @return
      */
     public UserRelationType getRelationType(String currentUsername, String otherUsername) {
-        // 该用户是否是当前用户的关注者
-        boolean isFollower = userRelationDAO.exist(new UserRelation(currentUsername, otherUsername));
         // 该用户是否是当前用户的粉丝
-        boolean isFollowing = userRelationDAO.exist(new UserRelation(otherUsername, currentUsername));
+        boolean isFollower = userRelationDAO.exist(new UserRelation(otherUsername, currentUsername));
+        // 该用户是否是当前用户的关注者
+        boolean isFollowing = userRelationDAO.exist(new UserRelation(currentUsername, otherUsername));
         if (isFollowing && isFollower) { // 互相关注
             return UserRelationType.FOLLOW_EACH_OTHER;
         } else if (isFollowing) { // 是当前用户的粉丝

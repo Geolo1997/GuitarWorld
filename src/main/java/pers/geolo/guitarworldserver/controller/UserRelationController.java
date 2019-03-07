@@ -31,8 +31,8 @@ public class UserRelationController {
         // 获取当前用户的用户名
         String currentUsername = (String) ControllerUtils.getSessionAttribute("username");
         // 获取粉丝用户名
-        String followingUsername = userRelation.getFollowingUsername();
-        if (currentUsername != null && currentUsername.equals(followingUsername)) { // 当前用户是关系中的粉丝
+        String followerUsername = userRelation.getFollowerUsername();
+        if (currentUsername != null && currentUsername.equals(followerUsername)) { // 当前用户是关系中的粉丝
             userRelationService.addRelation(userRelation);
             return new ResponseJSONBody<>(0);
         } else {
@@ -47,8 +47,8 @@ public class UserRelationController {
         // 获取当前用户的用户名
         String currentUsername = (String) ControllerUtils.getSessionAttribute("username");
         // 获取粉丝用户名
-        String followingUsername = userRelation.getFollowingUsername();
-        if (currentUsername != null && currentUsername.equals(followingUsername)) { // 当前用户是关系中的粉丝
+        String followerUsername = userRelation.getFollowerUsername();
+        if (currentUsername != null && currentUsername.equals(followerUsername)) { // 当前用户是关系中的粉丝
             userRelationService.removeRelation(userRelation);
             return new ResponseJSONBody<>(0);
         } else {
@@ -68,7 +68,7 @@ public class UserRelationController {
     }
 
     /**
-     * 获取某用户粉丝
+     * 获取某用户关注
      * @param username 该用户用户名
      * @return 该用户粉丝用户名列表
      */
@@ -80,7 +80,7 @@ public class UserRelationController {
     }
 
     /**
-     * 获取某用户偶像
+     * 获取某用户粉丝
      * @param username 该用户用户名
      * @return 该用户偶像用户名列表
      */

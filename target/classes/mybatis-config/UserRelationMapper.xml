@@ -3,23 +3,23 @@
 
 <mapper namespace="pers.geolo.guitarworldserver.dao.UserRelationDAO">
     <insert id="add" parameterType="userRelation">
-        INSERT INTO UserRelation(following_username, follower_username)
-            VALUE (#{followingUsername}, #{followerUsername});
+        INSERT INTO UserRelation(follower_username, following_username)
+            VALUE (#{followerUsername}, #{followingUsername});
     </insert>
 
     <delete id="remove" parameterType="userRelation">
         DELETE
         FROM UserRelation
-        WHERE following_username = #{followingUsername}
-          AND follower_username = #{followerUsername};
+        WHERE follower_username = #{followerUsername}
+          AND following_username = #{followingUsername};
     </delete>
 
     <select id="exist" parameterType="userRelation" resultType="boolean">
         <![CDATA[
         SELECT COUNT(*)
         FROM UserRelation
-        WHERE following_username = #{followingUsername}
-          AND follower_username = #{followerUsername};
+        WHERE follower_username = #{followerUsername}
+          AND following_username = #{followingUsername};
         ]]>
     </select>
 
@@ -34,6 +34,4 @@
         FROM UserRelation
         WHERE following_username = #{followingUsername};
     </select>
-
-
 </mapper>
