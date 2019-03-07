@@ -3,7 +3,9 @@ package pers.geolo.guitarworld.activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
 import butterknife.OnClick;
+
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.base.BaseActivity;
 import pers.geolo.guitarworld.dao.DAOService;

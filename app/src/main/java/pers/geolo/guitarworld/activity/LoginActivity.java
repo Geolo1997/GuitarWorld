@@ -64,24 +64,23 @@ public class LoginActivity extends BaseActivity {
         LogInfo logInfo = new LogInfo(username, password, isSavePassword, isAutoLogin);
         // 登录
         HttpService.getInstance().getAPI(UserAPI.class)
-                .login(username, password)
-                .enqueue(new BaseCallback<Void>() {
-                    @Override
-                    public void onSuccess(Void responseData) {
-                        DAOService.getInstance().saveLogInfo(logInfo);
-                        startActivityAndFinish(MainActivity.class);
-                    }
+                .login(username, password).enqueue(new BaseCallback<Void>() {
+            @Override
+            public void onSuccess(Void responseData) {
+                DAOService.getInstance().saveLogInfo(logInfo);
+                startActivityAndFinish(MainActivity.class);
+            }
 
-                    @Override
-                    public void onError(int errorCode, String errorMessage) {
-                        tvLoginHint.setText(errorMessage);
-                    }
+            @Override
+            public void onError(int errorCode, String errorMessage) {
+                tvLoginHint.setText(errorMessage);
+            }
 
-                    @Override
-                    public void onFailure() {
-                        tvLoginHint.setText("网络错误");
-                    }
-                });
+            @Override
+            public void onFailure() {
+                tvLoginHint.setText("网络错误");
+            }
+        });
     }
 
     @OnClick(R.id.bt_register)

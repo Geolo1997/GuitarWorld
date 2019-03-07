@@ -4,8 +4,9 @@ import android.os.Bundle;
 
 import android.os.CountDownTimer;
 import android.widget.TextView;
+
 import butterknife.BindView;
-import butterknife.ButterKnife;
+
 import pers.geolo.guitarworld.base.BaseActivity;
 import pers.geolo.guitarworld.dao.DAOService;
 import pers.geolo.guitarworld.entity.LogInfo;

@@ -25,13 +25,13 @@ public class MyWorksActivity extends BaseActivity {
     @BindView(R.id.rv_my_works)
     RecyclerView rvMyWorks;
     @BindView(R.id.srl_refresh)
-    SwipeRefreshLayout swipeRefreshLayout;
+    SwipeRefreshLayout srlRefresh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // 设置刷新事件监听
-        swipeRefreshLayout.setOnRefreshListener(() -> updateWorksList());
+        srlRefresh.setOnRefreshListener(() -> updateWorksList());
 
         // 设置RecyclerView管理器
         rvMyWorks.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
@@ -55,7 +55,7 @@ public class MyWorksActivity extends BaseActivity {
             @Override
             public void onSuccess(List<Works> responseData) {
                 adapter.setDataList(responseData);
-                swipeRefreshLayout.setRefreshing(false);
+                srlRefresh.setRefreshing(false);
             }
 
             @Override

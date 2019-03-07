@@ -38,7 +38,7 @@ public class WorksDetailActivity extends BaseActivity {
     RecyclerView rvComments;
 
     //    @BindView(R.id.srl_refresh)
-//    SwipeRefreshLayout swipeRefreshLayout;
+//    SwipeRefreshLayout srlRefresh;
 
     @Override
     protected int getContentView() {
@@ -53,7 +53,7 @@ public class WorksDetailActivity extends BaseActivity {
 
         loadingWorks();
 
-//        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//        srlRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 //            @Override
 //            public void onRefresh() {
 //                loadingWorks();
@@ -85,7 +85,7 @@ public class WorksDetailActivity extends BaseActivity {
 //                        adapter.getDataList().clear();
 //                        List<Comment> commentList = responseData.getComments();
 //                        adapter.setDataList(commentList);
-//                swipeRefreshLayout.setRefreshing(false);
+//                srlRefresh.setRefreshing(false);
                     }
 
                     @Override

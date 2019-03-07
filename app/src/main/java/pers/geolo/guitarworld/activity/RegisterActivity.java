@@ -4,11 +4,14 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.widget.EditText;
 import android.widget.TextView;
+
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
+
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.base.BaseActivity;
+import pers.geolo.guitarworld.dao.DAOService;
+import pers.geolo.guitarworld.entity.LogInfo;
 import pers.geolo.guitarworld.network.HttpService;
 import pers.geolo.guitarworld.network.api.UserAPI;
 import pers.geolo.guitarworld.network.callback.BaseCallback;
@@ -36,25 +39,29 @@ public class RegisterActivity extends BaseActivity {
 
     @OnClick(R.id.bt_register)
     protected void register() {
+        // 获取控件值
+        String username = etUsername.getText().toString();
+        String password = etPassword.getText().toString();
+        String email = etEmail.getText().toString();
+
+        LogInfo logInfo = new LogInfo(username, password, false, false);
         HttpService.getInstance().getAPI(UserAPI.class)
-                .register(etUsername.getText().toString(),
-                        etPassword.getText().toString(),
-                        etEmail.getText().toString())
-                .enqueue(new BaseCallback<Void>() {
-                    @Override
-                    public void onSuccess(Void responseData) {
-                        startActivityAndFinish(MainActivity.class);
-                    }
+                .register(username, password, email).enqueue(new BaseCallback<Void>() {
+            @Override
+            public void onSuccess(Void responseData) {
+                DAOService.getInstance().saveLogInfo(logInfo);
+                startActivityAndFinish(MainActivity.class);
+            }
 
-                    @Override
-                    public void onError(int errorCode, String errorMessage) {
-                        tvRegisterHint.setText(errorMessage);
-                    }
+            @Override
+            public void onError(int errorCode, String errorMessage) {
+                tvRegisterHint.setText(errorMessage);
+            }
 
-                    @Override
-                    public void onFailure() {
-                        tvRegisterHint.setText("网络错误");
-                    }
-                });
+            @Override
+            public void onFailure() {
+                tvRegisterHint.setText("网络错误");
+            }
+        });
     }
 }

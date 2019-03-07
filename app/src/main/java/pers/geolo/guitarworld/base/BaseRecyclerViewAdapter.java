@@ -52,7 +52,6 @@ public abstract class BaseRecyclerViewAdapter<ListType, ViewHolder extends BaseR
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(getItemViewId(), viewGroup, false);
         ViewHolder viewHolder = null;
         try {
-            Constructor[] constructors = viewHolderType.getDeclaredConstructors();
             viewHolder = (ViewHolder) GenericUtils.newInstance(viewHolderType, new Class[]{getClass(), View.class},
                     new Object[]{this, view});
         } catch (NoSuchMethodException e) {
