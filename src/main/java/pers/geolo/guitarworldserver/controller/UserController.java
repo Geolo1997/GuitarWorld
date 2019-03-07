@@ -49,13 +49,13 @@ public class UserController {
     public ResponseJSONBody<User> getMyProfile() {
         String username = (String) ControllerUtils.getSessionAttribute("username");
         logger.debug("收到获取个人资料请求：" + username);
-         User user = userService.getProfile(username);
-         ResponseJSONBody<User> responseJSONBody = new ResponseJSONBody<>();
-         if (user != null) {
-             return new ResponseJSONBody<>(0, user, null);
-         } else {
-             return new ResponseJSONBody<>(1);
-         }
+        User user = userService.getProfile(username);
+        ResponseJSONBody<User> responseJSONBody = new ResponseJSONBody<>();
+        if (user != null) {
+            return new ResponseJSONBody<>(0, user, null);
+        } else {
+            return new ResponseJSONBody<>(1);
+        }
     }
 
     @RequestMapping(value = "/updateMyProfile", method = RequestMethod.POST)

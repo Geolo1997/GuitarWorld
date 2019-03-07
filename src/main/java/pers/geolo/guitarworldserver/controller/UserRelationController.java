@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import pers.geolo.guitarworldserver.entity.ResponseJSONBody;
 import pers.geolo.guitarworldserver.entity.UserRelation;
 import pers.geolo.guitarworldserver.entity.UserRelationType;
@@ -69,6 +70,7 @@ public class UserRelationController {
 
     /**
      * 获取某用户关注
+     *
      * @param username 该用户用户名
      * @return 该用户粉丝用户名列表
      */
@@ -81,6 +83,7 @@ public class UserRelationController {
 
     /**
      * 获取某用户粉丝
+     *
      * @param username 该用户用户名
      * @return 该用户偶像用户名列表
      */

@@ -1,5 +1,7 @@
 package pers.geolo.guitarworldserver.controller;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -7,12 +9,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import pers.geolo.guitarworldserver.entity.ResponseJSONBody;
 import pers.geolo.guitarworldserver.entity.Works;
 import pers.geolo.guitarworldserver.service.WorksService;
 import pers.geolo.guitarworldserver.util.ControllerUtils;
-
-import java.util.List;
 
 @Controller
 public class WorksController {
@@ -49,5 +50,13 @@ public class WorksController {
         logger.debug("收到获取作品请求:" + id);
         Works works = worksService.getWorks(id);
         return new ResponseJSONBody<>(0, works, null);
+    }
+
+    //---------test---------------
+    @RequestMapping(value = "/getAllWorks", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseJSONBody<List<Works>> getAllWorks() {
+        List<Works> worksList = worksService.getAllWorks();
+        return new ResponseJSONBody<>(0, worksList, null);
     }
 }

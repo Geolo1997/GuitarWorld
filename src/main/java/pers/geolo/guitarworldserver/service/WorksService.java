@@ -2,6 +2,7 @@ package pers.geolo.guitarworldserver.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import pers.geolo.guitarworldserver.dao.WorksDAO;
 import pers.geolo.guitarworldserver.entity.Works;
 
@@ -24,5 +25,9 @@ public class WorksService {
 
     public Works getWorks(int id) {
         return worksDAO.getWorks(id);
+    }
+
+    public List<Works> getAllWorks() {
+        return worksDAO.listAllWorks();
     }
 }

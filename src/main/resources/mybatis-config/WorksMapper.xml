@@ -2,22 +2,27 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="pers.geolo.guitarworldserver.dao.WorksDAO">
-    <insert id="add" parameterType="pers.geolo.guitarworldserver.entity.Works" useGeneratedKeys="true"
+    <insert id="add" parameterType="works" useGeneratedKeys="true"
             keyProperty="id">
         INSERT INTO Works(author, create_time, title, content)
         VALUES (#{author}, #{createTime}, #{title}, #{content});
     </insert>
 
-    <select id="getWorks" parameterType="int" resultType="pers.geolo.guitarworldserver.entity.Works">
+    <select id="getWorks" parameterType="int" resultType="works">
         SELECT id, author, create_time AS createTime, title, content
         FROM Works
         WHERE id = #{id};
     </select>
 
-    <select id="listWorks" parameterType="string" resultType="pers.geolo.guitarworldserver.entity.Works">
+    <select id="listWorks" parameterType="string" resultType="works">
         SELECT id, author, create_time AS createTime, title, content
         FROM Works
         WHERE author = #{author};
+    </select>
+
+    <select id="listAllWorks" resultType="works">
+        SELECT id, author, create_time AS createTime, title, content
+        FROM Works;
     </select>
 
 </mapper>
