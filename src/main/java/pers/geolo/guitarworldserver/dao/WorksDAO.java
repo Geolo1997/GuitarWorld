@@ -16,4 +16,6 @@ public interface WorksDAO {
     List<Works> listWorks(String author);
 
     List<Works> listAllWorks();
+
+    void remove(int id);
 }

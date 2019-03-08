@@ -30,4 +30,9 @@ public class WorksService {
     public List<Works> getAllWorks() {
         return worksDAO.listAllWorks();
     }
+
+    public int removeWorks(int id) {
+        worksDAO.remove(id);
+        return 0;
+    }
 }

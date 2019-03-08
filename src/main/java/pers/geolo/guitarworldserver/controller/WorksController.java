@@ -52,6 +52,15 @@ public class WorksController {
         return new ResponseJSONBody<>(0, works, null);
     }
 
+    @RequestMapping(value = "/removeWorks", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseJSONBody<Void> removeWorks(int id) {
+        logger.debug("收到删除作品请求：" + id);
+        //TODO 删除的是自己的作品
+            int code = worksService.removeWorks(id);
+            return new ResponseJSONBody<>(code);
+    }
+
     //---------test---------------
     @RequestMapping(value = "/getAllWorks", method = RequestMethod.GET)
     @ResponseBody

@@ -9,20 +9,26 @@
     </insert>
 
     <select id="getWorks" parameterType="int" resultType="works">
-        SELECT id, author, create_time AS createTime, title, content
+        SELECT id, author, create_time, title, content
         FROM Works
         WHERE id = #{id};
     </select>
 
     <select id="listWorks" parameterType="string" resultType="works">
-        SELECT id, author, create_time AS createTime, title, content
+        SELECT id, author, create_time, title, content
         FROM Works
         WHERE author = #{author};
     </select>
 
     <select id="listAllWorks" resultType="works">
-        SELECT id, author, create_time AS createTime, title, content
+        SELECT id, author, create_time, title, content
         FROM Works;
     </select>
+
+    <delete id="remove" parameterType="int">
+        DELETE
+        FROM Works
+        WHERE id = #{id};
+    </delete>
 
 </mapper>
