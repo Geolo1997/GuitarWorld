@@ -17,8 +17,13 @@ public interface WorksAPI {
     @POST("getWorks")
     Call<ResponseBody<Works>> getWorks(@Field("id") int id);
 
+    @FormUrlEncoded
+    @POST("removeWorks")
+    Call<ResponseBody<Void>> removeWorks(@Field("id") int id);
+
     @POST("publishWorks")
     Call<ResponseBody<Void>> publishWorks(@Body Works works);
+
 
     @GET("getAllWorks")
     Call<ResponseBody<List<Works>>> getAllWorks();
