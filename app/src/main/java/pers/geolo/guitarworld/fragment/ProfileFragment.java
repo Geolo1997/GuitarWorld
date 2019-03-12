@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.OnClick;
+
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.activity.FollowActivity;
 import pers.geolo.guitarworld.activity.LoginActivity;
@@ -21,8 +22,6 @@ import pers.geolo.guitarworld.base.BaseFragment;
 import pers.geolo.guitarworld.dao.DAOService;
 
 public class ProfileFragment extends BaseFragment {
-
-
 
     @BindView(R.id.tv_username)
     TextView tvUsername;
@@ -77,5 +76,4 @@ public class ProfileFragment extends BaseFragment {
         getBaseActivity().startActivity(LoginActivity.class);
         getActivity().finish();
     }
-
 }

@@ -1,24 +1,17 @@
 package pers.geolo.guitarworld.network;
 
-import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import java.util.concurrent.TimeUnit;
 import okhttp3.OkHttpClient;
-import pers.geolo.util.SingletonHolder;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import java.util.concurrent.TimeUnit;
-
 public class APIFactory {
 
-    private static final long DEFAULT_TIME_OUT = 1;
-    private Retrofit retrofit;
+    private static final long DEFAULT_TIME_OUT = 10;
     private static String baseUrl = "http://192.168.3.13:8080/GuitarWorld/";
-
-    public static void setBaseUrl(String baseUrl) {
-        APIFactory.baseUrl = baseUrl;
-    }
+    private Retrofit retrofit;
 
     public APIFactory() {
         //gson converter
@@ -31,6 +24,10 @@ public class APIFactory {
                 .client(getOkHttpClient())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
+    }
+
+    public static void setBaseUrl(String baseUrl) {
+        APIFactory.baseUrl = baseUrl;
     }
 
     private OkHttpClient getOkHttpClient() {
@@ -48,5 +45,4 @@ public class APIFactory {
     public <T> T getAPI(Class<T> clazz) {
         return retrofit.create(clazz);
     }
-
 }

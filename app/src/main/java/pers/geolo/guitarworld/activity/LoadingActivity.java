@@ -1,19 +1,17 @@
 package pers.geolo.guitarworld.activity;
 
 import android.os.Bundle;
-
 import android.os.CountDownTimer;
 import android.widget.TextView;
-
 import butterknife.BindView;
 
+import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.base.BaseActivity;
 import pers.geolo.guitarworld.dao.DAOService;
 import pers.geolo.guitarworld.entity.LogInfo;
 import pers.geolo.guitarworld.network.HttpService;
 import pers.geolo.guitarworld.network.api.UserAPI;
 import pers.geolo.guitarworld.network.callback.BaseCallback;
-import pers.geolo.guitarworld.R;
 import pers.geolo.util.SingletonHolder;
 
 public class LoadingActivity extends BaseActivity {
@@ -54,23 +52,22 @@ public class LoadingActivity extends BaseActivity {
         LogInfo logInfo = SingletonHolder.getInstance(DAOService.class).getCurrentLogInfo();
         if (logInfo != null && logInfo.isAutoLogin()) {
             HttpService.getInstance().getAPI(UserAPI.class)
-                    .login(logInfo.getUsername(), logInfo.getPassword())
-                    .enqueue(new BaseCallback<Void>() {
-                        @Override
-                        public void onSuccess(Void responseData) {
-                            startActivityAndFinish(MainActivity.class);
-                        }
+                    .login(logInfo.getUsername(), logInfo.getPassword()).enqueue(new BaseCallback<Void>() {
+                @Override
+                public void onSuccess(Void responseData) {
+                    startActivityAndFinish(MainActivity.class);
+                }
 
-                        @Override
-                        public void onError(int errorCode, String errorMessage) {
-                            startActivityAndFinish(LoginActivity.class);
-                        }
+                @Override
+                public void onError(int errorCode, String errorMessage) {
+                    startActivityAndFinish(LoginActivity.class);
+                }
 
-                        @Override
-                        public void onFailure() {
-                            startActivityAndFinish(LoginActivity.class);
-                        }
-                    });
+                @Override
+                public void onFailure() {
+                    startActivityAndFinish(LoginActivity.class);
+                }
+            });
         } else {
             startActivityAndFinish(LoginActivity.class);
         }
