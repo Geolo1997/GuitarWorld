@@ -7,6 +7,9 @@
 
     <!--启用spring的一些annotation -->
     <context:annotation-config/>
+    <mvc:resources mapping="/html/**" location="/html/" />
+    <!--<resources mapping="/**" location="/images/" />-->
+    <mvc:resources mapping="/js/**" location="/js/" />
 
 
     <mvc:annotation-driven>

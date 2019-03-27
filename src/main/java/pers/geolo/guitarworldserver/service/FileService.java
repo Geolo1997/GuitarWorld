@@ -24,4 +24,10 @@ public class FileService {
             return 1;
         }
     }
+
+    public File getProfilePicture(String username) {
+        String filePath = ResourceUtils.getFilePath() + username + "/";
+        File file = new File(filePath, "profilePicture.jpg");
+        return file.exists() ? file : null;
+    }
 }
