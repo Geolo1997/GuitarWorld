@@ -25,4 +25,8 @@ public class HttpService {
     public <T> T getAPI(Class<T> clazz) {
         return apiFactory.getAPI(clazz);
     }
+
+    public void setBaseUrl(String url) {
+        apiFactory.setBaseUrl(url);
+    }
 }

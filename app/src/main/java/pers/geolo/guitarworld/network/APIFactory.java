@@ -14,6 +14,15 @@ public class APIFactory {
     private Retrofit retrofit;
 
     public APIFactory() {
+        getRetrofit();
+    }
+
+    public void setBaseUrl(String baseUrl) {
+        APIFactory.baseUrl = baseUrl;
+        getRetrofit();
+    }
+
+    public Retrofit getRetrofit() {
         //gson converter
         Gson gson = new GsonBuilder()
                 .setDateFormat("yyyy-MM-dd HH:mm:ss")
@@ -24,10 +33,7 @@ public class APIFactory {
                 .client(getOkHttpClient())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
-    }
-
-    public static void setBaseUrl(String baseUrl) {
-        APIFactory.baseUrl = baseUrl;
+        return retrofit;
     }
 
     private OkHttpClient getOkHttpClient() {

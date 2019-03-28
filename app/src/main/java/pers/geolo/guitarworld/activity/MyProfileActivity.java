@@ -5,11 +5,20 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
 import android.widget.*;
 import butterknife.BindView;
 import butterknife.OnClick;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import okhttp3.MultipartBody;
+import okhttp3.ResponseBody;
 import pub.devrel.easypermissions.EasyPermissions;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.base.BaseActivity;
@@ -51,6 +60,7 @@ public class MyProfileActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         // 更新个人资料
         updateProfile();
+        updateProfilePicture();
         // 禁用编辑控件
         ViewUtils.setViewGroupEnabled(linearLayout, false);
     }
@@ -83,6 +93,53 @@ public class MyProfileActivity extends BaseActivity {
                 startActivity(NetworkErrorActivity.class);
             }
         });
+    }
+
+    void updateProfilePicture() {
+        String currentUsername = DAOService.getInstance().getCurrentLogInfo().getUsername();
+//        HttpService.getInstance().setBaseUrl("https://img.pc841.com/2018/0815/");
+        HttpService.getInstance().getAPI(FileAPI.class)
+                .getProfilePicture(currentUsername).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                Log.d(TAG, "获取头像成功...");
+                InputStream inputStream = response.body().byteStream();
+                new Thread(() -> {
+                    try {
+                        String filePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/test.jpg";
+//                        FileUtils.saveFile(filePath, inputStream);
+//                        byte[] bytes = toByteArray(inputStream);
+//                        System.err.println("-----------------------------");
+//                        for (int i = 0; i < bytes.length; i++) {
+//                            System.out.print(bytes[i]);
+//                        }
+//                        System.err.println("\n-----------------------------");
+                        Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                        runOnUiThread(() -> {
+                            Log.d(TAG, "bitmap : " + String.valueOf(bitmap == null));
+                            ivProfilePicture.setImageBitmap(bitmap);
+                        });
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }).start();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public static byte[] toByteArray(InputStream input) throws IOException {
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        byte[] buffer = new byte[4096];
+        int n = 0;
+        while (-1 != (n = input.read(buffer))) {
+            output.write(buffer, 0, n);
+        }
+        return output.toByteArray();
     }
 
     @OnClick(R.id.bt_edit)
@@ -218,5 +275,20 @@ public class MyProfileActivity extends BaseActivity {
 //        } else {
 //            Log.d(TAG, "没有权限");
 //        }
+    }
+}
+
+/* * 从数据流中获得数据 */
+class StreamTool {
+
+    public static byte[] readInputStream(InputStream inputStream) throws IOException {
+        byte[] buffer = new byte[1024];
+        int len = 0;
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        while ((len = inputStream.read(buffer)) != -1) {
+            bos.write(buffer, 0, len);
+        }
+        bos.close();
+        return bos.toByteArray();
     }
 }

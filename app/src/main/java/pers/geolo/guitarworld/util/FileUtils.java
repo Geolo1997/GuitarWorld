@@ -1,7 +1,6 @@
 package pers.geolo.guitarworld.util;
 
-import android.net.Uri;
-import java.io.File;
+import java.io.*;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -18,4 +17,17 @@ public class FileUtils {
 //    public static String getImagePathFromUri(Uri uri) {
 //
 //    }
+
+    public static void saveFile(String filePath,InputStream inputStream) throws IOException {
+
+        OutputStream outputStream = new FileOutputStream(filePath);
+        byte[] buffer = new byte[2048];
+        int len;
+        while ((len = inputStream.read(buffer)) != -1) {
+            outputStream.write(buffer, 0, len);
+        }
+        outputStream.flush();
+        outputStream.close();
+        inputStream.close();
+    }
 }
