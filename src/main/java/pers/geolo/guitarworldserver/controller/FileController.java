@@ -2,6 +2,7 @@ package pers.geolo.guitarworldserver.controller;
 
 import java.io.File;
 import java.io.IOException;
+import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,17 +39,18 @@ public class FileController {
     }
 
     @RequestMapping(value = "/profilePicture", method = RequestMethod.GET)
-    public ResponseEntity<byte[]> getProfilePicture(String username) throws IOException {
+    public void getProfilePicture(String username, HttpServletResponse response) throws IOException {
         logger.debug("获取头像 username = " + username);
         File file = fileService.getProfilePicture(username);
         if (file == null) {
             logger.debug("文件不存在");
         }
-        // 设置格式
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentDispositionFormData("attachment", file.getName());
-        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-        // 返回下载
-        return new ResponseEntity<>(FileUtils.readFileToByteArray(file), headers, HttpStatus.OK);
+        ControllerUtils.returnFile(file, response);
+//        // 设置格式
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.setContentDispositionFormData("attachment", file.getName());
+//        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+//        // 返回下载
+//        return new ResponseEntity<>(FileUtils.readFileToByteArray(file), headers, HttpStatus.OK);
     }
 }
