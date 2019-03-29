@@ -7,14 +7,10 @@ import butterknife.BindView;
 
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.base.BaseActivity;
-import pers.geolo.guitarworld.dao.DAOService;
-import pers.geolo.guitarworld.entity.LogInfo;
-import pers.geolo.guitarworld.network.HttpService;
-import pers.geolo.guitarworld.network.api.UserAPI;
-import pers.geolo.guitarworld.network.callback.BaseCallback;
-import pers.geolo.util.SingletonHolder;
+import pers.geolo.guitarworld.presenter.AuthPresenter;
+import pers.geolo.guitarworld.view.AutoLoginView;
 
-public class LoadingActivity extends BaseActivity {
+public class LoadingActivity extends BaseActivity implements AutoLoginView {
 
     @BindView(R.id.tv_timer)
     TextView tvTimer;
@@ -31,7 +27,7 @@ public class LoadingActivity extends BaseActivity {
 
         @Override
         public void onFinish() {
-            autoLogin();
+            startActivityAndFinish(LoginActivity.class);
         }
     };
 
@@ -40,7 +36,7 @@ public class LoadingActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         // 启动倒计时
 //        loadingCountDownTimer.start();
-        autoLogin();
+        AuthPresenter.autoLogin(this);
     }
 
     @Override
@@ -48,28 +44,13 @@ public class LoadingActivity extends BaseActivity {
         return R.layout.activity_loading;
     }
 
-    private void autoLogin() {
-        LogInfo logInfo = SingletonHolder.getInstance(DAOService.class).getCurrentLogInfo();
-        if (logInfo != null && logInfo.isAutoLogin()) {
-            HttpService.getInstance().getAPI(UserAPI.class)
-                    .login(logInfo.getUsername(), logInfo.getPassword()).enqueue(new BaseCallback<Void>() {
-                @Override
-                public void onSuccess(Void responseData) {
-                    startActivityAndFinish(MainActivity.class);
-                }
+    @Override
+    public void onAutoLoginSuccess() {
+        startActivityAndFinish(MainActivity.class);
+    }
 
-                @Override
-                public void onError(int errorCode, String errorMessage) {
-                    startActivityAndFinish(LoginActivity.class);
-                }
-
-                @Override
-                public void onFailure() {
-                    startActivityAndFinish(LoginActivity.class);
-                }
-            });
-        } else {
-            startActivityAndFinish(LoginActivity.class);
-        }
+    @Override
+    public void onAutoLoginFailure() {
+        startActivityAndFinish(LoginActivity.class);
     }
 }

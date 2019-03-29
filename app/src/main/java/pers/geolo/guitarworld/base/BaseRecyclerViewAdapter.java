@@ -6,20 +6,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import butterknife.ButterKnife;
-import pers.geolo.guitarworld.util.GenericUtils;
-
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
+
+import pers.geolo.guitarworld.util.GenericUtils;
+import pers.geolo.guitarworld.view.BaseView;
 
 public abstract class BaseRecyclerViewAdapter<ListType, ViewHolder extends BaseRecyclerViewAdapter.BaseViewHolder>
         extends RecyclerView.Adapter<ViewHolder> {
 
 
+    private final List<ListType> DATA_LIST;
     private Class viewHolderType;
     private BaseActivity activity;
-    private final List<ListType> DATA_LIST;
 
 
     public BaseRecyclerViewAdapter(BaseActivity activity) {
@@ -71,12 +71,30 @@ public abstract class BaseRecyclerViewAdapter<ListType, ViewHolder extends BaseR
         return DATA_LIST.size();
     }
 
-    public class BaseViewHolder extends RecyclerView.ViewHolder {
+    public class BaseViewHolder extends RecyclerView.ViewHolder implements BaseView {
 
         public BaseViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
-    }
 
+        @Override
+        public void showLoading() {
+        }
+
+        @Override
+        public void hideLoading() {
+
+        }
+
+        @Override
+        public void showToast(String message) {
+            getActivity().showToast(message);
+        }
+
+        @Override
+        public void showLongToast(String message) {
+            getActivity().showLongToast(message);
+        }
+    }
 }

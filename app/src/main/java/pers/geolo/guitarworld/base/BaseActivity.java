@@ -20,9 +20,13 @@ import pers.geolo.guitarworld.temp.ActivityCallback;
 import pers.geolo.guitarworld.temp.ActivityRequestCode;
 import pers.geolo.guitarworld.temp.PermissionCallback;
 import pers.geolo.guitarworld.temp.PermissionRequestCode;
+import pers.geolo.guitarworld.view.BaseView;
+import pers.geolo.guitarworld.view.base.LoadingView;
+import pers.geolo.guitarworld.view.base.RefreshView;
+import pers.geolo.guitarworld.view.base.ToastView;
 import pers.geolo.util.SingletonHolder;
 
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity implements ToastView, RefreshView, LoadingView {
 
     protected final String TAG = this.getClass().getSimpleName();
     private final Map<ActivityRequestCode, ActivityCallback> activityCallbackMap = new HashMap<>();
@@ -108,5 +112,25 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public void showLongToast(String message) {
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
+    }
+
+    @Override
+    public void showRefreshing() {
+
+    }
+
+    @Override
+    public void hideRefreshing() {
+
     }
 }
