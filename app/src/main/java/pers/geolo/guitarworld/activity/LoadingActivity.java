@@ -45,12 +45,12 @@ public class LoadingActivity extends BaseActivity implements AutoLoginView {
     }
 
     @Override
-    public void onAutoLoginSuccess() {
+    public void toMainView() {
         startActivityAndFinish(MainActivity.class);
     }
 
     @Override
-    public void onAutoLoginFailure() {
+    public void toLoginView() {
         startActivityAndFinish(LoginActivity.class);
     }
 }

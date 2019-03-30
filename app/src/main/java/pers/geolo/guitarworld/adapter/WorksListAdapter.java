@@ -16,11 +16,7 @@ import pers.geolo.guitarworld.activity.WorksDetailActivity;
 import pers.geolo.guitarworld.base.BaseActivity;
 import pers.geolo.guitarworld.base.BaseApplication;
 import pers.geolo.guitarworld.base.BaseRecyclerViewAdapter;
-import pers.geolo.guitarworld.dao.DAOService;
 import pers.geolo.guitarworld.entity.Works;
-import pers.geolo.guitarworld.network.HttpService;
-import pers.geolo.guitarworld.network.api.WorksAPI;
-import pers.geolo.guitarworld.network.callback.BaseCallback;
 import pers.geolo.guitarworld.presenter.WorksPresenter;
 import pers.geolo.guitarworld.util.DateUtils;
 import pers.geolo.guitarworld.view.WorksItemOptionView;
@@ -42,7 +38,8 @@ public class WorksListAdapter extends BaseRecyclerViewAdapter<Works, WorksListAd
         return R.layout.item_works_view;
     }
 
-    public class MyViewHolder extends BaseRecyclerViewAdapter.BaseViewHolder implements WorksItemView, WorksItemOptionView {
+    public class MyViewHolder extends BaseRecyclerViewAdapter.BaseViewHolder
+            implements WorksItemView, WorksItemOptionView {
         @BindView(R.id.tv_author)
         TextView tvAuthor;
         @BindView(R.id.tv_create_time)
@@ -85,7 +82,6 @@ public class WorksListAdapter extends BaseRecyclerViewAdapter<Works, WorksListAd
                         switch (text) {
                             case "删除":
                                 WorksPresenter.removeWorks(this);
-
                                 break;
                             default:
                         }

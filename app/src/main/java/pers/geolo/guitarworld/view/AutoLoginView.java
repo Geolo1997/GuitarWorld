@@ -1,7 +1,10 @@
 package pers.geolo.guitarworld.view;
 
-public interface AutoLoginView {
-    void onAutoLoginSuccess();
+import pers.geolo.guitarworld.view.base.BaseView;
 
-    void onAutoLoginFailure();
+public interface AutoLoginView extends BaseView {
+
+    void toMainView();
+
+    void toLoginView();
 }

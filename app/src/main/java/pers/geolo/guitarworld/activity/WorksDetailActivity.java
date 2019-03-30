@@ -17,22 +17,17 @@ import java.util.List;
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.adapter.CommentListAdapter;
 import pers.geolo.guitarworld.base.BaseActivity;
-import pers.geolo.guitarworld.dao.DAOService;
 import pers.geolo.guitarworld.entity.Comment;
 import pers.geolo.guitarworld.entity.Works;
-import pers.geolo.guitarworld.network.HttpService;
-import pers.geolo.guitarworld.network.api.CommentAPI;
-import pers.geolo.guitarworld.network.api.WorksAPI;
-import pers.geolo.guitarworld.network.callback.BaseCallback;
 import pers.geolo.guitarworld.presenter.CommentPresenter;
 import pers.geolo.guitarworld.presenter.WorksPresenter;
-import pers.geolo.guitarworld.util.DateUtils;
 import pers.geolo.guitarworld.util.KeyBoardUtils;
-import pers.geolo.guitarworld.view.CommentView;
-import pers.geolo.guitarworld.view.WorsDetailView;
+import pers.geolo.guitarworld.view.AddCommentView;
+import pers.geolo.guitarworld.view.CommentListView;
+import pers.geolo.guitarworld.view.WorksDetailView;
 
-public class WorksDetailActivity extends BaseActivity implements WorsDetailView, CommentView {
-
+public class WorksDetailActivity extends BaseActivity
+        implements WorksDetailView, CommentListView, AddCommentView {
 
     @BindView(R.id.tv_author)
     TextView tvAuthor;
@@ -50,9 +45,9 @@ public class WorksDetailActivity extends BaseActivity implements WorsDetailView,
     LinearLayout llAddComment;
     @BindView(R.id.et_comment)
     EditText etComment;
+
     private CommentListAdapter adapter;
     private int worksId;
-    private int loadingFlag;
 
     @Override
     protected int getContentView() {
@@ -80,9 +75,8 @@ public class WorksDetailActivity extends BaseActivity implements WorsDetailView,
     }
 
     private void loading() {
-        loadingFlag = 2;
         WorksPresenter.loadingWorksDetail(this);
-        CommentPresenter.loadingComment(this);
+        CommentPresenter.loadingCommentList(this);
     }
 
     @OnClick(R.id.bt_add_comment)
@@ -93,44 +87,12 @@ public class WorksDetailActivity extends BaseActivity implements WorsDetailView,
 
     @OnClick(R.id.bt_comment)
     public void addComment() {
-        String author = DAOService.getInstance().getCurrentLogInfo().getUsername();
-        String content = etComment.getText().toString();
-        Comment comment = new Comment(worksId, author, new Date(), content);
-
-        HttpService.getInstance().getAPI(CommentAPI.class)
-                .addComment(comment).enqueue(new BaseCallback<Void>() {
-            @Override
-            public void onSuccess(Void responseData) {
-                showToast("评论成功！");
-                etComment.setText("");
-                KeyBoardUtils.hideKeyBoard(WorksDetailActivity.this, etComment);
-                llAddComment.setVisibility(View.GONE);
-                loading();
-            }
-
-            @Override
-            public void onError(int errorCode, String errorMessage) {
-                showToast("评论失败");
-            }
-
-            @Override
-            public void onFailure() {
-                showToast("评论失败");
-            }
-        });
+        CommentPresenter.addComment(this, this);
     }
 
     @Override
     public void setDataList(List<Comment> responseData) {
         adapter.setDataList(responseData);
-    }
-
-    @Override
-    public void loadingCommentOnSuccess() {
-        loadingFlag--;
-        if (loadingFlag == 0) {
-            srlRefresh.setRefreshing(false);
-        }
     }
 
     @Override
@@ -159,15 +121,23 @@ public class WorksDetailActivity extends BaseActivity implements WorsDetailView,
     }
 
     @Override
-    public void loadingWorksDetailOnSuccess() {
-        loadingFlag--;
-        if (loadingFlag == 0) {
-            srlRefresh.setRefreshing(false);
-        }
+    public int getWorksId() {
+        return worksId;
     }
 
     @Override
-    public int getWorksId() {
-        return worksId;
+    public String getComment() {
+        return etComment.getText().toString().trim();
+    }
+
+    @Override
+    public void setCommentText(String s) {
+        etComment.setText(s);
+    }
+
+    @Override
+    public void toCommentListView() {
+        KeyBoardUtils.hideKeyBoard(this, etComment);
+        llAddComment.setVisibility(View.GONE);
     }
 }

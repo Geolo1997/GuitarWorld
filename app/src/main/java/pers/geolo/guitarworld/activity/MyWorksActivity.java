@@ -12,7 +12,7 @@ import pers.geolo.guitarworld.base.BaseActivity;
 import pers.geolo.guitarworld.dao.DAOService;
 import pers.geolo.guitarworld.entity.Works;
 import pers.geolo.guitarworld.network.HttpService;
-import pers.geolo.guitarworld.network.api.WorksAPI;
+import pers.geolo.guitarworld.network.api.WorksApi;
 import pers.geolo.guitarworld.network.callback.BaseCallback;
 
 
@@ -50,7 +50,7 @@ public class MyWorksActivity extends BaseActivity {
 
     public void updateWorksList() {
         String author = DAOService.getInstance().getCurrentLogInfo().getUsername();
-        HttpService.getInstance().getAPI(WorksAPI.class)
+        HttpService.getInstance().getAPI(WorksApi.class)
                 .getWorksList(author).enqueue(new BaseCallback<List<Works>>() {
             @Override
             public void onSuccess(List<Works> responseData) {

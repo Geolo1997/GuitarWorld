@@ -11,9 +11,8 @@ import butterknife.BindView;
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.adapter.UsernameListAdapter;
 import pers.geolo.guitarworld.base.BaseFragment;
-import pers.geolo.guitarworld.dao.DAOService;
 import pers.geolo.guitarworld.network.HttpService;
-import pers.geolo.guitarworld.network.api.UserRelationAPI;
+import pers.geolo.guitarworld.network.api.UserRelationApi;
 import pers.geolo.guitarworld.network.callback.BaseCallback;
 
 import java.util.List;
@@ -51,7 +50,7 @@ public class FollowingFragment extends BaseFragment {
     }
 
     private void updateFollowingList(String username) {
-        HttpService.getInstance().getAPI(UserRelationAPI.class)
+        HttpService.getInstance().getAPI(UserRelationApi.class)
                 .getFollowing(username).enqueue(new BaseCallback<List<String>>() {
             @Override
             public void onSuccess(List<String> responseData) {

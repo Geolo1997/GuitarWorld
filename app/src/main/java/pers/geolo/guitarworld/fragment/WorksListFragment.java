@@ -20,7 +20,7 @@ import pers.geolo.guitarworld.adapter.WorksListAdapter;
 import pers.geolo.guitarworld.base.BaseFragment;
 import pers.geolo.guitarworld.entity.Works;
 import pers.geolo.guitarworld.network.HttpService;
-import pers.geolo.guitarworld.network.api.WorksAPI;
+import pers.geolo.guitarworld.network.api.WorksApi;
 import pers.geolo.guitarworld.network.callback.BaseCallback;
 import pers.geolo.util.SingletonHolder;
 
@@ -72,7 +72,7 @@ public class WorksListFragment extends BaseFragment {
 
 
     public void updateWorksList(String author) {
-        SingletonHolder.getInstance(HttpService.class).getAPI(WorksAPI.class)
+        SingletonHolder.getInstance(HttpService.class).getAPI(WorksApi.class)
                 .getWorksList(author)
                 .enqueue(new BaseCallback<List<Works>>() {
                     @Override

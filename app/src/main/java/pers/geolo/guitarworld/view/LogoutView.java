@@ -1,9 +1,8 @@
 package pers.geolo.guitarworld.view;
 
-public interface LogoutView {
-    void onLogoutSuccess();
+import pers.geolo.guitarworld.view.base.ToastView;
 
-    void onLogoutError();
+public interface LogoutView extends ToastView {
 
-    void onLogoutFailure();
+    void toLoginView();
 }

@@ -1,6 +1,8 @@
 package pers.geolo.guitarworld.view;
 
-public interface LoginView extends BaseView {
+import pers.geolo.guitarworld.view.base.LoadingView;
+
+public interface LoginView extends LoadingView {
 
     void setSavePassword(boolean savePassword);
 
@@ -14,9 +16,7 @@ public interface LoginView extends BaseView {
 
     void setPassword(String password);
 
-    void onLoginSuccess();
+    void toMainView();
 
-    void onLoginError();
-
-    void onLoginFailure();
+    void showHint(String errorMessage);
 }

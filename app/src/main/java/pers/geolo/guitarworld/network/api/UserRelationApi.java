@@ -4,14 +4,11 @@ import pers.geolo.guitarworld.entity.UserRelation;
 import pers.geolo.guitarworld.entity.UserRelationType;
 import pers.geolo.guitarworld.network.ResponseBody;
 import retrofit2.Call;
-import retrofit2.http.Body;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.POST;
+import retrofit2.http.*;
 
 import java.util.List;
 
-public interface UserRelationAPI {
+public interface UserRelationApi {
 
     /**
      * 关注用户
@@ -19,7 +16,7 @@ public interface UserRelationAPI {
      * @param userRelation 被关注的用户名
      * @return
      */
-    @POST("addRelation")
+    @POST("relation")
     Call<ResponseBody<Void>> addRelation(@Body UserRelation userRelation);
 
     /**
@@ -28,7 +25,7 @@ public interface UserRelationAPI {
      * @param userRelation 被取消关注的用户名
      * @return
      */
-    @POST("removeRelation")
+    @DELETE("relation")
     Call<ResponseBody<Void>> removeRelation(@Body UserRelation userRelation);
 
     /**
@@ -37,9 +34,8 @@ public interface UserRelationAPI {
      * @param otherUsername 其他用户名
      * @return
      */
-    @FormUrlEncoded
-    @POST("getMyRelationTypeWith")
-    Call<ResponseBody<UserRelationType>> getMyRelationTypeWith(@Field("otherUsername") String otherUsername);
+    @GET("relation/with")
+    Call<ResponseBody<UserRelationType>> getMyRelationTypeWith(@Query("otherUsername") String otherUsername);
 
     /**
      * 获取某用户粉丝
@@ -47,9 +43,8 @@ public interface UserRelationAPI {
      * @param username 该用户用户名
      * @return 该用户粉丝用户名列表
      */
-    @FormUrlEncoded
-    @POST("getFollowing")
-    Call<ResponseBody<List<String>>> getFollowing(@Field("username") String username);
+    @GET("relation/{username}/following")
+    Call<ResponseBody<List<String>>> getFollowing(@Path("username") String username);
 
     /**
      * 获取某用户偶像
@@ -57,7 +52,6 @@ public interface UserRelationAPI {
      * @param username 该用户用户名
      * @return 该用户偶像用户名列表
      */
-    @FormUrlEncoded
-    @POST("getFollower")
-    Call<ResponseBody<List<String>>> getFollower(@Field("username") String username);
+    @GET("relation/{username}/follower")
+    Call<ResponseBody<List<String>>> getFollower(@Path("username") String username);
 }

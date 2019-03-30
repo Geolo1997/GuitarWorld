@@ -12,19 +12,28 @@ import pers.geolo.guitarworld.base.BaseActivity;
 import pers.geolo.guitarworld.presenter.AuthPresenter;
 import pers.geolo.guitarworld.view.LoginView;
 
-
 public class LoginActivity extends BaseActivity implements LoginView {
 
     @BindView(R.id.et_username)
-    protected EditText etUsername;
+    EditText etUsername;
     @BindView(R.id.et_password)
-    protected EditText etPassword;
+    EditText etPassword;
     @BindView(R.id.tv_loginHint)
-    protected TextView tvLoginHint;
+    TextView tvLoginHint;
     @BindView(R.id.cb_savePassword)
-    protected CheckBox cbSavePassword;
+    CheckBox cbSavePassword;
     @BindView(R.id.cb_autoLogin)
-    protected CheckBox cbAutoLogin;
+    CheckBox cbAutoLogin;
+
+    @OnClick(R.id.bt_login)
+    protected void login() {
+        AuthPresenter.login(this);
+    }
+
+    @OnClick(R.id.bt_register)
+    protected void startRegisterActivity() {
+        startActivity(RegisterActivity.class);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,16 +45,6 @@ public class LoginActivity extends BaseActivity implements LoginView {
     @Override
     protected int getContentView() {
         return R.layout.activity_login;
-    }
-
-    @OnClick(R.id.bt_login)
-    protected void login() {
-        AuthPresenter.login(this);
-    }
-
-    @OnClick(R.id.bt_register)
-    protected void startRegisterActivity() {
-        startActivity(RegisterActivity.class);
     }
 
     @Override
@@ -69,18 +68,13 @@ public class LoginActivity extends BaseActivity implements LoginView {
     }
 
     @Override
-    public void onLoginSuccess() {
-        startActivity(MainActivity.class);
+    public void toMainView() {
+        startActivityAndFinish(MainActivity.class);
     }
 
     @Override
-    public void onLoginError() {
-        tvLoginHint.setText("账号或密码错误");
-    }
-
-    @Override
-    public void onLoginFailure() {
-        tvLoginHint.setText("网络错误");
+    public void showHint(String errorMessage) {
+        tvLoginHint.setText(errorMessage);
     }
 
     @Override

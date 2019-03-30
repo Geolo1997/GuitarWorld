@@ -6,7 +6,7 @@ import retrofit2.http.*;
 
 import pers.geolo.guitarworld.network.ResponseBody;
 
-public interface FileAPI {
+public interface FileApi {
 
     @Multipart
     @POST("profilePicture")

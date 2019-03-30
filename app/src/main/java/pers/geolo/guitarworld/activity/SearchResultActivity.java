@@ -11,7 +11,7 @@ import pers.geolo.guitarworld.adapter.UsernameListAdapter;
 import pers.geolo.guitarworld.base.BaseActivity;
 import pers.geolo.guitarworld.entity.User;
 import pers.geolo.guitarworld.network.HttpService;
-import pers.geolo.guitarworld.network.api.UserAPI;
+import pers.geolo.guitarworld.network.api.UserApi;
 import pers.geolo.guitarworld.network.callback.BaseCallback;
 
 import java.util.List;
@@ -46,7 +46,7 @@ public class SearchResultActivity extends BaseActivity {
 
     private void update() {
 
-        HttpService.getInstance().getAPI(UserAPI.class)
+        HttpService.getInstance().getAPI(UserApi.class)
                 .getAllUsers().enqueue(new BaseCallback<List<User>>() {
             @Override
             public void onSuccess(List<User> responseData) {

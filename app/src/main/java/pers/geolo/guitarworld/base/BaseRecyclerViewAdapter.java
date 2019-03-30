@@ -7,11 +7,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import butterknife.ButterKnife;
 import java.lang.reflect.InvocationTargetException;
+import java.sql.Ref;
 import java.util.ArrayList;
 import java.util.List;
 
 import pers.geolo.guitarworld.util.GenericUtils;
-import pers.geolo.guitarworld.view.BaseView;
+import pers.geolo.guitarworld.view.base.BaseView;
+import pers.geolo.guitarworld.view.base.LoadingView;
+import pers.geolo.guitarworld.view.base.RefreshView;
+import pers.geolo.guitarworld.view.base.ToastView;
 
 public abstract class BaseRecyclerViewAdapter<ListType, ViewHolder extends BaseRecyclerViewAdapter.BaseViewHolder>
         extends RecyclerView.Adapter<ViewHolder> {
@@ -71,7 +75,7 @@ public abstract class BaseRecyclerViewAdapter<ListType, ViewHolder extends BaseR
         return DATA_LIST.size();
     }
 
-    public class BaseViewHolder extends RecyclerView.ViewHolder implements BaseView {
+    public class BaseViewHolder extends RecyclerView.ViewHolder implements LoadingView, RefreshView, ToastView {
 
         public BaseViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -95,6 +99,16 @@ public abstract class BaseRecyclerViewAdapter<ListType, ViewHolder extends BaseR
         @Override
         public void showLongToast(String message) {
             getActivity().showLongToast(message);
+        }
+
+        @Override
+        public void showRefreshing() {
+
+        }
+
+        @Override
+        public void hideRefreshing() {
+
         }
     }
 }

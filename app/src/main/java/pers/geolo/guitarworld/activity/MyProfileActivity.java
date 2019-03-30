@@ -26,8 +26,8 @@ import pers.geolo.guitarworld.dao.DAOService;
 import pers.geolo.guitarworld.entity.LogInfo;
 import pers.geolo.guitarworld.entity.User;
 import pers.geolo.guitarworld.network.HttpService;
-import pers.geolo.guitarworld.network.api.FileAPI;
-import pers.geolo.guitarworld.network.api.UserAPI;
+import pers.geolo.guitarworld.network.api.FileApi;
+import pers.geolo.guitarworld.network.api.UserApi;
 import pers.geolo.guitarworld.network.callback.BaseCallback;
 import pers.geolo.guitarworld.temp.ActivityCallback;
 import pers.geolo.guitarworld.temp.PermissionCallback;
@@ -71,13 +71,14 @@ public class MyProfileActivity extends BaseActivity {
     }
 
 //    protected void updateProfilePicture() {
-//        HttpService.getInstance().getAPI(FileAPI.class)
+//        HttpService.getInstance().getAPI(FileApi.class)
 //                .
 //    }
 
     protected void updateProfile() {
-        HttpService.getInstance().getAPI(UserAPI.class)
-                .getMyProfile().enqueue(new BaseCallback<User>() {
+        String username = DAOService.getInstance().getCurrentLogInfo().getUsername();
+        HttpService.getInstance().getAPI(UserApi.class)
+                .getUserInfo(username).enqueue(new BaseCallback<User>() {
             @Override
             public void onSuccess(User responseData) {
                 tvUsername.setText(responseData.getUsername());
@@ -98,7 +99,7 @@ public class MyProfileActivity extends BaseActivity {
     void updateProfilePicture() {
         String currentUsername = DAOService.getInstance().getCurrentLogInfo().getUsername();
 //        HttpService.getInstance().setBaseUrl("https://img.pc841.com/2018/0815/");
-        HttpService.getInstance().getAPI(FileAPI.class)
+        HttpService.getInstance().getAPI(FileApi.class)
                 .getProfilePicture(currentUsername).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -155,8 +156,8 @@ public class MyProfileActivity extends BaseActivity {
         user.setUsername(logInfo.getUsername());
         user.setPassword(logInfo.getPassword());
         user.setEmail(etEmail.getText().toString());
-        HttpService.getInstance().getAPI(UserAPI.class)
-                .saveMyProfile(user).enqueue(new BaseCallback<Void>() {
+        HttpService.getInstance().getAPI(UserApi.class)
+                .updateUserInfo(user).enqueue(new BaseCallback<Void>() {
             @Override
             public void onSuccess(Void responseData) {
                 ViewUtils.setViewGroupEnabled(linearLayout, false);
@@ -239,7 +240,7 @@ public class MyProfileActivity extends BaseActivity {
                                         data.getData());
 
                                 MultipartBody.Part body = FileUtils.createMultipartBodyPart(filePath, "profilePicture");
-                                HttpService.getInstance().getAPI(FileAPI.class)
+                                HttpService.getInstance().getAPI(FileApi.class)
                                         .uploadProfilePicture(body).enqueue(new BaseCallback<Void>() {
                                     @Override
                                     public void onSuccess(Void responseData) {
@@ -275,20 +276,5 @@ public class MyProfileActivity extends BaseActivity {
 //        } else {
 //            Log.d(TAG, "没有权限");
 //        }
-    }
-}
-
-/* * 从数据流中获得数据 */
-class StreamTool {
-
-    public static byte[] readInputStream(InputStream inputStream) throws IOException {
-        byte[] buffer = new byte[1024];
-        int len = 0;
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        while ((len = inputStream.read(buffer)) != -1) {
-            bos.write(buffer, 0, len);
-        }
-        bos.close();
-        return bos.toByteArray();
     }
 }

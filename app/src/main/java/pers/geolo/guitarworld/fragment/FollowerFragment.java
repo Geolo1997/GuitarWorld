@@ -8,15 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
+
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.adapter.UsernameListAdapter;
 import pers.geolo.guitarworld.base.BaseFragment;
-import pers.geolo.guitarworld.entity.User;
 import pers.geolo.guitarworld.network.HttpService;
-import pers.geolo.guitarworld.network.api.UserAPI;
-import pers.geolo.guitarworld.network.api.UserRelationAPI;
+import pers.geolo.guitarworld.network.api.UserRelationApi;
 import pers.geolo.guitarworld.network.callback.BaseCallback;
 
 import java.util.List;
@@ -55,7 +52,7 @@ public class FollowerFragment extends BaseFragment {
     }
 
     private void updateUsernameList(String username) {
-        HttpService.getInstance().getAPI(UserRelationAPI.class)
+        HttpService.getInstance().getAPI(UserRelationApi.class)
                 .getFollower(username).enqueue(new BaseCallback<List<String>>() {
             @Override
             public void onSuccess(List<String> responseData) {

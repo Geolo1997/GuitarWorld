@@ -16,7 +16,7 @@ import pers.geolo.guitarworld.dao.DAOService;
 import pers.geolo.guitarworld.entity.UserRelation;
 import pers.geolo.guitarworld.entity.UserRelationType;
 import pers.geolo.guitarworld.network.HttpService;
-import pers.geolo.guitarworld.network.api.UserRelationAPI;
+import pers.geolo.guitarworld.network.api.UserRelationApi;
 import pers.geolo.guitarworld.network.callback.BaseCallback;
 
 public class UsernameListAdapter extends BaseRecyclerViewAdapter<String, UsernameListAdapter.ViewHolder> {
@@ -41,7 +41,7 @@ public class UsernameListAdapter extends BaseRecyclerViewAdapter<String, Usernam
 
         String otherUsername = getDataList().get(i);
         tvUsername.setText(otherUsername);
-        HttpService.getInstance().getAPI(UserRelationAPI.class)
+        HttpService.getInstance().getAPI(UserRelationApi.class)
                 .getMyRelationTypeWith(otherUsername).enqueue(new BaseCallback<UserRelationType>() {
             @Override
             public void onSuccess(UserRelationType responseData) {
@@ -86,7 +86,7 @@ public class UsernameListAdapter extends BaseRecyclerViewAdapter<String, Usernam
             UserRelation userRelation = new UserRelation(DAOService.getInstance().getCurrentLogInfo().getUsername(),
                     otherUsername);
             if (ADD_FOLLOWING.equals(text)) {
-                HttpService.getInstance().getAPI(UserRelationAPI.class)
+                HttpService.getInstance().getAPI(UserRelationApi.class)
                         .addRelation(userRelation).enqueue(new BaseCallback<Void>() {
                     @Override
                     public void onSuccess(Void responseData) {
@@ -108,7 +108,7 @@ public class UsernameListAdapter extends BaseRecyclerViewAdapter<String, Usernam
                 builder.setTitle("警告");
                 builder.setMessage("确定取消关注吗？");
                 builder.setPositiveButton("确定", (dialog, which) -> {
-                    HttpService.getInstance().getAPI(UserRelationAPI.class)
+                    HttpService.getInstance().getAPI(UserRelationApi.class)
                             .removeRelation(userRelation).enqueue(new BaseCallback<Void>() {
                         @Override
                         public void onSuccess(Void responseData) {

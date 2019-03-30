@@ -1,6 +1,6 @@
 package pers.geolo.guitarworld.view.base;
 
-public interface RefreshView {
+public interface RefreshView extends BaseView {
 
     void showRefreshing();
 

@@ -3,21 +3,22 @@ package pers.geolo.guitarworld.network.callback;
 import android.util.Log;
 import okhttp3.Headers;
 import pers.geolo.guitarworld.network.ResponseBody;
+import pers.geolo.guitarworld.view.base.BaseView;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public abstract class BaseCallback<T> implements Callback<ResponseBody<T>> {
 
-    private final String TAG = "CallBack";
-
+    public static final String TAG = "CallBack";
 
     public BaseCallback() {
 
     }
 
     @Override
-    public final void onResponse(Call<ResponseBody<T>> call, Response<ResponseBody<T>> response) {
+    public  void onResponse(Call<ResponseBody<T>> call, Response<ResponseBody<T>> response) {
         ResponseBody<T> responseBody = response.body();
         Headers headers = response.headers();
 
@@ -39,7 +40,7 @@ public abstract class BaseCallback<T> implements Callback<ResponseBody<T>> {
     }
 
     @Override
-    public final void onFailure(Call<ResponseBody<T>> call, Throwable t) {
+    public  void onFailure(Call<ResponseBody<T>> call, Throwable t) {
         Log.d(TAG, "网络错误");
         onFailure();
     }

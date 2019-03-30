@@ -1,13 +1,8 @@
 package pers.geolo.guitarworld.adapter;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import butterknife.BindView;
@@ -19,7 +14,7 @@ import pers.geolo.guitarworld.base.BaseRecyclerViewAdapter;
 import pers.geolo.guitarworld.dao.DAOService;
 import pers.geolo.guitarworld.entity.Comment;
 import pers.geolo.guitarworld.network.HttpService;
-import pers.geolo.guitarworld.network.api.CommentAPI;
+import pers.geolo.guitarworld.network.api.CommentApi;
 import pers.geolo.guitarworld.network.callback.BaseCallback;
 import pers.geolo.guitarworld.util.DateUtils;
 
@@ -72,7 +67,7 @@ public class CommentListAdapter extends BaseRecyclerViewAdapter<Comment, Comment
                         String text = alertDialogItems[i];
                         switch (text) {
                             case "删除":
-                                HttpService.getInstance().getAPI(CommentAPI.class)
+                                HttpService.getInstance().getAPI(CommentApi.class)
                                         .removeComment(comment.getId()).enqueue(new BaseCallback<Void>() {
                                     @Override
                                     public void onSuccess(Void responseData) {
