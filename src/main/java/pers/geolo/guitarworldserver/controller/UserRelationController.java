@@ -4,10 +4,7 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.spi.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import pers.geolo.guitarworldserver.entity.ResponseJSONBody;
 import pers.geolo.guitarworldserver.entity.UserRelation;
@@ -18,6 +15,7 @@ import pers.geolo.guitarworldserver.util.ControllerUtils;
 import java.util.List;
 
 @Controller
+@RequestMapping("relation")
 public class UserRelationController {
 
     Logger logger = Logger.getLogger(UserRelationController.class);
@@ -25,7 +23,7 @@ public class UserRelationController {
     @Autowired
     UserRelationService userRelationService;
 
-    @RequestMapping(value = "/addRelation", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
     public ResponseJSONBody<Void> addRelation(@RequestBody UserRelation userRelation) {
         logger.debug("收到关注请求：" + userRelation.toString());
@@ -41,7 +39,7 @@ public class UserRelationController {
         }
     }
 
-    @RequestMapping(value = "/removeRelation", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.DELETE)
     @ResponseBody
     public ResponseJSONBody<Void> removeRelation(@RequestBody UserRelation userRelation) {
         logger.debug("收到取关请求：" + userRelation.toString());
@@ -57,7 +55,7 @@ public class UserRelationController {
         }
     }
 
-    @RequestMapping(value = "/getMyRelationTypeWith", method = RequestMethod.POST)
+    @RequestMapping(value = "/with", method = RequestMethod.GET)
     @ResponseBody
     public ResponseJSONBody<UserRelationType> getRelationType(String otherUsername) {
         logger.debug("收到获取关系请求：" + otherUsername);
@@ -74,9 +72,9 @@ public class UserRelationController {
      * @param username 该用户用户名
      * @return 该用户粉丝用户名列表
      */
-    @RequestMapping(value = "/getFollowing", method = RequestMethod.POST)
+    @RequestMapping(value = "/{username}/following", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseJSONBody<List<String>> getFollowing(String username) {
+    public ResponseJSONBody<List<String>> getFollowing(@PathVariable("username") String username) {
         List<String> followings = userRelationService.getFollowings(username);
         return new ResponseJSONBody<>(0, followings, null);
     }
@@ -87,9 +85,9 @@ public class UserRelationController {
      * @param username 该用户用户名
      * @return 该用户偶像用户名列表
      */
-    @RequestMapping(value = "/getFollower", method = RequestMethod.POST)
+    @RequestMapping(value = "/{username}/follower", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseJSONBody<List<String>> getFollower(String username) {
+    public ResponseJSONBody<List<String>> getFollower(@PathVariable("username") String username) {
         List<String> followers = userRelationService.getFollowers(username);
         return new ResponseJSONBody<>(0, followers, null);
     }

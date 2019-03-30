@@ -58,18 +58,22 @@ function getAllWorks() {
         success: function (data) {
             if (data.code === 0) {
                 var item = $('.works_list_item');
+                item.before(item.clone());
                 var worksList = data.data;
                 console.log(worksList);
                 for (var i = 0; i < worksList.length; i++) {
                     var works = worksList[i];
+                    item.attr('id', 'work_item_' + works.id);
                     item.children('.author').text(works.author);
                     item.children('.title').text(works.title);
                     item.children('.content').text(works.content);
-                    item.children('.detail').click(function () {
-                        worksDetail(item.children('.comments_list'), works.id);
-                    });
+                    item.children('.detail').attr('onclick', 'worksDetail(' + works.id + ')');
+                    item.children('.comments_list').attr('id', 'comments_of_work_' + works.id);
+                    // item.children('.detail').click(function () {
+                    //     worksDetail(item.children('.comments_list'), works.id);
+                    // });
                     if (i !== worksList.length - 1) {
-                        item.before(item.prop("outerHTML"));
+                        item.before(item.clone());
                     }
                 }
             } else {
@@ -78,30 +82,45 @@ function getAllWorks() {
     });
 }
 
-function worksDetail(commentListDiv, worksId) {
-    $.ajax({
-        url: "/GuitarWorld/listCommentOfWorks",
-        type: "POST",
-        data: {
-            "worksId": worksId
-        },
-        dataType: "json",
-        success: function (data) {
-            if (data.code === 0) {
-                var commentList = data.data;
-                console.log(commentList);
-                var item = commentListDiv.children('.comment_item');
-                for (var i = 0; i < commentList.length; i++) {
-                    var comment = commentList[i];
-                    item.children('.id').text(comment.id);
-                    item.children('.author').text(comment.author);
-                    item.children('.create_time').text(comment.createTime);
-                    item.children('.content').text(comment.content);
-                    if (i !== commentList.length - 1) {
-                        item.before(item.prop("outerHTML"));
+function getButtonOfWorks(worksId) {
+    return $('#work_item_' + worksId).children('.detail');
+}
+
+function worksDetail(worksId) {
+    var Button = getButtonOfWorks(worksId);
+    console.log(Button.text());
+    if (Button.text() === '详情') {
+        $.ajax({
+            url: "/GuitarWorld/listCommentOfWorks",
+            type: "POST",
+            data: {
+                "worksId": worksId
+            },
+            dataType: "json",
+            success: function (data) {
+                if (data.code === 0) {
+                    var commentList = data.data;
+                    console.log(commentList);
+                    var item = $('#comments_of_work_' + worksId).children('.comment_item');
+                    item.before(item.clone());
+                    for (var i = 0; i < commentList.length; i++) {
+                        var comment = commentList[i];
+                        item.attr('id', 'comment_item_' + comment.id);
+                        item.attr('class', 'comment_item entity');
+                        // item.children('.id').text(comment.id);
+                        item.children('.author').text(comment.author);
+                        item.children('.create_time').text(comment.createTime);
+                        item.children('.content').text(comment.content);
+                        if (i !== commentList.length - 1) {
+                            item.before(item.clone());
+                        }
                     }
                 }
             }
-        }
-    });
+        });
+        Button.text('收起');
+    } else {
+       $('.entity').remove();
+        Button.text('详情');
+    }
 }

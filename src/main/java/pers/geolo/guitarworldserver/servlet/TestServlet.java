@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Observable;
+import java.util.Observer;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -34,7 +36,8 @@ public class TestServlet extends HttpServlet {
 //        resp.setHeader("Location", site);
         resp.setHeader("Refresh", "3;url='http://www.baidu.com'");
 
-
+    //        Observable observable;
+    //        Observer
     }
 
     private String getJsonRequest(HttpServletRequest request) throws IOException {
