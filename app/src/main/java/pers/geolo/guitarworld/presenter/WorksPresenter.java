@@ -1,5 +1,6 @@
 package pers.geolo.guitarworld.presenter;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -7,12 +8,12 @@ import pers.geolo.guitarworld.dao.DAOService;
 import pers.geolo.guitarworld.entity.Works;
 import pers.geolo.guitarworld.network.HttpService;
 import pers.geolo.guitarworld.network.api.WorksApi;
-import pers.geolo.guitarworld.network.callback.BaseCallback;
 import pers.geolo.guitarworld.network.callback.MvpNetworkCallBack;
 import pers.geolo.guitarworld.view.*;
 
 public class WorksPresenter extends BasePresenter {
 
+   public static List<Works> worksList = new ArrayList<>();
     /**
      * 发布创作
      *
@@ -62,7 +63,15 @@ public class WorksPresenter extends BasePresenter {
             @Override
             public void onSuccess(List<Works> responseData) {
                 // 设置数据
-                worksListView.setDataList(responseData);
+                worksList = responseData;
+                worksListView.onBindView(() -> worksList.size(), (view, index) -> {
+                    Works works = worksList.get(index);
+                    view.setId(works.getId());
+                    view.setAuthor(works.getAuthor());
+                    view.setCreateTime(works.getCreateTime());
+                    view.setTitle(works.getTitle());
+                    view.setContent(works.getContent());
+                });
                 // 隐藏刷新控件
                 worksListView.hideRefreshing();
             }
@@ -80,83 +89,72 @@ public class WorksPresenter extends BasePresenter {
     }
 
     /**
-     * 加载创作条目
-     *
-     * @param worksItemView 创作条目视图
-     */
-    public static void loadingWorksItem(WorksItemView worksItemView) {
-        Works works = worksItemView.getWorks();
-        worksItemView.setAuthor(works.getAuthor());
-        worksItemView.setCreateTime(works.getCreateTime());
-        worksItemView.setTitle(works.getTitle());
-        worksItemView.setContent(works.getContent().toString());
-    }
-
-    /**
      * 显示创作条目选项
      *
-     * @param worksItemOptionView 创作条目选项视图
+     * @param worksListItemView 创作条目选项视图
      */
-    public static void showWorksItemOption(WorksItemOptionView worksItemOptionView) {
+    public static void showWorksItemOption(WorksListItemView worksListItemView) {
         // 作者权限选项
         String[] authorOptions = new String[]{"删除"};
         // 浏览者权限选项
         String[] viewerOptions = new String[]{};
 
-        Works works = worksItemOptionView.getWorks();
+        String username = worksListItemView.getUsername();
         String currentUsername = DAOService.getInstance().getCurrentLogInfo().getUsername();
 
         String[] options;
-        if (currentUsername.equals(works.getAuthor())) {
+        if (currentUsername.equals(username)) {
             options = authorOptions;
         } else {
             options = viewerOptions;
         }
-        worksItemOptionView.showOptions(options);
+        worksListItemView.showOptions(options);
     }
 
     /**
      * 删除创作
      *
-     * @param worksItemOptionView 创作条目选项视图
+     * @param worksListItemView 创作条目选项视图
      */
-    public static void removeWorks(WorksItemOptionView worksItemOptionView) {
+    public static void removeWorks(WorksListItemView worksListItemView) {
         // 发送删除创作请求
         HttpService.getInstance().getAPI(WorksApi.class)
-                .removeWorks(worksItemOptionView.getWorks().getId())
-                .enqueue(new MvpNetworkCallBack<Void>(worksItemOptionView) {
+                .removeWorks(worksListItemView.getWorksId())
+                .enqueue(new MvpNetworkCallBack<Void>(worksListItemView) {
                     @Override
                     public void onSuccess(Void responseData) {
-                        worksItemOptionView.showToast("删除成功");
-                        worksItemOptionView.removeWorks();
+                        worksListItemView.showToast("删除成功");
+                        worksList.remove(worksListItemView.getIndex());
+                        worksListItemView.remove();
                     }
 
                     @Override
                     public void onError(int errorCode, String errorMessage) {
-                        worksItemOptionView.showToast("删除失败");
+                        worksListItemView.showToast("删除失败");
                     }
 
                     @Override
                     public void onFailure() {
-                        worksItemOptionView.showToast("网络错误");
+                        worksListItemView.showToast("网络错误");
                     }
                 });
     }
 
     /**
      * 加载创作详情
+     *
      * @param worksDetailView 创作详情视图
      */
-    public static void loadingWorksDetail(WorksDetailView worksDetailView) {
+    public static void loadingWorksDetail(WorksListDetailView worksDetailView) {
         HttpService.getInstance().getAPI(WorksApi.class)
                 .getWorks(worksDetailView.getWorksId())
                 .enqueue(new MvpNetworkCallBack<Works>(worksDetailView) {
                     @Override
                     public void onSuccess(Works responseData) {
-                        worksDetailView.setAuthor(responseData.getAuthor());
-                        worksDetailView.setCreateTime(responseData.getCreateTime());
-                        worksDetailView.setTitle(responseData.getTitle());
-                        worksDetailView.setContent(responseData.getContent().toString());
+//                        worksDetailView.setAuthor(responseData.getAuthor());
+//                        worksDetailView.setCreateTime(responseData.getCreateTime());
+//                        worksDetailView.setTitle(responseData.getTitle());
+//                        worksDetailView.setContent(responseData.getContent().toString());
                         worksDetailView.hideRefreshing();
                     }
 

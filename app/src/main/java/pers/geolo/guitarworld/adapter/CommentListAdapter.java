@@ -18,7 +18,7 @@ import pers.geolo.guitarworld.network.api.CommentApi;
 import pers.geolo.guitarworld.network.callback.BaseCallback;
 import pers.geolo.guitarworld.util.DateUtils;
 
-public class CommentListAdapter extends BaseRecyclerViewAdapter<Comment, CommentListAdapter.ViewHolder> {
+public class CommentListAdapter extends BaseRecyclerViewAdapter< CommentListAdapter.ViewHolder> {
 
     private final String[] personlOptions = new String[]{"删除"};
     private final String[] viewerOptions = new String[]{};
@@ -34,7 +34,7 @@ public class CommentListAdapter extends BaseRecyclerViewAdapter<Comment, Comment
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        Comment comment = getDataList().get(i);
+        Comment comment = null;
         viewHolder.tvCommentAuthor.setText(comment.getAuthor());
         viewHolder.tvComment.setText(comment.getContent());
         viewHolder.tvCreateTime.setText(DateUtils.toString(comment.getCreateTime()));
@@ -51,7 +51,7 @@ public class CommentListAdapter extends BaseRecyclerViewAdapter<Comment, Comment
 
         @OnLongClick(R.id.ll_comment_item)
         public boolean option() {
-            Comment comment = getDataList().get(getAdapterPosition());
+            Comment comment =null;
             String currentUsername = DAOService.getInstance().getCurrentLogInfo().getUsername();
 
             String[] alertDialogItems;
@@ -72,7 +72,7 @@ public class CommentListAdapter extends BaseRecyclerViewAdapter<Comment, Comment
                                     @Override
                                     public void onSuccess(Void responseData) {
                                         getActivity().showToast("删除成功");
-                                        getDataList().remove(getAdapterPosition());
+//                                        getDataList().remove(getAdapterPosition());
                                         notifyDataSetChanged();
                                     }
 

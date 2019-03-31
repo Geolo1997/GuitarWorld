@@ -77,7 +77,7 @@ public class WorksListFragment extends BaseFragment {
                 .enqueue(new BaseCallback<List<Works>>() {
                     @Override
                     public void onSuccess(List<Works> responseData) {
-                        adapter.setDataList(responseData);
+//                        adapter.setDataList(responseData);
                         srlRefresh.setRefreshing(false);
                     }
 

@@ -19,7 +19,7 @@ import pers.geolo.guitarworld.network.HttpService;
 import pers.geolo.guitarworld.network.api.UserRelationApi;
 import pers.geolo.guitarworld.network.callback.BaseCallback;
 
-public class UsernameListAdapter extends BaseRecyclerViewAdapter<String, UsernameListAdapter.ViewHolder> {
+public class UsernameListAdapter extends BaseRecyclerViewAdapter<UsernameListAdapter.ViewHolder> {
 
     public final String ADD_FOLLOWING = getActivity().getString(R.string.add_following);
     public final String FOLLOWED = getActivity().getString(R.string.followed);
@@ -39,7 +39,7 @@ public class UsernameListAdapter extends BaseRecyclerViewAdapter<String, Usernam
         TextView tvUsername = viewHolder.tvUsername;
         Button btFollowing = viewHolder.btFollowing;
 
-        String otherUsername = getDataList().get(i);
+        String otherUsername = "";
         tvUsername.setText(otherUsername);
         HttpService.getInstance().getAPI(UserRelationApi.class)
                 .getMyRelationTypeWith(otherUsername).enqueue(new BaseCallback<UserRelationType>() {
@@ -82,7 +82,7 @@ public class UsernameListAdapter extends BaseRecyclerViewAdapter<String, Usernam
         @OnClick(R.id.bt_following)
         public void onViewClicked() {
             String text = btFollowing.getText().toString();
-            String otherUsername = getDataList().get(getAdapterPosition());
+            String otherUsername = "";
             UserRelation userRelation = new UserRelation(DAOService.getInstance().getCurrentLogInfo().getUsername(),
                     otherUsername);
             if (ADD_FOLLOWING.equals(text)) {

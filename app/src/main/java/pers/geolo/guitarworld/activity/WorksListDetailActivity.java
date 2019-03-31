@@ -18,16 +18,15 @@ import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.adapter.CommentListAdapter;
 import pers.geolo.guitarworld.base.BaseActivity;
 import pers.geolo.guitarworld.entity.Comment;
-import pers.geolo.guitarworld.entity.Works;
 import pers.geolo.guitarworld.presenter.CommentPresenter;
 import pers.geolo.guitarworld.presenter.WorksPresenter;
 import pers.geolo.guitarworld.util.KeyBoardUtils;
 import pers.geolo.guitarworld.view.AddCommentView;
 import pers.geolo.guitarworld.view.CommentListView;
-import pers.geolo.guitarworld.view.WorksDetailView;
+import pers.geolo.guitarworld.view.WorksListDetailView;
 
-public class WorksDetailActivity extends BaseActivity
-        implements WorksDetailView, CommentListView, AddCommentView {
+public class WorksListDetailActivity extends BaseActivity
+        implements WorksListDetailView, CommentListView, AddCommentView {
 
     @BindView(R.id.tv_author)
     TextView tvAuthor;
@@ -82,7 +81,7 @@ public class WorksDetailActivity extends BaseActivity
     @OnClick(R.id.bt_add_comment)
     public void showAddCommentView() {
         llAddComment.setVisibility(View.VISIBLE);
-        KeyBoardUtils.showKeyBoard(WorksDetailActivity.this, etComment);
+        KeyBoardUtils.showKeyBoard(WorksListDetailActivity.this, etComment);
     }
 
     @OnClick(R.id.bt_comment)
@@ -92,33 +91,29 @@ public class WorksDetailActivity extends BaseActivity
 
     @Override
     public void setDataList(List<Comment> responseData) {
-        adapter.setDataList(responseData);
+//        adapter.setDataList(responseData);
     }
 
-    @Override
-    public Works getWorks() {
-        return null;
-    }
 
-    @Override
-    public void setAuthor(String author) {
-        tvAuthor.setText(author);
-    }
+//    @Override
+//    public void setAuthor(String author) {
+//        tvAuthor.setText(author);
+//    }
 
-    @Override
-    public void setCreateTime(Date createTime) {
-        tvCreateTime.setText(createTime.toString());
-    }
+//    @Override
+//    public void setCreateTime(Date createTime) {
+//        tvCreateTime.setText(createTime.toString());
+//    }
 
-    @Override
-    public void setTitle(String title) {
-        tvTitle.setText(title);
-    }
+//    @Override
+//    public void setTitle(String title) {
+//        tvTitle.setText(title);
+//    }
 
-    @Override
-    public void setContent(Object content) {
-        tvContent.setText(content.toString());
-    }
+//    @Override
+//    public void setContent(Object content) {
+//        tvContent.setText(content.toString());
+//    }
 
     @Override
     public int getWorksId() {

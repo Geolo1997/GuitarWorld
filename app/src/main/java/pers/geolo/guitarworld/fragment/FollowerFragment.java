@@ -56,7 +56,7 @@ public class FollowerFragment extends BaseFragment {
                 .getFollower(username).enqueue(new BaseCallback<List<String>>() {
             @Override
             public void onSuccess(List<String> responseData) {
-                adapter.setDataList(responseData);
+//                adapter.setDataList(responseData);
             }
 
             @Override

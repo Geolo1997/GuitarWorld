@@ -7,48 +7,46 @@ import android.view.View;
 import android.view.ViewGroup;
 import butterknife.ButterKnife;
 import java.lang.reflect.InvocationTargetException;
-import java.sql.Ref;
-import java.util.ArrayList;
-import java.util.List;
 
 import pers.geolo.guitarworld.util.GenericUtils;
-import pers.geolo.guitarworld.view.base.BaseView;
 import pers.geolo.guitarworld.view.base.LoadingView;
 import pers.geolo.guitarworld.view.base.RefreshView;
 import pers.geolo.guitarworld.view.base.ToastView;
+import pers.geolo.guitarworld.view.list.ListItemView;
+import pers.geolo.guitarworld.view.list.OnBindViewListener;
+import pers.geolo.guitarworld.view.list.SizeListener;
 
-public abstract class BaseRecyclerViewAdapter<ListType, ViewHolder extends BaseRecyclerViewAdapter.BaseViewHolder>
+public abstract class BaseRecyclerViewAdapter<ViewHolder extends BaseRecyclerViewAdapter.BaseViewHolder>
         extends RecyclerView.Adapter<ViewHolder> {
 
-
-    private final List<ListType> DATA_LIST;
     private Class viewHolderType;
     private BaseActivity activity;
-
+    private SizeListener sizeListener = () -> 0;
+    private OnBindViewListener onBindViewListener;
 
     public BaseRecyclerViewAdapter(BaseActivity activity) {
         this.activity = activity;
-        viewHolderType = GenericUtils.getActualGenericExtended(this, 1);
-        DATA_LIST = new ArrayList<>();
+        viewHolderType = GenericUtils.getActualGenericExtended(this, 0);
     }
 
+    public void setSizeListener(SizeListener sizeListener) {
+        this.sizeListener = sizeListener;
+    }
+
+    public void setOnBindViewListener(OnBindViewListener onBindViewListener) {
+        this.onBindViewListener = onBindViewListener;
+    }
 
     public BaseActivity getActivity() {
         return activity;
     }
 
-    public List<ListType> getDataList() {
-        return DATA_LIST;
-    }
-
-    public void setDataList(List<ListType> dataList) {
-        DATA_LIST.clear();
-        DATA_LIST.addAll(dataList);
-        notifyDataSetChanged();
-    }
-
-
     public abstract int getItemViewId();
+
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+        onBindViewListener.onBindView(viewHolder, i);
+    }
 
     @NonNull
     @Override
@@ -72,10 +70,11 @@ public abstract class BaseRecyclerViewAdapter<ListType, ViewHolder extends BaseR
 
     @Override
     public int getItemCount() {
-        return DATA_LIST.size();
+        return sizeListener.getSize();
     }
 
-    public class BaseViewHolder extends RecyclerView.ViewHolder implements LoadingView, RefreshView, ToastView {
+    public class BaseViewHolder extends RecyclerView.ViewHolder implements ListItemView, LoadingView, RefreshView,
+            ToastView {
 
         public BaseViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -109,6 +108,20 @@ public abstract class BaseRecyclerViewAdapter<ListType, ViewHolder extends BaseR
         @Override
         public void hideRefreshing() {
 
+        }
+
+        @Override
+        public int getIndex() {
+            return getAdapterPosition();
+        }
+
+        @Override
+        public void remove() {
+            int index = getIndex();
+            notifyItemRemoved(index);
+            if (index != getItemCount()) {
+                notifyItemRangeChanged(index, getItemCount() - index);
+            }
         }
     }
 }

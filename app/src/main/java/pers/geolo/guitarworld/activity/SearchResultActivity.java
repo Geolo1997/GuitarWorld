@@ -50,8 +50,8 @@ public class SearchResultActivity extends BaseActivity {
                 .getAllUsers().enqueue(new BaseCallback<List<User>>() {
             @Override
             public void onSuccess(List<User> responseData) {
-                adapter.getDataList().clear();
-                responseData.forEach(user -> adapter.getDataList().add(user.getUsername()));
+//                adapter.getDataList().clear();
+//                responseData.forEach(user -> adapter.getDataList().add(user.getUsername()));
                 adapter.notifyDataSetChanged();
             }
 

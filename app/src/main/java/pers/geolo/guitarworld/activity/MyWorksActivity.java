@@ -54,7 +54,7 @@ public class MyWorksActivity extends BaseActivity {
                 .getWorksList(author).enqueue(new BaseCallback<List<Works>>() {
             @Override
             public void onSuccess(List<Works> responseData) {
-                adapter.setDataList(responseData);
+//                adapter.setDataList(responseData);
                 srlRefresh.setRefreshing(false);
             }
 

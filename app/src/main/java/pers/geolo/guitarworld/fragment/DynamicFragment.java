@@ -10,15 +10,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import butterknife.BindView;
 import butterknife.OnClick;
-import java.util.List;
 
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.activity.PublishActivity;
 import pers.geolo.guitarworld.adapter.WorksListAdapter;
 import pers.geolo.guitarworld.base.BaseFragment;
-import pers.geolo.guitarworld.entity.Works;
 import pers.geolo.guitarworld.presenter.WorksPresenter;
+import pers.geolo.guitarworld.view.WorksListItemView;
 import pers.geolo.guitarworld.view.WorksListView;
+import pers.geolo.guitarworld.view.list.OnBindViewListener;
+import pers.geolo.guitarworld.view.list.SizeListener;
 
 public class DynamicFragment extends BaseFragment implements WorksListView {
 
@@ -64,12 +65,14 @@ public class DynamicFragment extends BaseFragment implements WorksListView {
     }
 
     @Override
-    public void setDataList(List<Works> responseData) {
-        adapter.setDataList(responseData);
+    public void hideRefreshing() {
+        srlRefresh.setRefreshing(false);
     }
 
     @Override
-    public void hideRefreshing() {
-        srlRefresh.setRefreshing(false);
+    public void onBindView(SizeListener sizeListener, OnBindViewListener<WorksListItemView> onBindViewListener) {
+        adapter.setSizeListener(sizeListener);
+        adapter.setOnBindViewListener(onBindViewListener);
+        adapter.notifyDataSetChanged();
     }
 }

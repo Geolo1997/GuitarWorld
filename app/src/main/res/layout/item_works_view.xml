@@ -8,6 +8,11 @@
     android:id="@+id/ll_works_item">
 
     <TextView
+        android:id="@+id/tv_id"
+        android:visibility="gone"
+        android:layout_height="1dp"
+        android:layout_width="1dp"/>
+    <TextView
         android:id="@+id/tv_author"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
