@@ -7,7 +7,7 @@ import butterknife.OnClick;
 
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.base.BaseActivity;
-import pers.geolo.guitarworld.presenter.WorksPresenter;
+import pers.geolo.guitarworld.presenter.PublishWorksPresenter;
 import pers.geolo.guitarworld.view.PublishWorksView;
 
 public class PublishActivity extends BaseActivity implements PublishWorksView {
@@ -17,9 +17,12 @@ public class PublishActivity extends BaseActivity implements PublishWorksView {
     @BindView(R.id.et_content)
     EditText etContent;
 
+    private PublishWorksPresenter publishWorksPresenter = new PublishWorksPresenter();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        publishWorksPresenter.bind(this);
     }
 
     @Override
@@ -29,7 +32,7 @@ public class PublishActivity extends BaseActivity implements PublishWorksView {
 
     @OnClick(R.id.bt_publish)
     public void publish() {
-        WorksPresenter.publishWorks(this);
+        publishWorksPresenter.publishWorks();
     }
 
 

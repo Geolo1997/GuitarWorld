@@ -1,6 +1,5 @@
 package pers.geolo.guitarworld.base;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import pers.geolo.guitarworld.R;
+
 import pers.geolo.guitarworld.view.base.LoadingView;
 import pers.geolo.guitarworld.view.base.RefreshView;
 import pers.geolo.guitarworld.view.base.ToastView;

@@ -6,4 +6,5 @@ import pers.geolo.guitarworld.view.list.ListView;
 
 public interface WorksListView extends ListView<WorksListItemView>, RefreshView, ToastView {
 
+    void toWorksDetailView(int worksId);
 }

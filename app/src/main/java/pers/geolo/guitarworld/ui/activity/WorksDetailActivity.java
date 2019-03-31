@@ -11,21 +11,20 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.OnClick;
-import java.util.List;
+import java.util.Date;
 
 import pers.geolo.guitarworld.R;
-import pers.geolo.guitarworld.ui.adapter.CommentListAdapter;
 import pers.geolo.guitarworld.base.BaseActivity;
-import pers.geolo.guitarworld.entity.Comment;
-import pers.geolo.guitarworld.presenter.CommentPresenter;
-import pers.geolo.guitarworld.presenter.WorksPresenter;
+import pers.geolo.guitarworld.presenter.AddCommentPresenter;
+import pers.geolo.guitarworld.presenter.CommentListPresenter;
+import pers.geolo.guitarworld.presenter.WorksDetailPresenter;
+import pers.geolo.guitarworld.ui.adapter.CommentListAdapter;
+import pers.geolo.guitarworld.util.DateUtils;
 import pers.geolo.guitarworld.util.KeyBoardUtils;
 import pers.geolo.guitarworld.view.AddCommentView;
-import pers.geolo.guitarworld.view.CommentListView;
-import pers.geolo.guitarworld.view.WorksListDetailView;
+import pers.geolo.guitarworld.view.WorksDetailView;
 
-public class WorksListDetailActivity extends BaseActivity
-        implements WorksListDetailView, CommentListView, AddCommentView {
+public class WorksDetailActivity extends BaseActivity implements WorksDetailView, AddCommentView {
 
     @BindView(R.id.tv_author)
     TextView tvAuthor;
@@ -44,8 +43,11 @@ public class WorksListDetailActivity extends BaseActivity
     @BindView(R.id.et_comment)
     EditText etComment;
 
-    private CommentListAdapter adapter;
-    private int worksId;
+    private CommentListAdapter commentListAdapter;
+
+    private WorksDetailPresenter worksDetailPresenter = new WorksDetailPresenter();
+    private CommentListPresenter commentListPresenter = new CommentListPresenter();
+    private AddCommentPresenter addCommentPresenter = new AddCommentPresenter();
 
     @Override
     protected int getContentView() {
@@ -56,67 +58,59 @@ public class WorksListDetailActivity extends BaseActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // 接收活动传来的作品id
-        worksId = getIntent().getIntExtra("id", 0);
+       int worksId = getIntent().getIntExtra("id", 0);
+
 
         // 设置RecyclerView管理器
         rvComments.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         // 初始化适配器
-        adapter = new CommentListAdapter(this);
+        commentListAdapter = new CommentListAdapter(this);
         // 设置添加或删除item时的动画，这里使用默认动画
         rvComments.setItemAnimator(new DefaultItemAnimator());
         // 设置适配器
-        rvComments.setAdapter(adapter);
+        rvComments.setAdapter(commentListAdapter);
 
-        srlRefresh.setOnRefreshListener(() -> loading());
+        worksDetailPresenter.bind(this);
+        addCommentPresenter.bind(this);
+        commentListPresenter.bind(commentListAdapter);
+        worksDetailPresenter.setWorksId(worksId);
+        commentListPresenter.setWorksId(worksId);
+        commentListPresenter.loadingCommentList();
 
-        loading();
-    }
+        srlRefresh.setOnRefreshListener(() -> worksDetailPresenter.loadingWorksDetail());
 
-    private void loading() {
-        WorksPresenter.loadingWorksDetail(this);
-        CommentPresenter.loadingCommentList(this);
+        worksDetailPresenter.loadingWorksDetail();
     }
 
     @OnClick(R.id.bt_add_comment)
     public void showAddCommentView() {
         llAddComment.setVisibility(View.VISIBLE);
-        KeyBoardUtils.showKeyBoard(WorksListDetailActivity.this, etComment);
+        KeyBoardUtils.showKeyBoard(WorksDetailActivity.this, etComment);
     }
 
     @OnClick(R.id.bt_comment)
     public void addComment() {
-        CommentPresenter.addComment(this, this);
+        addCommentPresenter.addComment();
     }
 
     @Override
-    public void setDataList(List<Comment> responseData) {
-//        adapter.setDataList(responseData);
+    public void setAuthor(String author) {
+        tvAuthor.setText(author);
     }
 
-
-//    @Override
-//    public void setAuthor(String author) {
-//        tvAuthor.setText(author);
-//    }
-
-//    @Override
-//    public void setCreateTime(Date createTime) {
-//        tvCreateTime.setText(createTime.toString());
-//    }
-
-//    @Override
-//    public void setTitle(String title) {
-//        tvTitle.setText(title);
-//    }
-
-//    @Override
-//    public void setContent(Object content) {
-//        tvContent.setText(content.toString());
-//    }
+    @Override
+    public void setCreateTime(Date createTime) {
+        tvCreateTime.setText(DateUtils.toString(createTime));
+    }
 
     @Override
-    public int getWorksId() {
-        return worksId;
+    public void setTitle(String title) {
+        tvTitle.setText(title);
+    }
+
+    @Override
+    public void setContent(Object content) {
+        tvContent.setText(content.toString());
     }
 
     @Override

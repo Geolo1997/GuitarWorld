@@ -1,14 +1,8 @@
 package pers.geolo.guitarworld.view;
 
-import java.util.List;
-
-import pers.geolo.guitarworld.entity.Comment;
 import pers.geolo.guitarworld.view.base.RefreshView;
 import pers.geolo.guitarworld.view.base.ToastView;
+import pers.geolo.guitarworld.view.list.ListView;
 
-public interface CommentListView extends ToastView, RefreshView {
-
-    void setDataList(List<Comment> responseData);
-
-    int getWorksId();
+public interface CommentListView extends ListView<CommentItemView>, ToastView, RefreshView {
 }

@@ -9,7 +9,8 @@ import butterknife.OnClick;
 
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.base.BaseActivity;
-import pers.geolo.guitarworld.presenter.AuthPresenter;
+import pers.geolo.guitarworld.presenter.LoginPresenter;
+import pers.geolo.guitarworld.presenter.RegisterPresenter;
 import pers.geolo.guitarworld.view.LoginView;
 
 public class LoginActivity extends BaseActivity implements LoginView {
@@ -25,9 +26,11 @@ public class LoginActivity extends BaseActivity implements LoginView {
     @BindView(R.id.cb_autoLogin)
     CheckBox cbAutoLogin;
 
+    private LoginPresenter loginPresenter = new LoginPresenter();
+
     @OnClick(R.id.bt_login)
     protected void login() {
-        AuthPresenter.login(this);
+        loginPresenter.login();
     }
 
     @OnClick(R.id.bt_register)
@@ -38,8 +41,9 @@ public class LoginActivity extends BaseActivity implements LoginView {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        loginPresenter.bind(this);
         // 加载保存的登录信息
-        AuthPresenter.loadingLogInfo(this);
+        loginPresenter.loadingLogInfo();
     }
 
     @Override

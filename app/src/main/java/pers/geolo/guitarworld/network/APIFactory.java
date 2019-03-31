@@ -11,6 +11,7 @@ public class APIFactory {
 
     private static final long DEFAULT_TIME_OUT = 10;
     private static String baseUrl = "http://192.168.3.13:8080/GuitarWorld/";
+    private static String hotPointBaseUrl = "http://192.168.43.191:8080/GuitarWorld/";
     private Retrofit retrofit;
 
     public APIFactory() {
@@ -29,7 +30,7 @@ public class APIFactory {
                 .serializeNulls()
                 .create();
         retrofit = new Retrofit.Builder()
-                .baseUrl(baseUrl)
+                .baseUrl(hotPointBaseUrl)
                 .client(getOkHttpClient())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();

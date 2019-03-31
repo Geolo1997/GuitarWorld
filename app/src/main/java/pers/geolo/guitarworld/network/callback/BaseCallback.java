@@ -3,7 +3,6 @@ package pers.geolo.guitarworld.network.callback;
 import android.util.Log;
 import okhttp3.Headers;
 import pers.geolo.guitarworld.network.ResponseBody;
-import pers.geolo.guitarworld.view.base.BaseView;
 
 import retrofit2.Call;
 import retrofit2.Callback;

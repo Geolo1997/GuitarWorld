@@ -4,9 +4,9 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.TextView;
-
 import butterknife.BindView;
 import butterknife.OnLongClick;
+import java.util.Date;
 
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.base.BaseActivity;
@@ -17,10 +17,13 @@ import pers.geolo.guitarworld.network.HttpService;
 import pers.geolo.guitarworld.network.api.CommentApi;
 import pers.geolo.guitarworld.network.callback.BaseCallback;
 import pers.geolo.guitarworld.util.DateUtils;
+import pers.geolo.guitarworld.view.CommentItemView;
+import pers.geolo.guitarworld.view.CommentListView;
 
-public class CommentListAdapter extends BaseRecyclerViewAdapter< CommentListAdapter.ViewHolder> {
+public class CommentListAdapter extends BaseRecyclerViewAdapter<CommentListAdapter.ViewHolder, CommentItemView>
+        implements CommentListView {
 
-    private final String[] personlOptions = new String[]{"删除"};
+    private final String[] personalOptions = new String[]{"删除"};
     private final String[] viewerOptions = new String[]{};
 
     public CommentListAdapter(BaseActivity activity) {
@@ -31,16 +34,16 @@ public class CommentListAdapter extends BaseRecyclerViewAdapter< CommentListAdap
     public int getItemViewId() {
         return R.layout.item_comments_view;
     }
+//
+//    @Override
+//    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+//        Comment comment = null;
+//        viewHolder.tvCommentAuthor.setText(comment.getAuthor());
+//        viewHolder.tvComment.setText(comment.getContent());
+//        viewHolder.tvCreateTime.setText(DateUtils.toString(comment.getCreateTime()));
+//    }
 
-    @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        Comment comment = null;
-        viewHolder.tvCommentAuthor.setText(comment.getAuthor());
-        viewHolder.tvComment.setText(comment.getContent());
-        viewHolder.tvCreateTime.setText(DateUtils.toString(comment.getCreateTime()));
-    }
-
-    public class ViewHolder extends BaseRecyclerViewAdapter.BaseViewHolder {
+    public class ViewHolder extends BaseRecyclerViewAdapter.BaseViewHolder implements CommentItemView {
 
         @BindView(R.id.tv_commentAuthor)
         TextView tvCommentAuthor;
@@ -49,14 +52,18 @@ public class CommentListAdapter extends BaseRecyclerViewAdapter< CommentListAdap
         @BindView(R.id.tv_create_time)
         TextView tvCreateTime;
 
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+        }
+
         @OnLongClick(R.id.ll_comment_item)
         public boolean option() {
-            Comment comment =null;
+            Comment comment = null;
             String currentUsername = DAOService.getInstance().getCurrentLogInfo().getUsername();
 
             String[] alertDialogItems;
             if (currentUsername.equals(comment.getAuthor())) {
-                alertDialogItems = personlOptions;
+                alertDialogItems = personalOptions;
             } else {
                 alertDialogItems = viewerOptions;
             }
@@ -95,8 +102,19 @@ public class CommentListAdapter extends BaseRecyclerViewAdapter< CommentListAdap
             return true;
         }
 
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
+        @Override
+        public void setAuthor(String author) {
+            tvCommentAuthor.setText(author);
+        }
+
+        @Override
+        public void setCreateTime(Date createTime) {
+            tvCreateTime.setText(DateUtils.toString(createTime));
+        }
+
+        @Override
+        public void setContent(String content) {
+            tvCommentAuthor.setText(content);
         }
     }
 }

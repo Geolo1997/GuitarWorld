@@ -1,4 +1,4 @@
-package pers.geolo.guitarworld.temp;
+package pers.geolo.guitarworld.ui.temp;
 
 import android.app.Activity;
 import android.content.Intent;

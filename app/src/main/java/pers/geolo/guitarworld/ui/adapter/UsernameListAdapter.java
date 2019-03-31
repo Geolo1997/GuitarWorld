@@ -18,8 +18,9 @@ import pers.geolo.guitarworld.entity.UserRelationType;
 import pers.geolo.guitarworld.network.HttpService;
 import pers.geolo.guitarworld.network.api.UserRelationApi;
 import pers.geolo.guitarworld.network.callback.BaseCallback;
+import pers.geolo.guitarworld.view.UsernameItemView;
 
-public class UsernameListAdapter extends BaseRecyclerViewAdapter<UsernameListAdapter.ViewHolder> {
+public class UsernameListAdapter extends BaseRecyclerViewAdapter<UsernameListAdapter.ViewHolder, UsernameItemView> {
 
     public final String ADD_FOLLOWING = getActivity().getString(R.string.add_following);
     public final String FOLLOWED = getActivity().getString(R.string.followed);

@@ -9,7 +9,7 @@ import butterknife.OnClick;
 
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.base.BaseActivity;
-import pers.geolo.guitarworld.presenter.AuthPresenter;
+import pers.geolo.guitarworld.presenter.RegisterPresenter;
 import pers.geolo.guitarworld.view.RegisterView;
 
 public class RegisterActivity extends BaseActivity implements RegisterView {
@@ -23,9 +23,12 @@ public class RegisterActivity extends BaseActivity implements RegisterView {
     @BindView(R.id.tv_registerHint)
     protected TextView tvRegisterHint;
 
+    private RegisterPresenter registerPresenter = new RegisterPresenter();
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        registerPresenter.bind(this);
     }
 
     @Override
@@ -35,7 +38,7 @@ public class RegisterActivity extends BaseActivity implements RegisterView {
 
     @OnClick(R.id.bt_register)
     protected void register() {
-        AuthPresenter.register(this);
+        registerPresenter.register();
     }
 
     @Override

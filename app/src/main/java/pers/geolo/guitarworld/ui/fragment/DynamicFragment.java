@@ -12,16 +12,12 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 import pers.geolo.guitarworld.R;
+import pers.geolo.guitarworld.base.BaseFragment;
+import pers.geolo.guitarworld.presenter.WorksListPresenter;
 import pers.geolo.guitarworld.ui.activity.PublishActivity;
 import pers.geolo.guitarworld.ui.adapter.WorksListAdapter;
-import pers.geolo.guitarworld.base.BaseFragment;
-import pers.geolo.guitarworld.presenter.WorksPresenter;
-import pers.geolo.guitarworld.view.WorksListItemView;
-import pers.geolo.guitarworld.view.WorksListView;
-import pers.geolo.guitarworld.view.list.OnBindViewListener;
-import pers.geolo.guitarworld.view.list.SizeListener;
 
-public class DynamicFragment extends BaseFragment implements WorksListView {
+public class DynamicFragment extends BaseFragment {
 
     WorksListAdapter adapter;
 
@@ -29,6 +25,8 @@ public class DynamicFragment extends BaseFragment implements WorksListView {
     RecyclerView rvWorksList;
     @BindView(R.id.srl_refresh)
     SwipeRefreshLayout srlRefresh;
+
+    private WorksListPresenter worksListPresenter = new WorksListPresenter();
 
     @Override
     protected int getContentView() {
@@ -40,7 +38,7 @@ public class DynamicFragment extends BaseFragment implements WorksListView {
         // TODO: inflate a fragment view
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
         srlRefresh.setOnRefreshListener(() -> {
-            WorksPresenter.loadingWorksList(this);
+            worksListPresenter.loadingWorksList();
         });
         // 设置RecyclerView管理器
         rvWorksList.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
@@ -49,7 +47,9 @@ public class DynamicFragment extends BaseFragment implements WorksListView {
         adapter = new WorksListAdapter(getBaseActivity());
         rvWorksList.setAdapter(adapter);
 
-        WorksPresenter.loadingWorksList(this);
+        worksListPresenter.bind(adapter);
+
+        worksListPresenter.loadingWorksList();
 
         return rootView;
     }
@@ -67,12 +67,5 @@ public class DynamicFragment extends BaseFragment implements WorksListView {
     @Override
     public void hideRefreshing() {
         srlRefresh.setRefreshing(false);
-    }
-
-    @Override
-    public void onBindView(SizeListener sizeListener, OnBindViewListener<WorksListItemView> onBindViewListener) {
-        adapter.setSizeListener(sizeListener);
-        adapter.setOnBindViewListener(onBindViewListener);
-        adapter.notifyDataSetChanged();
     }
 }

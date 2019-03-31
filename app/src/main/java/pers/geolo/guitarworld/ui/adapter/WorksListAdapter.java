@@ -11,24 +11,36 @@ import butterknife.OnLongClick;
 import java.util.Date;
 
 import pers.geolo.guitarworld.R;
-import pers.geolo.guitarworld.ui.activity.WorksListDetailActivity;
 import pers.geolo.guitarworld.base.BaseActivity;
 import pers.geolo.guitarworld.base.BaseApplication;
 import pers.geolo.guitarworld.base.BaseRecyclerViewAdapter;
-import pers.geolo.guitarworld.presenter.WorksPresenter;
+import pers.geolo.guitarworld.presenter.WorksListPresenter;
+import pers.geolo.guitarworld.ui.activity.WorksDetailActivity;
 import pers.geolo.guitarworld.util.DateUtils;
 import pers.geolo.guitarworld.view.WorksListItemView;
+import pers.geolo.guitarworld.view.WorksListView;
 
-public class WorksListAdapter extends BaseRecyclerViewAdapter<WorksListAdapter.WorksViewHolder> {
+public class WorksListAdapter extends BaseRecyclerViewAdapter<WorksListAdapter.WorksViewHolder, WorksListItemView>
+        implements WorksListView {
 
+    WorksListPresenter worksListPresenter = new WorksListPresenter();
 
     public WorksListAdapter(BaseActivity activity) {
         super(activity);
+        worksListPresenter.bind(this);
+        worksListPresenter.loadingWorksList();
     }
 
     @Override
     public int getItemViewId() {
         return R.layout.item_works_view;
+    }
+
+    @Override
+    public void toWorksDetailView(int worksId) {
+        Intent intent = new Intent(BaseApplication.getContext(), WorksDetailActivity.class);
+        intent.putExtra("id", worksId);
+        getActivity().startActivity(intent);
     }
 
     public class WorksViewHolder extends BaseRecyclerViewAdapter.BaseViewHolder implements WorksListItemView {
@@ -49,14 +61,12 @@ public class WorksListAdapter extends BaseRecyclerViewAdapter<WorksListAdapter.W
 
         @OnClick(R.id.ll_works_item)
         public void onViewClicked() {
-            Intent intent = new Intent(BaseApplication.getContext(), WorksListDetailActivity.class);
-            intent.putExtra("id", Integer.valueOf(tvId.getText().toString()));
-            getActivity().startActivity(intent);
+            worksListPresenter.toWorksDetail(getIndex());
         }
 
         @OnLongClick(R.id.ll_works_item)
         public boolean option() {
-            WorksPresenter.showWorksItemOption(this);
+            worksListPresenter.showWorksItemOption(this);
             return true;
         }
 
@@ -69,7 +79,7 @@ public class WorksListAdapter extends BaseRecyclerViewAdapter<WorksListAdapter.W
                         String text = options[i];
                         switch (text) {
                             case "删除":
-                                WorksPresenter.removeWorks(this);
+                                worksListPresenter.removeWorks(getIndex());
                                 break;
                             default:
                         }

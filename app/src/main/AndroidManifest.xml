@@ -32,7 +32,7 @@
         <activity android:name=".ui.activity.MyProfileActivity"/>
         <activity android:name=".ui.activity.FollowActivity">
         </activity>
-        <activity android:name=".ui.activity.WorksListDetailActivity">
+        <activity android:name=".ui.activity.WorksDetailActivity">
         </activity>
         <activity android:name=".ui.activity.PublishActivity">
         </activity>
