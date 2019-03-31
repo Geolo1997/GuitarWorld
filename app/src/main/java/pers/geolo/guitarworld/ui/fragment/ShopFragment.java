@@ -1,4 +1,4 @@
-package pers.geolo.guitarworld.fragment;
+package pers.geolo.guitarworld.ui.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;

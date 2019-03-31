@@ -1,4 +1,4 @@
-package pers.geolo.guitarworld.activity;
+package pers.geolo.guitarworld.ui.activity;
 
 import android.Manifest;
 import android.content.Intent;
@@ -29,9 +29,9 @@ import pers.geolo.guitarworld.network.HttpService;
 import pers.geolo.guitarworld.network.api.FileApi;
 import pers.geolo.guitarworld.network.api.UserApi;
 import pers.geolo.guitarworld.network.callback.BaseCallback;
-import pers.geolo.guitarworld.temp.ActivityCallback;
-import pers.geolo.guitarworld.temp.PermissionCallback;
-import pers.geolo.guitarworld.temp.PermissionRequestCode;
+import pers.geolo.guitarworld.ui.temp.ActivityCallback;
+import pers.geolo.guitarworld.ui.temp.PermissionCallback;
+import pers.geolo.guitarworld.ui.temp.PermissionRequestCode;
 import pers.geolo.guitarworld.util.FileUtils;
 import pers.geolo.guitarworld.util.GetPhotoFromPhotoAlbum;
 import pers.geolo.guitarworld.util.PermissionUtils;

@@ -1,4 +1,4 @@
-package pers.geolo.guitarworld.activity;
+package pers.geolo.guitarworld.ui.activity;
 
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -11,11 +11,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.OnClick;
-import java.util.Date;
 import java.util.List;
 
 import pers.geolo.guitarworld.R;
-import pers.geolo.guitarworld.adapter.CommentListAdapter;
+import pers.geolo.guitarworld.ui.adapter.CommentListAdapter;
 import pers.geolo.guitarworld.base.BaseActivity;
 import pers.geolo.guitarworld.entity.Comment;
 import pers.geolo.guitarworld.presenter.CommentPresenter;

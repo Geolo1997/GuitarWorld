@@ -1,4 +1,4 @@
-package pers.geolo.guitarworld.activity;
+package pers.geolo.guitarworld.ui.activity;
 
 import android.os.Bundle;
 import android.view.View;
@@ -9,8 +9,8 @@ import butterknife.OnClick;
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.base.BaseActivity;
 import pers.geolo.guitarworld.dao.DAOService;
-import pers.geolo.guitarworld.fragment.FollowerFragment;
-import pers.geolo.guitarworld.fragment.FollowingFragment;
+import pers.geolo.guitarworld.ui.fragment.FollowerFragment;
+import pers.geolo.guitarworld.ui.fragment.FollowingFragment;
 
 public class FollowActivity extends BaseActivity {
 

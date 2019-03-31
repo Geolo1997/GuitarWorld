@@ -1,4 +1,4 @@
-package pers.geolo.guitarworld.activity;
+package pers.geolo.guitarworld.ui.activity;
 
 import android.os.Bundle;
 import butterknife.ButterKnife;

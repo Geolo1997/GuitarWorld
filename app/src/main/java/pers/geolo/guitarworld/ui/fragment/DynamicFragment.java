@@ -1,4 +1,4 @@
-package pers.geolo.guitarworld.fragment;
+package pers.geolo.guitarworld.ui.fragment;
 
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -12,8 +12,8 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 import pers.geolo.guitarworld.R;
-import pers.geolo.guitarworld.activity.PublishActivity;
-import pers.geolo.guitarworld.adapter.WorksListAdapter;
+import pers.geolo.guitarworld.ui.activity.PublishActivity;
+import pers.geolo.guitarworld.ui.adapter.WorksListAdapter;
 import pers.geolo.guitarworld.base.BaseFragment;
 import pers.geolo.guitarworld.presenter.WorksPresenter;
 import pers.geolo.guitarworld.view.WorksListItemView;

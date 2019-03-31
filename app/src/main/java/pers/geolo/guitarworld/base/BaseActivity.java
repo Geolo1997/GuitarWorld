@@ -16,10 +16,10 @@ import butterknife.ButterKnife;
 import java.util.HashMap;
 import java.util.Map;
 
-import pers.geolo.guitarworld.temp.ActivityCallback;
-import pers.geolo.guitarworld.temp.ActivityRequestCode;
-import pers.geolo.guitarworld.temp.PermissionCallback;
-import pers.geolo.guitarworld.temp.PermissionRequestCode;
+import pers.geolo.guitarworld.ui.temp.ActivityCallback;
+import pers.geolo.guitarworld.ui.temp.ActivityRequestCode;
+import pers.geolo.guitarworld.ui.temp.PermissionCallback;
+import pers.geolo.guitarworld.ui.temp.PermissionRequestCode;
 import pers.geolo.guitarworld.view.base.LoadingView;
 import pers.geolo.guitarworld.view.base.RefreshView;
 import pers.geolo.guitarworld.view.base.ToastView;

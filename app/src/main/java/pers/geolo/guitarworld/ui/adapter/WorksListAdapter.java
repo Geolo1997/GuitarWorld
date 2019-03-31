@@ -1,4 +1,4 @@
-package pers.geolo.guitarworld.adapter;
+package pers.geolo.guitarworld.ui.adapter;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -11,7 +11,7 @@ import butterknife.OnLongClick;
 import java.util.Date;
 
 import pers.geolo.guitarworld.R;
-import pers.geolo.guitarworld.activity.WorksListDetailActivity;
+import pers.geolo.guitarworld.ui.activity.WorksListDetailActivity;
 import pers.geolo.guitarworld.base.BaseActivity;
 import pers.geolo.guitarworld.base.BaseApplication;
 import pers.geolo.guitarworld.base.BaseRecyclerViewAdapter;

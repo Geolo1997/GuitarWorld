@@ -1,4 +1,4 @@
-package pers.geolo.guitarworld.adapter;
+package pers.geolo.guitarworld.ui.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;

@@ -1,4 +1,4 @@
-package pers.geolo.guitarworld.temp;
+package pers.geolo.guitarworld.ui.temp;
 
 public interface PermissionCallback {
 

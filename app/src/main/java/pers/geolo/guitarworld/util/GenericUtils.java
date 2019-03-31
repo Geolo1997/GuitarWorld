@@ -1,14 +1,9 @@
 package pers.geolo.guitarworld.util;
 
-import android.view.View;
-import pers.geolo.guitarworld.activity.MyWorksActivity;
-
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * 运行时获取泛型类型

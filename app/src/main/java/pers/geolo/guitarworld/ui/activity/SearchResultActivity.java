@@ -1,4 +1,4 @@
-package pers.geolo.guitarworld.activity;
+package pers.geolo.guitarworld.ui.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,7 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import butterknife.BindView;
 import pers.geolo.guitarworld.R;
-import pers.geolo.guitarworld.adapter.UsernameListAdapter;
+import pers.geolo.guitarworld.ui.adapter.UsernameListAdapter;
 import pers.geolo.guitarworld.base.BaseActivity;
 import pers.geolo.guitarworld.entity.User;
 import pers.geolo.guitarworld.network.HttpService;

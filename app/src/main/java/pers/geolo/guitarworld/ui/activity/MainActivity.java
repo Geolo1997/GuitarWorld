@@ -1,15 +1,14 @@
-package pers.geolo.guitarworld.activity;
+package pers.geolo.guitarworld.ui.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Button;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.base.BaseActivity;
-import pers.geolo.guitarworld.fragment.*;
+import pers.geolo.guitarworld.ui.fragment.*;
 
 public class MainActivity extends BaseActivity {
 

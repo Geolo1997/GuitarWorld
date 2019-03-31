@@ -16,27 +16,27 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".activity.LoadingActivity">
+        <activity android:name=".ui.activity.LoadingActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".activity.LoginActivity">
+        <activity android:name=".ui.activity.LoginActivity">
         </activity>
-        <activity android:name=".activity.RegisterActivity"/>
-        <activity android:name=".activity.MainActivity"/>
-        <activity android:name=".activity.MyWorksActivity"/>
-        <activity android:name=".activity.NetworkErrorActivity"/>
-        <activity android:name=".activity.MyProfileActivity"/>
-        <activity android:name=".activity.FollowActivity">
+        <activity android:name=".ui.activity.RegisterActivity"/>
+        <activity android:name=".ui.activity.MainActivity"/>
+        <activity android:name=".ui.activity.MyWorksActivity"/>
+        <activity android:name=".ui.activity.NetworkErrorActivity"/>
+        <activity android:name=".ui.activity.MyProfileActivity"/>
+        <activity android:name=".ui.activity.FollowActivity">
         </activity>
-        <activity android:name=".activity.WorksListDetailActivity">
+        <activity android:name=".ui.activity.WorksListDetailActivity">
         </activity>
-        <activity android:name=".activity.PublishActivity">
+        <activity android:name=".ui.activity.PublishActivity">
         </activity>
-        <activity android:name=".activity.SearchResultActivity"></activity>
+        <activity android:name=".ui.activity.SearchResultActivity"></activity>
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="pers.geolo.guitarworld.fileprovider"

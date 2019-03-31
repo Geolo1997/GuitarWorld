@@ -1,4 +1,4 @@
-package pers.geolo.guitarworld.fragment;
+package pers.geolo.guitarworld.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,10 +14,10 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 import pers.geolo.guitarworld.R;
-import pers.geolo.guitarworld.activity.FollowActivity;
-import pers.geolo.guitarworld.activity.LoginActivity;
-import pers.geolo.guitarworld.activity.MyProfileActivity;
-import pers.geolo.guitarworld.activity.MyWorksActivity;
+import pers.geolo.guitarworld.ui.activity.FollowActivity;
+import pers.geolo.guitarworld.ui.activity.LoginActivity;
+import pers.geolo.guitarworld.ui.activity.MyProfileActivity;
+import pers.geolo.guitarworld.ui.activity.MyWorksActivity;
 import pers.geolo.guitarworld.base.BaseFragment;
 import pers.geolo.guitarworld.dao.DAOService;
 

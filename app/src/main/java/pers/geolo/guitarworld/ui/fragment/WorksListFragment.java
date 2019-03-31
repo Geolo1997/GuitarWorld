@@ -1,4 +1,4 @@
-package pers.geolo.guitarworld.fragment;
+package pers.geolo.guitarworld.ui.fragment;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ import android.view.ViewGroup;
 import butterknife.BindView;
 
 import pers.geolo.guitarworld.R;
-import pers.geolo.guitarworld.adapter.WorksListAdapter;
+import pers.geolo.guitarworld.ui.adapter.WorksListAdapter;
 import pers.geolo.guitarworld.base.BaseFragment;
 import pers.geolo.guitarworld.entity.Works;
 import pers.geolo.guitarworld.network.HttpService;

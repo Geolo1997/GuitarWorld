@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/ic_loading"
-    tools:context=".activity.LoadingActivity">
+    tools:context=".ui.activity.LoadingActivity">
 
     <TextView
         android:id="@+id/tv_timer"

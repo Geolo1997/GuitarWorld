@@ -1,4 +1,4 @@
-package pers.geolo.guitarworld.activity;
+package pers.geolo.guitarworld.ui.activity;
 
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -7,7 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import butterknife.BindView;
 import pers.geolo.guitarworld.R;
-import pers.geolo.guitarworld.adapter.WorksListAdapter;
+import pers.geolo.guitarworld.ui.adapter.WorksListAdapter;
 import pers.geolo.guitarworld.base.BaseActivity;
 import pers.geolo.guitarworld.dao.DAOService;
 import pers.geolo.guitarworld.entity.Works;

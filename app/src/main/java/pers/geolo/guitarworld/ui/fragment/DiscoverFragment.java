@@ -1,18 +1,13 @@
-package pers.geolo.guitarworld.fragment;
+package pers.geolo.guitarworld.ui.fragment;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
+
 import pers.geolo.guitarworld.R;
-import pers.geolo.guitarworld.activity.SearchResultActivity;
+import pers.geolo.guitarworld.ui.activity.SearchResultActivity;
 import pers.geolo.guitarworld.base.BaseFragment;
 
 public class DiscoverFragment extends BaseFragment {
