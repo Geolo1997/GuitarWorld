@@ -8,14 +8,18 @@ public class BaseApplication extends Application {
 
     private static Context context;
 
+    public static Context getContext() {
+        return context;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
         context = getApplicationContext();
         LitePal.initialize(context);
-    }
+//        LitePal.deleteDatabase("GuitarWorld");
+//        LitePal.getDatabase();
 
-    public static Context getContext() {
-        return context;
+//        LitePal.deleteAll(LogInfo.class);
     }
 }

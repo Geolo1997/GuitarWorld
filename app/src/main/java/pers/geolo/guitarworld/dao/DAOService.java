@@ -1,14 +1,15 @@
 package pers.geolo.guitarworld.dao;
 
+import java.util.Date;
+
 import pers.geolo.guitarworld.dao.impl.LogInfoDAOImpl;
 import pers.geolo.guitarworld.entity.LogInfo;
 import pers.geolo.util.SingletonHolder;
 
-import java.util.Date;
-
 public class DAOService {
 
     public static volatile DAOService instance;
+    private LogInfoDAO logInfoDAO = SingletonHolder.getInstance(LogInfoDAOImpl.class);
 
     public static DAOService getInstance() {
         if (instance == null) {
@@ -21,11 +22,13 @@ public class DAOService {
         return instance;
     }
 
-    private LogInfoDAO logInfoDAO = SingletonHolder.getInstance(LogInfoDAOImpl.class);
+    public LogInfo getLogInfo(String username) {
+        return logInfoDAO.getLogInfo(username);
+    }
 
-    public void saveLogInfo(LogInfo logInfo) {
+    public void addLogInfo(LogInfo logInfo) {
         logInfo.setSaveTime(new Date());
-        logInfoDAO.save(logInfo);
+        logInfoDAO.add(logInfo);
     }
 
     public LogInfo getCurrentLogInfo() {
@@ -34,5 +37,10 @@ public class DAOService {
 
     public void removeLogInfo(LogInfo logInfo) {
         logInfoDAO.remove(logInfo);
+    }
+
+    public void updateLogInfo(LogInfo logInfo) {
+        logInfo.setSaveTime(new Date());
+        logInfoDAO.update(logInfo);
     }
 }

@@ -1,11 +1,10 @@
 package pers.geolo.guitarworld.dao.impl;
 
+import java.util.List;
 import org.litepal.LitePal;
-import org.litepal.crud.DataSupport;
+
 import pers.geolo.guitarworld.dao.LogInfoDAO;
 import pers.geolo.guitarworld.entity.LogInfo;
-
-import java.util.List;
 
 public class LogInfoDAOImpl implements LogInfoDAO {
 
@@ -14,22 +13,29 @@ public class LogInfoDAOImpl implements LogInfoDAO {
     }
 
     @Override
-    public void save(LogInfo logInfo) {
-        if (getLogInfo(logInfo.getUsername()) == null) {
-            logInfo.save();
-        } else {
-            logInfo.updateAll("username = ?", logInfo.getUsername());
+    public void add(LogInfo logInfo) {
+        logInfo.save();
+    }
+
+    @Override
+    public void update(LogInfo logInfo) {
+        if (!logInfo.isSavePassword()) {
+            logInfo.setToDefault("savePassword");
         }
+        if (!logInfo.isAutoLogin()) {
+            logInfo.setToDefault("autoLogin");
+        }
+        logInfo.updateAll("username = ?", logInfo.getUsername());
     }
 
     @Override
     public void remove(LogInfo logInfo) {
-        DataSupport.deleteAll(LogInfo.class, "username = ?", logInfo.getUsername());
+        LitePal.deleteAll(LogInfo.class, "username = ?", logInfo.getUsername());
     }
 
     @Override
     public LogInfo getLogInfo(String username) {
-        List<LogInfo> logInfos = DataSupport.where("username = ?", username).find(LogInfo.class);
+        List<LogInfo> logInfos = LitePal.where("username = ?", username).find(LogInfo.class);
         if (logInfos == null || logInfos.size() == 0) {
             return null;
         } else {
@@ -39,12 +45,12 @@ public class LogInfoDAOImpl implements LogInfoDAO {
 
     @Override
     public List<LogInfo> getAllLogInfos() {
-        return DataSupport.findAll(LogInfo.class);
+        return LitePal.findAll(LogInfo.class);
     }
 
     @Override
     public LogInfo getLastSavedLogInfo() {
-        List<LogInfo> logInfos = DataSupport.order("saveTime desc").find(LogInfo.class);
+        List<LogInfo> logInfos = LitePal.order("saveTime desc").find(LogInfo.class);
         if (logInfos == null || logInfos.size() == 0) {
             return null;
         } else {

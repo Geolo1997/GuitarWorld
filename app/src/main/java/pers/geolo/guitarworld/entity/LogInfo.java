@@ -1,17 +1,23 @@
 package pers.geolo.guitarworld.entity;
 
-import org.litepal.crud.DataSupport;
-
 import java.util.Date;
+import org.litepal.annotation.Column;
+import org.litepal.crud.LitePalSupport;
 
 /**
  * 登录信息
  */
-public class LogInfo extends DataSupport {
+public class LogInfo extends LitePalSupport {
 
+    @Column(unique = true)
     private String username;
+
     private String password;
-    private boolean isSavePassword;
+
+    @Column(defaultValue = "0")
+    private boolean savePassword;
+
+    @Column(defaultValue = "0")
     private boolean autoLogin;
 
     private Date saveTime;
@@ -19,10 +25,10 @@ public class LogInfo extends DataSupport {
     public LogInfo() {
     }
 
-    public LogInfo(String username, String password, boolean isSavePassword, boolean autoLogin) {
+    public LogInfo(String username, String password, boolean savePassword, boolean autoLogin) {
         this.username = username;
         this.password = password;
-        this.isSavePassword = isSavePassword;
+        this.savePassword = savePassword;
         this.autoLogin = autoLogin;
     }
 
@@ -43,11 +49,11 @@ public class LogInfo extends DataSupport {
     }
 
     public boolean isSavePassword() {
-        return isSavePassword;
+        return savePassword;
     }
 
     public void setSavePassword(boolean savePassword) {
-        isSavePassword = savePassword;
+        this.savePassword = savePassword;
     }
 
     public boolean isAutoLogin() {

@@ -14,16 +14,26 @@ import pers.geolo.guitarworld.view.RegisterView;
 
 public class RegisterActivity extends BaseActivity implements RegisterView {
 
-    @BindView(R.id.et_username)
-    protected EditText etUsername;
-    @BindView(R.id.et_password)
-    protected EditText etPassword;
-    @BindView(R.id.et_email)
-    protected EditText etEmail;
-    @BindView(R.id.tv_registerHint)
-    protected TextView tvRegisterHint;
+    RegisterPresenter registerPresenter = new RegisterPresenter();
 
-    private RegisterPresenter registerPresenter = new RegisterPresenter();
+    @BindView(R.id.et_username)
+    EditText etUsername;
+    @BindView(R.id.et_password)
+    EditText etPassword;
+    @BindView(R.id.et_email)
+    EditText etEmail;
+    @BindView(R.id.tv_registerHint)
+    TextView tvRegisterHint;
+
+    @OnClick(R.id.bt_register)
+    protected void register() {
+        registerPresenter.register();
+    }
+
+    @Override
+    protected int getContentView() {
+        return R.layout.activity_register;
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -32,14 +42,11 @@ public class RegisterActivity extends BaseActivity implements RegisterView {
     }
 
     @Override
-    protected int getContentView() {
-        return R.layout.activity_register;
+    protected void onDestroy() {
+        super.onDestroy();
+        registerPresenter.unBind();
     }
 
-    @OnClick(R.id.bt_register)
-    protected void register() {
-        registerPresenter.register();
-    }
 
     @Override
     public String getUsername() {

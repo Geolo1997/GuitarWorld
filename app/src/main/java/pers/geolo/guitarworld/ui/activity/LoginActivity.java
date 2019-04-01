@@ -10,10 +10,11 @@ import butterknife.OnClick;
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.base.BaseActivity;
 import pers.geolo.guitarworld.presenter.LoginPresenter;
-import pers.geolo.guitarworld.presenter.RegisterPresenter;
 import pers.geolo.guitarworld.view.LoginView;
 
 public class LoginActivity extends BaseActivity implements LoginView {
+
+    LoginPresenter loginPresenter = new LoginPresenter();
 
     @BindView(R.id.et_username)
     EditText etUsername;
@@ -26,8 +27,6 @@ public class LoginActivity extends BaseActivity implements LoginView {
     @BindView(R.id.cb_autoLogin)
     CheckBox cbAutoLogin;
 
-    private LoginPresenter loginPresenter = new LoginPresenter();
-
     @OnClick(R.id.bt_login)
     protected void login() {
         loginPresenter.login();
@@ -39,6 +38,11 @@ public class LoginActivity extends BaseActivity implements LoginView {
     }
 
     @Override
+    protected int getContentView() {
+        return R.layout.activity_login;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         loginPresenter.bind(this);
@@ -46,9 +50,11 @@ public class LoginActivity extends BaseActivity implements LoginView {
         loginPresenter.loadingLogInfo();
     }
 
+
     @Override
-    protected int getContentView() {
-        return R.layout.activity_login;
+    protected void onDestroy() {
+        super.onDestroy();
+        loginPresenter.unBind();
     }
 
     @Override
@@ -82,8 +88,18 @@ public class LoginActivity extends BaseActivity implements LoginView {
     }
 
     @Override
+    public boolean isSavePassword() {
+        return cbSavePassword.isChecked();
+    }
+
+    @Override
     public void setSavePassword(boolean savePassword) {
         cbSavePassword.setChecked(savePassword);
+    }
+
+    @Override
+    public boolean isAutoLogin() {
+        return cbAutoLogin.isChecked();
     }
 
     @Override

@@ -19,7 +19,7 @@ public class RegisterPresenter extends BasePresenter<RegisterView> {
         String email = getView().getEmail();
         // 检查登录信息合法性
         if (username == null || password == null || email == null) {
-            getView().showHint("请填写完整！");
+            getView().showHint("请填写完整");
             return;
         } // TODO 检查用户名密码和邮箱字符串规则
 
@@ -32,7 +32,7 @@ public class RegisterPresenter extends BasePresenter<RegisterView> {
                     @Override
                     public void onSuccess(Void responseData) {
                         // 保存登录信息
-                        DAOService.getInstance().saveLogInfo(logInfo);
+                        DAOService.getInstance().addLogInfo(logInfo);
                         // 跳转至主视图
                         getView().toMainView();
                     }

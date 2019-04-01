@@ -1,14 +1,14 @@
 package pers.geolo.guitarworld.dao;
 
-import android.util.Log;
-import pers.geolo.guitarworld.entity.LogInfo;
-import pers.geolo.guitarworld.entity.User;
-
 import java.util.List;
+
+import pers.geolo.guitarworld.entity.LogInfo;
 
 public interface LogInfoDAO {
 
-    void save(LogInfo logInfo);
+    void add(LogInfo logInfo);
+
+    void update(LogInfo logInfo);
 
     void remove(LogInfo logInfo);
 

@@ -8,15 +8,15 @@ import butterknife.BindView;
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.base.BaseActivity;
 import pers.geolo.guitarworld.presenter.AutoLoginPresenter;
-import pers.geolo.guitarworld.presenter.RegisterPresenter;
 import pers.geolo.guitarworld.view.AutoLoginView;
 
 public class LoadingActivity extends BaseActivity implements AutoLoginView {
 
+
+    AutoLoginPresenter autoLoginPresenter = new AutoLoginPresenter();
+
     @BindView(R.id.tv_timer)
     TextView tvTimer;
-
-    private AutoLoginPresenter autoLoginPresenter = new AutoLoginPresenter();
 
     // 倒计时
     private int totalTime = 5000;
@@ -35,6 +35,11 @@ public class LoadingActivity extends BaseActivity implements AutoLoginView {
     };
 
     @Override
+    protected int getContentView() {
+        return R.layout.activity_loading;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         autoLoginPresenter.bind(this);
@@ -47,11 +52,6 @@ public class LoadingActivity extends BaseActivity implements AutoLoginView {
     protected void onDestroy() {
         super.onDestroy();
         autoLoginPresenter.unBind();
-    }
-
-    @Override
-    protected int getContentView() {
-        return R.layout.activity_loading;
     }
 
     @Override

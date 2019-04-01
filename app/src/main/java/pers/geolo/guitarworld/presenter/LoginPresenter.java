@@ -7,9 +7,7 @@ import pers.geolo.guitarworld.entity.LogInfo;
 import pers.geolo.guitarworld.network.HttpService;
 import pers.geolo.guitarworld.network.api.AuthApi;
 import pers.geolo.guitarworld.network.callback.MvpNetworkCallBack;
-import pers.geolo.guitarworld.view.AutoLoginView;
 import pers.geolo.guitarworld.view.LoginView;
-import pers.geolo.util.SingletonHolder;
 
 public class LoginPresenter extends BasePresenter<LoginView> {
 
@@ -34,12 +32,27 @@ public class LoginPresenter extends BasePresenter<LoginView> {
     public void login() {
         // 显示登录加载条
         getView().showLoading();
+        // 保存登录信息
+        LogInfo logInfo = new LogInfo();
+        logInfo.setUsername(getView().getUsername());
+        if (getView().isAutoLogin() || getView().isSavePassword()) {
+            logInfo.setPassword(getView().getPassword());
+        }
+        logInfo.setSavePassword(getView().isSavePassword());
+        logInfo.setAutoLogin(getView().isAutoLogin());
         // 发送登录请求
         HttpService.getInstance().getAPI(AuthApi.class)
                 .login(getView().getUsername(), getView().getPassword())
                 .enqueue(new MvpNetworkCallBack<Void>(getView()) {
                     @Override
                     public void onSuccess(Void responseData) {
+                        // 保存登录信息
+                        DAOService daoService = DAOService.getInstance();
+                        if (daoService.getLogInfo(logInfo.getUsername()) != null) {
+                            daoService.updateLogInfo(logInfo);
+                        } else {
+                            daoService.addLogInfo(logInfo);
+                        }
                         // 隐藏加载条
                         getView().hideLoading();
                         // 跳转至主视图
@@ -49,7 +62,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
                     @Override
                     public void onError(int errorCode, String errorMessage) {
                         Log.d(TAG, "登录错误，错误码：" + errorCode + "错误信息：" + errorMessage);
-                        getView().showHint(errorMessage);
+                        getView().showHint("账号或密码错误");
                     }
 
                     @Override
@@ -58,6 +71,4 @@ public class LoginPresenter extends BasePresenter<LoginView> {
                     }
                 });
     }
-
-
 }

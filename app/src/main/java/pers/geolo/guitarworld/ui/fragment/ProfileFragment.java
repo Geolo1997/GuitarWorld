@@ -14,14 +14,18 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 import pers.geolo.guitarworld.R;
+import pers.geolo.guitarworld.base.BaseFragment;
+import pers.geolo.guitarworld.dao.DAOService;
+import pers.geolo.guitarworld.presenter.LogoutPresenter;
 import pers.geolo.guitarworld.ui.activity.FollowActivity;
 import pers.geolo.guitarworld.ui.activity.LoginActivity;
 import pers.geolo.guitarworld.ui.activity.MyProfileActivity;
 import pers.geolo.guitarworld.ui.activity.MyWorksActivity;
-import pers.geolo.guitarworld.base.BaseFragment;
-import pers.geolo.guitarworld.dao.DAOService;
+import pers.geolo.guitarworld.view.LogoutView;
 
-public class ProfileFragment extends BaseFragment {
+public class ProfileFragment extends BaseFragment implements LogoutView {
+
+    LogoutPresenter logoutPresenter = new LogoutPresenter();
 
     @BindView(R.id.tv_username)
     TextView tvUsername;
@@ -36,18 +40,25 @@ public class ProfileFragment extends BaseFragment {
     @BindView(R.id.bt_logout)
     Button btLogout;
 
+    @Override
+    protected int getContentView() {
+        return R.layout.fragment_profile;
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
+        logoutPresenter.bind(this);
         tvUsername.setText(DAOService.getInstance().getCurrentLogInfo().getUsername());
         return view;
     }
 
     @Override
-    protected int getContentView() {
-        return R.layout.fragment_profile;
+    public void onDestroyView() {
+        super.onDestroyView();
+        logoutPresenter.unBind();
     }
 
     @OnClick(R.id.bt_my_profile)
@@ -73,7 +84,12 @@ public class ProfileFragment extends BaseFragment {
 
     @OnClick(R.id.bt_logout)
     public void onLogout() {
+        logoutPresenter.logout();
+    }
+
+    @Override
+    public void toLoginView() {
         getBaseActivity().startActivity(LoginActivity.class);
-        getActivity().finish();
+        getBaseActivity().finish();
     }
 }

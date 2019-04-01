@@ -31,14 +31,14 @@ public abstract class BaseActivity extends AppCompatActivity implements ToastVie
     private final Map<ActivityRequestCode, ActivityCallback> activityCallbackMap = new HashMap<>();
     private final Map<PermissionRequestCode, PermissionCallback> permissionCallbackMap = new HashMap<>();
 
+    protected abstract int getContentView();
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getContentView());
         ButterKnife.bind(this);
     }
-
-    protected abstract int getContentView();
 
     public void addActivityRequest(ActivityRequestCode requestCode, ActivityCallback callback) {
         activityCallbackMap.put(requestCode, callback);

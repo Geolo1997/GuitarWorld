@@ -3,8 +3,11 @@ package pers.geolo.guitarworld.view;
 import pers.geolo.guitarworld.view.base.LoadingView;
 
 public interface LoginView extends LoadingView {
+    boolean isSavePassword();
 
     void setSavePassword(boolean savePassword);
+
+    boolean isAutoLogin();
 
     void setAutoLogin(boolean autoLogin);
 

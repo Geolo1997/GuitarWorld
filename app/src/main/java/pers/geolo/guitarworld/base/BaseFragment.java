@@ -22,6 +22,8 @@ public abstract class BaseFragment extends Fragment implements ToastView, Loadin
 
     Unbinder unbinder;
 
+    protected abstract int getContentView();
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -31,8 +33,6 @@ public abstract class BaseFragment extends Fragment implements ToastView, Loadin
         activity = (BaseActivity) getActivity();
         return view;
     }
-
-    protected abstract int getContentView();
 
     public BaseActivity getBaseActivity() {
         return activity;
