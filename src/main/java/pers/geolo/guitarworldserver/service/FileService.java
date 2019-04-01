@@ -1,10 +1,10 @@
 package pers.geolo.guitarworldserver.service;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import pers.geolo.guitarworldserver.util.IoUtils;
 import pers.geolo.guitarworldserver.util.ResourceUtils;
 
 @Service
@@ -29,5 +29,16 @@ public class FileService {
         String filePath = ResourceUtils.getFilePath() + username + "/";
         File file = new File(filePath, "profilePicture.jpg");
         return file.exists() ? file : null;
+    }
+
+    public void copyFile(String originPath, String destinationPath) throws IOException {
+        InputStream inputStream = new FileInputStream(originPath);
+        File directory = new File(destinationPath.substring(0, destinationPath.lastIndexOf("/")));
+        System.out.println("dir: " + directory);
+        if (!directory.exists()) {
+            directory.mkdir();
+        }
+        OutputStream outputStream = new FileOutputStream(destinationPath);
+        IoUtils.streamTransfor(inputStream, outputStream, 2048);
     }
 }
