@@ -3,7 +3,7 @@ package pers.geolo.guitarworldserver.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pers.geolo.guitarworldserver.entity.User;
-import pers.geolo.guitarworldserver.dao.UserDAO;
+import pers.geolo.guitarworldserver.dao.UserMapper;
 import pers.geolo.guitarworldserver.value.LogState;
 
 import java.util.List;
@@ -12,10 +12,10 @@ import java.util.List;
 public class UserService {
 
     @Autowired
-    UserDAO userDAO;
+    UserMapper userMapper;
 
     public int login(String username, String password) {
-        User user = userDAO.getUser(username);
+        User user = userMapper.selectByUsername(username);
         if (user == null) { // 不存在该用户
             return 2;
         } else if (user.getPassword().equals(password)) { // 登录成功
@@ -28,18 +28,18 @@ public class UserService {
     }
 
     public int register(String username, String password, String email) {
-        if (userDAO.getUser(username) != null) { // 用户名已存在
+        if (userMapper.selectByUsername(username) != null) { // 用户名已存在
             return 1;
         } else { // 注册成功
             User user = new User(username, password, email);
             user.setState(LogState.LOGIN);
-            userDAO.add(user);
+            userMapper.insert(user);
             return 0;
         }
     }
 
     public int logout(String username) {
-        User user = userDAO.getUser(username);
+        User user = userMapper.selectByUsername(username);
         if (user == null) { //不存在该用户
             return 1;
         } else {
@@ -49,21 +49,19 @@ public class UserService {
     }
 
     public User getProfile(String username) {
-        User user = userDAO.getUser(username);
-        System.out.println(user.getUsername() + " " + user.getPassword() + " " + user.getEmail());
-        return userDAO.getUser(username);
+        return userMapper.selectByUsername(username);
     }
 
     public int update(User user) {
-        if (userDAO.getUser(user.getUsername()) == null) {
+        if (userMapper.selectByUsername(user.getUsername()) == null) {
             return 1;
         } else {
-            userDAO.update(user);
+            userMapper.update(user);
             return 0;
         }
     }
 
     public List<User> getAllUsers() {
-        return userDAO.getAllUsers();
+        return userMapper.selectAll();
     }
 }

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="pers.geolo.guitarworldserver.dao.UserRelationDAO">
-    <insert id="add" parameterType="userRelation">
+<mapper namespace="pers.geolo.guitarworldserver.dao.UserRelationMapper">
+    <insert id="insert" parameterType="userRelation">
         INSERT INTO UserRelation(follower_username, following_username)
             VALUE (#{followerUsername}, #{followingUsername});
     </insert>
 
-    <delete id="remove" parameterType="userRelation">
+    <delete id="delete" parameterType="userRelation">
         DELETE
         FROM UserRelation
         WHERE follower_username = #{followerUsername}

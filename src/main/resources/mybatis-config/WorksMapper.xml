@@ -1,34 +1,37 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="pers.geolo.guitarworldserver.dao.WorksDAO">
-    <insert id="add" parameterType="works" useGeneratedKeys="true"
+<mapper namespace="pers.geolo.guitarworldserver.dao.WorksMapper">
+    <insert id="insert" parameterType="works" useGeneratedKeys="true"
             keyProperty="id">
         INSERT INTO Works(author, create_time, title, content)
         VALUES (#{author}, #{createTime}, #{title}, #{content});
     </insert>
 
-    <select id="getWorks" parameterType="int" resultType="works">
-        SELECT id, author, create_time, title, content
-        FROM Works
-        WHERE id = #{id};
-    </select>
-
-    <select id="listWorks" parameterType="string" resultType="works">
-        SELECT id, author, create_time, title, content
-        FROM Works
-        WHERE author = #{author};
-    </select>
-
-    <select id="listAllWorks" resultType="works">
-        SELECT id, author, create_time, title, content
-        FROM Works;
-    </select>
-
-    <delete id="remove" parameterType="int">
+    <delete id="delete" parameterType="map">
         DELETE
         FROM Works
-        WHERE id = #{id};
+        <where>
+            <if test="id != null">
+                AND id = #{id}
+            </if>
+            <if test="author != null">
+                AND author = #{author}
+            </if>
+        </where>
     </delete>
+
+    <select id="select" parameterType="map" resultType="works">
+        SELECT id, author, create_time, title, content
+        FROM Works
+        <where>
+            <if test="id != null">
+                AND id = #{id}
+            </if>
+            <if test="author != null">
+                AND author = #{author}
+            </if>
+        </where>
+    </select>
 
 </mapper>

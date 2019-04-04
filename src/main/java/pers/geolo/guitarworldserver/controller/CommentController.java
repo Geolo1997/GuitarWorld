@@ -1,5 +1,6 @@
 package pers.geolo.guitarworldserver.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,25 +34,19 @@ public class CommentController {
         }
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(method = RequestMethod.DELETE)
     @ResponseBody
-    public ResponseJSONBody<Void> removeComment(@PathVariable("id") int id) {
+    public ResponseJSONBody<Void> removeCommentList(@RequestParam HashMap<String, Object> filter) {
         // TODO 缺少权限检查
-        commentService.removeComment(id);
+        commentService.removeCommentList(filter);
         return new ResponseJSONBody<>(0);
-    }
-
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    @ResponseBody
-    public ResponseJSONBody<Comment> getComment(@PathVariable("id") int id) {
-        Comment comment = commentService.getComment(id);
-        return new ResponseJSONBody<>(0, comment, null);
     }
 
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public ResponseJSONBody<List<Comment>> listCommentOfWorks(Integer worksId) {
-        List<Comment> commentList = commentService.listCommentOfWorks(worksId);
+    public ResponseJSONBody<List<Comment>> getComment(@RequestParam HashMap<String, Object> filter) {
+        logger.debug("收到获取Comment请求：" + "id=" + filter.get("id") + ", worksId=" + filter.get("worksId"));
+        List<Comment> commentList = commentService.getCommentList(filter);
         return new ResponseJSONBody<>(0, commentList, null);
     }
 }

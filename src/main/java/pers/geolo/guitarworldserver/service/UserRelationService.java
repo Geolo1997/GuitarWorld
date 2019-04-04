@@ -2,7 +2,7 @@ package pers.geolo.guitarworldserver.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pers.geolo.guitarworldserver.dao.UserRelationDAO;
+import pers.geolo.guitarworldserver.dao.UserRelationMapper;
 import pers.geolo.guitarworldserver.entity.UserRelation;
 import pers.geolo.guitarworldserver.entity.UserRelationType;
 
@@ -12,7 +12,7 @@ import java.util.List;
 public class UserRelationService {
 
     @Autowired
-    UserRelationDAO userRelationDAO;
+    UserRelationMapper userRelationMapper;
 
     /**
      * 增加用户关系
@@ -20,8 +20,8 @@ public class UserRelationService {
      * @param userRelation
      */
     public void addRelation(UserRelation userRelation) {
-        if (!userRelationDAO.exist(userRelation)) {
-            userRelationDAO.add(userRelation);
+        if (!userRelationMapper.exist(userRelation)) {
+            userRelationMapper.insert(userRelation);
         }
     }
 
@@ -31,8 +31,8 @@ public class UserRelationService {
      * @param userRelation
      */
     public void removeRelation(UserRelation userRelation) {
-        if (userRelationDAO.exist(userRelation)) {
-            userRelationDAO.remove(userRelation);
+        if (userRelationMapper.exist(userRelation)) {
+            userRelationMapper.delete(userRelation);
         }
     }
 
@@ -43,7 +43,7 @@ public class UserRelationService {
      * @return
      */
     public List<String> getFollowers(String username) {
-        return userRelationDAO.listFollowerUsername(username);
+        return userRelationMapper.listFollowerUsername(username);
     }
 
     /**
@@ -53,7 +53,7 @@ public class UserRelationService {
      * @return
      */
     public List<String> getFollowings(String username) {
-        return userRelationDAO.listFollowingUsername(username);
+        return userRelationMapper.listFollowingUsername(username);
     }
 
     /**
@@ -64,9 +64,9 @@ public class UserRelationService {
      */
     public UserRelationType getRelationType(String currentUsername, String otherUsername) {
         // 该用户是否是当前用户的粉丝
-        boolean isFollower = userRelationDAO.exist(new UserRelation(otherUsername, currentUsername));
+        boolean isFollower = userRelationMapper.exist(new UserRelation(otherUsername, currentUsername));
         // 该用户是否是当前用户的关注者
-        boolean isFollowing = userRelationDAO.exist(new UserRelation(currentUsername, otherUsername));
+        boolean isFollowing = userRelationMapper.exist(new UserRelation(currentUsername, otherUsername));
         if (isFollowing && isFollower) { // 互相关注
             return UserRelationType.FOLLOW_EACH_OTHER;
         } else if (isFollowing) { // 是当前用户的粉丝

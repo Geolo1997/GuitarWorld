@@ -6,11 +6,11 @@ import pers.geolo.guitarworldserver.entity.UserRelation;
 import java.util.List;
 
 @Repository
-public interface UserRelationDAO {
+public interface UserRelationMapper {
 
-    void add(UserRelation userRelation);
+    void insert(UserRelation userRelation);
 
-    void remove(UserRelation userRelation);
+    void delete(UserRelation userRelation);
 
     boolean exist(UserRelation userRelation);
 

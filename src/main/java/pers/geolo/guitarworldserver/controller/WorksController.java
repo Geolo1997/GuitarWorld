@@ -1,5 +1,6 @@
 package pers.geolo.guitarworldserver.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,36 +33,21 @@ public class WorksController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.DELETE)
     @ResponseBody
-    public ResponseJSONBody<List<Works>> getWorksList(String author) {
-        logger.debug("收到获取作品请求:" + author);
-        List<Works> worksList = worksService.getWorksList(author);
-        return new ResponseJSONBody<>(0, worksList, null);
-    }
-
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    @ResponseBody
-    public ResponseJSONBody<Works> getWorks(@PathVariable("id") int id) {
-        logger.debug("收到获取作品请求:" + id);
-        Works works = worksService.getWorks(id);
-        return new ResponseJSONBody<>(0, works, null);
-    }
-
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    @ResponseBody
-    public ResponseJSONBody<Void> removeWorks(@PathVariable("id") int id) {
-        logger.debug("收到删除作品请求：" + id);
+    public ResponseJSONBody<Void> removeWorks(@RequestParam HashMap<String, Object> filter) {
+        logger.debug("收到删除作品请求：" + filter);
         //TODO 删除的是自己的作品
-        int code = worksService.removeWorks(id);
+        int code = worksService.removeWorksList(filter);
         return new ResponseJSONBody<>(code);
     }
 
-    //---------test---------------
-    @RequestMapping(value = "/all",method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public ResponseJSONBody<List<Works>> getAllWorks() {
-        List<Works> worksList = worksService.getAllWorks();
+    public ResponseJSONBody<List<Works>> getWorks(@RequestParam HashMap<String, Object> filter) {
+        System.out.println("收到获取Works的请求");
+        System.out.println("id = " + filter.get("id") + ", author = " + filter.get("author"));
+        List<Works> worksList = worksService.getWorksList(filter);
         return new ResponseJSONBody<>(0, worksList, null);
     }
 }
