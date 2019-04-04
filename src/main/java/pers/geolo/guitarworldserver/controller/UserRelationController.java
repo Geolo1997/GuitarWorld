@@ -71,6 +71,7 @@ public class UserRelationController {
      *
      * @param username 该用户用户名
      * @return 该用户粉丝用户名列表
+     * @deprecated
      */
     @RequestMapping(value = "/{username}/following", method = RequestMethod.GET)
     @ResponseBody
@@ -84,6 +85,7 @@ public class UserRelationController {
      *
      * @param username 该用户用户名
      * @return 该用户偶像用户名列表
+     * @deprecated
      */
     @RequestMapping(value = "/{username}/follower", method = RequestMethod.GET)
     @ResponseBody

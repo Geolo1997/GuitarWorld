@@ -64,4 +64,12 @@ public class UserService {
     public List<User> getAllUsers() {
         return userMapper.selectAll();
     }
+
+    public List<User> getFollowings(String username) {
+        return userMapper.selectByFollower(username);
+    }
+
+    public List<User> getFollowers(String username) {
+        return userMapper.selectByFollowing(username);
+    }
 }

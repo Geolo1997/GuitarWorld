@@ -8,49 +8,25 @@
   <component name="ChangeListManager">
     <list default="true" id="ecdd6389-a3c6-46c5-a67a-49be2f4caf7e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/Test.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/controller/CommentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/controller/CommentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/Test.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/controller/UserRelationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/controller/UserRelationController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/controller/WorksController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/controller/WorksController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/dao/CommentDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/dao/CommentMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/dao/UserDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/dao/UserMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/dao/UserRelationDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/dao/UserRelationMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/dao/WorksDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/dao/WorksMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/service/CommentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/service/CommentService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/service/UserRelationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/service/UserRelationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/dao/UserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/dao/UserMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/dao/WorksMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/dao/WorksMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/service/UserService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/service/WorksService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/service/WorksService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/mybatis-config/CommentMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mybatis-config/CommentMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/mybatis-config/UserMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mybatis-config/UserMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/mybatis-config/UserRelationMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mybatis-config/UserRelationMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/mybatis-config/WorksMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mybatis-config/WorksMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/mybatis-config/CommentMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mybatis-config/CommentMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/mybatis-config/UserMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mybatis-config/UserMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/mybatis-config/UserRelationMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mybatis-config/UserRelationMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/mybatis-config/WorksMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mybatis-config/WorksMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pers/geolo/guitarworldserver/Test.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pers/geolo/guitarworldserver/Test.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pers/geolo/guitarworldserver/controller/CommentController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pers/geolo/guitarworldserver/controller/CommentController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pers/geolo/guitarworldserver/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pers/geolo/guitarworldserver/controller/UserController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pers/geolo/guitarworldserver/controller/UserRelationController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pers/geolo/guitarworldserver/controller/UserRelationController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/pers/geolo/guitarworldserver/controller/WorksController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pers/geolo/guitarworldserver/controller/WorksController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pers/geolo/guitarworldserver/dao/CommentDAO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pers/geolo/guitarworldserver/dao/UserDAO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pers/geolo/guitarworldserver/dao/UserRelationDAO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pers/geolo/guitarworldserver/dao/WorksDAO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pers/geolo/guitarworldserver/service/CommentService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pers/geolo/guitarworldserver/service/CommentService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pers/geolo/guitarworldserver/service/UserRelationService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pers/geolo/guitarworldserver/service/UserRelationService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/pers/geolo/guitarworldserver/service/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pers/geolo/guitarworldserver/service/UserService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/pers/geolo/guitarworldserver/service/WorksService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pers/geolo/guitarworldserver/service/WorksService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/guitarworldserver/WEB-INF/classes/mybatis-config/CommentMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/guitarworldserver/WEB-INF/classes/mybatis-config/CommentMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/guitarworldserver/WEB-INF/classes/mybatis-config/UserMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/guitarworldserver/WEB-INF/classes/mybatis-config/UserMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/guitarworldserver/WEB-INF/classes/mybatis-config/UserRelationMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/guitarworldserver/WEB-INF/classes/mybatis-config/UserRelationMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/guitarworldserver/WEB-INF/classes/mybatis-config/WorksMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/guitarworldserver/WEB-INF/classes/mybatis-config/WorksMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/guitarworldserver/WEB-INF/classes/pers/geolo/guitarworldserver/Test.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/guitarworldserver/WEB-INF/classes/pers/geolo/guitarworldserver/Test.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/guitarworldserver/WEB-INF/classes/pers/geolo/guitarworldserver/controller/CommentController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/guitarworldserver/WEB-INF/classes/pers/geolo/guitarworldserver/controller/CommentController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/guitarworldserver/WEB-INF/classes/pers/geolo/guitarworldserver/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/guitarworldserver/WEB-INF/classes/pers/geolo/guitarworldserver/controller/UserController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/guitarworldserver/WEB-INF/classes/pers/geolo/guitarworldserver/controller/UserRelationController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/guitarworldserver/WEB-INF/classes/pers/geolo/guitarworldserver/controller/UserRelationController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/guitarworldserver/WEB-INF/classes/pers/geolo/guitarworldserver/controller/WorksController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/guitarworldserver/WEB-INF/classes/pers/geolo/guitarworldserver/controller/WorksController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/guitarworldserver/WEB-INF/classes/pers/geolo/guitarworldserver/dao/CommentDAO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/guitarworldserver/WEB-INF/classes/pers/geolo/guitarworldserver/dao/UserDAO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/guitarworldserver/WEB-INF/classes/pers/geolo/guitarworldserver/dao/UserRelationDAO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/guitarworldserver/WEB-INF/classes/pers/geolo/guitarworldserver/dao/WorksDAO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/guitarworldserver/WEB-INF/classes/pers/geolo/guitarworldserver/service/CommentService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/guitarworldserver/WEB-INF/classes/pers/geolo/guitarworldserver/service/CommentService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/guitarworldserver/WEB-INF/classes/pers/geolo/guitarworldserver/service/UserRelationService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/guitarworldserver/WEB-INF/classes/pers/geolo/guitarworldserver/service/UserRelationService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/guitarworldserver/WEB-INF/classes/pers/geolo/guitarworldserver/service/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/guitarworldserver/WEB-INF/classes/pers/geolo/guitarworldserver/service/UserService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/guitarworldserver/WEB-INF/classes/pers/geolo/guitarworldserver/service/WorksService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/guitarworldserver/WEB-INF/classes/pers/geolo/guitarworldserver/service/WorksService.class" afterDir="false" />
     </list>
@@ -97,11 +73,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/controller/WorksController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="131">
-              <caret line="46" column="91" selection-start-line="46" selection-start-column="91" selection-end-line="46" selection-end-column="91" />
+            <state relative-caret-position="244">
+              <caret line="49" column="52" lean-forward="true" selection-start-line="49" selection-start-column="52" selection-end-line="49" selection-end-column="52" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -112,17 +88,26 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/service/WorksService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="280">
-              <caret line="16" column="15" selection-start-line="16" selection-start-column="15" selection-end-line="16" selection-end-column="15" />
+            <state relative-caret-position="196">
+              <caret line="22" column="24" lean-forward="true" selection-start-line="22" selection-start-column="24" selection-end-line="22" selection-end-column="24" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/controller/CommentController.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/dao/WorksMapper.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="139">
-              <caret line="47" column="101" selection-start-line="47" selection-start-column="101" selection-end-line="47" selection-end-column="101" />
+            <state relative-caret-position="252">
+              <caret line="13" column="33" lean-forward="true" selection-start-line="13" selection-start-column="33" selection-end-line="13" selection-end-column="33" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/controller/UserController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1883">
+              <caret line="74" column="53" selection-start-line="74" selection-start-column="53" selection-end-line="74" selection-end-column="53" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -131,37 +116,31 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/mybatis-config/CommentMapper.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="160">
-              <caret line="18" column="39" lean-forward="true" selection-start-line="18" selection-start-column="39" selection-end-line="18" selection-end-column="39" />
+        <entry file="das://09cb1157-a67e-4027-a065-0e78e809a7ee/schema/GuitarWorld_Server/table/UserRelation">
+          <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+            <state>
+              <filtering enabled="true" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/mybatis-config/UserMapper.xml">
+        <entry file="file://$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/service/UserService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="565">
-              <caret line="29" column="26" selection-start-line="29" selection-start-column="26" selection-end-line="29" selection-end-column="26" />
+            <state relative-caret-position="621">
+              <caret line="72" column="42" lean-forward="true" selection-start-line="72" selection-start-column="42" selection-end-line="72" selection-end-column="42" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/mybatis-config/UserRelationMapper.xml">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/controller/FileController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-344">
-              <caret line="3" column="60" lean-forward="true" selection-start-line="3" selection-start-column="60" selection-end-line="3" selection-end-column="60" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/mybatis-config/WorksMapper.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="476">
-              <caret line="17" column="36" selection-start-line="17" selection-start-column="36" selection-end-line="17" selection-end-column="36" />
+            <state relative-caret-position="-28">
+              <caret line="30" column="74" selection-start-line="30" selection-start-column="60" selection-end-line="30" selection-end-column="74" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -169,8 +148,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/controller/UserRelationController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1612">
-              <caret line="87" column="39" selection-start-line="87" selection-start-column="31" selection-end-line="87" selection-end-column="39" />
+            <state relative-caret-position="-1128">
+              <caret line="43" column="78" selection-start-line="43" selection-start-column="78" selection-end-line="43" selection-end-column="78" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/dao/UserRelationMapper.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="420">
+              <caret line="18" column="17" selection-start-line="18" selection-start-column="17" selection-end-line="18" selection-end-column="17" />
             </state>
           </provider>
         </entry>
@@ -210,8 +198,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/entity/UserRelation.java" />
-        <option value="$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/entity/Comment.java" />
         <option value="$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/entity/ResponseCode.java" />
         <option value="$PROJECT_DIR$/src/main/resources/file-config/file.properties" />
         <option value="$PROJECT_DIR$/src/main/resources/spring-config/file-config.xml" />
@@ -235,9 +221,7 @@
         <option value="$PROJECT_DIR$/src/main/webapp/js/main.js" />
         <option value="$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/interceptor/AuthInterceptor.java" />
         <option value="$PROJECT_DIR$/src/main/resources/spring-config/dispatcher-servlet.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/controller/UserController.java" />
         <option value="$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/controller/FileController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/controller/UserRelationController.java" />
         <option value="$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/util/IoUtil.java" />
         <option value="$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/util/IoUtils.java" />
         <option value="$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/service/FileService.java" />
@@ -253,14 +237,18 @@
         <option value="$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/dao/UserRelationMapper.java" />
         <option value="$PROJECT_DIR$/src/main/resources/mybatis-config/UserRelationMapper.xml" />
         <option value="$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/service/CommentService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/Test.java" />
+        <option value="$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/controller/CommentController.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/mybatis-config/CommentMapper.xml" />
+        <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/controller/UserRelationController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/controller/UserController.java" />
         <option value="$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/service/UserService.java" />
         <option value="$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/dao/UserMapper.java" />
         <option value="$PROJECT_DIR$/src/main/resources/mybatis-config/UserMapper.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/service/WorksService.java" />
-        <option value="$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/Test.java" />
         <option value="$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/controller/WorksController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/controller/CommentController.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/mybatis-config/CommentMapper.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/service/WorksService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/dao/WorksMapper.java" />
       </list>
     </option>
   </component>
@@ -301,9 +289,9 @@
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="67" />
-    <option name="y" value="27" />
-    <option name="width" value="917" />
-    <option name="height" value="789" />
+    <option name="y" value="25" />
+    <option name="width" value="927" />
+    <option name="height" value="1055" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -354,39 +342,6 @@
               <item name="guitarworldserver" type="462c0819:PsiDirectoryNode" />
               <item name="controller" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="GuitarWorld-Server" type="b2602c69:ProjectViewProjectNode" />
-              <item name="GuitarWorld-Server" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="guitarworldserver" type="462c0819:PsiDirectoryNode" />
-              <item name="dao" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="GuitarWorld-Server" type="b2602c69:ProjectViewProjectNode" />
-              <item name="GuitarWorld-Server" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="guitarworldserver" type="462c0819:PsiDirectoryNode" />
-              <item name="service" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="GuitarWorld-Server" type="b2602c69:ProjectViewProjectNode" />
-              <item name="GuitarWorld-Server" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="GuitarWorld-Server" type="b2602c69:ProjectViewProjectNode" />
-              <item name="GuitarWorld-Server" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="mybatis-config" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -399,7 +354,7 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1554371889776" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1554392159886" />
     <property name="database.console.LAST_STATE" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../Geolo's Library" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
@@ -571,12 +526,12 @@
       <workItem from="1554183640957" duration="698000" />
       <workItem from="1554191956858" duration="77000" />
       <workItem from="1554298906209" duration="4443000" />
-      <workItem from="1554366455000" duration="5132000" />
+      <workItem from="1554366455000" duration="10666000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="267321000" />
+    <option name="totallyTimeSpent" value="272855000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -590,7 +545,7 @@
   <component name="ToolWindowManager">
     <frame x="67" y="25" width="1853" height="1055" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49637157" visible="true" weight="0.26703602" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49637157" visible="true" weight="0.24265929" />
       <window_info id="Structure" order="1" sideWeight="0.50159746" side_tool="true" weight="0.19833796" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -601,13 +556,13 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32972974" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.46054053" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49750692" weight="0.652973" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49750692" visible="true" weight="0.3772973" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32972974" />
       <window_info anchor="bottom" id="Spring" order="7" weight="0.32864866" />
       <window_info anchor="bottom" id="Application Servers" order="8" weight="0.32864866" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="9" visible="true" weight="0.7956757" />
+      <window_info anchor="bottom" id="Terminal" order="9" weight="0.8389189" />
       <window_info anchor="bottom" id="Docker" order="10" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5024931" side_tool="true" weight="0.3545946" />
       <window_info anchor="bottom" id="Messages" order="12" weight="0.32864866" />
@@ -763,13 +718,6 @@
     <entry file="file://$PROJECT_DIR$/src/main/resources/spring-config/spring-mybatis.xml">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="das://09cb1157-a67e-4027-a065-0e78e809a7ee/schema/GuitarWorld_Server/table/UserRelation">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
     <entry file="das://09cb1157-a67e-4027-a065-0e78e809a7ee/schema/GuitarWorld_Server/table/User">
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state>
@@ -788,23 +736,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="212">
           <caret line="1307" column="19" selection-start-line="1307" selection-start-column="19" selection-end-line="1307" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="7" lean-forward="true" selection-start-column="7" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/controller/FileController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="476">
-          <caret line="30" column="74" selection-start-line="30" selection-start-column="60" selection-end-line="30" selection-end-column="74" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -877,24 +808,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/dao/WorksMapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="15" column="30" selection-start-line="15" selection-start-column="30" selection-end-line="15" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/entity/Comment.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="168">
           <caret line="6" column="13" lean-forward="true" selection-start-line="6" selection-start-column="13" selection-end-line="7" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/dao/UserRelationMapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="140">
-          <caret line="8" column="17" selection-start-line="8" selection-start-column="17" selection-end-line="8" selection-end-column="17" />
         </state>
       </provider>
     </entry>
@@ -922,81 +839,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/service/UserRelationService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="299">
-          <caret line="64" column="47" selection-start-line="64" selection-start-column="47" selection-end-line="64" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/dao/UserMapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="560">
-          <caret line="20" column="24" selection-start-line="20" selection-start-column="24" selection-end-line="20" selection-end-column="24" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/service/UserService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="957">
-          <caret line="64" column="38" selection-start-line="64" selection-start-column="38" selection-end-line="64" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/Test.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="280">
-          <caret line="13" column="33" selection-start-line="13" selection-start-column="33" selection-end-line="13" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/controller/AuthController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-513">
-          <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/controller/UserController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-373">
-          <caret line="17" column="50" selection-start-line="17" selection-start-column="50" selection-end-line="17" selection-end-column="50" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/service/WorksService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="280">
-          <caret line="16" column="15" selection-start-line="16" selection-start-column="15" selection-end-line="16" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/controller/UserRelationController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1612">
-          <caret line="87" column="39" selection-start-line="87" selection-start-column="31" selection-end-line="87" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/controller/CommentController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="139">
-          <caret line="47" column="101" selection-start-line="47" selection-start-column="101" selection-end-line="47" selection-end-column="101" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="das://09cb1157-a67e-4027-a065-0e78e809a7ee/schema/GuitarWorld_Server/table/Comment">
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state>
@@ -1006,21 +848,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/mybatis-config/CommentMapper.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
+        <state relative-caret-position="173">
           <caret line="18" column="39" lean-forward="true" selection-start-line="18" selection-start-column="39" selection-end-line="18" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/mybatis-config/UserMapper.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="565">
-          <caret line="29" column="26" selection-start-line="29" selection-start-column="26" selection-end-line="29" selection-end-column="26" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/mybatis-config/UserRelationMapper.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-344">
+        <state relative-caret-position="-219">
           <caret line="3" column="60" lean-forward="true" selection-start-line="3" selection-start-column="60" selection-end-line="3" selection-end-column="60" />
         </state>
       </provider>
@@ -1046,10 +881,130 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="28">
+          <caret line="1" column="7" selection-start-line="1" selection-start-column="7" selection-end-line="1" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/controller/AuthController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-224">
+          <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/controller/CommentController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="968">
+          <caret line="40" column="33" selection-start-line="40" selection-start-column="33" selection-end-line="40" selection-end-column="33" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/service/UserRelationService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="327">
+          <caret line="45" column="45" selection-start-line="45" selection-start-column="45" selection-end-line="45" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/dao/UserRelationMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="18" column="17" selection-start-line="18" selection-start-column="17" selection-end-line="18" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/mybatis-config/UserMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="565">
+          <caret line="43" column="31" lean-forward="true" selection-start-line="43" selection-start-column="31" selection-end-line="43" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/dao/UserMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="672">
+          <caret line="24" column="51" lean-forward="true" selection-start-line="24" selection-start-column="51" selection-end-line="24" selection-end-column="51" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/service/UserService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="621">
+          <caret line="72" column="42" lean-forward="true" selection-start-line="72" selection-start-column="42" selection-end-line="72" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://09cb1157-a67e-4027-a065-0e78e809a7ee/schema/GuitarWorld_Server/table/UserRelation">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/controller/UserController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1883">
+          <caret line="74" column="53" selection-start-line="74" selection-start-column="53" selection-end-line="74" selection-end-column="53" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/controller/UserRelationController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1128">
+          <caret line="43" column="78" selection-start-line="43" selection-start-column="78" selection-end-line="43" selection-end-column="78" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/controller/WorksController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="131">
-          <caret line="46" column="91" selection-start-line="46" selection-start-column="91" selection-end-line="46" selection-end-column="91" />
+        <state relative-caret-position="244">
+          <caret line="49" column="52" lean-forward="true" selection-start-line="49" selection-start-column="52" selection-end-line="49" selection-end-column="52" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/service/WorksService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="196">
+          <caret line="22" column="24" lean-forward="true" selection-start-line="22" selection-start-column="24" selection-end-line="22" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/Test.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="280">
+          <caret line="13" column="33" selection-start-line="13" selection-start-column="33" selection-end-line="13" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/dao/WorksMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="13" column="33" lean-forward="true" selection-start-line="13" selection-start-column="33" selection-end-line="13" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/pers/geolo/guitarworldserver/controller/FileController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-28">
+          <caret line="30" column="74" selection-start-line="30" selection-start-column="60" selection-end-line="30" selection-end-column="74" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

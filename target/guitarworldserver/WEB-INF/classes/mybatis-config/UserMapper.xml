@@ -32,4 +32,18 @@
         FROM User;
     </select>
 
+    <select id="selectByFollower" parameterType="string" resultType="user">
+        SELECT username, email
+        FROM User, UserRelation
+        WHERE UserRelation.follower_username = #{follower}
+        AND User.username = UserRelation.following_username;
+    </select>
+
+    <select id="selectByFollowing" parameterType="string" resultType="user">
+        SELECT username, email
+        FROM User, UserRelation
+        WHERE UserRelation.following_username = #{following}
+          AND User.username = UserRelation.follower_username;
+    </select>
+
 </mapper>

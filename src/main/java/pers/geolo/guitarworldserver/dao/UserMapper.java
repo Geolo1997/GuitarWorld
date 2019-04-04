@@ -19,4 +19,8 @@ public interface UserMapper {
 
     // test
     List<User> selectAll();
+
+    List<User> selectByFollower(String follower);
+
+    List<User> selectByFollowing(String following);
 }

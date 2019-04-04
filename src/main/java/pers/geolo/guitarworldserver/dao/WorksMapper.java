@@ -1,7 +1,7 @@
 package pers.geolo.guitarworldserver.dao;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.springframework.stereotype.Repository;
 
 import pers.geolo.guitarworldserver.entity.Works;
@@ -11,7 +11,7 @@ public interface WorksMapper {
 
     void insert(Works works);
 
-    void delete(HashMap<String, Object> filter);
+    void delete(Map<String, Object> filter);
 
-    List<Works> select(HashMap<String, Object> filter);
+    List<Works> select(Map<String, Object> filter);
 }

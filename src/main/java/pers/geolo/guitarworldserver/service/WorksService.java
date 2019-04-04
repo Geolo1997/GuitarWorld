@@ -1,7 +1,7 @@
 package pers.geolo.guitarworldserver.service;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,12 +19,12 @@ public class WorksService {
         return 0;
     }
 
-    public int removeWorksList(HashMap<String, Object> filter) {
+    public int removeWorksList(Map<String, Object> filter) {
         worksMapper.delete(filter);
         return 0;
     }
 
-    public List<Works> getWorksList(HashMap<String, Object> filter) {
+    public List<Works> getWorksList(Map<String, Object> filter) {
         return worksMapper.select(filter);
     }
 }

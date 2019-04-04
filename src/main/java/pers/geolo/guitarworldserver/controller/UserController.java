@@ -52,4 +52,30 @@ public class UserController {
         List<User> userList = userService.getAllUsers();
         return new ResponseJSONBody<>(0, userList, null);
     }
+
+    /**
+     * 获取某用户关注
+     *
+     * @param username 该用户用户名
+     * @return 该用户粉丝用户名列表
+     */
+    @RequestMapping(value = "/{username}/following", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseJSONBody<List<User>> getFollowing(@PathVariable("username") String username) {
+        List<User> followings = userService.getFollowings(username);
+        return new ResponseJSONBody<>(0, followings, null);
+    }
+
+    /**
+     * 获取某用户粉丝
+     *
+     * @param username 该用户用户名
+     * @return 该用户偶像用户名列表
+     */
+    @RequestMapping(value = "/{username}/follower", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseJSONBody<List<User>> getFollower(@PathVariable("username") String username) {
+        List<User> followers = userService.getFollowers(username);
+        return new ResponseJSONBody<>(0, followers, null);
+    }
 }
