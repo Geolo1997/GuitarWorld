@@ -6,8 +6,8 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 import pers.geolo.guitarworld.R;
-import pers.geolo.guitarworld.base.BaseActivity;
-import pers.geolo.guitarworld.presenter.PublishWorksPresenter;
+import pers.geolo.guitarworld.ui.base.BaseActivity;
+import pers.geolo.guitarworld.presenter.works.PublishWorksPresenter;
 import pers.geolo.guitarworld.view.PublishWorksView;
 
 public class PublishActivity extends BaseActivity implements PublishWorksView {

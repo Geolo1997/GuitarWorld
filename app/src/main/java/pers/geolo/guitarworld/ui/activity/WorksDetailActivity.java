@@ -2,8 +2,6 @@ package pers.geolo.guitarworld.ui.activity;
 
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.EditText;
@@ -14,13 +12,15 @@ import butterknife.OnClick;
 import java.util.Date;
 
 import pers.geolo.guitarworld.R;
-import pers.geolo.guitarworld.base.BaseActivity;
-import pers.geolo.guitarworld.presenter.AddCommentPresenter;
-import pers.geolo.guitarworld.presenter.CommentListPresenter;
-import pers.geolo.guitarworld.presenter.WorksDetailPresenter;
+import pers.geolo.guitarworld.ui.base.BaseActivity;
+import pers.geolo.guitarworld.presenter.comment.AddCommentPresenter;
+import pers.geolo.guitarworld.presenter.comment.CommentListPresenter;
+import pers.geolo.guitarworld.presenter.works.WorksDetailPresenter;
 import pers.geolo.guitarworld.ui.adapter.CommentListAdapter;
 import pers.geolo.guitarworld.util.DateUtils;
 import pers.geolo.guitarworld.util.KeyBoardUtils;
+import pers.geolo.guitarworld.util.ModuleMessage;
+import pers.geolo.guitarworld.util.RecyclerViewUtils;
 import pers.geolo.guitarworld.view.AddCommentView;
 import pers.geolo.guitarworld.view.WorksDetailView;
 
@@ -44,10 +44,9 @@ public class WorksDetailActivity extends BaseActivity implements WorksDetailView
     EditText etComment;
 
     private CommentListAdapter commentListAdapter;
-
     private WorksDetailPresenter worksDetailPresenter = new WorksDetailPresenter();
-    private CommentListPresenter commentListPresenter = new CommentListPresenter();
     private AddCommentPresenter addCommentPresenter = new AddCommentPresenter();
+    private CommentListPresenter commentListPresenter;
 
     @Override
     protected int getContentView() {
@@ -58,28 +57,31 @@ public class WorksDetailActivity extends BaseActivity implements WorksDetailView
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // 接收活动传来的作品id
-       int worksId = getIntent().getIntExtra("id", 0);
-
-
-        // 设置RecyclerView管理器
-        rvComments.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        // 初始化适配器
-        commentListAdapter = new CommentListAdapter(this);
-        // 设置添加或删除item时的动画，这里使用默认动画
-        rvComments.setItemAnimator(new DefaultItemAnimator());
-        // 设置适配器
-        rvComments.setAdapter(commentListAdapter);
-
+        int worksId = getIntent().getIntExtra(ModuleMessage.WORKS_ID, 0);
+        // 绑定Presenter
         worksDetailPresenter.bind(this);
-        addCommentPresenter.bind(this);
-        commentListPresenter.bind(commentListAdapter);
         worksDetailPresenter.setWorksId(worksId);
-        commentListPresenter.setWorksId(worksId);
-        commentListPresenter.loadingCommentList();
+        addCommentPresenter.bind(this);
+        addCommentPresenter.setWorksId(worksId);
+        // 设置适配器
+        commentListAdapter = new CommentListAdapter(this);
+        commentListPresenter = commentListAdapter.getCommentListPresenter();
+        commentListPresenter.setFilter("worksId", worksId);
+        //设置RecyclerView
+        RecyclerViewUtils.setDefaultConfig(this, rvComments);
+        rvComments.setAdapter(commentListAdapter);
+        // 设置刷新事件
+        srlRefresh.setOnRefreshListener(() -> worksDetailPresenter.loadWorksDetail());
+        // 初始化加载
+        worksDetailPresenter.loadWorksDetail();
+        commentListPresenter.loadCommentList();
+    }
 
-        srlRefresh.setOnRefreshListener(() -> worksDetailPresenter.loadingWorksDetail());
-
-        worksDetailPresenter.loadingWorksDetail();
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        worksDetailPresenter.unBind();
+        addCommentPresenter.unBind();
     }
 
     @OnClick(R.id.bt_add_comment)

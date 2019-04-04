@@ -5,7 +5,7 @@ import java.util.Date;
 import pers.geolo.guitarworld.view.base.BaseView;
 import pers.geolo.guitarworld.view.list.ListItemView;
 
-public interface WorksListItemView extends BaseView, ListItemView {
+public interface WorksListItemView extends ListItemView {
 
     void setAuthor(String author);
 
@@ -18,8 +18,4 @@ public interface WorksListItemView extends BaseView, ListItemView {
     String getUsername();
 
     void showOptions(String[] options);
-
-    int getWorksId();
-
-    void setId(int id);
 }

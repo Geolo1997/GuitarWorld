@@ -1,8 +1,6 @@
 package pers.geolo.guitarworld.ui.fragment;
 
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,19 +8,14 @@ import android.view.ViewGroup;
 import butterknife.BindView;
 
 import pers.geolo.guitarworld.R;
-import pers.geolo.guitarworld.ui.adapter.UsernameListAdapter;
-import pers.geolo.guitarworld.base.BaseFragment;
-import pers.geolo.guitarworld.network.HttpService;
-import pers.geolo.guitarworld.network.api.UserRelationApi;
-import pers.geolo.guitarworld.network.callback.BaseCallback;
-
-import java.util.List;
+import pers.geolo.guitarworld.ui.base.BaseFragment;
+import pers.geolo.guitarworld.entity.UserListType;
+import pers.geolo.guitarworld.presenter.user.UserListPresenter;
+import pers.geolo.guitarworld.ui.adapter.UserListAdapter;
+import pers.geolo.guitarworld.util.ModuleMessage;
+import pers.geolo.guitarworld.util.RecyclerViewUtils;
 
 public class FollowerFragment extends BaseFragment {
-
-    Bundle bundle;
-
-    UsernameListAdapter adapter;
 
     @BindView(R.id.rv_follower)
     RecyclerView rvFollower;
@@ -34,41 +27,23 @@ public class FollowerFragment extends BaseFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
-
-        // 设置RecyclerView管理器
-        rvFollower.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        // 设置添加或删除item时的动画，这里使用默认动画
-        rvFollower.setItemAnimator(new DefaultItemAnimator());
-        adapter = new UsernameListAdapter(getBaseActivity());
-        rvFollower.setAdapter(adapter);
-
-        bundle = getArguments();
-
-        updateUsernameList(bundle.getString("username"));
-
+        String currentUsername = null;
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            currentUsername = bundle.getString(ModuleMessage.CURRENT_USERNAME);
+        }
+        // 设置RecyclerView
+        RecyclerViewUtils.setDefaultConfig(getContext(), rvFollower);
+        UserListAdapter userListAdapter = new UserListAdapter(getBaseActivity());
+        rvFollower.setAdapter(userListAdapter);
+        // 获取presenter
+        UserListPresenter userListPresenter = userListAdapter.getPresenter();
+        // 设置过滤器
+        userListPresenter.setFilter(UserListType.class.getSimpleName(), UserListType.FOLLOWER);
+        userListPresenter.setFilter("currentUsername", currentUsername);
+        // 加载用户列表
+        userListPresenter.loadUserList();
         return rootView;
     }
-
-    private void updateUsernameList(String username) {
-        HttpService.getInstance().getAPI(UserRelationApi.class)
-                .getFollower(username).enqueue(new BaseCallback<List<String>>() {
-            @Override
-            public void onSuccess(List<String> responseData) {
-//                adapter.setDataList(responseData);
-            }
-
-            @Override
-            public void onError(int errorCode, String errorMessage) {
-
-            }
-
-            @Override
-            public void onFailure() {
-
-            }
-        });
-    }
-
 }

@@ -1,22 +1,22 @@
 package pers.geolo.guitarworld.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-
 import butterknife.OnClick;
 
 import pers.geolo.guitarworld.R;
-import pers.geolo.guitarworld.base.BaseActivity;
-import pers.geolo.guitarworld.dao.DAOService;
+import pers.geolo.guitarworld.ui.base.BaseActivity;
 import pers.geolo.guitarworld.ui.fragment.FollowerFragment;
 import pers.geolo.guitarworld.ui.fragment.FollowingFragment;
+import pers.geolo.guitarworld.util.ModuleMessage;
 
 public class FollowActivity extends BaseActivity {
 
     protected Button selectedButton;
 
-    protected Bundle bundle;
+    protected Bundle bundle = new Bundle();
 
     @Override
     protected int getContentView() {
@@ -26,11 +26,11 @@ public class FollowActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        String currentUsername = DAOService.getInstance().getCurrentLogInfo().getUsername();
-        bundle = new Bundle();
-        bundle.putString("username", currentUsername);
+        Intent intent = getIntent();
+        String currentUsername = intent.getStringExtra(ModuleMessage.CURRENT_USERNAME);
+        bundle.putString(ModuleMessage.CURRENT_USERNAME, currentUsername);
         // 设置默认碎片
-        String tag = getIntent().getStringExtra("tag");
+        String tag = getIntent().getStringExtra(ModuleMessage.FOLLOW_TAG);
         selectedButton = findViewById("following".equals(tag) ? R.id.bt_following : R.id.bt_follower);
         onViewClicked(selectedButton);
     }

@@ -1,4 +1,4 @@
-package pers.geolo.guitarworld.presenter;
+package pers.geolo.guitarworld.presenter.base;
 
 import pers.geolo.guitarworld.view.base.BaseView;
 

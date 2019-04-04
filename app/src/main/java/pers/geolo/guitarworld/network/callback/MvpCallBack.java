@@ -7,11 +7,11 @@ import retrofit2.Response;
 import pers.geolo.guitarworld.network.ResponseBody;
 import pers.geolo.guitarworld.view.base.BaseView;
 
-public abstract class MvpNetworkCallBack<T> extends BaseCallback<T> {
+public abstract class MvpCallBack<T> extends BaseCallback<T> {
 
     private BaseView baseView;
 
-    public MvpNetworkCallBack(BaseView baseView) {
+    public MvpCallBack(BaseView baseView) {
         this.baseView = baseView;
     }
 

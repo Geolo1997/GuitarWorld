@@ -1,10 +1,12 @@
-package pers.geolo.guitarworld.presenter;
+package pers.geolo.guitarworld.presenter.auth;
 
+import pers.geolo.guitarworld.ui.base.CustomContext;
 import pers.geolo.guitarworld.dao.DAOService;
 import pers.geolo.guitarworld.entity.LogInfo;
 import pers.geolo.guitarworld.network.HttpService;
 import pers.geolo.guitarworld.network.api.AuthApi;
-import pers.geolo.guitarworld.network.callback.MvpNetworkCallBack;
+import pers.geolo.guitarworld.network.callback.MvpCallBack;
+import pers.geolo.guitarworld.presenter.base.BasePresenter;
 import pers.geolo.guitarworld.view.AutoLoginView;
 import pers.geolo.util.SingletonHolder;
 
@@ -20,9 +22,10 @@ public class AutoLoginPresenter extends BasePresenter<AutoLoginView> {
             // 发送登录请求
             HttpService.getInstance().getAPI(AuthApi.class)
                     .login(logInfo.getUsername(), logInfo.getPassword())
-                    .enqueue(new MvpNetworkCallBack<Void>(getView()) {
+                    .enqueue(new MvpCallBack<Void>(getView()) {
                         @Override
                         public void onSuccess(Void responseData) {
+                            CustomContext.getInstance().setLogInfo(logInfo);
                             // 登录成功跳转至主视图
                             getView().toMainView();
                         }

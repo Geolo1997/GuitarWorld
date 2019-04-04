@@ -2,8 +2,6 @@ package pers.geolo.guitarworld.ui.fragment;
 
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,21 +10,19 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 import pers.geolo.guitarworld.R;
-import pers.geolo.guitarworld.base.BaseFragment;
-import pers.geolo.guitarworld.presenter.WorksListPresenter;
+import pers.geolo.guitarworld.ui.base.BaseFragment;
 import pers.geolo.guitarworld.ui.activity.PublishActivity;
 import pers.geolo.guitarworld.ui.adapter.WorksListAdapter;
+import pers.geolo.guitarworld.util.RecyclerViewUtils;
 
 public class DynamicFragment extends BaseFragment {
-
-    WorksListAdapter adapter;
 
     @BindView(R.id.rv_works_list)
     RecyclerView rvWorksList;
     @BindView(R.id.srl_refresh)
     SwipeRefreshLayout srlRefresh;
 
-    private WorksListPresenter worksListPresenter = new WorksListPresenter();
+    WorksListAdapter worksListAdapter;
 
     @Override
     protected int getContentView() {
@@ -35,22 +31,15 @@ public class DynamicFragment extends BaseFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        srlRefresh.setOnRefreshListener(() -> {
-            worksListPresenter.loadingWorksList();
-        });
-        // 设置RecyclerView管理器
-        rvWorksList.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        // 设置添加或删除item时的动画，这里使用默认动画
-        rvWorksList.setItemAnimator(new DefaultItemAnimator());
-        adapter = new WorksListAdapter(getBaseActivity());
-        rvWorksList.setAdapter(adapter);
-
-        worksListPresenter.bind(adapter);
-
-        worksListPresenter.loadingWorksList();
-
+        // 设置刷新控件监听
+        srlRefresh.setOnRefreshListener(() -> worksListAdapter.getWorksListPresenter().loadWorksList());
+        // 设置RecyclerView默认配置
+        RecyclerViewUtils.setDefaultConfig(getContext(), rvWorksList);
+        // 设置适配器
+        worksListAdapter = new WorksListAdapter(getBaseActivity());
+        rvWorksList.setAdapter(worksListAdapter);
+        worksListAdapter.getWorksListPresenter().loadWorksList();
         return rootView;
     }
 

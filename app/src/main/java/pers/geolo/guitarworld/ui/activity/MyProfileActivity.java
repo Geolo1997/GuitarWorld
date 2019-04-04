@@ -21,7 +21,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import pers.geolo.guitarworld.R;
-import pers.geolo.guitarworld.base.BaseActivity;
+import pers.geolo.guitarworld.ui.base.BaseActivity;
 import pers.geolo.guitarworld.dao.DAOService;
 import pers.geolo.guitarworld.entity.LogInfo;
 import pers.geolo.guitarworld.entity.User;

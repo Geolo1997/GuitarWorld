@@ -14,13 +14,15 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 import pers.geolo.guitarworld.R;
-import pers.geolo.guitarworld.base.BaseFragment;
+import pers.geolo.guitarworld.ui.base.BaseFragment;
+import pers.geolo.guitarworld.ui.base.CustomContext;
 import pers.geolo.guitarworld.dao.DAOService;
-import pers.geolo.guitarworld.presenter.LogoutPresenter;
+import pers.geolo.guitarworld.presenter.auth.LogoutPresenter;
 import pers.geolo.guitarworld.ui.activity.FollowActivity;
 import pers.geolo.guitarworld.ui.activity.LoginActivity;
 import pers.geolo.guitarworld.ui.activity.MyProfileActivity;
 import pers.geolo.guitarworld.ui.activity.MyWorksActivity;
+import pers.geolo.guitarworld.util.ModuleMessage;
 import pers.geolo.guitarworld.view.LogoutView;
 
 public class ProfileFragment extends BaseFragment implements LogoutView {
@@ -76,9 +78,8 @@ public class ProfileFragment extends BaseFragment implements LogoutView {
         int id = view.getId();
         Log.d(TAG, String.valueOf(id));
         Intent intent = new Intent(getActivity(), FollowActivity.class);
-        intent.putExtra("tag", id == R.id.bt_my_following ? "following" : "follower");
-        intent.putExtra("permission", "admin");
-        intent.putExtra("username", DAOService.getInstance().getCurrentLogInfo().getUsername());
+        intent.putExtra(ModuleMessage.FOLLOW_TAG, id == R.id.bt_my_following ? "following" : "follower");
+        intent.putExtra(ModuleMessage.CURRENT_USERNAME, CustomContext.getInstance().getLogInfo().getUsername());
         startActivity(intent);
     }
 

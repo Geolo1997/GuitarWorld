@@ -41,12 +41,14 @@
             <CheckBox
                 android:id="@+id/cb_savePassword"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:text="@string/save_password"/>
 
             <CheckBox
                 android:id="@+id/cb_autoLogin"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:text="@string/auto_login"/>
 
             <Button
                 android:id="@+id/bt_login"

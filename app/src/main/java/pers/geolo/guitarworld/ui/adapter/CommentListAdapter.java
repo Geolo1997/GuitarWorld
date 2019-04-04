@@ -9,41 +9,47 @@ import butterknife.OnLongClick;
 import java.util.Date;
 
 import pers.geolo.guitarworld.R;
-import pers.geolo.guitarworld.base.BaseActivity;
-import pers.geolo.guitarworld.base.BaseRecyclerViewAdapter;
-import pers.geolo.guitarworld.dao.DAOService;
-import pers.geolo.guitarworld.entity.Comment;
-import pers.geolo.guitarworld.network.HttpService;
-import pers.geolo.guitarworld.network.api.CommentApi;
-import pers.geolo.guitarworld.network.callback.BaseCallback;
+import pers.geolo.guitarworld.ui.base.BaseActivity;
+import pers.geolo.guitarworld.presenter.comment.CommentListPresenter;
 import pers.geolo.guitarworld.util.DateUtils;
 import pers.geolo.guitarworld.view.CommentItemView;
 import pers.geolo.guitarworld.view.CommentListView;
 
-public class CommentListAdapter extends BaseRecyclerViewAdapter<CommentListAdapter.ViewHolder, CommentItemView>
+public class CommentListAdapter extends MvpRecyclerViewAdapter<CommentListAdapter.ViewHolder, CommentItemView>
         implements CommentListView {
 
-    private final String[] personalOptions = new String[]{"删除"};
-    private final String[] viewerOptions = new String[]{};
+    private CommentListPresenter commentListPresenter = new CommentListPresenter();
 
     public CommentListAdapter(BaseActivity activity) {
         super(activity);
+        commentListPresenter.bind(this);
+    }
+
+    public CommentListPresenter getCommentListPresenter() {
+        return commentListPresenter;
     }
 
     @Override
     public int getItemViewId() {
         return R.layout.item_comments_view;
     }
-//
-//    @Override
-//    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-//        Comment comment = null;
-//        viewHolder.tvCommentAuthor.setText(comment.getAuthor());
-//        viewHolder.tvComment.setText(comment.getContent());
-//        viewHolder.tvCreateTime.setText(DateUtils.toString(comment.getCreateTime()));
-//    }
 
-    public class ViewHolder extends BaseRecyclerViewAdapter.BaseViewHolder implements CommentItemView {
+    @Override
+    protected ViewHolder getViewHolder(View view) {
+        return new ViewHolder(view);
+    }
+
+    @Override
+    public void onBindItemView(ViewHolder viewHolder, int i) {
+        commentListPresenter.onBindItemView(viewHolder, i);
+    }
+
+    @Override
+    public int getItemCount() {
+        return commentListPresenter.getListSize();
+    }
+
+    public class ViewHolder extends MvpRecyclerViewAdapter.ViewHolder implements CommentItemView {
 
         @BindView(R.id.tv_commentAuthor)
         TextView tvCommentAuthor;
@@ -58,48 +64,13 @@ public class CommentListAdapter extends BaseRecyclerViewAdapter<CommentListAdapt
 
         @OnLongClick(R.id.ll_comment_item)
         public boolean option() {
-            Comment comment = null;
-            String currentUsername = DAOService.getInstance().getCurrentLogInfo().getUsername();
-
-            String[] alertDialogItems;
-            if (currentUsername.equals(comment.getAuthor())) {
-                alertDialogItems = personalOptions;
-            } else {
-                alertDialogItems = viewerOptions;
-            }
-            //添加列表
-            AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
-                    .setTitle("选项")
-                    .setItems(alertDialogItems, (dialogInterface, i) -> {
-                        String text = alertDialogItems[i];
-                        switch (text) {
-                            case "删除":
-                                HttpService.getInstance().getAPI(CommentApi.class)
-                                        .removeComment(comment.getId()).enqueue(new BaseCallback<Void>() {
-                                    @Override
-                                    public void onSuccess(Void responseData) {
-                                        getActivity().showToast("删除成功");
-//                                        getDataList().remove(getAdapterPosition());
-                                        notifyDataSetChanged();
-                                    }
-
-                                    @Override
-                                    public void onError(int errorCode, String errorMessage) {
-                                        getActivity().showToast("删除失败");
-                                    }
-
-                                    @Override
-                                    public void onFailure() {
-                                        getActivity().showToast("网络错误");
-                                    }
-                                });
-                                break;
-                            default:
-                        }
-                    })
-                    .create();
-            alertDialog.show();
+            commentListPresenter.showItemOptions(getIndex());
             return true;
+        }
+
+        @Override
+        public String getAuthor() {
+            return tvCommentAuthor.getText().toString().trim();
         }
 
         @Override
@@ -114,7 +85,25 @@ public class CommentListAdapter extends BaseRecyclerViewAdapter<CommentListAdapt
 
         @Override
         public void setContent(String content) {
-            tvCommentAuthor.setText(content);
+            tvComment.setText(content);
+        }
+
+        @Override
+        public void showOptions(String[] options) {
+            //添加列表
+            AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
+                    .setTitle("选项")
+                    .setItems(options, (dialogInterface, i) -> {
+                        String text = options[i];
+                        switch (text) {
+                            case "删除":
+                                commentListPresenter.removeComment(getIndex());
+                                break;
+                            default:
+                        }
+                    })
+                    .create();
+            alertDialog.show();
         }
     }
 }

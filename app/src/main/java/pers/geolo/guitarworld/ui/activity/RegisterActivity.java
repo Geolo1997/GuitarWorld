@@ -8,8 +8,8 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 import pers.geolo.guitarworld.R;
-import pers.geolo.guitarworld.base.BaseActivity;
-import pers.geolo.guitarworld.presenter.RegisterPresenter;
+import pers.geolo.guitarworld.ui.base.BaseActivity;
+import pers.geolo.guitarworld.presenter.auth.RegisterPresenter;
 import pers.geolo.guitarworld.view.RegisterView;
 
 public class RegisterActivity extends BaseActivity implements RegisterView {

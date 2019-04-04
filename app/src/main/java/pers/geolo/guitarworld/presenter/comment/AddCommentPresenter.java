@@ -1,12 +1,13 @@
-package pers.geolo.guitarworld.presenter;
+package pers.geolo.guitarworld.presenter.comment;
 
 import java.util.Date;
 
-import pers.geolo.guitarworld.dao.DAOService;
+import pers.geolo.guitarworld.ui.base.CustomContext;
 import pers.geolo.guitarworld.entity.Comment;
 import pers.geolo.guitarworld.network.HttpService;
 import pers.geolo.guitarworld.network.api.CommentApi;
-import pers.geolo.guitarworld.network.callback.MvpNetworkCallBack;
+import pers.geolo.guitarworld.network.callback.MvpCallBack;
+import pers.geolo.guitarworld.presenter.base.BasePresenter;
 import pers.geolo.guitarworld.view.AddCommentView;
 
 public class AddCommentPresenter extends BasePresenter<AddCommentView> {
@@ -21,10 +22,10 @@ public class AddCommentPresenter extends BasePresenter<AddCommentView> {
      * 增加评论
      */
     public  void addComment() {
-        String author = DAOService.getInstance().getCurrentLogInfo().getUsername();
+        String author = CustomContext.getInstance().getLogInfo().getUsername();
         Comment comment = new Comment(worksId, author, new Date(), getView().getComment());
         HttpService.getInstance().getAPI(CommentApi.class)
-                .addComment(comment).enqueue(new MvpNetworkCallBack<Void>(getView()) {
+                .addComment(comment).enqueue(new MvpCallBack<Void>(getView()) {
             @Override
             public void onSuccess(Void responseData) {
                 getView().showToast("评论成功！");

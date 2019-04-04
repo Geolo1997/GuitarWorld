@@ -1,32 +1,37 @@
-package pers.geolo.guitarworld.presenter;
+package pers.geolo.guitarworld.presenter.works;
+
+import java.util.HashMap;
+import java.util.List;
 
 import pers.geolo.guitarworld.entity.Works;
 import pers.geolo.guitarworld.network.HttpService;
 import pers.geolo.guitarworld.network.api.WorksApi;
-import pers.geolo.guitarworld.network.callback.MvpNetworkCallBack;
+import pers.geolo.guitarworld.network.callback.MvpCallBack;
+import pers.geolo.guitarworld.presenter.base.BasePresenter;
 import pers.geolo.guitarworld.view.WorksDetailView;
 
 public class WorksDetailPresenter extends BasePresenter<WorksDetailView> {
 
-    private int worksId;
+    private HashMap<String, Object> filter = new HashMap<>();
 
     public void setWorksId(int worksId) {
-        this.worksId = worksId;
+        filter.put("id", worksId);
     }
 
     /**
      * 加载创作详情
      */
-    public void loadingWorksDetail() {
+    public void loadWorksDetail() {
         HttpService.getInstance().getAPI(WorksApi.class)
-                .getWorks(worksId)
-                .enqueue(new MvpNetworkCallBack<Works>(getView()) {
+                .getWorks(filter)
+                .enqueue(new MvpCallBack<List<Works>>(getView()) {
                     @Override
-                    public void onSuccess(Works responseData) {
-                        getView().setAuthor(responseData.getAuthor());
-                        getView().setCreateTime(responseData.getCreateTime());
-                        getView().setTitle(responseData.getTitle());
-                        getView().setContent(responseData.getContent().toString());
+                    public void onSuccess(List<Works> responseData) {
+                        Works works = responseData.get(0);
+                        getView().setAuthor(works.getAuthor());
+                        getView().setCreateTime(works.getCreateTime());
+                        getView().setTitle(works.getTitle());
+                        getView().setContent(works.getContent().toString());
                         getView().hideRefreshing();
                     }
 

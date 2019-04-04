@@ -8,8 +8,8 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 import pers.geolo.guitarworld.R;
-import pers.geolo.guitarworld.base.BaseActivity;
-import pers.geolo.guitarworld.presenter.LoginPresenter;
+import pers.geolo.guitarworld.ui.base.BaseActivity;
+import pers.geolo.guitarworld.presenter.auth.LoginPresenter;
 import pers.geolo.guitarworld.view.LoginView;
 
 public class LoginActivity extends BaseActivity implements LoginView {

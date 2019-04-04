@@ -2,48 +2,64 @@ package pers.geolo.guitarworld.ui.adapter;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.OnClick;
-import butterknife.OnLongClick;
 import java.util.Date;
 
 import pers.geolo.guitarworld.R;
-import pers.geolo.guitarworld.base.BaseActivity;
-import pers.geolo.guitarworld.base.BaseApplication;
-import pers.geolo.guitarworld.base.BaseRecyclerViewAdapter;
-import pers.geolo.guitarworld.presenter.WorksListPresenter;
+import pers.geolo.guitarworld.ui.base.BaseActivity;
+import pers.geolo.guitarworld.presenter.works.WorksListPresenter;
 import pers.geolo.guitarworld.ui.activity.WorksDetailActivity;
 import pers.geolo.guitarworld.util.DateUtils;
+import pers.geolo.guitarworld.util.ModuleMessage;
 import pers.geolo.guitarworld.view.WorksListItemView;
 import pers.geolo.guitarworld.view.WorksListView;
 
-public class WorksListAdapter extends BaseRecyclerViewAdapter<WorksListAdapter.WorksViewHolder, WorksListItemView>
+public class WorksListAdapter extends MvpRecyclerViewAdapter<WorksListAdapter.ViewHolder, WorksListItemView>
         implements WorksListView {
 
-    WorksListPresenter worksListPresenter = new WorksListPresenter();
+    private WorksListPresenter worksListPresenter = new WorksListPresenter();
 
     public WorksListAdapter(BaseActivity activity) {
         super(activity);
         worksListPresenter.bind(this);
-        worksListPresenter.loadingWorksList();
+    }
+
+    public WorksListPresenter getWorksListPresenter() {
+        return worksListPresenter;
     }
 
     @Override
-    public int getItemViewId() {
+    protected int getItemViewId() {
         return R.layout.item_works_view;
     }
 
     @Override
+    protected ViewHolder getViewHolder(View view) {
+        return new ViewHolder(view);
+    }
+
+    @Override
+    public void onBindItemView(ViewHolder viewHolder, int i) {
+        worksListPresenter.onBindItemView(viewHolder, i);
+    }
+
+    @Override
+    public int getItemCount() {
+        return worksListPresenter.getListSize();
+    }
+
+    @Override
     public void toWorksDetailView(int worksId) {
-        Intent intent = new Intent(BaseApplication.getContext(), WorksDetailActivity.class);
-        intent.putExtra("id", worksId);
+        Intent intent = new Intent(getActivity(), WorksDetailActivity.class);
+        intent.putExtra(ModuleMessage.WORKS_ID, worksId);
         getActivity().startActivity(intent);
     }
 
-    public class WorksViewHolder extends BaseRecyclerViewAdapter.BaseViewHolder implements WorksListItemView {
+    public class ViewHolder extends MvpRecyclerViewAdapter.ViewHolder implements WorksListItemView {
+
         @BindView(R.id.tv_id)
         TextView tvId;
         @BindView(R.id.tv_author)
@@ -55,47 +71,13 @@ public class WorksListAdapter extends BaseRecyclerViewAdapter<WorksListAdapter.W
         @BindView(R.id.tv_content)
         TextView tvContent;
 
-        public WorksViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
         }
 
         @OnClick(R.id.ll_works_item)
         public void onViewClicked() {
-            worksListPresenter.toWorksDetail(getIndex());
-        }
-
-        @OnLongClick(R.id.ll_works_item)
-        public boolean option() {
-            worksListPresenter.showWorksItemOption(this);
-            return true;
-        }
-
-        @Override
-        public void showOptions(String[] options) {
-            //添加列表
-            AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
-                    .setTitle("选项")
-                    .setItems(options, (dialogInterface, i) -> {
-                        String text = options[i];
-                        switch (text) {
-                            case "删除":
-                                worksListPresenter.removeWorks(getIndex());
-                                break;
-                            default:
-                        }
-                    })
-                    .create();
-            alertDialog.show();
-        }
-
-        @Override
-        public int getWorksId() {
-            return Integer.valueOf(tvId.getText().toString());
-        }
-
-        @Override
-        public void setId(int id) {
-            tvId.setText(String.valueOf(id));
+            worksListPresenter.toWorksDetail(getAdapterPosition());
         }
 
         @Override
@@ -105,11 +87,7 @@ public class WorksListAdapter extends BaseRecyclerViewAdapter<WorksListAdapter.W
 
         @Override
         public void setCreateTime(Date createTime) {
-            String dateString = null;
-            if (createTime != null) {
-                dateString = DateUtils.toString(createTime);
-            }
-            tvCreateTime.setText(dateString);
+            tvCreateTime.setText(DateUtils.toString(createTime));
         }
 
         @Override
@@ -125,6 +103,16 @@ public class WorksListAdapter extends BaseRecyclerViewAdapter<WorksListAdapter.W
         @Override
         public String getUsername() {
             return tvAuthor.getText().toString().trim();
+        }
+
+        @Override
+        public void showOptions(String[] options) {
+
+        }
+
+        @Override
+        public int getIndex() {
+            return getAdapterPosition();
         }
     }
 }

@@ -8,7 +8,7 @@ import butterknife.OnClick;
 
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.ui.activity.SearchResultActivity;
-import pers.geolo.guitarworld.base.BaseFragment;
+import pers.geolo.guitarworld.ui.base.BaseFragment;
 
 public class DiscoverFragment extends BaseFragment {
 

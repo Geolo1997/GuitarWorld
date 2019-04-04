@@ -50,4 +50,6 @@
     <string name="add_comment">评论</string>
     <string name="update">上传</string>
     <string name="take_photo">拍照</string>
+    <string name="save_password">记住密码</string>
+    <string name="auto_login">自动登录</string>
 </resources>

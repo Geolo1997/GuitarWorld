@@ -7,7 +7,7 @@ import android.widget.Button;
 import butterknife.BindView;
 import butterknife.OnClick;
 import pers.geolo.guitarworld.R;
-import pers.geolo.guitarworld.base.BaseActivity;
+import pers.geolo.guitarworld.ui.base.BaseActivity;
 import pers.geolo.guitarworld.ui.fragment.*;
 
 public class MainActivity extends BaseActivity {

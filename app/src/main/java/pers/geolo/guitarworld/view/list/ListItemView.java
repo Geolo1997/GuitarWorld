@@ -1,6 +1,8 @@
 package pers.geolo.guitarworld.view.list;
 
-public interface ListItemView {
+import pers.geolo.guitarworld.view.base.BaseView;
+
+public interface ListItemView extends BaseView {
 
     int getIndex();
 }

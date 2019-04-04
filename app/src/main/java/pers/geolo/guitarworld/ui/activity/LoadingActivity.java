@@ -6,8 +6,8 @@ import android.widget.TextView;
 import butterknife.BindView;
 
 import pers.geolo.guitarworld.R;
-import pers.geolo.guitarworld.base.BaseActivity;
-import pers.geolo.guitarworld.presenter.AutoLoginPresenter;
+import pers.geolo.guitarworld.ui.base.BaseActivity;
+import pers.geolo.guitarworld.presenter.auth.AutoLoginPresenter;
 import pers.geolo.guitarworld.view.AutoLoginView;
 
 public class LoadingActivity extends BaseActivity implements AutoLoginView {

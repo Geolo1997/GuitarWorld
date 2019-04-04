@@ -2,7 +2,7 @@ package pers.geolo.guitarworld.util;
 
 import android.content.Intent;
 
-import pers.geolo.guitarworld.base.BaseActivity;
+import pers.geolo.guitarworld.ui.base.BaseActivity;
 import pers.geolo.guitarworld.ui.temp.ActivityCallback;
 import pers.geolo.guitarworld.ui.temp.ActivityRequestCode;
 

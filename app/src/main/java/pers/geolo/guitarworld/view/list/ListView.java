@@ -1,9 +1,21 @@
 package pers.geolo.guitarworld.view.list;
 
-public interface ListView<V> {
+import pers.geolo.guitarworld.view.base.RefreshView;
+import pers.geolo.guitarworld.view.base.ToastView;
 
-    void onBindView(SizeListener sizeListener, OnBindViewListener<V> onBindViewListener);
+public interface ListView<I> extends RefreshView, ToastView {
 
+    int getListSize();
 
-    void remove(int index);
+    void addAllItemView();
+
+    void addItemView();
+
+    void addItemView(int index);
+
+    void removeItemView(int index);
+
+    void clearItemView();
+
+    I getItemView(int index);
 }

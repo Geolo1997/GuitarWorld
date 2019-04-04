@@ -1,9 +1,9 @@
 package pers.geolo.guitarworld.ui.activity;
 
 import android.os.Bundle;
-import butterknife.ButterKnife;
+
 import pers.geolo.guitarworld.R;
-import pers.geolo.guitarworld.base.BaseActivity;
+import pers.geolo.guitarworld.ui.base.BaseActivity;
 
 public class NetworkErrorActivity extends BaseActivity {
 

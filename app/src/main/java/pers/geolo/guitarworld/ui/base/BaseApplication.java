@@ -1,22 +1,14 @@
-package pers.geolo.guitarworld.base;
+package pers.geolo.guitarworld.ui.base;
 
 import android.app.Application;
-import android.content.Context;
 import org.litepal.LitePal;
 
 public class BaseApplication extends Application {
 
-    private static Context context;
-
-    public static Context getContext() {
-        return context;
-    }
-
     @Override
     public void onCreate() {
         super.onCreate();
-        context = getApplicationContext();
-        LitePal.initialize(context);
+        LitePal.initialize(getApplicationContext());
 //        LitePal.deleteDatabase("GuitarWorld");
 //        LitePal.getDatabase();
 

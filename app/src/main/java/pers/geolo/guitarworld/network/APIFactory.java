@@ -30,7 +30,7 @@ public class APIFactory {
                 .serializeNulls()
                 .create();
         retrofit = new Retrofit.Builder()
-                .baseUrl(baseUrl)
+                .baseUrl(hotPointBaseUrl)
                 .client(getOkHttpClient())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();

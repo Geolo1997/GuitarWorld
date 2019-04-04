@@ -25,7 +25,7 @@ public interface UserRelationApi {
      * @param userRelation 被取消关注的用户名
      * @return
      */
-    @DELETE("relation")
+    @HTTP(method = "DELETE", path = "relation", hasBody = true)
     Call<ResponseBody<Void>> removeRelation(@Body UserRelation userRelation);
 
     /**
