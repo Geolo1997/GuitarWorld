@@ -23,7 +23,7 @@ public class FileController {
     @Autowired
     FileService fileService;
 
-    @RequestMapping(value = "/profilePicture", method = RequestMethod.POST)
+    @RequestMapping(value = "/avatar", method = RequestMethod.POST)
     @ResponseBody
     public ResponseJSONBody<Void> uploadProfilePicture(MultipartFile profilePicture) {
         logger.debug("收到更新头像请求：" + profilePicture.getName());
@@ -32,7 +32,7 @@ public class FileController {
         return new ResponseJSONBody<>(code);
     }
 
-    @RequestMapping(value = "/profilePicture", method = RequestMethod.GET)
+    @RequestMapping(value = "/avatar", method = RequestMethod.GET)
     public void getProfilePicture(String username, HttpServletResponse response) throws IOException {
         logger.debug("获取头像 username = " + username);
         File file = fileService.getProfilePicture(username);
@@ -46,5 +46,14 @@ public class FileController {
 //        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
 //        // 返回下载
 //        return new ResponseEntity<>(FileUtils.readFileToByteArray(file), headers, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/image", method = RequestMethod.GET)
+    public void getImage(String imagePath, HttpServletResponse response) throws IOException {
+        File file = fileService.getImage(imagePath);
+        if (file == null) {
+            logger.debug("文件不存在");
+        }
+        ControllerUtils.returnFile(file, response);
     }
 }

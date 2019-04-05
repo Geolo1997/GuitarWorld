@@ -25,6 +25,11 @@ public class WorksService {
     }
 
     public List<Works> getWorksList(Map<String, Object> filter) {
-        return worksMapper.select(filter);
+        String following = (String) filter.get("follower");
+        if (following != null) { // 获取被关注者的works
+            return worksMapper.selectByFollower(following);
+        } else {
+            return worksMapper.select(filter);
+        }
     }
 }

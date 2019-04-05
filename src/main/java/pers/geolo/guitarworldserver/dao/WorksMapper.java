@@ -14,4 +14,6 @@ public interface WorksMapper {
     void delete(Map<String, Object> filter);
 
     List<Works> select(Map<String, Object> filter);
+
+    List<Works> selectByFollower(String followerUsername);
 }

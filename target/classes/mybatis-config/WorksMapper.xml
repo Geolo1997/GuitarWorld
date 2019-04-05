@@ -34,4 +34,12 @@
         </where>
     </select>
 
+    <select id="selectByFollower" parameterType="string" resultType="works">
+        SELECT id, author, create_time, title, content
+        FROM Works,
+             UserRelation
+        WHERE follower_username = #{followerUsername}
+          AND following_username = author;
+    </select>
+
 </mapper>

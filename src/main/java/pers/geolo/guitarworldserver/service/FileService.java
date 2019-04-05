@@ -17,7 +17,7 @@ public class FileService {
             directory.mkdir();
         }
         try {
-            profilePicture.transferTo(new File(filePath, "profilePicture.jpg"));
+            profilePicture.transferTo(new File(filePath, "avatar.jpg"));
             return 0;
         } catch (IOException e) {
             e.printStackTrace();
@@ -27,7 +27,7 @@ public class FileService {
 
     public File getProfilePicture(String username) {
         String filePath = ResourceUtils.getFilePath() + username + "/";
-        File file = new File(filePath, "profilePicture.jpg");
+        File file = new File(filePath, "avatar.jpg");
         return file.exists() ? file : null;
     }
 
@@ -40,5 +40,11 @@ public class FileService {
         }
         OutputStream outputStream = new FileOutputStream(destinationPath);
         IoUtils.streamTransfor(inputStream, outputStream, 2048);
+    }
+
+    public File getImage(String imagePath) {
+        String filePath = ResourceUtils.getFilePath() + "/" + imagePath;
+        File file = new File(filePath);
+        return file.exists() ? file : null;
     }
 }
