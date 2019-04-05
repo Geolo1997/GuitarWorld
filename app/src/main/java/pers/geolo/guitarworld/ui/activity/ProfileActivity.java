@@ -9,20 +9,21 @@ import android.widget.*;
 import butterknife.BindView;
 import butterknife.OnClick;
 import java.io.InputStream;
-import okhttp3.MultipartBody;
 import pub.devrel.easypermissions.EasyPermissions;
 
 import pers.geolo.guitarworld.R;
+import pers.geolo.guitarworld.presenter.user.EditProfilePresenter;
 import pers.geolo.guitarworld.presenter.user.ProfilePresenter;
 import pers.geolo.guitarworld.ui.base.BaseActivity;
-import pers.geolo.guitarworld.network.HttpService;
-import pers.geolo.guitarworld.network.api.FileApi;
-import pers.geolo.guitarworld.network.callback.BaseCallback;
 import pers.geolo.guitarworld.ui.temp.ActivityCallback;
+import pers.geolo.guitarworld.ui.temp.ActivityRequestCode;
 import pers.geolo.guitarworld.ui.temp.PermissionCallback;
 import pers.geolo.guitarworld.ui.temp.PermissionRequestCode;
-import pers.geolo.guitarworld.util.*;
+import pers.geolo.guitarworld.util.GetPhotoFromPhotoAlbum;
+import pers.geolo.guitarworld.util.ModuleMessage;
+import pers.geolo.guitarworld.util.ViewUtils;
 import pers.geolo.guitarworld.view.EditProfileView;
+import pers.geolo.guitarworld.view.PhotoAlbumViewCallBack;
 import pers.geolo.guitarworld.view.ProfileView;
 
 public class ProfileActivity extends BaseActivity implements ProfileView, EditProfileView {
@@ -45,6 +46,7 @@ public class ProfileActivity extends BaseActivity implements ProfileView, EditPr
     ImageView ivAvatar;
 
     ProfilePresenter profilePresenter = new ProfilePresenter();
+    EditProfilePresenter editProfilePresenter = new EditProfilePresenter();
 
     private String[] permissions = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
@@ -57,6 +59,7 @@ public class ProfileActivity extends BaseActivity implements ProfileView, EditPr
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         profilePresenter.bind(this);
+        editProfilePresenter.bind(this);
         // 设置当前用户
         String username = getIntent().getStringExtra(ModuleMessage.CURRENT_USERNAME);
         profilePresenter.setUsername(username);
@@ -76,6 +79,11 @@ public class ProfileActivity extends BaseActivity implements ProfileView, EditPr
     @OnClick(R.id.bt_edit)
     public void onBtEditClicked() {
         ViewUtils.setViewGroupEnabled(linearLayout, true);
+    }
+
+    @OnClick(R.id.bt_save)
+    public void onBtSaveClicked() {
+        editProfilePresenter.saveProfile();
     }
 
     @OnClick(R.id.iv_avatar)
@@ -136,54 +144,14 @@ public class ProfileActivity extends BaseActivity implements ProfileView, EditPr
 
     @OnClick(R.id.bt_update_profile_picture)
     public void onBtUpdateProfilePictureClicked() {
-//        if (havePermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-        requestPermission(PermissionRequestCode.USE_PHOTO_ALBUM, Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                new PermissionCallback() {
-                    @Override
-                    public void onSuccess() {
-                        PermissionUtils.choosePhoto(ProfileActivity.this, new ActivityCallback() {
-                            @Override
-                            public void onSuccess(Intent data) {
-                                String filePath = GetPhotoFromPhotoAlbum.getRealPathFromUri(ProfileActivity.this,
-                                        data.getData());
+        editProfilePresenter.chooseImageFromPhotoAlbum();
+    }
 
-                                MultipartBody.Part body = FileUtils.createMultipartBodyPart(filePath, "profilePicture");
-                                HttpService.getInstance().getAPI(FileApi.class)
-                                        .uploadProfilePicture(body).enqueue(new BaseCallback<Void>() {
-                                    @Override
-                                    public void onSuccess(Void responseData) {
-                                        showToast("保存成功！");
-                                        Bitmap bitmap = BitmapFactory.decodeFile(filePath);
-                                        ivAvatar.setImageBitmap(bitmap);
-                                    }
-
-                                    @Override
-                                    public void onError(int errorCode, String errorMessage) {
-                                        showToast("网络错误");
-                                    }
-
-                                    @Override
-                                    public void onFailure() {
-                                        showToast("网络错误");
-                                    }
-                                });
-                            }
-
-                            @Override
-                            public void onFailure() {
-                                showToast("读取失败");
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onFailure() {
-                        showToast("没有权限");
-                    }
-                });
-//        } else {
-//            Log.d(TAG, "没有权限");
-//        }
+    /**
+     * 获取读写硬盘权限
+     */
+    private void requestWriteExternalStorage(PermissionCallback callback) {
+        requestPermission(PermissionRequestCode.USE_PHOTO_ALBUM, Manifest.permission.WRITE_EXTERNAL_STORAGE, callback);
     }
 
     @Override
@@ -192,14 +160,9 @@ public class ProfileActivity extends BaseActivity implements ProfileView, EditPr
     }
 
     @Override
-    public void setEmail(String email) {
-        etEmail.setText(email);
-    }
-
-    @Override
     public void setAvatar(InputStream inputStream) {
         Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-        runOnUiThread(()-> {
+        runOnUiThread(() -> {
             ivAvatar.setImageBitmap(bitmap);
         });
     }
@@ -217,12 +180,59 @@ public class ProfileActivity extends BaseActivity implements ProfileView, EditPr
     }
 
     @Override
+    public void setPassword(String password) {
+        etPassword.setText(password);
+    }
+
+    @Override
     public String getEmail() {
         return etEmail.getText().toString();
     }
 
     @Override
+    public void setEmail(String email) {
+        etEmail.setText(email);
+    }
+
+    @Override
     public void disableEdit() {
         ViewUtils.setViewGroupEnabled(linearLayout, false);
+    }
+
+    @Override
+    public void toPhotoAlbumView(PhotoAlbumViewCallBack callBack) {
+        requestWriteExternalStorage(new PermissionCallback() {
+            @Override
+            public void onSuccess() {
+                // 添加活动请求
+                addActivityRequest(ActivityRequestCode.CHOOSE_PHOTO, new ActivityCallback() {
+                    @Override
+                    public void onSuccess(Intent data) {
+                        String filePath = GetPhotoFromPhotoAlbum.getRealPathFromUri(ProfileActivity.this,
+                                data.getData());
+                        callBack.onSuccess(filePath);
+                    }
+
+                    @Override
+                    public void onFailure() {
+                        callBack.onFailure();
+                    }
+                });
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType("image/*");
+                startActivityForResult(intent, ActivityRequestCode.CHOOSE_PHOTO.ordinal());
+            }
+
+            @Override
+            public void onFailure() {
+                showToast("没有权限");
+            }
+        });
+    }
+
+    @Override
+    public void setAvatar(String filePath) {
+        Bitmap bitmap = BitmapFactory.decodeFile(filePath);
+        ivAvatar.setImageBitmap(bitmap);
     }
 }

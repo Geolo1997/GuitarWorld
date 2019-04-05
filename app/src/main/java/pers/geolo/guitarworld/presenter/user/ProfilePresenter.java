@@ -34,6 +34,7 @@ public class ProfilePresenter extends BasePresenter<ProfileView> {
                     @Override
                     public void onSuccess(User responseData) {
                         getView().setUsername(responseData.getUsername());
+                        getView().setPassword(responseData.getPassword());
                         getView().setEmail(responseData.getEmail());
                     }
 

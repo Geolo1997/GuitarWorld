@@ -8,4 +8,8 @@ public interface EditProfileView extends ToastView {
     String getEmail();
 
     void disableEdit();
+
+    void toPhotoAlbumView(PhotoAlbumViewCallBack callBack);
+
+    void setAvatar(String filePath);
 }

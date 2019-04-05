@@ -29,7 +29,7 @@ public abstract class BaseActivity extends AppCompatActivity implements ToastVie
 
     protected final String TAG = this.getClass().getSimpleName();
     private final Map<ActivityRequestCode, ActivityCallback> activityCallbackMap = new HashMap<>();
-    private final Map<PermissionRequestCode, PermissionCallback> permissionCallbackMap = new HashMap<>();
+    private final Map<PermissionRequestCode, PermissionCallback[]> permissionCallbackMap = new HashMap<>();
 
     protected abstract int getContentView();
 
@@ -57,24 +57,55 @@ public abstract class BaseActivity extends AppCompatActivity implements ToastVie
         }
     }
 
-    public void requestPermission(PermissionRequestCode requestCode, String permission, PermissionCallback callback) {
-        permissionCallbackMap.put(requestCode, callback);
-        ActivityCompat.requestPermissions(this, new String[]{permission}, requestCode.ordinal());
-    }
-
     public boolean havePermission(String permission) {
         return ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED;
     }
 
+    /**
+     * 请求多个permission
+     * @param requestCode
+     * @param permissions
+     * @param callbacks
+     */
+    public void requestPermissions(PermissionRequestCode requestCode, String[] permissions,
+                                   PermissionCallback[] callbacks) {
+        permissionCallbackMap.put(requestCode, callbacks);
+        ActivityCompat.requestPermissions(this, permissions, requestCode.ordinal());
+    }
+
+    /**
+     * 请求单个permission
+     * @param requestCode
+     * @param permission
+     * @param callback
+     */
+    public void requestPermission(PermissionRequestCode requestCode, String permission, PermissionCallback callback) {
+        permissionCallbackMap.put(requestCode, new PermissionCallback[]{callback});
+        ActivityCompat.requestPermissions(this, new String[]{permission}, requestCode.ordinal());
+    }
+
+    /**
+     * permission请求回调
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
         PermissionRequestCode permissionRequestCode = PermissionRequestCode.values()[requestCode];
-        PermissionCallback callback = permissionCallbackMap.get(permissionRequestCode);
-        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            callback.onSuccess();
-        } else {
-            callback.onFailure();
+        PermissionCallback[] callbacks = permissionCallbackMap.get(permissionRequestCode);
+        if (callbacks != null) {
+            for (int i = 0; i < grantResults.length && i < callbacks.length; i++) {
+                PermissionCallback callback = callbacks[i];
+                if (callback != null) {
+                    if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                        callback.onSuccess();
+                    } else {
+                        callback.onFailure();
+                    }
+                }
+            }
         }
     }
 

@@ -7,10 +7,10 @@ import okhttp3.RequestBody;
 
 public class FileUtils {
 
-    public static MultipartBody.Part createMultipartBodyPart(String filePath, String fileType) {
+    public static MultipartBody.Part createMultipartBodyPart(String filePath, String fieldName) {
         File file = new File(filePath);
         RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-        MultipartBody.Part part = MultipartBody.Part.createFormData(fileType, file.getName(), requestBody);
+        MultipartBody.Part part = MultipartBody.Part.createFormData(fieldName, file.getName(), requestBody);
         return part;
     }
 
