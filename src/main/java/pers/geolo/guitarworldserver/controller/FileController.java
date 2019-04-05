@@ -25,10 +25,10 @@ public class FileController {
 
     @RequestMapping(value = "/avatar", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseJSONBody<Void> uploadProfilePicture(MultipartFile profilePicture) {
-        logger.debug("收到更新头像请求：" + profilePicture.getName());
+    public ResponseJSONBody<Void> uploadProfilePicture(MultipartFile avatar) {
+        logger.debug("收到更新头像请求：" + avatar.getName());
         String username = (String) ControllerUtils.getSessionAttribute("username");
-        int code = fileService.saveProfilePicture(username, profilePicture);
+        int code = fileService.saveProfilePicture(username, avatar);
         return new ResponseJSONBody<>(code);
     }
 
