@@ -25,7 +25,8 @@ public class CommentListPresenter extends BaseListPresenter<CommentListView, Com
                 .enqueue(new MvpCallBack<List<Comment>>(getView()) {
                     @Override
                     public void onSuccess(List<Comment> responseData) {
-                        addAllItemView(responseData);
+                        setDataList(responseData);
+                        getView().addAllItemView();
                         getView().hideRefreshing();
                     }
 
@@ -51,6 +52,7 @@ public class CommentListPresenter extends BaseListPresenter<CommentListView, Com
                 .enqueue(new BaseCallback<Void>() {
                     @Override
                     public void onSuccess(Void responseData) {
+                        getDataList().remove(index);
                         getView().removeItemView(index);
                         getView().showToast("删除成功");
                     }

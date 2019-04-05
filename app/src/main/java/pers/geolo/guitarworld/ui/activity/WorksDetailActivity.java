@@ -12,11 +12,11 @@ import butterknife.OnClick;
 import java.util.Date;
 
 import pers.geolo.guitarworld.R;
-import pers.geolo.guitarworld.ui.base.BaseActivity;
 import pers.geolo.guitarworld.presenter.comment.AddCommentPresenter;
 import pers.geolo.guitarworld.presenter.comment.CommentListPresenter;
 import pers.geolo.guitarworld.presenter.works.WorksDetailPresenter;
 import pers.geolo.guitarworld.ui.adapter.CommentListAdapter;
+import pers.geolo.guitarworld.ui.base.BaseActivity;
 import pers.geolo.guitarworld.util.DateUtils;
 import pers.geolo.guitarworld.util.KeyBoardUtils;
 import pers.geolo.guitarworld.util.ModuleMessage;
@@ -43,11 +43,9 @@ public class WorksDetailActivity extends BaseActivity implements WorksDetailView
     @BindView(R.id.et_comment)
     EditText etComment;
 
-    private CommentListAdapter commentListAdapter;
-    private WorksDetailPresenter worksDetailPresenter = new WorksDetailPresenter();
-    private AddCommentPresenter addCommentPresenter = new AddCommentPresenter();
-    private CommentListPresenter commentListPresenter;
-
+    WorksDetailPresenter worksDetailPresenter = new WorksDetailPresenter();
+    AddCommentPresenter addCommentPresenter = new AddCommentPresenter();
+    CommentListPresenter commentListPresenter;
     @Override
     protected int getContentView() {
         return R.layout.activity_works_detail;
@@ -64,18 +62,28 @@ public class WorksDetailActivity extends BaseActivity implements WorksDetailView
         addCommentPresenter.bind(this);
         addCommentPresenter.setWorksId(worksId);
         // 设置适配器
-        commentListAdapter = new CommentListAdapter(this);
+        CommentListAdapter commentListAdapter = new CommentListAdapter(this);
         commentListPresenter = commentListAdapter.getCommentListPresenter();
         commentListPresenter.setFilter("worksId", worksId);
+        commentListAdapter.setRefreshView(this);
         //设置RecyclerView
         RecyclerViewUtils.setDefaultConfig(this, rvComments);
         rvComments.setAdapter(commentListAdapter);
         // 设置刷新事件
-        srlRefresh.setOnRefreshListener(() -> worksDetailPresenter.loadWorksDetail());
+        srlRefresh.setOnRefreshListener(refreshListener);
         // 初始化加载
         worksDetailPresenter.loadWorksDetail();
         commentListPresenter.loadCommentList();
     }
+
+    SwipeRefreshLayout.OnRefreshListener refreshListener = new SwipeRefreshLayout.OnRefreshListener() {
+        @Override
+        public void onRefresh() {
+            worksDetailPresenter.loadWorksDetail();
+            srlRefresh.setRefreshing(true);
+            commentListPresenter.loadCommentList();
+        }
+    };
 
     @Override
     protected void onDestroy() {
@@ -129,5 +137,16 @@ public class WorksDetailActivity extends BaseActivity implements WorksDetailView
     public void toCommentListView() {
         KeyBoardUtils.hideKeyBoard(this, etComment);
         llAddComment.setVisibility(View.GONE);
+        refreshListener.onRefresh();
+    }
+
+    @Override
+    public void showRefreshing() {
+        srlRefresh.setRefreshing(true);
+    }
+
+    @Override
+    public void hideRefreshing() {
+        srlRefresh.setRefreshing(false);
     }
 }

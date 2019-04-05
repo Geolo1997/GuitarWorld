@@ -71,7 +71,7 @@ public class UserListPresenter extends BaseListPresenter<UserListView, UserItemV
                 });
         // 获取用户头像
         HttpService.getInstance().getAPI(FileApi.class)
-                .getProfilePicture(itemView.getUsername())
+                .getAvatar(itemView.getUsername())
                 .enqueue(new FileCallBack() {
                     @Override
                     protected void onResponseInputStream(InputStream inputStream) {
@@ -90,6 +90,9 @@ public class UserListPresenter extends BaseListPresenter<UserListView, UserItemV
                 });
     }
 
+    /**
+     * 加载用户列表
+     */
     public void loadUserList() {
         getView().showRefreshing();
         String username = (String) getFilter().get("currentUsername");
@@ -108,7 +111,8 @@ public class UserListPresenter extends BaseListPresenter<UserListView, UserItemV
         call.enqueue(new MvpCallBack<List<User>>(getView()) {
             @Override
             public void onSuccess(List<User> responseData) {
-                addAllItemView(responseData);
+                setDataList(responseData);
+                getView().addAllItemView();
                 getView().hideRefreshing();
             }
 
@@ -179,5 +183,13 @@ public class UserListPresenter extends BaseListPresenter<UserListView, UserItemV
 
                     }
                 });
+    }
+
+    /**
+     * 查看用户资料
+     */
+    public void toUserInfo(int index) {
+        String username = getItemView(index).getUsername();
+        getView().toUserInfo(username);
     }
 }

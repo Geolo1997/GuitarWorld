@@ -29,7 +29,7 @@
         <activity android:name=".ui.activity.MainActivity"/>
         <activity android:name=".ui.activity.MyWorksActivity"/>
         <activity android:name=".ui.activity.NetworkErrorActivity"/>
-        <activity android:name=".ui.activity.MyProfileActivity"/>
+        <activity android:name=".ui.activity.ProfileActivity"/>
         <activity android:name=".ui.activity.FollowActivity">
         </activity>
         <activity android:name=".ui.activity.WorksDetailActivity">

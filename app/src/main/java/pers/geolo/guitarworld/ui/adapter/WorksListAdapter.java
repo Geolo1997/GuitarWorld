@@ -2,10 +2,12 @@ package pers.geolo.guitarworld.ui.adapter;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.OnClick;
+import butterknife.OnLongClick;
 import java.util.Date;
 
 import pers.geolo.guitarworld.R;
@@ -80,6 +82,12 @@ public class WorksListAdapter extends MvpRecyclerViewAdapter<WorksListAdapter.Vi
             worksListPresenter.toWorksDetail(getAdapterPosition());
         }
 
+        @OnLongClick(R.id.ll_works_item)
+        public boolean onLongClick() {
+            worksListPresenter.showWorksItemOption(getIndex());
+            return true;
+        }
+
         @Override
         public void setAuthor(String author) {
             tvAuthor.setText(author);
@@ -107,7 +115,20 @@ public class WorksListAdapter extends MvpRecyclerViewAdapter<WorksListAdapter.Vi
 
         @Override
         public void showOptions(String[] options) {
-
+            //添加列表
+            AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
+                    .setTitle("选项")
+                    .setItems(options, (dialogInterface, i) -> {
+                        String text = options[i];
+                        switch (text) {
+                            case "删除":
+                                worksListPresenter.removeWorks(getIndex());
+                                break;
+                            default:
+                        }
+                    })
+                    .create();
+            alertDialog.show();
         }
 
         @Override

@@ -14,14 +14,14 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 import pers.geolo.guitarworld.R;
-import pers.geolo.guitarworld.ui.base.BaseFragment;
-import pers.geolo.guitarworld.ui.base.CustomContext;
 import pers.geolo.guitarworld.dao.DAOService;
 import pers.geolo.guitarworld.presenter.auth.LogoutPresenter;
 import pers.geolo.guitarworld.ui.activity.FollowActivity;
 import pers.geolo.guitarworld.ui.activity.LoginActivity;
-import pers.geolo.guitarworld.ui.activity.MyProfileActivity;
 import pers.geolo.guitarworld.ui.activity.MyWorksActivity;
+import pers.geolo.guitarworld.ui.activity.ProfileActivity;
+import pers.geolo.guitarworld.ui.base.BaseFragment;
+import pers.geolo.guitarworld.ui.base.CustomContext;
 import pers.geolo.guitarworld.util.ModuleMessage;
 import pers.geolo.guitarworld.view.LogoutView;
 
@@ -65,7 +65,9 @@ public class ProfileFragment extends BaseFragment implements LogoutView {
 
     @OnClick(R.id.bt_my_profile)
     public void onBtMyProfileClicked() {
-        getBaseActivity().startActivity(MyProfileActivity.class);
+        Intent intent = new Intent(getActivity(), ProfileActivity.class);
+        intent.putExtra(ModuleMessage.CURRENT_USERNAME, DAOService.getInstance().getCurrentLogInfo().getUsername());
+        startActivity(intent);
     }
 
     @OnClick(R.id.bt_my_works)

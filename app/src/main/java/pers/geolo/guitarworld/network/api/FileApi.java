@@ -14,7 +14,7 @@ public interface FileApi {
 
     @Streaming
     @GET("profilePicture")
-    Call<okhttp3.ResponseBody> getProfilePicture(@Query("username") String username);
+    Call<okhttp3.ResponseBody> getAvatar(@Query("username") String username);
 
     @Streaming
     @GET("20180815101229911.jpg")

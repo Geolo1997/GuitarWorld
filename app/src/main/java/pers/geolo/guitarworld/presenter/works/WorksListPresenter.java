@@ -27,7 +27,8 @@ public class WorksListPresenter extends BaseListPresenter<WorksListView, WorksLi
                     @Override
                     public void onSuccess(List<Works> responseData) {
                         // 设置数据
-                        addAllItemView(responseData);
+                        setDataList(responseData);
+                        getView().addAllItemView();
                         // 隐藏刷新控件
                         getView().hideRefreshing();
                     }

@@ -10,6 +10,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 import pers.geolo.guitarworld.R;
+import pers.geolo.guitarworld.presenter.works.WorksListPresenter;
 import pers.geolo.guitarworld.ui.base.BaseFragment;
 import pers.geolo.guitarworld.ui.activity.PublishActivity;
 import pers.geolo.guitarworld.ui.adapter.WorksListAdapter;
@@ -34,12 +35,15 @@ public class DynamicFragment extends BaseFragment {
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
         // 设置刷新控件监听
         srlRefresh.setOnRefreshListener(() -> worksListAdapter.getWorksListPresenter().loadWorksList());
-        // 设置RecyclerView默认配置
-        RecyclerViewUtils.setDefaultConfig(getContext(), rvWorksList);
         // 设置适配器
         worksListAdapter = new WorksListAdapter(getBaseActivity());
+        worksListAdapter.setRefreshView(this);
+        // 设置RecyclerView默认配置
+        RecyclerViewUtils.setDefaultConfig(getContext(), rvWorksList);
         rvWorksList.setAdapter(worksListAdapter);
-        worksListAdapter.getWorksListPresenter().loadWorksList();
+        // 设置presenter
+        WorksListPresenter worksListPresenter = worksListAdapter.getWorksListPresenter();
+        worksListPresenter.loadWorksList();
         return rootView;
     }
 

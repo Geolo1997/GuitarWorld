@@ -28,7 +28,9 @@ public class SearchResultActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // 设置Adapter
         userListAdapter = new UserListAdapter(this);
+        userListAdapter.setRefreshView(this);
         // 设置RecyclerView
         RecyclerViewUtils.setDefaultConfig(this, rv);
         rv.setAdapter(userListAdapter);

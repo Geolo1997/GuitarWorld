@@ -6,6 +6,7 @@ import pers.geolo.guitarworld.network.HttpService;
 import pers.geolo.guitarworld.network.api.AuthApi;
 import pers.geolo.guitarworld.network.callback.MvpCallBack;
 import pers.geolo.guitarworld.presenter.base.BasePresenter;
+import pers.geolo.guitarworld.ui.base.CustomContext;
 import pers.geolo.guitarworld.view.RegisterView;
 
 public class RegisterPresenter extends BasePresenter<RegisterView> {
@@ -34,6 +35,7 @@ public class RegisterPresenter extends BasePresenter<RegisterView> {
                     public void onSuccess(Void responseData) {
                         // 保存登录信息
                         DAOService.getInstance().addLogInfo(logInfo);
+                        CustomContext.getInstance().setLogInfo(logInfo);
                         // 跳转至主视图
                         getView().toMainView();
                     }

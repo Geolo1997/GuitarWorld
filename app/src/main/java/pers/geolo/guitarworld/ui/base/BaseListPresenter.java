@@ -27,37 +27,16 @@ public abstract class BaseListPresenter<V extends ListView<I>, I extends ListIte
         return dataList;
     }
 
+    public void setDataList(List<E> dataList) {
+        this.dataList = dataList;
+    }
+
     public HashMap<String, Object> getFilter() {
         return filter;
     }
 
     protected I getItemView(int index) {
         return getView().getItemView(index);
-    }
-
-    protected void addAllItemView(List<E> dataList) {
-        this.dataList = dataList;
-        getView().addAllItemView();
-    }
-
-    protected void addItemView(E e) {
-        getDataList().add(e);
-        getView().addItemView(getListSize());
-    }
-
-    protected void addItemView(int index, E e) {
-        getDataList().add(index, e);
-        getView().addItemView(index);
-    }
-
-    protected void removeItemView(int index) {
-        getDataList().remove(index);
-        getView().removeItemView(index);
-    }
-
-    protected void clearItemView() {
-        getDataList().clear();
-        getView().clearItemView();
     }
 
     public abstract void onBindItemView(I itemView, int index);

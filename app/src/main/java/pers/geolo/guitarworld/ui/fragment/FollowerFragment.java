@@ -33,9 +33,11 @@ public class FollowerFragment extends BaseFragment {
         if (bundle != null) {
             currentUsername = bundle.getString(ModuleMessage.CURRENT_USERNAME);
         }
+        // 设置适配器
+        UserListAdapter userListAdapter = new UserListAdapter(getBaseActivity());
+        userListAdapter.setRefreshView(this);
         // 设置RecyclerView
         RecyclerViewUtils.setDefaultConfig(getContext(), rvFollower);
-        UserListAdapter userListAdapter = new UserListAdapter(getBaseActivity());
         rvFollower.setAdapter(userListAdapter);
         // 获取presenter
         UserListPresenter userListPresenter = userListAdapter.getPresenter();

@@ -21,6 +21,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import pers.geolo.guitarworld.R;
+import pers.geolo.guitarworld.presenter.user.ProfilePresenter;
 import pers.geolo.guitarworld.ui.base.BaseActivity;
 import pers.geolo.guitarworld.dao.DAOService;
 import pers.geolo.guitarworld.entity.LogInfo;
@@ -32,15 +33,16 @@ import pers.geolo.guitarworld.network.callback.BaseCallback;
 import pers.geolo.guitarworld.ui.temp.ActivityCallback;
 import pers.geolo.guitarworld.ui.temp.PermissionCallback;
 import pers.geolo.guitarworld.ui.temp.PermissionRequestCode;
-import pers.geolo.guitarworld.util.FileUtils;
-import pers.geolo.guitarworld.util.GetPhotoFromPhotoAlbum;
-import pers.geolo.guitarworld.util.PermissionUtils;
-import pers.geolo.guitarworld.util.ViewUtils;
+import pers.geolo.guitarworld.util.*;
+import pers.geolo.guitarworld.view.EditProfileView;
+import pers.geolo.guitarworld.view.ProfileView;
 
-public class MyProfileActivity extends BaseActivity {
+public class ProfileActivity extends BaseActivity implements ProfileView, EditProfileView {
 
     @BindView(R.id.tv_username)
     TextView tvUsername;
+    @BindView(R.id.et_password)
+    EditText etPassword;
     @BindView(R.id.et_email)
     EditText etEmail;
     @BindView(R.id.et_sex)
@@ -51,128 +53,41 @@ public class MyProfileActivity extends BaseActivity {
     EditText etHometown;
     @BindView(R.id.edit_texts)
     LinearLayout linearLayout;
-    @BindView(R.id.iv_profile_picture)
-    ImageView ivProfilePicture;
-    private String[] permissions = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+    @BindView(R.id.iv_avatar)
+    ImageView ivAvatar;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // 更新个人资料
-        updateProfile();
-        updateProfilePicture();
-        // 禁用编辑控件
-        ViewUtils.setViewGroupEnabled(linearLayout, false);
-    }
+    ProfilePresenter profilePresenter = new ProfilePresenter();
+
+    private String[] permissions = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
     @Override
     protected int getContentView() {
         return R.layout.activity_my_profile;
     }
 
-//    protected void updateProfilePicture() {
-//        HttpService.getInstance().getAPI(FileApi.class)
-//                .
-//    }
-
-    protected void updateProfile() {
-        String username = DAOService.getInstance().getCurrentLogInfo().getUsername();
-        HttpService.getInstance().getAPI(UserApi.class)
-                .getUserInfo(username).enqueue(new BaseCallback<User>() {
-            @Override
-            public void onSuccess(User responseData) {
-                tvUsername.setText(responseData.getUsername());
-                etEmail.setText(responseData.getEmail());
-            }
-
-            @Override
-            public void onError(int errorCode, String errorMessage) {
-            }
-
-            @Override
-            public void onFailure() {
-                startActivity(NetworkErrorActivity.class);
-            }
-        });
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        profilePresenter.bind(this);
+        // 设置当前用户
+        String username = getIntent().getStringExtra(ModuleMessage.CURRENT_USERNAME);
+        profilePresenter.setUsername(username);
+        // 更新个人资料
+        profilePresenter.loadAvatar();
+        profilePresenter.loadProfile();
+        // 禁用编辑控件
+        ViewUtils.setViewGroupEnabled(linearLayout, false);
     }
 
-    void updateProfilePicture() {
-        String currentUsername = DAOService.getInstance().getCurrentLogInfo().getUsername();
-//        HttpService.getInstance().setBaseUrl("https://img.pc841.com/2018/0815/");
-        HttpService.getInstance().getAPI(FileApi.class)
-                .getProfilePicture(currentUsername).enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                Log.d(TAG, "获取头像成功...");
-                InputStream inputStream = response.body().byteStream();
-                new Thread(() -> {
-                    try {
-                        String filePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/test.jpg";
-//                        FileUtils.saveFile(filePath, inputStream);
-//                        byte[] bytes = toByteArray(inputStream);
-//                        System.err.println("-----------------------------");
-//                        for (int i = 0; i < bytes.length; i++) {
-//                            System.out.print(bytes[i]);
-//                        }
-//                        System.err.println("\n-----------------------------");
-                        Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                        runOnUiThread(() -> {
-                            Log.d(TAG, "bitmap : " + String.valueOf(bitmap == null));
-                            ivProfilePicture.setImageBitmap(bitmap);
-                        });
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }).start();
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-            }
-        });
-    }
-
-    public static byte[] toByteArray(InputStream input) throws IOException {
-        ByteArrayOutputStream output = new ByteArrayOutputStream();
-        byte[] buffer = new byte[4096];
-        int n = 0;
-        while (-1 != (n = input.read(buffer))) {
-            output.write(buffer, 0, n);
-        }
-        return output.toByteArray();
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        profilePresenter.unBind();
     }
 
     @OnClick(R.id.bt_edit)
     public void onBtEditClicked() {
         ViewUtils.setViewGroupEnabled(linearLayout, true);
-    }
-
-    // TODO
-    @OnClick(R.id.bt_save)
-    public void onBtSaveClicked() {
-        LogInfo logInfo = DAOService.getInstance().getCurrentLogInfo();
-        User user = new User();
-        user.setUsername(logInfo.getUsername());
-        user.setPassword(logInfo.getPassword());
-        user.setEmail(etEmail.getText().toString());
-        HttpService.getInstance().getAPI(UserApi.class)
-                .updateUserInfo(user).enqueue(new BaseCallback<Void>() {
-            @Override
-            public void onSuccess(Void responseData) {
-                ViewUtils.setViewGroupEnabled(linearLayout, false);
-            }
-
-            @Override
-            public void onError(int errorCode, String errorMessage) {
-                showToast("保存失败！");
-            }
-
-            @Override
-            public void onFailure() {
-                startActivity(NetworkErrorActivity.class);
-            }
-        });
     }
 
     //获取权限
@@ -233,10 +148,10 @@ public class MyProfileActivity extends BaseActivity {
                 new PermissionCallback() {
                     @Override
                     public void onSuccess() {
-                        PermissionUtils.choosePhoto(MyProfileActivity.this, new ActivityCallback() {
+                        PermissionUtils.choosePhoto(ProfileActivity.this, new ActivityCallback() {
                             @Override
                             public void onSuccess(Intent data) {
-                                String filePath = GetPhotoFromPhotoAlbum.getRealPathFromUri(MyProfileActivity.this,
+                                String filePath = GetPhotoFromPhotoAlbum.getRealPathFromUri(ProfileActivity.this,
                                         data.getData());
 
                                 MultipartBody.Part body = FileUtils.createMultipartBodyPart(filePath, "profilePicture");
@@ -246,7 +161,7 @@ public class MyProfileActivity extends BaseActivity {
                                     public void onSuccess(Void responseData) {
                                         showToast("保存成功！");
                                         Bitmap bitmap = BitmapFactory.decodeFile(filePath);
-                                        ivProfilePicture.setImageBitmap(bitmap);
+                                        ivAvatar.setImageBitmap(bitmap);
                                     }
 
                                     @Override
@@ -276,5 +191,38 @@ public class MyProfileActivity extends BaseActivity {
 //        } else {
 //            Log.d(TAG, "没有权限");
 //        }
+    }
+
+    @Override
+    public void setUsername(String username) {
+        tvUsername.setText(username);
+    }
+
+    @Override
+    public void setEmail(String email) {
+        etEmail.setText(email);
+    }
+
+    @Override
+    public void setAvatar(InputStream inputStream) {
+        Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+        runOnUiThread(()-> {
+            ivAvatar.setImageBitmap(bitmap);
+        });
+    }
+
+    @Override
+    public String getPassword() {
+        return etPassword.getText().toString().trim();
+    }
+
+    @Override
+    public String getEmail() {
+        return etEmail.getText().toString();
+    }
+
+    @Override
+    public void disableEdit() {
+        ViewUtils.setViewGroupEnabled(linearLayout, false);
     }
 }

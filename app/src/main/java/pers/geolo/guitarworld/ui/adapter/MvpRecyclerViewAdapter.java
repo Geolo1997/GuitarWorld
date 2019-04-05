@@ -8,6 +8,7 @@ import java.util.List;
 
 import pers.geolo.guitarworld.ui.base.BaseActivity;
 import pers.geolo.guitarworld.ui.base.BaseRecyclerViewAdapter;
+import pers.geolo.guitarworld.view.base.RefreshView;
 import pers.geolo.guitarworld.view.list.ListItemView;
 import pers.geolo.guitarworld.view.list.ListView;
 
@@ -17,10 +18,15 @@ public abstract class MvpRecyclerViewAdapter<ViewHolderType extends MvpRecyclerV
         implements ListView<ListItemViewType> {
 
     private List<ListItemViewType> listItemViews;
+    private RefreshView refreshView;
 
     public MvpRecyclerViewAdapter(BaseActivity activity) {
         super(activity);
         listItemViews = new ArrayList<>();
+    }
+
+    public void setRefreshView(RefreshView refreshView) {
+        this.refreshView = refreshView;
     }
 
     @NonNull
@@ -85,12 +91,12 @@ public abstract class MvpRecyclerViewAdapter<ViewHolderType extends MvpRecyclerV
 
     @Override
     public void showRefreshing() {
-
+        refreshView.showRefreshing();
     }
 
     @Override
     public void hideRefreshing() {
-
+        refreshView.hideRefreshing();
     }
 
     @Override

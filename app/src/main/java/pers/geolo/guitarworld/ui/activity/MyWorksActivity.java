@@ -31,6 +31,8 @@ public class MyWorksActivity extends BaseActivity {
         RecyclerViewUtils.setDefaultConfig(this, rvMyWorks);
         worksListAdapter = new WorksListAdapter(this);
         rvMyWorks.setAdapter(worksListAdapter);
+        // 设置RefreshView
+        worksListAdapter.setRefreshView(this);
         // 设置worksListPresenter
         worksListPresenter = worksListAdapter.getWorksListPresenter();
         // 设置Filter
@@ -43,5 +45,15 @@ public class MyWorksActivity extends BaseActivity {
     @Override
     protected int getContentView() {
         return R.layout.activity_my_works;
+    }
+
+    @Override
+    public void showRefreshing() {
+        srlRefresh.setRefreshing(true);
+    }
+
+    @Override
+    public void hideRefreshing() {
+        srlRefresh.setRefreshing(false);
     }
 }

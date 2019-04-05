@@ -1,12 +1,14 @@
 package pers.geolo.guitarworld.ui.adapter;
 
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -15,8 +17,10 @@ import java.io.InputStream;
 
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.presenter.user.UserListPresenter;
+import pers.geolo.guitarworld.ui.activity.ProfileActivity;
 import pers.geolo.guitarworld.ui.base.BaseActivity;
 import pers.geolo.guitarworld.ui.temp.ConfirmCallBack;
+import pers.geolo.guitarworld.util.ModuleMessage;
 import pers.geolo.guitarworld.view.UserItemView;
 import pers.geolo.guitarworld.view.UserListView;
 
@@ -54,6 +58,13 @@ public class UserListAdapter extends MvpRecyclerViewAdapter<UserListAdapter.View
         return new ViewHolder(view);
     }
 
+    @Override
+    public void toUserInfo(String username) {
+        Intent intent = new Intent(getActivity(), ProfileActivity.class);
+        intent.putExtra(ModuleMessage.CURRENT_USERNAME, username);
+        getActivity().startActivity(intent);
+    }
+
     public class ViewHolder extends MvpRecyclerViewAdapter.ViewHolder implements UserItemView {
 
         @BindView(R.id.civ_avatar)
@@ -72,6 +83,11 @@ public class UserListAdapter extends MvpRecyclerViewAdapter<UserListAdapter.View
         @OnClick(R.id.bt_following)
         public void onViewClicked() {
             presenter.changeFollowState(getIndex());
+        }
+
+        @OnClick(R.id.ll_user_item)
+        public void toUserInfo() {
+            presenter.toUserInfo(getIndex());
         }
 
         @Override
