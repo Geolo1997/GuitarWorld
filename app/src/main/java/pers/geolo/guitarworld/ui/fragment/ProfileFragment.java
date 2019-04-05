@@ -66,7 +66,7 @@ public class ProfileFragment extends BaseFragment implements LogoutView {
     @OnClick(R.id.bt_my_profile)
     public void onBtMyProfileClicked() {
         Intent intent = new Intent(getActivity(), ProfileActivity.class);
-        intent.putExtra(ModuleMessage.CURRENT_USERNAME, DAOService.getInstance().getCurrentLogInfo().getUsername());
+        intent.putExtra(ModuleMessage.CURRENT_USERNAME, CustomContext.getInstance().getLogInfo().getUsername());
         startActivity(intent);
     }
 

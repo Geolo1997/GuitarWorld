@@ -13,4 +13,6 @@ public interface ProfileView extends ToastView {
     void setEmail(String email);
 
     void setAvatar(InputStream inputStream);
+
+    void toImageDetail(String imagePath);
 }

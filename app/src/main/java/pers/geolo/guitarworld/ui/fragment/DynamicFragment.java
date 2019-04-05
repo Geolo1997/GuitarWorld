@@ -14,6 +14,7 @@ import pers.geolo.guitarworld.presenter.works.WorksListPresenter;
 import pers.geolo.guitarworld.ui.base.BaseFragment;
 import pers.geolo.guitarworld.ui.activity.PublishActivity;
 import pers.geolo.guitarworld.ui.adapter.WorksListAdapter;
+import pers.geolo.guitarworld.ui.base.CustomContext;
 import pers.geolo.guitarworld.util.RecyclerViewUtils;
 
 public class DynamicFragment extends BaseFragment {
@@ -43,6 +44,7 @@ public class DynamicFragment extends BaseFragment {
         rvWorksList.setAdapter(worksListAdapter);
         // 设置presenter
         WorksListPresenter worksListPresenter = worksListAdapter.getWorksListPresenter();
+        worksListPresenter.setFilter("follower", CustomContext.getInstance().getLogInfo().getUsername());
         worksListPresenter.loadWorksList();
         return rootView;
     }

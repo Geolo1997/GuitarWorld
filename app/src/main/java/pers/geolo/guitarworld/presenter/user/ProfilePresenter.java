@@ -72,4 +72,9 @@ public class ProfilePresenter extends BasePresenter<ProfileView> {
                     }
                 });
     }
+
+    public void toImageDetail() {
+        String imagePath = username + "/avatar.jpg";
+        getView().toImageDetail(imagePath);
+    }
 }

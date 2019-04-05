@@ -5,30 +5,18 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.os.Environment;
-import android.util.Log;
 import android.widget.*;
 import butterknife.BindView;
 import butterknife.OnClick;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import okhttp3.MultipartBody;
-import okhttp3.ResponseBody;
 import pub.devrel.easypermissions.EasyPermissions;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.presenter.user.ProfilePresenter;
 import pers.geolo.guitarworld.ui.base.BaseActivity;
-import pers.geolo.guitarworld.dao.DAOService;
-import pers.geolo.guitarworld.entity.LogInfo;
-import pers.geolo.guitarworld.entity.User;
 import pers.geolo.guitarworld.network.HttpService;
 import pers.geolo.guitarworld.network.api.FileApi;
-import pers.geolo.guitarworld.network.api.UserApi;
 import pers.geolo.guitarworld.network.callback.BaseCallback;
 import pers.geolo.guitarworld.ui.temp.ActivityCallback;
 import pers.geolo.guitarworld.ui.temp.PermissionCallback;
@@ -62,7 +50,7 @@ public class ProfileActivity extends BaseActivity implements ProfileView, EditPr
 
     @Override
     protected int getContentView() {
-        return R.layout.activity_my_profile;
+        return R.layout.activity_profile;
     }
 
     @Override
@@ -88,6 +76,11 @@ public class ProfileActivity extends BaseActivity implements ProfileView, EditPr
     @OnClick(R.id.bt_edit)
     public void onBtEditClicked() {
         ViewUtils.setViewGroupEnabled(linearLayout, true);
+    }
+
+    @OnClick(R.id.iv_avatar)
+    public void onIvAvatarClicked() {
+        profilePresenter.toImageDetail();
     }
 
     //获取权限
@@ -209,6 +202,13 @@ public class ProfileActivity extends BaseActivity implements ProfileView, EditPr
         runOnUiThread(()-> {
             ivAvatar.setImageBitmap(bitmap);
         });
+    }
+
+    @Override
+    public void toImageDetail(String imagePath) {
+        Intent intent = new Intent(this, ImageDetailActivity.class);
+        intent.putExtra(ModuleMessage.IMAGE_PATH, imagePath);
+        startActivity(intent);
     }
 
     @Override
