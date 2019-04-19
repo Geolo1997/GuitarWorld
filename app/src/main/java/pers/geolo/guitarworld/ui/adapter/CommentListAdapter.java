@@ -11,9 +11,9 @@ import java.util.Date;
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.ui.base.BaseActivity;
 import pers.geolo.guitarworld.presenter.comment.CommentListPresenter;
-import pers.geolo.guitarworld.util.DateUtils;
 import pers.geolo.guitarworld.view.CommentItemView;
 import pers.geolo.guitarworld.view.CommentListView;
+import pers.geolo.util.DateUtils;
 
 public class CommentListAdapter extends MvpRecyclerViewAdapter<CommentListAdapter.ViewHolder, CommentItemView>
         implements CommentListView {
@@ -80,7 +80,7 @@ public class CommentListAdapter extends MvpRecyclerViewAdapter<CommentListAdapte
 
         @Override
         public void setCreateTime(Date createTime) {
-            tvCreateTime.setText(DateUtils.toString(createTime));
+            tvCreateTime.setText(DateUtils.toDefaultString(createTime));
         }
 
         @Override

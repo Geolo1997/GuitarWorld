@@ -4,7 +4,6 @@ import java.util.Date;
 
 import pers.geolo.guitarworld.ui.base.CustomContext;
 import pers.geolo.guitarworld.entity.Comment;
-import pers.geolo.guitarworld.network.HttpService;
 import pers.geolo.guitarworld.network.api.CommentApi;
 import pers.geolo.guitarworld.network.callback.MvpCallBack;
 import pers.geolo.guitarworld.presenter.base.BasePresenter;
@@ -24,8 +23,7 @@ public class AddCommentPresenter extends BasePresenter<AddCommentView> {
     public  void addComment() {
         String author = CustomContext.getInstance().getLogInfo().getUsername();
         Comment comment = new Comment(worksId, author, new Date(), getView().getComment());
-        HttpService.getInstance().getAPI(CommentApi.class)
-                .addComment(comment).enqueue(new MvpCallBack<Void>(getView()) {
+        commentApi.addComment(comment).enqueue(new MvpCallBack<Void>(getView()) {
             @Override
             public void onSuccess(Void responseData) {
                 getView().showToast("评论成功！");

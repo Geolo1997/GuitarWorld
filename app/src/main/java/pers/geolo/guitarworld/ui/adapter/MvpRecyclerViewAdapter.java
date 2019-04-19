@@ -104,11 +104,6 @@ public abstract class MvpRecyclerViewAdapter<ViewHolderType extends MvpRecyclerV
         getActivity().showToast(message);
     }
 
-    @Override
-    public void showLongToast(String message) {
-        getActivity().showLongToast(message);
-    }
-
     public class ViewHolder extends BaseRecyclerViewAdapter.TestBaseViewHolder implements ListItemView {
 
         public ViewHolder(@NonNull View itemView) {

@@ -2,13 +2,11 @@ package pers.geolo.guitarworld.presenter.auth;
 
 import android.util.Log;
 
-import pers.geolo.guitarworld.ui.base.CustomContext;
 import pers.geolo.guitarworld.dao.DAOService;
 import pers.geolo.guitarworld.entity.LogInfo;
-import pers.geolo.guitarworld.network.HttpService;
-import pers.geolo.guitarworld.network.api.AuthApi;
 import pers.geolo.guitarworld.network.callback.MvpCallBack;
 import pers.geolo.guitarworld.presenter.base.BasePresenter;
+import pers.geolo.guitarworld.ui.base.CustomContext;
 import pers.geolo.guitarworld.view.LoginView;
 
 public class LoginPresenter extends BasePresenter<LoginView> {
@@ -18,7 +16,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
      */
     public void loadingLogInfo() {
         // 从本地数据库获取登录信息
-        LogInfo logInfo = DAOService.getInstance().getCurrentLogInfo();
+        LogInfo logInfo = daoService.getCurrentLogInfo();
         if (logInfo != null) {
             // 不为空则填写到相应文本框
             getView().setUsername(logInfo.getUsername());
@@ -43,8 +41,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
         logInfo.setSavePassword(getView().isSavePassword());
         logInfo.setAutoLogin(getView().isAutoLogin());
         // 发送登录请求
-        HttpService.getInstance().getAPI(AuthApi.class)
-                .login(getView().getUsername(), getView().getPassword())
+        authApi.login(getView().getUsername(), getView().getPassword())
                 .enqueue(new MvpCallBack<Void>(getView()) {
                     @Override
                     public void onSuccess(Void responseData) {

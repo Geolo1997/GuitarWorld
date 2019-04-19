@@ -17,12 +17,12 @@ import pers.geolo.guitarworld.presenter.comment.CommentListPresenter;
 import pers.geolo.guitarworld.presenter.works.WorksDetailPresenter;
 import pers.geolo.guitarworld.ui.adapter.CommentListAdapter;
 import pers.geolo.guitarworld.ui.base.BaseActivity;
-import pers.geolo.guitarworld.util.DateUtils;
 import pers.geolo.guitarworld.util.KeyBoardUtils;
 import pers.geolo.guitarworld.util.ModuleMessage;
 import pers.geolo.guitarworld.util.RecyclerViewUtils;
 import pers.geolo.guitarworld.view.AddCommentView;
 import pers.geolo.guitarworld.view.WorksDetailView;
+import pers.geolo.util.DateUtils;
 
 public class WorksDetailActivity extends BaseActivity implements WorksDetailView, AddCommentView {
 
@@ -110,7 +110,7 @@ public class WorksDetailActivity extends BaseActivity implements WorksDetailView
 
     @Override
     public void setCreateTime(Date createTime) {
-        tvCreateTime.setText(DateUtils.toString(createTime));
+        tvCreateTime.setText(DateUtils.toDefaultString(createTime));
     }
 
     @Override

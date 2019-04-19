@@ -50,11 +50,6 @@ public abstract class BaseFragment extends Fragment implements ToastView, Loadin
     }
 
     @Override
-    public void showLongToast(String message) {
-        getBaseActivity().showLongToast(message);
-    }
-
-    @Override
     public void showLoading() {
     }
 

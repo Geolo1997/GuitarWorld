@@ -14,10 +14,10 @@ import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.ui.base.BaseActivity;
 import pers.geolo.guitarworld.presenter.works.WorksListPresenter;
 import pers.geolo.guitarworld.ui.activity.WorksDetailActivity;
-import pers.geolo.guitarworld.util.DateUtils;
 import pers.geolo.guitarworld.util.ModuleMessage;
 import pers.geolo.guitarworld.view.WorksListItemView;
 import pers.geolo.guitarworld.view.WorksListView;
+import pers.geolo.util.DateUtils;
 
 public class WorksListAdapter extends MvpRecyclerViewAdapter<WorksListAdapter.ViewHolder, WorksListItemView>
         implements WorksListView {
@@ -95,7 +95,7 @@ public class WorksListAdapter extends MvpRecyclerViewAdapter<WorksListAdapter.Vi
 
         @Override
         public void setCreateTime(Date createTime) {
-            tvCreateTime.setText(DateUtils.toString(createTime));
+            tvCreateTime.setText(DateUtils.toDefaultString(createTime));
         }
 
         @Override

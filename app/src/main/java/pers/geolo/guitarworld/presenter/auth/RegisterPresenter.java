@@ -2,7 +2,6 @@ package pers.geolo.guitarworld.presenter.auth;
 
 import pers.geolo.guitarworld.dao.DAOService;
 import pers.geolo.guitarworld.entity.LogInfo;
-import pers.geolo.guitarworld.network.HttpService;
 import pers.geolo.guitarworld.network.api.AuthApi;
 import pers.geolo.guitarworld.network.callback.MvpCallBack;
 import pers.geolo.guitarworld.presenter.base.BasePresenter;
@@ -28,13 +27,12 @@ public class RegisterPresenter extends BasePresenter<RegisterView> {
         // 构建登录信息
         LogInfo logInfo = new LogInfo(username, password, false, true);
         // 发送注册请求
-        HttpService.getInstance().getAPI(AuthApi.class)
-                .register(username, password, email)
+        authApi.register(username, password, email)
                 .enqueue(new MvpCallBack<Void>(getView()) {
                     @Override
                     public void onSuccess(Void responseData) {
                         // 保存登录信息
-                        DAOService.getInstance().addLogInfo(logInfo);
+                       daoService.addLogInfo(logInfo);
                         CustomContext.getInstance().setLogInfo(logInfo);
                         // 跳转至主视图
                         getView().toMainView();

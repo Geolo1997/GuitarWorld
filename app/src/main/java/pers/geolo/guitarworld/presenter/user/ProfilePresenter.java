@@ -5,9 +5,6 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 
 import pers.geolo.guitarworld.entity.User;
-import pers.geolo.guitarworld.network.HttpService;
-import pers.geolo.guitarworld.network.api.FileApi;
-import pers.geolo.guitarworld.network.api.UserApi;
 import pers.geolo.guitarworld.network.callback.BaseCallback;
 import pers.geolo.guitarworld.network.callback.FileCallBack;
 import pers.geolo.guitarworld.presenter.base.BasePresenter;
@@ -28,8 +25,7 @@ public class ProfilePresenter extends BasePresenter<ProfileView> {
      * 加载个人资料
      */
     public void loadProfile() {
-        HttpService.getInstance().getAPI(UserApi.class)
-                .getUserInfo(username)
+        userApi.getUserInfo(username)
                 .enqueue(new BaseCallback<User>() {
                     @Override
                     public void onSuccess(User responseData) {
@@ -54,8 +50,7 @@ public class ProfilePresenter extends BasePresenter<ProfileView> {
      * 加载头像
      */
     public void loadAvatar() {
-        HttpService.getInstance().getAPI(FileApi.class)
-                .getAvatar(username)
+        fileApi.getAvatar(username)
                 .enqueue(new FileCallBack() {
                     @Override
                     protected void onResponseInputStream(InputStream inputStream) {

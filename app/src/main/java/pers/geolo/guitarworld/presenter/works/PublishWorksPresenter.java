@@ -4,7 +4,6 @@ import java.util.Date;
 
 import pers.geolo.guitarworld.ui.base.CustomContext;
 import pers.geolo.guitarworld.entity.Works;
-import pers.geolo.guitarworld.network.HttpService;
 import pers.geolo.guitarworld.network.api.WorksApi;
 import pers.geolo.guitarworld.network.callback.MvpCallBack;
 import pers.geolo.guitarworld.presenter.base.BasePresenter;
@@ -23,8 +22,7 @@ public class PublishWorksPresenter extends BasePresenter<PublishWorksView> {
         works.setTitle(getView().getWorksTitle());
         works.setContent(getView().getContent());
         // 发送发布请求
-        HttpService.getInstance().getAPI(WorksApi.class)
-                .publishWorks(works).enqueue(new MvpCallBack<Void>(getView()) {
+        worksApi.publishWorks(works).enqueue(new MvpCallBack<Void>(getView()) {
             @Override
             public void onSuccess(Void responseData) {
                 getView().showToast("发布成功");

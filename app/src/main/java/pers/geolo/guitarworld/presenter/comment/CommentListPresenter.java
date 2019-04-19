@@ -6,7 +6,6 @@ import java.util.List;
 import pers.geolo.guitarworld.ui.base.BaseListPresenter;
 import pers.geolo.guitarworld.ui.base.CustomContext;
 import pers.geolo.guitarworld.entity.Comment;
-import pers.geolo.guitarworld.network.HttpService;
 import pers.geolo.guitarworld.network.api.CommentApi;
 import pers.geolo.guitarworld.network.callback.BaseCallback;
 import pers.geolo.guitarworld.network.callback.MvpCallBack;
@@ -20,8 +19,7 @@ public class CommentListPresenter extends BaseListPresenter<CommentListView, Com
      */
     public void loadCommentList() {
         getView().showRefreshing();
-        HttpService.getInstance().getAPI(CommentApi.class)
-                .getComments(getFilter())
+        commentApi.getComments(getFilter())
                 .enqueue(new MvpCallBack<List<Comment>>(getView()) {
                     @Override
                     public void onSuccess(List<Comment> responseData) {
@@ -47,8 +45,7 @@ public class CommentListPresenter extends BaseListPresenter<CommentListView, Com
     public void removeComment(int index) {
         HashMap<String, Object> filter = new HashMap<>();
         filter.put("id", getDataList().get(index).getId());
-        HttpService.getInstance().getAPI(CommentApi.class)
-                .removeComment(filter)
+        commentApi.removeComment(filter)
                 .enqueue(new BaseCallback<Void>() {
                     @Override
                     public void onSuccess(Void responseData) {

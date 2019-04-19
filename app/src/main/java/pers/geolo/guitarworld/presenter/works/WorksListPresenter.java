@@ -3,12 +3,10 @@ package pers.geolo.guitarworld.presenter.works;
 import java.util.HashMap;
 import java.util.List;
 
+import pers.geolo.guitarworld.entity.Works;
+import pers.geolo.guitarworld.network.callback.MvpCallBack;
 import pers.geolo.guitarworld.ui.base.BaseListPresenter;
 import pers.geolo.guitarworld.ui.base.CustomContext;
-import pers.geolo.guitarworld.entity.Works;
-import pers.geolo.guitarworld.network.HttpService;
-import pers.geolo.guitarworld.network.api.WorksApi;
-import pers.geolo.guitarworld.network.callback.MvpCallBack;
 import pers.geolo.guitarworld.view.WorksListItemView;
 import pers.geolo.guitarworld.view.WorksListView;
 
@@ -21,8 +19,7 @@ public class WorksListPresenter extends BaseListPresenter<WorksListView, WorksLi
         // 显示刷新控件
         getView().showRefreshing();
         // 发送获取创作列表请求
-        HttpService.getInstance().getAPI(WorksApi.class)
-                .getWorks(getFilter())
+        worksApi.getWorks(getFilter())
                 .enqueue(new MvpCallBack<List<Works>>(getView()) {
                     @Override
                     public void onSuccess(List<Works> responseData) {
@@ -82,8 +79,7 @@ public class WorksListPresenter extends BaseListPresenter<WorksListView, WorksLi
         HashMap<String, Object> filter = new HashMap<>();
         filter.put("id", getDataList().get(index).getId());
         // 发送删除创作请求
-        HttpService.getInstance().getAPI(WorksApi.class)
-                .removeWorks(filter)
+        worksApi.removeWorks(filter)
                 .enqueue(new MvpCallBack<Void>(getView()) {
                     @Override
                     public void onSuccess(Void responseData) {

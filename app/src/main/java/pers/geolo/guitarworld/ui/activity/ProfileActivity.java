@@ -11,11 +11,11 @@ import butterknife.OnClick;
 import java.io.InputStream;
 import pub.devrel.easypermissions.EasyPermissions;
 
+import pers.geolo.android.app.ActivityCallback;
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.presenter.user.EditProfilePresenter;
 import pers.geolo.guitarworld.presenter.user.ProfilePresenter;
 import pers.geolo.guitarworld.ui.base.BaseActivity;
-import pers.geolo.guitarworld.ui.temp.ActivityCallback;
 import pers.geolo.guitarworld.ui.temp.ActivityRequestCode;
 import pers.geolo.guitarworld.ui.temp.PermissionCallback;
 import pers.geolo.guitarworld.ui.temp.PermissionRequestCode;
@@ -204,23 +204,21 @@ public class ProfileActivity extends BaseActivity implements ProfileView, EditPr
         requestWriteExternalStorage(new PermissionCallback() {
             @Override
             public void onSuccess() {
-                // 添加活动请求
-                addActivityRequest(ActivityRequestCode.CHOOSE_PHOTO, new ActivityCallback() {
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType("image/*");
+                startActivity(intent, ActivityRequestCode.CHOOSE_PHOTO.ordinal(), new ActivityCallback() {
                     @Override
-                    public void onSuccess(Intent data) {
+                    public void onSuccess(Intent intent) {
                         String filePath = GetPhotoFromPhotoAlbum.getRealPathFromUri(ProfileActivity.this,
-                                data.getData());
+                                intent.getData());
                         callBack.onSuccess(filePath);
                     }
 
                     @Override
-                    public void onFailure() {
+                    public void onFailure(Intent intent) {
                         callBack.onFailure();
                     }
                 });
-                Intent intent = new Intent(Intent.ACTION_PICK);
-                intent.setType("image/*");
-                startActivityForResult(intent, ActivityRequestCode.CHOOSE_PHOTO.ordinal());
             }
 
             @Override

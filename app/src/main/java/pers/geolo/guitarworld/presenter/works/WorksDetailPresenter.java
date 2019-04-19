@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import pers.geolo.guitarworld.entity.Works;
-import pers.geolo.guitarworld.network.HttpService;
 import pers.geolo.guitarworld.network.api.WorksApi;
 import pers.geolo.guitarworld.network.callback.MvpCallBack;
 import pers.geolo.guitarworld.presenter.base.BasePresenter;
@@ -22,8 +21,7 @@ public class WorksDetailPresenter extends BasePresenter<WorksDetailView> {
      * 加载创作详情
      */
     public void loadWorksDetail() {
-        HttpService.getInstance().getAPI(WorksApi.class)
-                .getWorks(filter)
+        worksApi.getWorks(filter)
                 .enqueue(new MvpCallBack<List<Works>>(getView()) {
                     @Override
                     public void onSuccess(List<Works> responseData) {

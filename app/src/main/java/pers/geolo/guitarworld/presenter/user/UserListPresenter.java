@@ -9,11 +9,7 @@ import pers.geolo.guitarworld.entity.User;
 import pers.geolo.guitarworld.entity.UserListType;
 import pers.geolo.guitarworld.entity.UserRelation;
 import pers.geolo.guitarworld.entity.UserRelationType;
-import pers.geolo.guitarworld.network.HttpService;
 import pers.geolo.guitarworld.network.ResponseBody;
-import pers.geolo.guitarworld.network.api.FileApi;
-import pers.geolo.guitarworld.network.api.UserApi;
-import pers.geolo.guitarworld.network.api.UserRelationApi;
 import pers.geolo.guitarworld.network.callback.BaseCallback;
 import pers.geolo.guitarworld.network.callback.FileCallBack;
 import pers.geolo.guitarworld.network.callback.MvpCallBack;
@@ -40,8 +36,7 @@ public class UserListPresenter extends BaseListPresenter<UserListView, UserItemV
         itemView.setUsername(user.getUsername());
         itemView.setEmail(user.getEmail());
         // 获取用户关系
-        HttpService.getInstance().getAPI(UserRelationApi.class)
-                .getMyRelationTypeWith(user.getUsername())
+        userRelationApi.getMyRelationTypeWith(user.getUsername())
                 .enqueue(new BaseCallback<UserRelationType>() {
                     @Override
                     public void onSuccess(UserRelationType responseData) {
@@ -70,8 +65,7 @@ public class UserListPresenter extends BaseListPresenter<UserListView, UserItemV
                     }
                 });
         // 获取用户头像
-        HttpService.getInstance().getAPI(FileApi.class)
-                .getAvatar(itemView.getUsername())
+        fileApi.getAvatar(itemView.getUsername())
                 .enqueue(new FileCallBack() {
                     @Override
                     protected void onResponseInputStream(InputStream inputStream) {
@@ -97,7 +91,6 @@ public class UserListPresenter extends BaseListPresenter<UserListView, UserItemV
         getView().showRefreshing();
         String username = (String) getFilter().get("currentUsername");
         String userType = (String) getFilter().get(UserListType.class.getSimpleName());
-        UserApi userApi = HttpService.getInstance().getAPI(UserApi.class);
         Call<ResponseBody<List<User>>> call;
         if (UserListType.ALL.equals(userType)) { // 全部用户 （测试功能）
             call = userApi.getAllUsers();
@@ -144,8 +137,7 @@ public class UserListPresenter extends BaseListPresenter<UserListView, UserItemV
     }
 
     public void addRelation(int index) {
-        HttpService.getInstance().getAPI(UserRelationApi.class)
-                .addRelation(getRelation(index))
+        userRelationApi.addRelation(getRelation(index))
                 .enqueue(new MvpCallBack<Void>(getView()) {
                     @Override
                     public void onSuccess(Void responseData) {
@@ -165,8 +157,7 @@ public class UserListPresenter extends BaseListPresenter<UserListView, UserItemV
     }
 
     public void removeRelation(int index) {
-        HttpService.getInstance().getAPI(UserRelationApi.class)
-                .removeRelation(getRelation(index))
+        userRelationApi.removeRelation(getRelation(index))
                 .enqueue(new MvpCallBack<Void>(getView()) {
                     @Override
                     public void onSuccess(Void responseData) {

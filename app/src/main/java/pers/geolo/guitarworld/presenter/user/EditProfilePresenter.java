@@ -3,9 +3,7 @@ package pers.geolo.guitarworld.presenter.user;
 import okhttp3.MultipartBody;
 
 import pers.geolo.guitarworld.entity.User;
-import pers.geolo.guitarworld.network.HttpService;
 import pers.geolo.guitarworld.network.api.FileApi;
-import pers.geolo.guitarworld.network.api.UserApi;
 import pers.geolo.guitarworld.network.callback.BaseCallback;
 import pers.geolo.guitarworld.presenter.base.BasePresenter;
 import pers.geolo.guitarworld.ui.base.CustomContext;
@@ -23,8 +21,7 @@ public class EditProfilePresenter extends BasePresenter<EditProfileView> {
         user.setUsername(CustomContext.getInstance().getLogInfo().getUsername());
         user.setPassword(getView().getPassword());
         user.setEmail(getView().getEmail());
-        HttpService.getInstance().getAPI(UserApi.class)
-                .updateUserInfo(user)
+        userApi.updateUserInfo(user)
                 .enqueue(new BaseCallback<Void>() {
                     @Override
                     public void onSuccess(Void responseData) {
@@ -67,8 +64,7 @@ public class EditProfilePresenter extends BasePresenter<EditProfileView> {
      */
     public void uploadAvatar(String avatarFilePath) {
         MultipartBody.Part body = FileUtils.createMultipartBodyPart(avatarFilePath, "avatar");
-        HttpService.getInstance().getAPI(FileApi.class)
-                .uploadProfilePicture(body).enqueue(new BaseCallback<Void>() {
+        fileApi.uploadProfilePicture(body).enqueue(new BaseCallback<Void>() {
             @Override
             public void onSuccess(Void responseData) {
                 getView().setAvatar(avatarFilePath);

@@ -4,7 +4,6 @@ import java.io.InputStream;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 
-import pers.geolo.guitarworld.network.HttpService;
 import pers.geolo.guitarworld.network.api.FileApi;
 import pers.geolo.guitarworld.network.callback.FileCallBack;
 import pers.geolo.guitarworld.presenter.base.BasePresenter;
@@ -20,8 +19,7 @@ public class ImageDetailPresenter extends BasePresenter<ImageDetailView> {
 
     public void loadImage() {
         getView().showLoading();
-        HttpService.getInstance().getAPI(FileApi.class)
-                .getImage(imagePath)
+        fileApi.getImage(imagePath)
                 .enqueue(new FileCallBack() {
                     @Override
                     protected void onResponseInputStream(InputStream inputStream) {
