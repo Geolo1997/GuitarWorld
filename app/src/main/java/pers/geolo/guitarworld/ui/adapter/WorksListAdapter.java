@@ -1,6 +1,8 @@
 package pers.geolo.guitarworld.ui.adapter;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
@@ -8,12 +10,14 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnLongClick;
+import de.hdodenhof.circleimageview.CircleImageView;
+import java.io.InputStream;
 import java.util.Date;
 
 import pers.geolo.guitarworld.R;
-import pers.geolo.guitarworld.ui.base.BaseActivity;
 import pers.geolo.guitarworld.presenter.works.WorksListPresenter;
 import pers.geolo.guitarworld.ui.activity.WorksDetailActivity;
+import pers.geolo.guitarworld.ui.base.BaseActivity;
 import pers.geolo.guitarworld.util.ModuleMessage;
 import pers.geolo.guitarworld.view.WorksListItemView;
 import pers.geolo.guitarworld.view.WorksListView;
@@ -62,6 +66,8 @@ public class WorksListAdapter extends MvpRecyclerViewAdapter<WorksListAdapter.Vi
 
     public class ViewHolder extends MvpRecyclerViewAdapter.ViewHolder implements WorksListItemView {
 
+        @BindView(R.id.civ_avatar)
+        CircleImageView civAvatar;
         @BindView(R.id.tv_id)
         TextView tvId;
         @BindView(R.id.tv_author)
@@ -129,6 +135,12 @@ public class WorksListAdapter extends MvpRecyclerViewAdapter<WorksListAdapter.Vi
                     })
                     .create();
             alertDialog.show();
+        }
+
+        @Override
+        public void setAvatar(InputStream inputStream) {
+            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+            getActivity().runOnUiThread(() -> civAvatar.setImageBitmap(bitmap));
         }
 
         @Override

@@ -21,6 +21,10 @@
         android:hint="@string/content"/>
 
     <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/update"/>
+    <Button
         android:id="@+id/bt_publish"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

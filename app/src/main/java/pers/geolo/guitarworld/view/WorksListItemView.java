@@ -1,5 +1,6 @@
 package pers.geolo.guitarworld.view;
 
+import java.io.InputStream;
 import java.util.Date;
 
 import pers.geolo.guitarworld.view.base.BaseView;
@@ -18,4 +19,6 @@ public interface WorksListItemView extends ListItemView {
     String getUsername();
 
     void showOptions(String[] options);
+
+    void setAvatar(InputStream inputStream);
 }

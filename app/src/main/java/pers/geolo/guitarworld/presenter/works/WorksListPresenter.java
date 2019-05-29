@@ -1,9 +1,14 @@
 package pers.geolo.guitarworld.presenter.works;
 
+import android.util.Log;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
 
 import pers.geolo.guitarworld.entity.Works;
+import pers.geolo.guitarworld.network.callback.FileCallBack;
 import pers.geolo.guitarworld.network.callback.MvpCallBack;
 import pers.geolo.guitarworld.ui.base.BaseListPresenter;
 import pers.geolo.guitarworld.ui.base.CustomContext;
@@ -107,5 +112,24 @@ public class WorksListPresenter extends BaseListPresenter<WorksListView, WorksLi
         itemView.setCreateTime(works.getCreateTime());
         itemView.setTitle(works.getTitle());
         itemView.setContent(works.getContent());
+
+        // 获取用户头像
+        fileApi.getAvatar(works.getAuthor())
+                .enqueue(new FileCallBack() {
+                    @Override
+                    protected void onResponseInputStream(InputStream inputStream) {
+                        itemView.setAvatar(inputStream);
+                    }
+
+                    @Override
+                    protected void onError(int code, String message) {
+                        Log.d(TAG, message);
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                    }
+                });
     }
 }

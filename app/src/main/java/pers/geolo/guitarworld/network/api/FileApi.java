@@ -12,6 +12,10 @@ public interface FileApi {
     @POST("avatar")
     Call<ResponseBody<Void>> uploadProfilePicture(@Part MultipartBody.Part file);
 
+    @Multipart
+    @POST("picture")
+    Call<ResponseBody<String>> uploadPicture(@Part MultipartBody.Part file);
+
     @Streaming
     @GET("avatar")
     Call<okhttp3.ResponseBody> getAvatar(@Query("username") String username);
