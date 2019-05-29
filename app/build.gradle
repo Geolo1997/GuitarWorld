@@ -51,7 +51,8 @@ dependencies {
     //RxJava 和 RxAndroid
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
     implementation 'io.reactivex.rxjava2:rxjava:2.1.9'
-    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'//配合Rxjava 使用
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+    //配合Rxjava 使用
     //ConverterFactory的String依赖包
     // litepal
     implementation 'org.litepal.android:java:3.0.0'
