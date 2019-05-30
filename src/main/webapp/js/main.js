@@ -17,16 +17,16 @@ function getMyProfile() {
 
 function updateProfilePicture() {
     var formData = new FormData();
-    formData.append('profilePicture', $('#ip_profile_picture')[0].files[0]);
+    formData.append('image', $('#ip_profile_picture')[0].files[0]);
     $.ajax({
-        url: '/GuitarWorld/profilePicture',
+        url: '/GuitarWorld/image',
         type: 'POST',
         cache: false,
         data: formData,
         processData: false,
         contentType: false,
         success: function (res) {
-            alert('上传成功！');
+            alert('上传成功！' + res);
             window.location.reload();
         },
         error: function (message) {

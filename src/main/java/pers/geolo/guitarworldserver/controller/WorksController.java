@@ -1,6 +1,5 @@
 package pers.geolo.guitarworldserver.controller;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.apache.log4j.Logger;
@@ -10,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import pers.geolo.guitarworldserver.entity.ResponseJSONBody;
 import pers.geolo.guitarworldserver.entity.Works;
+import pers.geolo.guitarworldserver.service.ImageService;
 import pers.geolo.guitarworldserver.service.WorksService;
 import pers.geolo.guitarworldserver.util.ControllerUtils;
 
@@ -19,6 +19,9 @@ public class WorksController {
 
     @Autowired
     WorksService worksService;
+    @Autowired
+    ImageService imageService;
+
     private Logger logger = Logger.getLogger(WorksController.class);
 
     @RequestMapping(method = RequestMethod.POST)
@@ -28,6 +31,7 @@ public class WorksController {
         String currentUsername = (String) ControllerUtils.getSessionAttribute("username");
         if (currentUsername != null && currentUsername.equals(works.getAuthor())) {
             int code = worksService.publishWorks(works);
+            imageService.addImages(works.getId(), works.getImagePaths());
             return new ResponseJSONBody<>(code);
         } else {
             return new ResponseJSONBody<>(-1);
@@ -48,6 +52,10 @@ public class WorksController {
     public ResponseJSONBody<List<Works>> getWorks(@RequestParam Map<String, Object> filter) {
         logger.debug("收到获取Works的请求:id = " + filter.get("id") + ", author = " + filter.get("author"));
         List<Works> worksList = worksService.getWorksList(filter);
+        for (int i = 0; i < worksList.size(); i++) {
+            List<String> imagePaths = imageService.getImagePaths(worksList.get(i).getId());
+            worksList.get(i).setImagePaths(imagePaths);
+        }
         return new ResponseJSONBody<>(0, worksList, null);
     }
 }

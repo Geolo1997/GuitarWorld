@@ -54,3 +54,11 @@ CREATE TABLE Comment (
     -- 内容
     content VARCHAR(100)
 );
+
+-- 图片表
+CREATE TABLE Image (
+    -- 无符号自增主键
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    works_id INT UNSIGNED NOT NULL REFERENCES Works(id),
+    path VARCHAR(100) NOT NULL
+);

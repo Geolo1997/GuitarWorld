@@ -56,4 +56,14 @@ public class FileController {
         }
         ControllerUtils.returnFile(file, response);
     }
+
+    @RequestMapping(value = "/image", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseJSONBody<String> uploadImage(MultipartFile image) {
+        logger.debug("收到上传图片请求：" + image.getOriginalFilename());
+        String username = (String) ControllerUtils.getSessionAttribute("username");
+        String path = fileService.saveImage(username, image);
+        logger.debug("存储路径为：" + path);
+        return new ResponseJSONBody<>(0, path, null);
+    }
 }

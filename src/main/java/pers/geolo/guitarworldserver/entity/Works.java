@@ -1,7 +1,6 @@
 package pers.geolo.guitarworldserver.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -21,6 +20,20 @@ public class Works<T> {
     private T content;
     // 评论
     private List<Comment> comments;
+
+    private List<String> imagePaths = new ArrayList<>();
+
+    public void addImage(String imagePath) {
+        imagePaths.add(imagePath);
+    }
+
+    public void setImagePaths(List<String> imagePaths) {
+        this.imagePaths = imagePaths;
+    }
+
+    public List<String> getImagePaths() {
+        return imagePaths;
+    }
 
     public Works() {
     }

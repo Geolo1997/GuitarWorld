@@ -1,6 +1,7 @@
 package pers.geolo.guitarworldserver.service;
 
 import java.io.*;
+import java.util.Date;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -40,6 +41,24 @@ public class FileService {
         }
         OutputStream outputStream = new FileOutputStream(destinationPath);
         IoUtils.streamTransfor(inputStream, outputStream, 2048);
+    }
+
+    public String saveImage(String username, MultipartFile image) {
+        String fileName = image.getOriginalFilename();
+        String fileType = fileName.substring(fileName.lastIndexOf("."));
+        long currentTime = new Date().getTime();
+        String filePath = ResourceUtils.getFilePath() + username + "/images/";
+        File directory = new File(filePath);
+        if (!directory.exists()) {
+            directory.mkdir();
+        }
+        try {
+            image.transferTo(new File(filePath, "" + currentTime + fileType));
+            return username + "/images/" + currentTime + fileType;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public File getImage(String imagePath) {
