@@ -2,20 +2,20 @@ package pers.geolo.guitarworld.presenter.works;
 
 import java.util.Date;
 
-import pers.geolo.guitarworld.ui.base.CustomContext;
 import pers.geolo.guitarworld.entity.Works;
-import pers.geolo.guitarworld.network.api.WorksApi;
 import pers.geolo.guitarworld.network.callback.MvpCallBack;
 import pers.geolo.guitarworld.presenter.base.BasePresenter;
+import pers.geolo.guitarworld.ui.base.CustomContext;
 import pers.geolo.guitarworld.view.PublishWorksView;
 
 public class PublishWorksPresenter extends BasePresenter<PublishWorksView> {
+
+    Works works = new Works();
 
     /**
      * 发布创作
      */
     public void publishWorks() {
-        Works works = new Works();
         String username = CustomContext.getInstance().getLogInfo().getUsername();
         works.setAuthor(username);
         works.setCreateTime(new Date());
@@ -40,5 +40,9 @@ public class PublishWorksPresenter extends BasePresenter<PublishWorksView> {
                 getView().showToast("网络错误");
             }
         });
+    }
+
+    public void addImage(String data) {
+        works.addImage(data);
     }
 }

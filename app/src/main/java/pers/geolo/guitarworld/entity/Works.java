@@ -1,12 +1,13 @@
 package pers.geolo.guitarworld.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 /**
  * 创作类
  */
-public class Works<T> {
+public class Works {
     // 作品编号
     private int id;
     // 作者
@@ -16,9 +17,19 @@ public class Works<T> {
     // 标题
     private String title;
     // 内容
-    private T content;
+    private String content;
     // 评论
     private List<Comment> comments;
+
+    private List<String> imagePaths = new ArrayList<>();
+
+    public void addImage(String imagePath) {
+        imagePaths.add(imagePath);
+    }
+
+    public List<String> getImagePaths() {
+        return imagePaths;
+    }
 
     public Works() {
     }
@@ -55,11 +66,11 @@ public class Works<T> {
         this.title = title;
     }
 
-    public T getContent() {
+    public String getContent() {
         return content;
     }
 
-    public void setContent(T content) {
+    public void setContent(String content) {
         this.content = content;
     }
 

@@ -13,9 +13,10 @@ import pers.geolo.guitarworld.view.UploadImageView;
  */
 public class UploadImagePresenter extends BasePresenter<UploadImageView> {
 
-    public void uploadImage(String imagePath) {
+    public void uploadImage() {
+        String imagePath = getView().getLocalImagePath();
         MultipartBody.Part body = FileUtils.createMultipartBodyPart(imagePath, "avatar");
-        fileApi.uploadPicture(body).enqueue(new BaseCallback<String>() {
+        fileApi.uploadImage(body).enqueue(new BaseCallback<String>() {
             @Override
             public void onSuccess(String responseData) {
                 getView().addImage(responseData);

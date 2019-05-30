@@ -14,6 +14,12 @@ public class FileUtils {
         return part;
     }
 
+    public static MultipartBody.Part createMultipartBodyPart(File file, String fieldName) {
+        RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        MultipartBody.Part part = MultipartBody.Part.createFormData(fieldName, file.getName(), requestBody);
+        return part;
+    }
+
 //    public static String getImagePathFromUri(Uri uri) {
 //
 //    }

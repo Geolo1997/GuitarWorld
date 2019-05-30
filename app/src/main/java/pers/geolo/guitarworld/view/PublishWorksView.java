@@ -6,7 +6,7 @@ public interface PublishWorksView extends ToastView {
 
     String getWorksTitle();
 
-    Object getContent();
+    String getContent();
 
     void toMainView();
 }

@@ -14,11 +14,13 @@ public interface WorksListItemView extends ListItemView {
 
     void setTitle(String title);
 
-    void setContent(Object content);
+    void setContent(String content);
 
     String getUsername();
 
     void showOptions(String[] options);
 
     void setAvatar(InputStream inputStream);
+
+    void setFirstImage(InputStream inputStream);
 }

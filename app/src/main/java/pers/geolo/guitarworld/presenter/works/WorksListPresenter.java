@@ -131,5 +131,26 @@ public class WorksListPresenter extends BaseListPresenter<WorksListView, WorksLi
 
                     }
                 });
+        String firstImagePath = null;
+        if (works.getImagePaths() != null && works.getImagePaths().size() != 0) {
+            firstImagePath = works.getImagePaths().get(0);
+            fileApi.getImage(firstImagePath)
+                    .enqueue(new FileCallBack() {
+                        @Override
+                        protected void onResponseInputStream(InputStream inputStream) {
+                            itemView.setFirstImage(inputStream);
+                        }
+
+                        @Override
+                        protected void onError(int code, String message) {
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                        }
+                    });
+        }
     }
 }

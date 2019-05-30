@@ -9,4 +9,6 @@ import pers.geolo.guitarworld.view.base.ToastView;
  */
 public interface UploadImageView extends ToastView {
     void addImage(String imagePath);
+
+    String getLocalImagePath();
 }

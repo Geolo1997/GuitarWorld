@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -18,6 +19,7 @@ import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.presenter.works.WorksListPresenter;
 import pers.geolo.guitarworld.ui.activity.WorksDetailActivity;
 import pers.geolo.guitarworld.ui.base.BaseActivity;
+import pers.geolo.guitarworld.ui.base.BaseApplication;
 import pers.geolo.guitarworld.util.ModuleMessage;
 import pers.geolo.guitarworld.view.WorksListItemView;
 import pers.geolo.guitarworld.view.WorksListView;
@@ -59,9 +61,9 @@ public class WorksListAdapter extends MvpRecyclerViewAdapter<WorksListAdapter.Vi
 
     @Override
     public void toWorksDetailView(int worksId) {
-        Intent intent = new Intent(getActivity(), WorksDetailActivity.class);
+        Intent intent = new Intent(BaseApplication.getContext(), WorksDetailActivity.class);
         intent.putExtra(ModuleMessage.WORKS_ID, worksId);
-        getActivity().startActivity(intent);
+        BaseApplication.getContext().startActivity(intent);
     }
 
     public class ViewHolder extends MvpRecyclerViewAdapter.ViewHolder implements WorksListItemView {
@@ -78,6 +80,8 @@ public class WorksListAdapter extends MvpRecyclerViewAdapter<WorksListAdapter.Vi
         TextView tvTitle;
         @BindView(R.id.tv_content)
         TextView tvContent;
+        @BindView(R.id.first_image)
+        ImageView firstImage;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -110,8 +114,8 @@ public class WorksListAdapter extends MvpRecyclerViewAdapter<WorksListAdapter.Vi
         }
 
         @Override
-        public void setContent(Object content) {
-            tvContent.setText(content.toString());
+        public void setContent(String content) {
+            tvContent.setText(content);
         }
 
         @Override
@@ -141,6 +145,12 @@ public class WorksListAdapter extends MvpRecyclerViewAdapter<WorksListAdapter.Vi
         public void setAvatar(InputStream inputStream) {
             Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
             getActivity().runOnUiThread(() -> civAvatar.setImageBitmap(bitmap));
+        }
+
+        @Override
+        public void setFirstImage(InputStream inputStream) {
+            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+            getActivity().runOnUiThread(() -> firstImage.setImageBitmap(bitmap));
         }
 
         @Override
