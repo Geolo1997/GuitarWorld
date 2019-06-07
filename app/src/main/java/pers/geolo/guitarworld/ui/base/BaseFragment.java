@@ -1,5 +1,6 @@
 package pers.geolo.guitarworld.ui.base;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -7,20 +8,21 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
+import android.widget.Toast;
 
-import pers.geolo.guitarworld.view.base.LoadingView;
-import pers.geolo.guitarworld.view.base.RefreshView;
-import pers.geolo.guitarworld.view.base.ToastView;
+import pers.geolo.android.app.GuideFragment;
+import pers.geolo.guitarworld.util.ActivityUtils;
 
-public abstract class BaseFragment extends Fragment implements ToastView, LoadingView , RefreshView {
+public abstract class BaseFragment extends GuideFragment {
 
     protected final String TAG = this.getClass().getSimpleName();
-
     private BaseActivity activity;
 
-    Unbinder unbinder;
+    @Override
+    protected int getContentViewId() {
+        return getContentView();
+    }
+
 
     protected abstract int getContentView();
 
@@ -28,8 +30,7 @@ public abstract class BaseFragment extends Fragment implements ToastView, Loadin
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(getContentView(), container, false);
-        unbinder = ButterKnife.bind(this, view);
+        View view = super.onCreateView(inflater, container, savedInstanceState);
         activity = (BaseActivity) getActivity();
         return view;
     }
@@ -39,18 +40,8 @@ public abstract class BaseFragment extends Fragment implements ToastView, Loadin
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
-
-    @Override
     public void showToast(String message) {
-        getBaseActivity().showToast(message);
-    }
-
-    @Override
-    public void showLoading() {
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -65,6 +56,39 @@ public abstract class BaseFragment extends Fragment implements ToastView, Loadin
 
     @Override
     public void hideRefreshing() {
+
+    }
+
+    @Override
+    public void startActivity(Class<? extends Activity> activityClass, Bundle requestParam) {
+        ActivityUtils.startActivity(getBaseActivity(), activityClass, requestParam);
+    }
+
+    @Override
+    public void startActivity(Class<? extends Activity> activityClass) {
+        ActivityUtils.startActivity(getBaseActivity(), activityClass);
+    }
+
+    @Override
+    public void setFragment(int viewId, Fragment fragment, Bundle parameters) {
+        fragment.setArguments(parameters);
+        getChildFragmentManager().beginTransaction()
+                .replace(viewId, fragment)
+                .commit();
+    }
+
+    @Override
+    public void setFragment(int viewId, Fragment fragment) {
+        setFragment(viewId, fragment, null);
+    }
+
+    @Override
+    public Bundle getStartParameters() {
+        return getArguments();
+    }
+
+    @Override
+    public void setResponseParameters(Bundle parameters) {
 
     }
 }

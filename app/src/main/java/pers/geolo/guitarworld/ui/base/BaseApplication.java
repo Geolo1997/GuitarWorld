@@ -1,10 +1,11 @@
 package pers.geolo.guitarworld.ui.base;
 
-import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
-import android.os.Bundle;
 import org.litepal.LitePal;
+
+import pers.geolo.guitarworld.http.HttpClient;
+import pers.geolo.guitarworld.http.retrofit.RetrofitHandler;
 
 public class BaseApplication extends Application {
 
@@ -19,46 +20,9 @@ public class BaseApplication extends Application {
         super.onCreate();
         context = getApplicationContext();
         LitePal.initialize(getApplicationContext());
-//        LitePal.deleteDatabase("GuitarWorld");
-//        LitePal.getDatabase();
 
-//        LitePal.deleteAll(LogInfo.class);
-
-        registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
-            @Override
-            public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-
-            }
-
-            @Override
-            public void onActivityStarted(Activity activity) {
-
-            }
-
-            @Override
-            public void onActivityResumed(Activity activity) {
-
-            }
-
-            @Override
-            public void onActivityPaused(Activity activity) {
-
-            }
-
-            @Override
-            public void onActivityStopped(Activity activity) {
-
-            }
-
-            @Override
-            public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
-
-            }
-
-            @Override
-            public void onActivityDestroyed(Activity activity) {
-
-            }
-        });
+        HttpClient.init()
+                .handler(new RetrofitHandler())
+                .configure();
     }
 }

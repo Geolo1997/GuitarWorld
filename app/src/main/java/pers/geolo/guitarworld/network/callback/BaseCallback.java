@@ -29,7 +29,7 @@ public abstract class BaseCallback<T> implements Callback<ResponseBody<T>> {
         Log.d(TAG, "收到网络消息：" + responseBody.toString());
         int code = responseBody.getCode();
         if (code == 0) {
-            Log.d(TAG, "onSuccess()");
+            Log.d(TAG, "success()");
             onSuccess(responseBody.getData());
         } else {
             String message = responseBody.getMessage();

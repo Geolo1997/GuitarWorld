@@ -1,104 +1,84 @@
 package pers.geolo.guitarworld.ui.base;
 
 import android.app.Activity;
-import android.content.pm.PackageManager;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import java.util.HashMap;
-import java.util.Map;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
-import pers.geolo.android.app.GuideActivity;
-import pers.geolo.guitarworld.ui.temp.PermissionCallback;
-import pers.geolo.guitarworld.ui.temp.PermissionRequestCode;
-import pers.geolo.guitarworld.view.base.LoadingView;
-import pers.geolo.guitarworld.view.base.RefreshView;
-import pers.geolo.guitarworld.view.base.ToastView;
+import pers.geolo.android.util.ActivityCollector;
+import pers.geolo.guitarworld.util.ActivityUtils;
 import pers.geolo.util.SingletonHolder;
 
-public abstract class BaseActivity extends GuideActivity implements ToastView, RefreshView, LoadingView {
+public abstract class BaseActivity extends AppCompatActivity {
 
     protected final String TAG = this.getClass().getSimpleName();
-    private final Map<PermissionRequestCode, PermissionCallback[]> permissionCallbackMap = new HashMap<>();
-
-    public boolean havePermission(String permission) {
-        return ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED;
-    }
+    private Unbinder unbinder;
 
     protected abstract int getContentView();
 
+
+    public void showToast(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
     @Override
-    protected int getContentViewId() {
-        return getContentView();
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(getContentView());
+        unbinder = ButterKnife.bind(this);
     }
 
-    /**
-     * 请求多个permission
-     *
-     * @param requestCode
-     * @param permissions
-     * @param callbacks
-     */
-    public void requestPermissions(PermissionRequestCode requestCode, String[] permissions,
-                                   PermissionCallback[] callbacks) {
-        permissionCallbackMap.put(requestCode, callbacks);
-        ActivityCompat.requestPermissions(this, permissions, requestCode.ordinal());
-    }
-
-    /**
-     * 请求单个permission
-     *
-     * @param requestCode
-     * @param permission
-     * @param callback
-     */
-    public void requestPermission(PermissionRequestCode requestCode, String permission, PermissionCallback callback) {
-        permissionCallbackMap.put(requestCode, new PermissionCallback[]{callback});
-        ActivityCompat.requestPermissions(this, new String[]{permission}, requestCode.ordinal());
-    }
-
-    /**
-     * permission请求回调
-     *
-     * @param requestCode
-     * @param permissions
-     * @param grantResults
-     */
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
-        PermissionRequestCode permissionRequestCode = PermissionRequestCode.values()[requestCode];
-        PermissionCallback[] callbacks = permissionCallbackMap.get(permissionRequestCode);
-        if (callbacks != null) {
-            for (int i = 0; i < grantResults.length && i < callbacks.length; i++) {
-                PermissionCallback callback = callbacks[i];
-                if (callback != null) {
-                    if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                        callback.onSuccess();
-                    } else {
-                        callback.onFailure();
-                    }
-                }
-            }
-        }
+    protected void onDestroy() {
+        super.onDestroy();
+        unbinder.unbind();
     }
 
     public void setFragment(int viewId, Class<? extends Fragment> fragmentClass) {
-        super.setFragment(viewId, SingletonHolder.getInstance(fragmentClass));
+        setFragment(viewId, SingletonHolder.getInstance(fragmentClass));
     }
 
     public void setFragment(int viewId, Class<? extends Fragment> fragmentClass, Bundle parameters) {
-        super.setFragment(viewId, SingletonHolder.getInstance(fragmentClass), parameters);
+        setFragment(viewId, SingletonHolder.getInstance(fragmentClass), parameters);
     }
 
     public void startActivityAndFinish(Class<? extends Activity> activityClass) {
-        super.startActivity(activityClass);
+        ActivityUtils.startActivity(this, activityClass);
         finish();
     }
 
-    public void showLoading() {
-        super.showLoading("加载中");
+
+    public void setFragment(int viewId, Fragment fragment, Bundle parameters) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        fragment.setArguments(parameters);
+        transaction.replace(viewId, fragment);
+        transaction.commit();
+    }
+
+    public void setFragment(int viewId, Fragment fragment) {
+        setFragment(viewId, fragment, null);
+    }
+
+    public Bundle getStartParameters() {
+        Intent intent = getIntent();
+        return intent.getExtras();
+    }
+
+    public void setResponseParameters(Bundle parameters) {
+        Intent intent = new Intent();
+        intent.putExtras(parameters);
+        setResult(RESULT_OK, intent);
+    }
+
+    public void finishLastActivity() {
+        ActivityCollector.finishLastActivity(this);
     }
 }

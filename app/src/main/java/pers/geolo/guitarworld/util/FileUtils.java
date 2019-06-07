@@ -24,7 +24,7 @@ public class FileUtils {
 //
 //    }
 
-    public static void saveFile(String filePath,InputStream inputStream) throws IOException {
+    public static void saveFile(String filePath, InputStream inputStream) throws IOException {
 
         OutputStream outputStream = new FileOutputStream(filePath);
         byte[] buffer = new byte[2048];
@@ -35,5 +35,11 @@ public class FileUtils {
         outputStream.flush();
         outputStream.close();
         inputStream.close();
+    }
+
+    public static File getDirectory(File file) {
+        String filePath = file.getPath();
+        String directoryPath = filePath.substring(0, filePath.lastIndexOf("/"));
+        return new File(directoryPath);
     }
 }

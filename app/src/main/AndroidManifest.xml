@@ -17,28 +17,32 @@
         android:supportsRtl="true"
         android:networkSecurityConfig="@xml/network_security_config"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".ui.activity.LoadingActivity">
+
+        <activity android:name=".ApplicationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.LoginActivity">
+
+        <activity android:name=".delegate.LauncherDelegate">
+
         </activity>
-        <activity android:name=".ui.activity.RegisterActivity"/>
-        <activity android:name=".ui.activity.MainActivity"/>
+        <activity android:name=".delegate.LoginDelegate">
+        </activity>
+        <activity android:name=".delegate.RegisterDelegate"/>
+        <activity android:name=".delegate.MainDelegate"/>
         <activity android:name=".ui.activity.MyWorksActivity"/>
-        <activity android:name=".ui.activity.NetworkErrorActivity"/>
-        <activity android:name=".ui.activity.ProfileActivity"/>
-        <activity android:name=".ui.activity.FollowActivity">
+        <activity android:name=".delegate.ProfileDelegate"/>
+        <activity android:name=".delegate.FollowDelegate">
         </activity>
-        <activity android:name=".ui.activity.WorksDetailActivity">
+        <activity android:name=".delegate.WorksDetailDelegate">
         </activity>
-        <activity android:name=".ui.activity.PublishActivity">
+        <activity android:name=".delegate.PublishDelegate">
         </activity>
-        <activity android:name=".ui.activity.SearchResultActivity"/>
-        <activity android:name=".ui.activity.ImageDetailActivity">
+        <activity android:name=".delegate.SearchResultDelegate"/>
+        <activity android:name=".delegate.ImageDetailDelegate">
 
         </activity>
 
