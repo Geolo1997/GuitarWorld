@@ -12,7 +12,7 @@ public class ShopDelegate extends BaseDelegate {
 
     @Override
     public Object getLayout() {
-        return R.layout.fragment_shop;
+        return R.layout.delegate_shop;
     }
 
     @Override

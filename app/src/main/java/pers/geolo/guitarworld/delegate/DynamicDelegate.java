@@ -18,7 +18,7 @@ public class DynamicDelegate extends BaseDelegate {
 
     @Override
     public Object getLayout() {
-        return R.layout.fragment_dynamic;
+        return R.layout.delegate_dynamic;
     }
 
     @Override

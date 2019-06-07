@@ -70,7 +70,7 @@ public class WorksListDelegate extends BaseDelegate {
 
     @Override
     public Object getLayout() {
-        return R.layout.fragment_works_list;
+        return R.layout.delegate_works_list;
     }
 
     @Override

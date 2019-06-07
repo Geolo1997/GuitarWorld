@@ -20,7 +20,7 @@ public class MainDelegate extends BaseDelegate {
 
     @Override
     public Object getLayout() {
-        return R.layout.activity_main;
+        return R.layout.delegate_main;
     }
 
     @Override

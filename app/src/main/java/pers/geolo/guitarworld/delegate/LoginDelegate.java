@@ -30,7 +30,7 @@ public class LoginDelegate extends BaseDelegate {
 
     @Override
     public Object getLayout() {
-        return R.layout.activity_login;
+        return R.layout.delegate_login;
     }
 
     @Override

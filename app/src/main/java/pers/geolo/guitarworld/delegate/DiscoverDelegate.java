@@ -32,7 +32,7 @@ public class DiscoverDelegate extends BaseDelegate {
 
     @Override
     public Object getLayout() {
-        return R.layout.fragment_discover;
+        return R.layout.delegate_discover;
     }
 
     @Override

@@ -65,7 +65,7 @@ public class UserListDelegate extends BaseDelegate {
 
     @Override
     public Object getLayout() {
-        return R.layout.fragment_user_list;
+        return R.layout.delegate_user_list;
     }
 
     @Override

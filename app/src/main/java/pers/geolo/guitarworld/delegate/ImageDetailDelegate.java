@@ -29,7 +29,7 @@ public class ImageDetailDelegate extends BaseDelegate {
 
     @Override
     public Object getLayout() {
-        return R.layout.activity_image_detail;
+        return R.layout.delegate_image_detail;
     }
 
     @Override

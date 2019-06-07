@@ -27,7 +27,7 @@ public class FollowDelegate extends BaseDelegate {
 
     @Override
     public Object getLayout() {
-        return R.layout.activity_follow;
+        return R.layout.delegate_follow;
     }
 
     @Override

@@ -52,7 +52,7 @@ public class WorksDetailDelegate extends BaseDelegate {
     }
     @Override
     public Object getLayout() {
-        return R.layout.activity_works_detail;
+        return R.layout.delegate_works_detail;
     }
 
     @Override

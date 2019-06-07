@@ -34,7 +34,7 @@ public class MineDelegate extends BaseDelegate {
 
     @Override
     public Object getLayout() {
-        return R.layout.fragment_profile;
+        return R.layout.delegate_profile;
     }
 
     @Override

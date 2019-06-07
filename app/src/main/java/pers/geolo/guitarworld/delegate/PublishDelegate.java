@@ -41,7 +41,7 @@ public class PublishDelegate extends BaseDelegate {
 
     @Override
     public Object getLayout() {
-        return R.layout.activity_publish;
+        return R.layout.delegate_publish;
     }
 
     @Override

@@ -59,7 +59,7 @@ public class ProfileDelegate extends BaseDelegate {
 
     @Override
     public Object getLayout() {
-        return R.layout.activity_profile;
+        return R.layout.delegate_profile;
     }
 
     @Override

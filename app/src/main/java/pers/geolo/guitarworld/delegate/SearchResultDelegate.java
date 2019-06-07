@@ -11,7 +11,7 @@ public class SearchResultDelegate extends BaseDelegate {
 
     @Override
     public Object getLayout() {
-        return R.layout.activity_search_result;
+        return R.layout.delegate_search_result;
     }
 
     @Override

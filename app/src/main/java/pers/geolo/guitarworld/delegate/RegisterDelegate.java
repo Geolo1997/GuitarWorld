@@ -27,7 +27,7 @@ public class RegisterDelegate extends BaseDelegate {
 
     @Override
     public Object getLayout() {
-        return R.layout.activity_register;
+        return R.layout.delegate_register;
     }
 
     @Override

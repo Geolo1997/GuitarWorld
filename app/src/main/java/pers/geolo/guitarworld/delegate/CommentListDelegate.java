@@ -52,7 +52,7 @@ public class CommentListDelegate extends BaseDelegate {
 
     @Override
     public Object getLayout() {
-        return R.layout.fragment_comment_list;
+        return R.layout.delegate_comment_list;
     }
 
     @Override

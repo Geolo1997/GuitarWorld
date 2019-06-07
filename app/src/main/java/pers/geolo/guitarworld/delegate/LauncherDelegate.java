@@ -21,7 +21,7 @@ public class LauncherDelegate extends BaseDelegate {
 
     @Override
     public Object getLayout() {
-        return R.layout.activity_loading;
+        return R.layout.delegate_loading;
     }
 
     @Override

@@ -7,6 +7,6 @@ public class ToolsDelegate extends BaseFragment {
 
     @Override
     protected int getContentView() {
-        return R.layout.fragment_tools;
+        return R.layout.delegate_tools;
     }
 }
