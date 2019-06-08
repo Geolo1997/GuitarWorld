@@ -4,7 +4,7 @@ import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.*;
 
-import pers.geolo.guitarworld.network.ResponseBody;
+import pers.geolo.guitarworld.network.callback.ResponseBody;
 
 public interface FileApi {
 

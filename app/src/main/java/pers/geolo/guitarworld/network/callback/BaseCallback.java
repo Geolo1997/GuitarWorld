@@ -2,7 +2,6 @@ package pers.geolo.guitarworld.network.callback;
 
 import android.util.Log;
 import okhttp3.Headers;
-import pers.geolo.guitarworld.network.ResponseBody;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -44,7 +43,7 @@ public abstract class BaseCallback<T> implements Callback<ResponseBody<T>> {
         onFailure();
     }
 
-    public abstract void onSuccess(T responseData);
+    public abstract void onSuccess(T t);
 
     public abstract void onError(int errorCode, String errorMessage);
 

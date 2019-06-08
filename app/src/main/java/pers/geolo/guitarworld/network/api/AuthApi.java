@@ -3,10 +3,9 @@ package pers.geolo.guitarworld.network.api;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.GET;
 import retrofit2.http.POST;
 
-import pers.geolo.guitarworld.network.ResponseBody;
+import pers.geolo.guitarworld.network.callback.ResponseBody;
 
 public interface AuthApi {
 
@@ -20,8 +19,8 @@ public interface AuthApi {
      */
     @FormUrlEncoded
     @POST("auth/register")
-    Call<ResponseBody<Void>> register(@Field("username") String username, @Field("password") String password, @Field(
-            "email") String email);
+    Call<ResponseBody<Void>> register(@Field("username") String username, @Field("password") String password,
+                                      @Field("email") String email, @Field("verifyCode") String verifyCode);
 
     /**
      * 登录

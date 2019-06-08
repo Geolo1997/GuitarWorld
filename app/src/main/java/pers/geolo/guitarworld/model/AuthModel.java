@@ -1,17 +1,12 @@
 package pers.geolo.guitarworld.model;
 
-import pers.geolo.guitarworld.constant.HttpConstants;
 import pers.geolo.guitarworld.dao.DataBaseManager;
 import pers.geolo.guitarworld.dao.LogInfoDAO;
+import pers.geolo.guitarworld.entity.DataListener;
 import pers.geolo.guitarworld.entity.LogInfo;
-import pers.geolo.guitarworld.http.HttpClient;
-import pers.geolo.guitarworld.http.HttpMethod;
-import pers.geolo.guitarworld.http.callback.IError;
-import pers.geolo.guitarworld.http.callback.IFailure;
-import pers.geolo.guitarworld.http.callback.ISuccess;
-import pers.geolo.guitarworld.model.listener.LoginListener;
-import pers.geolo.guitarworld.model.listener.LogoutListener;
-import pers.geolo.guitarworld.model.listener.RegisterListener;
+import pers.geolo.guitarworld.network.HttpClient;
+import pers.geolo.guitarworld.network.api.AuthApi;
+import pers.geolo.guitarworld.network.callback.DataCallback;
 
 /**
  * @author 桀骜(Geolo)
@@ -19,57 +14,30 @@ import pers.geolo.guitarworld.model.listener.RegisterListener;
  */
 public class AuthModel {
 
-    public static void register(String username, String password, String email, RegisterListener listener) {
-        HttpClient.newRequest()
-                .url(HttpConstants.REGISTER_URL)
-                .method(HttpMethod.POST)
-                .params("username", username)
-                .params("password", password)
-                .params("email", email)
-                .success(new ISuccess<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        listener.onSuccess();
-                    }
-                })
-                .error(new IError() {
-                    @Override
-                    public void onError(int code, String message) {
-                        listener.onError(message);
-                    }
-                })
-                .execute();
+    private static AuthApi authApi = HttpClient.getService(AuthApi.class);
+
+    public static void register(String username, String password, String email,
+                                String verifyCoed, DataListener<Void> listener) {
+        authApi.register(username, password, email, verifyCoed).enqueue(new DataCallback<Void>(listener) {
+            @Override
+            public void onSuccess(Void aVoid) {
+                listener.onReturn(aVoid);
+            }
+        });
     }
 
-    public static void login(String username, String password, LoginListener listener) {
-        HttpClient.newRequest()
-                .url(HttpConstants.LOGIN_URL)
-                .method(HttpMethod.POST)
-                .params("username", username)
-                .params("password", password)
-                .success(new ISuccess<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        listener.onSuccess();
-                    }
-                })
-                .error(new IError() {
-                    @Override
-                    public void onError(int code, String message) {
-                        listener.onError(message);
-                    }
-                })
-                .failure(new IFailure() {
-                    @Override
-                    public void onFailure() {
-                        listener.onFailure();
-                    }
-                })
-                .execute();
+    public static void login(String username, String password, DataListener<Void> listener) {
+        authApi.login(username, password).enqueue(new DataCallback<Void>(listener) {
+            @Override
+            public void onSuccess(Void aVoid) {
+                listener.onReturn(aVoid);
+            }
+        });
     }
 
-    public static LogInfo getLastSavedLogInfo() {
-        return DataBaseManager.getLogInfoDAO().getLastSavedLogInfo();
+    public static void getLastSavedLogInfo(DataListener<LogInfo> listener) {
+        LogInfo logInfo = DataBaseManager.getLogInfoDAO().getLastSavedLogInfo();
+        listener.onReturn(logInfo);
     }
 
     public static void saveLogInfo(LogInfo logInfo) {
@@ -81,21 +49,32 @@ public class AuthModel {
         }
     }
 
-    public static void logout(String username, LogoutListener listener) {
-        HttpClient.newRequest()
-                .url(HttpConstants.LOGOUT_URL)
-                .method(HttpMethod.POST)
-                .params("username", username)
-                .success(new ISuccess<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        listener.onSuccess();
-                    }
-                })
-                .execute();
+    public static void logout(DataListener<Void> listener) {
+        authApi.logout().enqueue(new DataCallback<Void>(listener) {
+            @Override
+            public void onSuccess(Void aVoid) {
+                listener.onReturn(aVoid);
+            }
+        });
     }
 
     public static LogInfo getCurrentLoginUser() {
         return DataBaseManager.getLogInfoDAO().getLastSavedLogInfo();
+    }
+
+    public static void autoLogin(DataListener<Void> listener) {
+        getLastSavedLogInfo(new DataListener<LogInfo>() {
+            @Override
+            public void onReturn(LogInfo logInfo) {
+                if (logInfo.isAutoLogin()) {
+                    login(logInfo.getUsername(), logInfo.getPassword(), listener);
+                }
+            }
+
+            @Override
+            public void onError(String message) {
+                listener.onError(message);
+            }
+        });
     }
 }

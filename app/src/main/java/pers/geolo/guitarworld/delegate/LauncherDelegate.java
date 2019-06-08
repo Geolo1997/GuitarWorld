@@ -9,15 +9,18 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 import pers.geolo.guitarworld.R;
-import pers.geolo.guitarworld.entity.LogInfo;
-import pers.geolo.guitarworld.fragmentationtest.delegate.BaseDelegate;
+import pers.geolo.guitarworld.base.BaseDelegate;
+import pers.geolo.guitarworld.delegate.auth.LoginDelegate;
+import pers.geolo.guitarworld.delegate.dynamic.MainDelegate;
 import pers.geolo.guitarworld.model.AuthModel;
-import pers.geolo.guitarworld.model.listener.LoginListener;
+import pers.geolo.guitarworld.entity.DataListener;
 
 public class LauncherDelegate extends BaseDelegate {
 
     @BindView(R.id.tv_timer)
     TextView tvTimer;
+
+    private LauncherTimer launcherTimer;
 
     @Override
     public Object getLayout() {
@@ -31,44 +34,52 @@ public class LauncherDelegate extends BaseDelegate {
 
     @OnClick(R.id.tv_timer)
     public void onClick() {
+        launcherTimer.cancel();
         autoLogin();
     }
 
     private void initCountDownTimer() {
-        new CountDownTimer(5000, 1000) {
-
-            @Override
-            public void onTick(long millisUntilFinished) {
-                int s = (int) (millisUntilFinished / 1000) + 1;
-                tvTimer.setText(s + "秒");
-            }
-
-            @Override
-            public void onFinish() {
-                autoLogin();
-            }
-        }.start();
+        launcherTimer = new LauncherTimer(5000, 1000);
+        launcherTimer.start();
     }
 
     private void autoLogin() {
-        LogInfo logInfo = AuthModel.getLastSavedLogInfo();
-        if (logInfo.isAutoLogin()) {
-            AuthModel.login(logInfo.getUsername(), logInfo.getPassword(), new LoginListener() {
-                @Override
-                public void onSuccess() {
-                    startWithPop(new MainDelegate());
-                }
+        AuthModel.autoLogin(new DataListener<Void>() {
+            @Override
+            public void onReturn(Void aVoid) {
+                startWithPop(new MainDelegate());
+            }
 
-                @Override
-                public void onError(String message) {
-                    startWithPop(new LoginDelegate());
-                }
+            @Override
+            public void onError(String message) {
+                startWithPop(new LoginDelegate());
+            }
+        });
+    }
 
-                @Override
-                public void onFailure() {
-                    startWithPop(new LoginDelegate());
-                }
-            });
+    private class LauncherTimer extends CountDownTimer {
+
+        /**
+         * @param millisInFuture    The number of millis in the future from the call
+         *                          to {@link #start()} until the countdown is done and {@link #onFinish()}
+         *                          is called.
+         * @param countDownInterval The interval along the way to receive
+         *                          {@link #onTick(long)} callbacks.
+         */
+        public LauncherTimer(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+
+            int s = (int) (millisUntilFinished / 1000) + 1;
+            tvTimer.setText(s + "秒");
+        }
+
+        @Override
+        public void onFinish() {
+            autoLogin();
         }
     }
 }
