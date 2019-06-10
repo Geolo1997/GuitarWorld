@@ -97,14 +97,28 @@ public class UserListDelegate extends BaseDelegate {
         if (filter.get("all") != null) {
             UserModel.getAllUser(callback);
         } else if (filter.get("follower") != null) {
-            UserModel.getFollower((String) filter.get("follower"), callback);
+            UserModel.getFollowing((String) filter.get("follower"), callback);
         } else if (filter.get("following") != null) {
-            UserModel.getFollowing((String) filter.get("following"), callback);
+            UserModel.getFollower((String) filter.get("following"), callback);
         }
     }
 
     void loadRelation() {
-
+        String currentUsername = AuthModel.getCurrentLoginUser().getUsername();
+        for (int i = 0; i < userList.size(); i++) {
+            String username = userList.get(i).getUsername();
+//            UserModel.getUserRelation(currentUsername, username, new DataListener<UserRelation>() {
+//                @Override
+//                public void onReturn(UserRelation userRelation) {
+//
+//                }
+//
+//                @Override
+//                public void onError(String message) {
+//
+//                }
+//            });
+        }
     }
 
     class Adapter extends RecyclerView.Adapter<ViewHolder> {

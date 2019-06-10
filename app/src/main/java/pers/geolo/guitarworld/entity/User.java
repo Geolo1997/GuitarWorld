@@ -8,7 +8,7 @@ public class User {
     private String username;
     private String password;
     private String email;
-    private String avatarImagePath;
+    private String avatarPath;
 
     // 我的关注者（粉丝）
     private List<String> followingUsername;
@@ -18,12 +18,12 @@ public class User {
     public User() {
     }
 
-    public String getAvatarImagePath() {
-        return avatarImagePath;
+    public String getAvatarPath() {
+        return avatarPath;
     }
 
-    public void setAvatarImagePath(String avatarImagePath) {
-        this.avatarImagePath = avatarImagePath;
+    public void setAvatarPath(String avatarPath) {
+        this.avatarPath = avatarPath;
     }
 
     public User(String username, String password, String email) {

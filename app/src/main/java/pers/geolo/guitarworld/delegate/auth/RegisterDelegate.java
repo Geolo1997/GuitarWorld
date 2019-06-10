@@ -10,10 +10,9 @@ import butterknife.OnClick;
 
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.base.BaseDelegate;
-import pers.geolo.guitarworld.delegate.dynamic.MainDelegate;
+import pers.geolo.guitarworld.entity.DataListener;
 import pers.geolo.guitarworld.entity.LogInfo;
 import pers.geolo.guitarworld.model.AuthModel;
-import pers.geolo.guitarworld.entity.DataListener;
 
 public class RegisterDelegate extends BaseDelegate {
 
@@ -46,8 +45,12 @@ public class RegisterDelegate extends BaseDelegate {
         AuthModel.register(username, password, email, null, new DataListener<Void>() {
             @Override
             public void onReturn(Void aVoid) {
-                AuthModel.saveLogInfo(logInfo);
-                startWithPop(new MainDelegate());
+                // 注册成功，返回登录界面
+                Bundle bundle = new Bundle();
+                bundle.putString("username", username);
+                bundle.putString("password", password);
+                setFragmentResult(RESULT_OK, bundle);
+                pop();
             }
 
             @Override

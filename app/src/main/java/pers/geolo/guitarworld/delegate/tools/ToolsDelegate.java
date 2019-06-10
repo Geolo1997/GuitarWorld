@@ -1,4 +1,4 @@
-package pers.geolo.guitarworld.delegate.tool;
+package pers.geolo.guitarworld.delegate.tools;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

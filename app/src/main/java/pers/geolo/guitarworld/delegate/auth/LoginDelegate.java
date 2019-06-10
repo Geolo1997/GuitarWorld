@@ -6,18 +6,20 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.OnClick;
 
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.base.BaseDelegate;
 import pers.geolo.guitarworld.delegate.dynamic.MainDelegate;
+import pers.geolo.guitarworld.entity.DataListener;
 import pers.geolo.guitarworld.entity.LogInfo;
 import pers.geolo.guitarworld.model.AuthModel;
-import pers.geolo.guitarworld.entity.DataListener;
 
 public class LoginDelegate extends BaseDelegate {
 
+    private static final int REGISTER = 1;
     @BindView(R.id.et_username)
     EditText etUsername;
     @BindView(R.id.et_password)
@@ -62,7 +64,18 @@ public class LoginDelegate extends BaseDelegate {
 
     @OnClick(R.id.bt_register)
     protected void startRegisterActivity() {
-        start(new RegisterDelegate());
+        startForResult(new RegisterDelegate(), REGISTER);
+    }
+
+    @Override
+    public void onFragmentResult(int requestCode, int resultCode, Bundle data) {
+        super.onFragmentResult(requestCode, resultCode, data);
+        if (requestCode == REGISTER && resultCode == RESULT_OK) {
+            Toast.makeText(getContext(), "注册成功！",Toast.LENGTH_SHORT).show();
+            etUsername.setText(data.getString("username"));
+            etPassword.setText(data.getString("password"));
+            login();
+        }
     }
 
     private void initLogInfo() {

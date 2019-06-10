@@ -23,7 +23,6 @@ import pers.geolo.guitarworld.entity.DataListener;
 import pers.geolo.guitarworld.entity.FileListener;
 import pers.geolo.guitarworld.model.CommentModel;
 import pers.geolo.guitarworld.model.ImageModel;
-import pers.geolo.guitarworld.model.listener.GetImageListener;
 import pers.geolo.guitarworld.util.RecyclerViewUtils;
 
 /**

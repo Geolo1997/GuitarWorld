@@ -1,36 +1,31 @@
 package pers.geolo.guitarworld.delegate.auth;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 import java.util.HashMap;
 
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.base.BaseDelegate;
-import pers.geolo.guitarworld.delegate.user.FollowDelegate;
+import pers.geolo.guitarworld.delegate.user.FriendDelegate;
 import pers.geolo.guitarworld.delegate.user.ProfileDelegate;
 import pers.geolo.guitarworld.delegate.works.WorksListDelegate;
-import pers.geolo.guitarworld.model.AuthModel;
 import pers.geolo.guitarworld.entity.DataListener;
+import pers.geolo.guitarworld.entity.FileListener;
+import pers.geolo.guitarworld.model.AuthModel;
+import pers.geolo.guitarworld.model.ImageModel;
 
 public class MineDelegate extends BaseDelegate {
 
     @BindView(R.id.tv_username)
     TextView tvUsername;
-    @BindView(R.id.bt_my_profile)
-    Button btMyProfile;
-    @BindView(R.id.bt_my_works)
-    Button btMyWorks;
-    @BindView(R.id.bt_my_follower)
-    Button btMyFans;
-    @BindView(R.id.bt_my_following)
-    Button btMyAttention;
-    @BindView(R.id.bt_logout)
-    Button btLogout;
+    @BindView(R.id.civ_avatar)
+    CircleImageView civAvatar;
 
     @Override
     public Object getLayout() {
@@ -39,7 +34,30 @@ public class MineDelegate extends BaseDelegate {
 
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
-        tvUsername.setText(AuthModel.getCurrentLoginUser().getUsername());
+        String currentUsername = AuthModel.getCurrentLoginUser().getUsername();
+        tvUsername.setText(currentUsername);
+        ImageModel.getAvatar(currentUsername, new FileListener<Bitmap>() {
+            @Override
+            public void onProgress(int currentLength, int totalLength) {
+
+            }
+
+            @Override
+            public void onReturn(Bitmap bitmap) {
+                civAvatar.setImageBitmap(bitmap);
+            }
+
+            @Override
+            public void onError(String message) {
+
+            }
+        });
+    }
+
+    @OnClick({R.id.civ_avatar, R.id.tv_username})
+    public void toProfileDelegate() {
+        String currentUsername = AuthModel.getCurrentLoginUser().getUsername();
+        getDelegateActivity().start(ProfileDelegate.newInstance(currentUsername));
     }
 
     @OnClick(R.id.bt_my_profile)
@@ -57,7 +75,7 @@ public class MineDelegate extends BaseDelegate {
     @OnClick({R.id.bt_my_following, R.id.bt_my_follower})
     public void onBtMyAttentionOrMyFansClicked(View view) {
         int id = view.getId();
-        getDelegateActivity().start(FollowDelegate.newInstance(AuthModel.getCurrentLoginUser().getUsername(),
+        getDelegateActivity().start(FriendDelegate.newInstance(AuthModel.getCurrentLoginUser().getUsername(),
                 id == R.id.bt_my_following ? "following" : "follower"));
     }
 

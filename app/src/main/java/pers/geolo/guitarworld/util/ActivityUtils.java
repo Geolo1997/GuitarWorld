@@ -41,7 +41,7 @@ public class ActivityUtils {
         startActivity(activity, activityClass, null, null);
     }
 
-    protected static void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    public static void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         Callback callback = callbackHolder.get(requestCode);
         // 存在callback，存在返回的intent
         if (callback != null) {

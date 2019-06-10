@@ -1,5 +1,6 @@
 package pers.geolo.guitarworld.dao.impl;
 
+import java.util.Date;
 import java.util.List;
 import org.litepal.LitePal;
 
@@ -14,11 +15,13 @@ public class LogInfoDAOImpl implements LogInfoDAO {
 
     @Override
     public void add(LogInfo logInfo) {
+        logInfo.setSaveTime(new Date());
         logInfo.save();
     }
 
     @Override
     public void update(LogInfo logInfo) {
+        logInfo.setSaveTime(new Date());
         if (!logInfo.isSavePassword()) {
             logInfo.setToDefault("savePassword");
         }

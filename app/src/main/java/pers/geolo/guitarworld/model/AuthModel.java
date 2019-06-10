@@ -68,6 +68,8 @@ public class AuthModel {
             public void onReturn(LogInfo logInfo) {
                 if (logInfo.isAutoLogin()) {
                     login(logInfo.getUsername(), logInfo.getPassword(), listener);
+                } else {
+                    listener.onError(null);
                 }
             }
 

@@ -20,7 +20,7 @@ public interface AuthApi {
     @FormUrlEncoded
     @POST("auth/register")
     Call<ResponseBody<Void>> register(@Field("username") String username, @Field("password") String password,
-                                      @Field("email") String email, @Field("verifyCode") String verifyCode);
+                                      @Field("email") String email, @Field("confirmCode") String verifyCode);
 
     /**
      * 登录

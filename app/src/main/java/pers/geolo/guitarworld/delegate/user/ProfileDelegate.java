@@ -13,18 +13,15 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import com.bumptech.glide.Glide;
 import java.io.File;
-import okhttp3.MultipartBody;
 
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.base.BaseDelegate;
 import pers.geolo.guitarworld.delegate.image.ImageDetailDelegate;
+import pers.geolo.guitarworld.entity.DataListener;
 import pers.geolo.guitarworld.entity.FileListener;
 import pers.geolo.guitarworld.entity.User;
-import pers.geolo.guitarworld.entity.DataListener;
 import pers.geolo.guitarworld.model.ImageModel;
 import pers.geolo.guitarworld.model.UserModel;
-import pers.geolo.guitarworld.model.listener.GetImageListener;
-import pers.geolo.guitarworld.network.callback.BaseCallback;
 import pers.geolo.guitarworld.util.*;
 
 public class ProfileDelegate extends BaseDelegate {
@@ -94,7 +91,7 @@ public class ProfileDelegate extends BaseDelegate {
     }
 
     private void initAvatar() {
-        ImageModel.getImage(user.getAvatarImagePath(), new FileListener<Bitmap>() {
+        ImageModel.getAvatar(user.getUsername(), new FileListener<Bitmap>() {
             @Override
             public void onProgress(int currentLength, int totalLength) {
 
@@ -119,11 +116,12 @@ public class ProfileDelegate extends BaseDelegate {
 
     @OnClick(R.id.bt_save)
     public void onBtSaveClicked() {
+//        String
     }
 
     @OnClick(R.id.iv_avatar)
     public void onIvAvatarClicked() {
-        start(ImageDetailDelegate.newInstance(user.getAvatarImagePath()));
+        start(ImageDetailDelegate.newInstance(user.getAvatarPath()));
     }
 
     @OnClick(R.id.bt_take_photo)
@@ -192,21 +190,17 @@ public class ProfileDelegate extends BaseDelegate {
             @Override
             public void onSuccess(Intent intent) {
                 String filePath = GetPhotoFromPhotoAlbum.getRealPathFromUri(getContext(), intent.getData());
-                MultipartBody.Part body = FileUtils.createMultipartBodyPart(filePath, "avatar");
-                ImageModel.fileApi.uploadProfilePicture(body).enqueue(new BaseCallback<Void>() {
+                ImageModel.uploadAvatar(new File(filePath), new DataListener<String>() {
                     @Override
-                    public void onSuccess(Void responseData) {
+                    public void onReturn(String s) {
                         Bitmap bitmap = BitmapFactory.decodeFile(filePath);
                         ivAvatar.setImageBitmap(bitmap);
-//                        showToast("保存成功！");
+                        Toast.makeText(getContext(), "上传成功！", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
-                    public void onError(int errorCode, String errorMessage) {
-                    }
+                    public void onError(String message) {
 
-                    @Override
-                    public void onFailure() {
                     }
                 });
             }

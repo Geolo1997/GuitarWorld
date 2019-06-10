@@ -29,7 +29,7 @@ import pers.geolo.guitarworld.util.FileUtils;
  */
 public class ImageModel {
 
-    public static FileApi fileApi = HttpClient.getService(FileApi.class);
+    private static FileApi fileApi = HttpClient.getService(FileApi.class);
     private static Map<String, Bitmap> imageBitmapHolder = new HashMap<>();
 
     public static void getImage(String imagePath, FileListener<Bitmap> listener) {
@@ -79,6 +79,16 @@ public class ImageModel {
     public static void upload(File file, DataListener<String> listener) {
         MultipartBody.Part body = FileUtils.createMultipartBodyPart(file, "image");
         fileApi.uploadImage(body).enqueue(new DataCallback<String>(listener) {
+            @Override
+            public void onSuccess(String responseData) {
+                listener.onReturn(responseData);
+            }
+        });
+    }
+
+    public static void uploadAvatar(File file, DataListener<String> listener) {
+        MultipartBody.Part body = FileUtils.createMultipartBodyPart(file, "avatar");
+        fileApi.uploadAvatar(body).enqueue(new DataCallback<String>(listener) {
             @Override
             public void onSuccess(String responseData) {
                 listener.onReturn(responseData);

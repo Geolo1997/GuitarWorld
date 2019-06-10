@@ -35,7 +35,7 @@ public class PermissionUtils {
         ActivityCompat.requestPermissions(activity, permissions, permissionCallbackHolder.size() - 1);
     }
 
-    public static void onRequestPermissionsResult(Activity activity, int requestCode, @NonNull String[] permissions,
+    public static void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                                   @NonNull int[] grantResults) {
         Callback callback = permissionCallbackHolder.get(requestCode);
         permissionCallbackHolder.add(requestCode, null);

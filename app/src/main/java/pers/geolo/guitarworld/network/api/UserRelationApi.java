@@ -35,7 +35,7 @@ public interface UserRelationApi {
      * @return
      */
     @GET("relation/with")
-    Call<ResponseBody<UserRelationType>> getMyRelationTypeWith(@Query("otherUsername") String otherUsername);
+    Call<ResponseBody<UserRelation>> getMyRelationWith(@Query("otherUsername") String otherUsername);
 
     /**
      * 获取某用户粉丝

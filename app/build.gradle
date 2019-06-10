@@ -40,6 +40,9 @@ dependencies {
     // fragmentation
     implementation 'me.yokeyword:fragmentation:1.3.6'
     implementation 'me.yokeyword:fragmentation-swipeback:1.3.6'
+    // iconify
+    implementation 'com.joanzapata.iconify:android-iconify-ionicons:2.2.2'
+    implementation 'com.joanzapata.iconify:android-iconify-fontawesome:2.2.2'
     // recyclerView
     implementation 'com.android.support:recyclerview-v7:28.0.0'
     //butterKnife

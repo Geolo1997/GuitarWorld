@@ -10,7 +10,7 @@ public interface FileApi {
 
     @Multipart
     @POST("avatar")
-    Call<ResponseBody<Void>> uploadProfilePicture(@Part MultipartBody.Part file);
+    Call<ResponseBody<String>> uploadAvatar(@Part MultipartBody.Part file);
 
     @Multipart
     @POST("image")
