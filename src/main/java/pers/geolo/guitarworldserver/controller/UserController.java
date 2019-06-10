@@ -20,9 +20,14 @@ public class UserController {
     @Autowired
     UserService userService;
 
+    /**
+     * 获取用户公开资料
+     * @param username 用户名
+     * @return 用户公开资料
+     */
     @RequestMapping(value = "/{username}", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseJSONBody<User> getUserInfo(@PathVariable("username") String username) {
+    public ResponseJSONBody<User> getUserPublicProfile(@PathVariable("username") String username) {
         logger.debug("收到获取个人资料请求：" + username);
         User user = userService.getProfile(username);
         ResponseJSONBody<User> responseJSONBody = new ResponseJSONBody<>();

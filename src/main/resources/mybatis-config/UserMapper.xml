@@ -16,31 +16,32 @@
     <update id="update" parameterType="user">
         UPDATE User
         SET password = #{password},
-            email    = #{email}
+            email    = #{email},
+            avatar_path = #{avatarPath}
         WHERE username = #{username};
     </update>
 
     <select id="selectByUsername" parameterType="string" resultType="user">
-        SELECT username, password, email
+        SELECT username, password, email, avatar_path
         FROM User
         WHERE username = #{username};
     </select>
 
     <!--test-->
     <select id="selectAll" resultType="user">
-        SELECT username, password, email
+        SELECT username, password, email, avatar_path
         FROM User;
     </select>
 
     <select id="selectByFollower" parameterType="string" resultType="user">
-        SELECT username, email
+        SELECT username, email, avatar_path
         FROM User, UserRelation
         WHERE UserRelation.follower_username = #{follower}
         AND User.username = UserRelation.following_username;
     </select>
 
     <select id="selectByFollowing" parameterType="string" resultType="user">
-        SELECT username, email
+        SELECT username, email, avatar_path
         FROM User, UserRelation
         WHERE UserRelation.following_username = #{following}
           AND User.username = UserRelation.follower_username;

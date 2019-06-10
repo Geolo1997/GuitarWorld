@@ -12,7 +12,6 @@ import pers.geolo.guitarworldserver.entity.ResponseJSONBody;
 import pers.geolo.guitarworldserver.service.FileService;
 import pers.geolo.guitarworldserver.service.UserService;
 import pers.geolo.guitarworldserver.util.ControllerUtils;
-import pers.geolo.guitarworldserver.util.ResourceUtils;
 
 @Controller
 @RequestMapping("/auth")
@@ -27,15 +26,15 @@ public class AuthController {
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseJSONBody<Void> register(String username, String password, String email) throws IOException {
+    public ResponseJSONBody<Void> register(String username, String password, String email, String confirmCode) throws IOException {
         logger.debug("收到注册请求： username = " + username + ", password = " + password + ", email = " + email);
         int code = userService.register(username, password, email);
-        if (code == 0) {
-            ControllerUtils.setSessionAttribute("username", username);
-            // 设置默认头像
-            String filePath = ResourceUtils.getFilePath();
-            fileService.copyFile(filePath + "null/profilePicture.jpg", filePath + username + "/profilePicture.jpg");
-        }
+//        if (code == 0) {
+//            ControllerUtils.setSessionAttribute("username", username);
+//            // 设置默认头像
+//            String filePath = ResourceUtils.getFilePath();
+//            fileService.copyFile(filePath + "null/avatar.jpg", filePath + username + "/profilePicture.jpg");
+//        }
         return new ResponseJSONBody<>(code);
     }
 

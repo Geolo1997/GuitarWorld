@@ -2,31 +2,42 @@ package pers.geolo.guitarworldserver.service;
 
 import java.io.*;
 import java.util.Date;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import pers.geolo.guitarworldserver.dao.UserMapper;
+import pers.geolo.guitarworldserver.entity.User;
 import pers.geolo.guitarworldserver.util.IoUtils;
 import pers.geolo.guitarworldserver.util.ResourceUtils;
 
 @Service
 public class FileService {
 
-    public int saveProfilePicture(String username, MultipartFile profilePicture) {
+    @Autowired
+    UserMapper userMapper;
+
+    public String saveAvatar(String username, MultipartFile avatar) {
         String filePath = ResourceUtils.getFilePath() + username + "/";
         File directory = new File(filePath);
         if (!directory.exists()) {
-            directory.mkdir();
+            directory.mkdirs();
         }
         try {
-            profilePicture.transferTo(new File(filePath, "avatar.jpg"));
-            return 0;
+            File file = new File(filePath, "avatar.jpg");
+            avatar.transferTo(file);
+            // 更新user表avatar_path字段
+            User user = userMapper.selectByUsername(username);
+            user.setAvatarPath(username  + "/avatar.jpg");
+            userMapper.update(user);
+            return username + "/avatar.jpg";
         } catch (IOException e) {
             e.printStackTrace();
-            return 1;
         }
+        return null;
     }
 
-    public File getProfilePicture(String username) {
+    public File getAvatar(String username) {
         String filePath = ResourceUtils.getFilePath() + username + "/";
         File file = new File(filePath, "avatar.jpg");
         return file.exists() ? file : null;
@@ -50,7 +61,7 @@ public class FileService {
         String filePath = ResourceUtils.getFilePath() + username + "/images/";
         File directory = new File(filePath);
         if (!directory.exists()) {
-            directory.mkdir();
+            directory.mkdirs();
         }
         try {
             image.transferTo(new File(filePath, "" + currentTime + fileType));
@@ -62,7 +73,7 @@ public class FileService {
     }
 
     public File getImage(String imagePath) {
-        String filePath = ResourceUtils.getFilePath() + "/" + imagePath;
+        String filePath = ResourceUtils.getFilePath() + imagePath;
         File file = new File(filePath);
         return file.exists() ? file : null;
     }

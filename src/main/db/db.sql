@@ -14,7 +14,9 @@ CREATE TABLE User (
     -- 密码
     password VARCHAR(20) NOT NULL,
     -- 电子邮箱
-    email VARCHAR(20) NOT NULL
+    email VARCHAR(20) NOT NULL,
+    -- 头像地址
+    avatar_path VARCHAR(100)
 );
 
 -- 用户关系表
@@ -23,6 +25,8 @@ CREATE TABLE UserRelation (
     follower_username VARCHAR(20) NOT NULL REFERENCES User(username),
     -- 被关注者
     following_username VARCHAR(20) NOT NULL REFERENCES User(username),
+    -- 用户关系类型
+    relation_type VARCHAR(20) NOT NULL,
     -- 联合主键
     PRIMARY KEY(follower_username, following_username)
 );

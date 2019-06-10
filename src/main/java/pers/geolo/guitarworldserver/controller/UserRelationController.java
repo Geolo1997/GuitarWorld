@@ -1,7 +1,6 @@
 package pers.geolo.guitarworldserver.controller;
 
 import org.apache.log4j.Logger;
-import org.apache.log4j.spi.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -57,13 +56,13 @@ public class UserRelationController {
 
     @RequestMapping(value = "/with", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseJSONBody<UserRelationType> getRelationType(String otherUsername) {
+    public ResponseJSONBody<UserRelation> getUserRelation(String otherUsername) {
         logger.debug("收到获取关系请求：" + otherUsername);
         // 获取当前用户的用户名
         String currentUsername = (String) ControllerUtils.getSessionAttribute("username");
         // 获取用户关系类型
-        UserRelationType userRelationType = userRelationService.getRelationType(currentUsername, otherUsername);
-        return new ResponseJSONBody<>(0, userRelationType, null);
+        UserRelation userRelation= userRelationService.getUserRelation(currentUsername, otherUsername);
+        return new ResponseJSONBody<>(0, userRelation, null);
     }
 
     /**

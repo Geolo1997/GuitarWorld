@@ -25,17 +25,17 @@ public class FileController {
 
     @RequestMapping(value = "/avatar", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseJSONBody<Void> uploadProfilePicture(MultipartFile avatar) {
+    public ResponseJSONBody<String> uploadAvatar(MultipartFile avatar) {
         logger.debug("收到更新头像请求：" + avatar.getName());
         String username = (String) ControllerUtils.getSessionAttribute("username");
-        int code = fileService.saveProfilePicture(username, avatar);
-        return new ResponseJSONBody<>(code);
+        String path = fileService.saveAvatar(username, avatar);
+        return new ResponseJSONBody<>(0, path, null);
     }
 
     @RequestMapping(value = "/avatar", method = RequestMethod.GET)
-    public void getProfilePicture(String username, HttpServletResponse response) throws IOException {
+    public void getAvatar(String username, HttpServletResponse response) throws IOException {
         logger.debug("获取头像 username = " + username);
-        File file = fileService.getProfilePicture(username);
+        File file = fileService.getAvatar(username);
         if (file == null) {
             logger.debug("文件不存在");
         }

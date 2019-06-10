@@ -7,6 +7,8 @@ public class UserRelation {
     private String followerUsername;
     // 偶像用户名
     private String followingUsername;
+    // 用户关系
+    private UserRelationType relationType;
 
     public UserRelation() {
     }
@@ -16,6 +18,11 @@ public class UserRelation {
         this.followingUsername = followingUsername;
     }
 
+    public UserRelation(String followerUsername, String followingUsername, UserRelationType relationType) {
+        this.followerUsername = followerUsername;
+        this.followingUsername = followingUsername;
+        this.relationType = relationType;
+    }
 
     public String getFollowerUsername() {
         return followerUsername;
@@ -33,6 +40,13 @@ public class UserRelation {
         this.followingUsername = followingUsername;
     }
 
+    public UserRelationType getRelationType() {
+        return relationType;
+    }
+
+    public void setRelationType(UserRelationType relationType) {
+        this.relationType = relationType;
+    }
 
     @Override
     public String toString() {

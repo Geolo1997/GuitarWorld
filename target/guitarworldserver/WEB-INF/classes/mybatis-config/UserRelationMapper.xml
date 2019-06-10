@@ -3,9 +3,16 @@
 
 <mapper namespace="pers.geolo.guitarworldserver.dao.UserRelationMapper">
     <insert id="insert" parameterType="userRelation">
-        INSERT INTO UserRelation(follower_username, following_username)
-            VALUE (#{followerUsername}, #{followingUsername});
+        INSERT INTO UserRelation(follower_username, following_username, relation_type)
+            VALUE (#{followerUsername}, #{followingUsername}, #{relationType});
     </insert>
+
+    <select id="select" resultType="userRelation">
+        SELECT *
+        FROM UserRelation
+        WHERE follower_username = #{current_username}
+        AND following_username = #{other_username};
+    </select>
 
     <delete id="delete" parameterType="userRelation">
         DELETE
@@ -13,6 +20,13 @@
         WHERE follower_username = #{followerUsername}
           AND following_username = #{followingUsername};
     </delete>
+
+    <update id="updateRelationType" parameterType="userRelation">
+        UPDATE UserRelation
+        SET relation_type = #{relationType}
+        WHERE follower_username = #{followerUsername}
+          AND following_username = #{followingUsername};
+    </update>
 
     <select id="exist" parameterType="userRelation" resultType="boolean">
         <![CDATA[
@@ -26,7 +40,8 @@
     <select id="listFollowingUsername" parameterType="string" resultType="string">
         SELECT following_username
         FROM UserRelation
-        WHERE follower_username = #{followerUsername};
+        WHERE follower_username = #{followerUsername}
+        AND relation_type != 'BLACK_LIST';
     </select>
 
     <select id="listFollowerUsername" parameterType="string" resultType="string">
