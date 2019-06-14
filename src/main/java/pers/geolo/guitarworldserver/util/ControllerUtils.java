@@ -35,7 +35,7 @@ public class ControllerUtils {
         response.setHeader("Content-Disposition", "attachment; filename=" + file.getName());
         InputStream inputStream = new FileInputStream(file);
         OutputStream outputStream = response.getOutputStream();
-        byte[] buffer = new byte[2048];
+        byte[] buffer = new byte[10000];
         int len;
         while ((len = inputStream.read(buffer)) != -1) {
             outputStream.write(buffer, 0, len);

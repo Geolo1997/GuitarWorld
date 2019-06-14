@@ -66,3 +66,12 @@ CREATE TABLE Image (
     works_id INT UNSIGNED NOT NULL REFERENCES Works(id),
     path VARCHAR(100) NOT NULL
 );
+
+-- 乐曲
+CREATE TABLE music (
+
+    -- 无符号自增主键
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL COMMENT ,
+
+);

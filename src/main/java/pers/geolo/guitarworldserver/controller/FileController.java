@@ -50,7 +50,7 @@ public class FileController {
 
     @RequestMapping(value = "/image", method = RequestMethod.GET)
     public void getImage(String imagePath, HttpServletResponse response) throws IOException {
-        File file = fileService.getImage(imagePath);
+        File file = fileService.getFile(imagePath);
         if (file == null) {
             logger.debug("文件不存在");
         }
@@ -65,5 +65,15 @@ public class FileController {
         String path = fileService.saveImage(username, image);
         logger.debug("存储路径为：" + path);
         return new ResponseJSONBody<>(0, path, null);
+    }
+
+    @RequestMapping(value = "/video", method = RequestMethod.GET)
+    public void getVideo(String videoPath, HttpServletResponse response) throws IOException {
+        logger.warn("收到获取视频请求：" + videoPath);
+        File file = fileService.getFile(videoPath);
+        if (file == null) {
+            logger.debug("文件不存在");
+        }
+        ControllerUtils.returnFile(file, response);
     }
 }

@@ -72,7 +72,7 @@ public class FileService {
         }
     }
 
-    public File getImage(String imagePath) {
+    public File getFile(String imagePath) {
         String filePath = ResourceUtils.getFilePath() + imagePath;
         File file = new File(filePath);
         return file.exists() ? file : null;
