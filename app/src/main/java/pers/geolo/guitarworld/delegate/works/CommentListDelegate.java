@@ -4,13 +4,17 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.OnLongClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,11 +22,14 @@ import java.util.List;
 
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.base.BaseDelegate;
+import pers.geolo.guitarworld.delegate.user.ProfileDelegate;
 import pers.geolo.guitarworld.entity.Comment;
 import pers.geolo.guitarworld.entity.DataListener;
 import pers.geolo.guitarworld.entity.FileListener;
+import pers.geolo.guitarworld.model.AuthModel;
 import pers.geolo.guitarworld.model.CommentModel;
 import pers.geolo.guitarworld.model.ImageModel;
+import pers.geolo.guitarworld.model.WorksModel;
 import pers.geolo.guitarworld.util.RecyclerViewUtils;
 
 /**
@@ -135,10 +142,56 @@ public class CommentListDelegate extends BaseDelegate {
         TextView tvCreateTime;
         @BindView(R.id.tv_comment)
         TextView tvComment;
+        String[] options;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+        }
+
+        @OnClick({R.id.civ_avatar, R.id.tv_author})
+        public void toProfileDelegate() {
+            String username = commentList.get(getAdapterPosition()).getAuthor();
+            getDelegateActivity().start(ProfileDelegate.newInstance(username));
+        }
+
+        @OnLongClick(R.id.ll_comment_item)
+        public boolean showOptions() {
+
+            Comment comment = commentList.get(getAdapterPosition());
+            String username = comment.getAuthor();
+            if (username.equals(AuthModel.getCurrentLoginUser().getUsername())) {
+                options = new String[]{"删除"};
+            }
+            //添加列表
+            AlertDialog alertDialog = new AlertDialog.Builder(getContext())
+                    .setTitle("选项")
+                    .setItems(options, (dialogInterface, i) -> {
+                        String text = options[i];
+                        switch (text) {
+                            case "删除":
+                                HashMap<String, Object> filter = new HashMap<>();
+                                filter.put("id", comment.getId());
+                                CommentModel.deleteCommentList(filter, new DataListener<Void>() {
+                                    @Override
+                                    public void onReturn(Void aVoid) {
+                                        commentList.remove(comment);
+                                        adapter.notifyItemRemoved(getAdapterPosition());
+                                        Toast.makeText(getContext(), "删除成功", Toast.LENGTH_SHORT).show();
+                                    }
+
+                                    @Override
+                                    public void onError(String message) {
+
+                                    }
+                                });
+                                break;
+                            default:
+                        }
+                    })
+                    .create();
+            alertDialog.show();
+            return true;
         }
     }
 }

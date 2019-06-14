@@ -66,6 +66,7 @@ public class WorksDetailDelegate extends BaseDelegate {
             HashMap<String, Object> filter = new HashMap<>();
             filter.put("worksId", worksId);
             initWorks();
+            // 加载CommentListDelegate
             loadRootFragment(R.id.ll_fragment, CommentListDelegate.newInstance(filter));
         }
     }

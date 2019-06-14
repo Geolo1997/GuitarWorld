@@ -1,6 +1,7 @@
 package pers.geolo.guitarworld.delegate.works;
 
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,10 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -33,6 +31,7 @@ import pers.geolo.guitarworld.entity.Works;
 import pers.geolo.guitarworld.model.AuthModel;
 import pers.geolo.guitarworld.model.ImageModel;
 import pers.geolo.guitarworld.model.WorksModel;
+import pers.geolo.guitarworld.network.HttpClient;
 import pers.geolo.guitarworld.util.RecyclerViewUtils;
 
 /**
@@ -171,6 +170,20 @@ public class WorksListDelegate extends BaseDelegate {
             } else {
                 viewHolder.firstImage.setImageBitmap(null);
             }
+
+
+            // TODO 播放视频
+            if (i == 1) {
+                String url = HttpClient.baseUrl + "video?videoPath=video/test.mp4";
+                viewHolder.vvVideo.setVisibility(View.VISIBLE);
+                viewHolder.vvVideo.setVideoURI(Uri.parse(url));
+                viewHolder.vvVideo.start();
+            } else {
+                if (viewHolder.vvVideo.isPlaying()) {
+                    viewHolder.vvVideo.stopPlayback();
+                }
+                viewHolder.vvVideo.setVisibility(View.GONE);
+            }
         }
 
         @Override
@@ -195,6 +208,8 @@ public class WorksListDelegate extends BaseDelegate {
         TextView tvContent;
         @BindView(R.id.first_image)
         ImageView firstImage;
+        @BindView(R.id.vv_video)
+        VideoView vvVideo;
         String[] options;
 
         public ViewHolder(@NonNull View itemView) {

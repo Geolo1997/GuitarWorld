@@ -17,7 +17,7 @@ public class MediaUtils {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         File directory = FileUtils.getDirectory(file);
         if (!directory.exists()) {
-            directory.mkdir();
+            directory.mkdirs();
         }
         Uri uri;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
