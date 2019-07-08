@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>吉他世界</title>
+
+    <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+
+    <script src="../js/main.js"></script>
+</head>
+<body>
+    <img id="img_profile_picture" height="100px" width="100px"/>
+    <div id="upload_profile_picture">
+        <input id="ip_profile_picture" type="file" name="image">
+        <button id="bt_upload" type="button" onclick="updateProfilePicture()">上传</button>
+    </div>
+    <h4 id="tv_username">用户名</h4>
+    <button onclick="logout()">注销</button>
+
+    <div id="works_list">
+        <hr>
+        <div class="works_list_item">
+            <div class="author"></div>
+            <div class="title"></div>
+            <div class="content"></div>
+            <button class="detail">详情</button>
+            <div class="comments_list">
+                <div class="comment_item" id="comment_template">
+                    <div class="id"></div>
+                    <div class="author"></div>
+                    <div class="create_time"></div>
+                    <div class="content"></div>
+                </div>
+            </div>
+            <hr>
+        </div>
+    </div>
+
+    <script type="application/javascript">
+        getMyProfile();
+        getAllWorks();
+    </script>
+</body>
+</html>

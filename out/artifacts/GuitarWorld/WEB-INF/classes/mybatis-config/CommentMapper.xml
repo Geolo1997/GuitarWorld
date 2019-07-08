@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="pers.geolo.guitarworldserver.dao.CommentMapper">
+    <insert id="insert" parameterType="comment" useGeneratedKeys="true"
+            keyProperty="id">
+        INSERT INTO Comment(works_id, author, create_time, content)
+        VALUES (#{worksId}, #{author}, #{createTime}, #{content});
+    </insert>
+
+
+    <delete id="delete" parameterType="map">
+        DELETE
+        FROM Comment
+        <where>
+            <if test="id != null">
+                AND id = #{id}
+            </if>
+            <if test="worksId != null">
+                AND works_id = #{worksId}
+            </if>
+        </where>
+    </delete>
+
+    <select id="select" parameterType="map" resultType="comment">
+        SELECT id, works_id, author, create_time, content
+        FROM Comment
+        <where>
+            <if test="id != null">
+                AND id = #{id}
+            </if>
+            <if test="worksId != null">
+                AND works_id = #{worksId}
+            </if>
+        </where>
+    </select>
+
+</mapper>

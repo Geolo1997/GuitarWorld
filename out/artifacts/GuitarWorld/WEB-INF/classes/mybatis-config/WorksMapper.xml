@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="pers.geolo.guitarworldserver.dao.WorksMapper">
+    <insert id="insert" parameterType="works" useGeneratedKeys="true"
+            keyProperty="id">
+        INSERT INTO Works(author, create_time, title, content)
+        VALUES (#{author}, #{createTime}, #{title}, #{content});
+    </insert>
+
+    <delete id="delete" parameterType="map">
+        DELETE
+        FROM Works
+        <where>
+            <if test="id != null">
+                AND id = #{id}
+            </if>
+            <if test="author != null">
+                AND author = #{author}
+            </if>
+        </where>
+    </delete>
+
+    <select id="select" parameterType="map" resultType="works">
+        SELECT id, author, create_time, title, content
+        FROM Works
+        <where>
+            <if test="id != null">
+                AND id = #{id}
+            </if>
+            <if test="author != null">
+                AND author = #{author}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectByFollower" parameterType="string" resultType="works">
+        SELECT id, author, create_time, title, content
+        FROM Works,
+             UserRelation
+        WHERE follower_username = #{followerUsername}
+          AND following_username = author;
+    </select>
+
+</mapper>
