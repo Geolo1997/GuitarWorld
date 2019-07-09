@@ -58,4 +58,11 @@
     <string name="confirm_code">验证码</string>
     <string name="get_confirm_code">获取验证码</string>
     <string name="black_list">黑名单</string>
+    <string name="music_name">音乐名称</string>
+    <string name="music_profile">音乐简介</string>
+    <string name="music_score_list">乐谱列表</string>
+    <string name="music_teach_list">教学列表</string>
+    <string name="music_show_list">表演列表</string>
+    <string name="music_score_title">乐谱名称</string>
+    <string name="music_score_author">乐谱作者</string>
 </resources>

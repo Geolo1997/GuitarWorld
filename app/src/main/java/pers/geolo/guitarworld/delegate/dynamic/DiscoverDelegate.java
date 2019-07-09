@@ -7,9 +7,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import butterknife.BindView;
 import butterknife.OnClick;
-
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.base.BaseDelegate;
+import pers.geolo.guitarworld.delegate.music.MusicDelegate;
 
 public class DiscoverDelegate extends BaseDelegate {
 
@@ -23,6 +23,12 @@ public class DiscoverDelegate extends BaseDelegate {
         // 获取输入文本
         String searchText = etSearch.getText().toString();
         getDelegateActivity().start(new SearchResultDelegate());
+    }
+
+    // TODO test
+    @OnClick(R.id.bt_show_music)
+    public void show() {
+        getDelegateActivity().start(new MusicDelegate());
     }
 
     @Override

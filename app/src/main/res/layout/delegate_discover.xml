@@ -25,4 +25,10 @@
             android:text="@string/search"/>
     </LinearLayout>
 
+    <Button
+        android:id="@+id/bt_show_music"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="显示音乐"/>
+
 </LinearLayout>

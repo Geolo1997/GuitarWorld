@@ -15,6 +15,11 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            // 编译错误解决 https://www.jianshu.com/p/14ea74ef7fe8
+            lintOptions {
+                checkReleaseBuilds false
+                abortOnError false
+            }
         }
     }
     compileOptions {

@@ -37,7 +37,11 @@ public class AuthModel {
 
     public static void getLastSavedLogInfo(DataListener<LogInfo> listener) {
         LogInfo logInfo = DataBaseManager.getLogInfoDAO().getLastSavedLogInfo();
-        listener.onReturn(logInfo);
+        if (logInfo != null) {
+            listener.onReturn(logInfo);
+        } else {
+            listener.onError("not exist loginfo");
+        }
     }
 
     public static void saveLogInfo(LogInfo logInfo) {
