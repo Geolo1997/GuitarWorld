@@ -37,7 +37,7 @@
     <string name="network_error_message">对不起，网络开小差了QAQ</string>
     <string name="author">作者</string>
     <string name="create_time">创作时间</string>
-    <string name="title">标题</string>
+    <string name="name">标题</string>
     <string name="content">内容</string>
     <string name="send">发送</string>
     <string name="logout">退出登录</string>

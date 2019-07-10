@@ -22,13 +22,13 @@ public class DiscoverDelegate extends BaseDelegate {
     public void onBtSearchClicked() {
         // 获取输入文本
         String searchText = etSearch.getText().toString();
-        getDelegateActivity().start(new SearchResultDelegate());
+        getContainerActivity().start(new SearchResultDelegate());
     }
 
     // TODO test
     @OnClick(R.id.bt_show_music)
     public void show() {
-        getDelegateActivity().start(new MusicDelegate());
+        getContainerActivity().start(new MusicDelegate());
     }
 
     @Override

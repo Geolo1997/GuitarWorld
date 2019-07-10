@@ -57,25 +57,25 @@ public class MineDelegate extends BaseDelegate {
     @OnClick({R.id.civ_avatar, R.id.tv_username})
     public void toProfileDelegate() {
         String currentUsername = AuthModel.getCurrentLoginUser().getUsername();
-        getDelegateActivity().start(ProfileDelegate.newInstance(currentUsername));
+        getContainerActivity().start(ProfileDelegate.newInstance(currentUsername));
     }
 
     @OnClick(R.id.bt_my_profile)
     public void onBtMyProfileClicked() {
-        getDelegateActivity().start(ProfileDelegate.newInstance(AuthModel.getCurrentLoginUser().getUsername()));
+        getContainerActivity().start(ProfileDelegate.newInstance(AuthModel.getCurrentLoginUser().getUsername()));
     }
 
     @OnClick(R.id.bt_my_works)
     public void onBtMyWorksClicked() {
         HashMap<String, Object> filter = new HashMap<>();
         filter.put("author", AuthModel.getCurrentLoginUser().getUsername());
-        getDelegateActivity().start(WorksListDelegate.newInstance(filter));
+        getContainerActivity().start(WorksListDelegate.newInstance(filter));
     }
 
     @OnClick({R.id.bt_my_following, R.id.bt_my_follower})
     public void onBtMyAttentionOrMyFansClicked(View view) {
         int id = view.getId();
-        getDelegateActivity().start(FriendDelegate.newInstance(AuthModel.getCurrentLoginUser().getUsername(),
+        getContainerActivity().start(FriendDelegate.newInstance(AuthModel.getCurrentLoginUser().getUsername(),
                 id == R.id.bt_my_following ? "following" : "follower"));
     }
 
@@ -84,7 +84,7 @@ public class MineDelegate extends BaseDelegate {
         AuthModel.logout(new DataListener<Void>() {
             @Override
             public void onReturn(Void aVoid) {
-                getDelegateActivity().startWithPop(new LoginDelegate());
+                getContainerActivity().startWithPop(new LoginDelegate());
             }
 
             @Override

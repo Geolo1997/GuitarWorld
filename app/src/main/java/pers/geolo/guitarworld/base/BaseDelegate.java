@@ -8,9 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import me.yokeyword.fragmentation.SupportActivity;
 import me.yokeyword.fragmentation_swipeback.SwipeBackFragment;
-
-import pers.geolo.guitarworld.base.DelegateActivity;
 
 /**
  * @author 桀骜(Geolo)
@@ -41,8 +40,8 @@ public abstract class BaseDelegate extends SwipeBackFragment {
         return rootView;
     }
 
-    public DelegateActivity getDelegateActivity() {
-        return (DelegateActivity) _mActivity;
+    public SupportActivity getContainerActivity() {
+        return (SupportActivity) _mActivity;
     }
 
     @Override

@@ -29,7 +29,6 @@ import pers.geolo.guitarworld.entity.FileListener;
 import pers.geolo.guitarworld.model.AuthModel;
 import pers.geolo.guitarworld.model.CommentModel;
 import pers.geolo.guitarworld.model.ImageModel;
-import pers.geolo.guitarworld.model.WorksModel;
 import pers.geolo.guitarworld.util.RecyclerViewUtils;
 
 /**
@@ -152,7 +151,7 @@ public class CommentListDelegate extends BaseDelegate {
         @OnClick({R.id.civ_avatar, R.id.tv_author})
         public void toProfileDelegate() {
             String username = commentList.get(getAdapterPosition()).getAuthor();
-            getDelegateActivity().start(ProfileDelegate.newInstance(username));
+            getContainerActivity().start(ProfileDelegate.newInstance(username));
         }
 
         @OnLongClick(R.id.ll_comment_item)

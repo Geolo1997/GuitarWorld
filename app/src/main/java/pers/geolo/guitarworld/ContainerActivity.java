@@ -8,7 +8,6 @@ import com.joanzapata.iconify.Iconify;
 import com.joanzapata.iconify.fonts.FontAwesomeModule;
 import me.yokeyword.fragmentation.SupportActivity;
 import org.litepal.LitePal;
-import pers.geolo.guitarworld.base.BaseDelegate;
 import pers.geolo.guitarworld.delegate.LauncherDelegate;
 import pers.geolo.guitarworld.ui.icon.FontModule;
 import pers.geolo.guitarworld.util.ActivityUtils;
@@ -23,6 +22,7 @@ public class ContainerActivity extends SupportActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.container);
         loadRootFragment(R.id.container, new LauncherDelegate());
         // LitePal 初始化
         LitePal.initialize(getApplicationContext());

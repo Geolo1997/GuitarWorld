@@ -1,21 +1,22 @@
 package pers.geolo.guitarworld.model;
 
 import pers.geolo.guitarworld.entity.DataListener;
-import pers.geolo.guitarworld.entity.Music;
+import pers.geolo.guitarworld.entity.MusicScore;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MusicModel {
 
-    public void getMusicScoreList(Long musicId, DataListener<List<Music>> listener) {
+    public void getMusicScoreList(Long musicId, DataListener<List<MusicScore>> listener) {
         // TODO 获取乐谱列表
-        ArrayList<Music> list = new ArrayList<>();
+        ArrayList<MusicScore> list = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
-            Music music = new Music();
-            music.setAuthor("桀骜");
-            music.setTitle("乐谱#" + i);
-            list.add(music);
+            MusicScore musicScore = new MusicScore();
+            musicScore.setId((long) i);
+            musicScore.setAuthor("桀骜");
+            musicScore.setName("乐谱#" + i);
+            list.add(musicScore);
         }
         listener.onReturn(list);
     }

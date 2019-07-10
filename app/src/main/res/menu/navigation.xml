@@ -3,11 +3,11 @@
 
     <item
         android:id="@+id/music_score_list"
-        android:title="@string/music_score_list"/>
+        android:name="@string/music_score_list"/>
     <item
         android:id="@+id/music_teach_list"
-        android:title="@string/music_teach_list"/>
+        android:name="@string/music_teach_list"/>
     <item
         android:id="@+id/music_show_list"
-        android:title="@string/music_show_list"/>
+        android:name="@string/music_show_list"/>
 </menu>

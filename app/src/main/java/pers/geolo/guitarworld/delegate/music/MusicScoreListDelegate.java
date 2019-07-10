@@ -3,7 +3,6 @@ package pers.geolo.guitarworld.delegate.music;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,10 +10,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.base.BaseDelegate;
 import pers.geolo.guitarworld.entity.DataListener;
-import pers.geolo.guitarworld.entity.Music;
+import pers.geolo.guitarworld.entity.MusicScore;
 import pers.geolo.guitarworld.model.MusicModel;
 import pers.geolo.guitarworld.util.RecyclerViewUtils;
 
@@ -30,7 +30,7 @@ public class MusicScoreListDelegate extends BaseDelegate {
 //    @BindView(R.id.srl_refresh)
 //    SwipeRefreshLayout srlRefresh;
 
-    List<Music> musicList = new ArrayList<>();
+    List<MusicScore> musicScoreList = new ArrayList<>();
     Adapter adapter = new Adapter();
     MusicModel musicModel = new MusicModel();
 
@@ -52,9 +52,9 @@ public class MusicScoreListDelegate extends BaseDelegate {
         Long musicId = 0L;
         if (getArguments() != null) {
             musicId = getArguments().getLong(MUSIC_ID);
-            initRecyclerView();
-            loadMusicScore(musicId);
         }
+        initRecyclerView();
+        loadMusicScore(musicId);
     }
 
     private void initRecyclerView() {
@@ -63,10 +63,10 @@ public class MusicScoreListDelegate extends BaseDelegate {
     }
 
     private void loadMusicScore(Long musicId) {
-        musicModel.getMusicScoreList(musicId, new DataListener<List<Music>>() {
+        musicModel.getMusicScoreList(musicId, new DataListener<List<MusicScore>>() {
             @Override
-            public void onReturn(List<Music> music) {
-                musicList = music;
+            public void onReturn(List<MusicScore> musicScores) {
+                musicScoreList = musicScores;
                 adapter.notifyDataSetChanged();
             }
 
@@ -89,26 +89,33 @@ public class MusicScoreListDelegate extends BaseDelegate {
 
         @Override
         public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-            Music music = musicList.get(i);
-            viewHolder.tvMusicScoreAuthor.setText(music.getAuthor());
-            viewHolder.tvMusicScoreTitle.setText(music.getTitle());
+            MusicScore musicScore = musicScoreList.get(i);
+            viewHolder.tvMusicScoreAuthor.setText(musicScore.getAuthor());
+            viewHolder.tvMusicScoreName.setText(musicScore.getName());
         }
 
         @Override
         public int getItemCount() {
-            return musicList.size();
+            return musicScoreList.size();
         }
 
         class ViewHolder extends RecyclerView.ViewHolder {
 
-            @BindView(R.id.tv_music_score_title)
-            TextView tvMusicScoreTitle;
+            @BindView(R.id.tv_music_score_name)
+            TextView tvMusicScoreName;
             @BindView(R.id.tv_music_score_author)
             TextView tvMusicScoreAuthor;
 
             public ViewHolder(@NonNull View itemView) {
                 super(itemView);
                 ButterKnife.bind(this, itemView);
+            }
+
+            @OnClick(R.id.item_music_score)
+            public void toMusicScoreDetail() {
+                MusicScore musicScore = musicScoreList.get(getAdapterPosition());
+                long scoreId = musicScore.getId();
+                getContainerActivity().start(MusicScoreDetailDelegate.newInstance(scoreId));
             }
         }
     }

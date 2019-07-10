@@ -220,13 +220,13 @@ public class WorksListDelegate extends BaseDelegate {
         @OnClick({R.id.civ_avatar, R.id.tv_author})
         public void onViewClicked(View view) {
             String author = worksList.get(getAdapterPosition()).getAuthor();
-            getDelegateActivity().start(ProfileDelegate.newInstance(author));
+            getContainerActivity().start(ProfileDelegate.newInstance(author));
         }
 
         @OnClick(R.id.ll_works_item)
         public void onWorksItemClicked() {
             int worksId = worksList.get(getAdapterPosition()).getId();
-            getDelegateActivity().start(WorksDetailDelegate.newInstance(worksId));
+            getContainerActivity().start(WorksDetailDelegate.newInstance(worksId));
         }
 
         @OnLongClick(R.id.ll_works_item)

@@ -59,7 +59,7 @@ public class ToolBarDelegate extends BaseDelegate {
 
     @OnClick(R.id.btn_back)
     public void onBackClick() {
-        getDelegateActivity().pop();
+        getContainerActivity().pop();
     }
 
     @OnClick(R.id.btn_option)

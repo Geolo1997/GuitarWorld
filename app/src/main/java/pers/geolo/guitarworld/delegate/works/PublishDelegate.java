@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.*;
@@ -75,8 +74,8 @@ public class PublishDelegate extends BaseDelegate {
             Toast.makeText(getContext(), "最多上传" + MAX_IMAGE_COUNT + "张图片", Toast.LENGTH_SHORT).show();
         } else {
             String[] permissions = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
-            if (!PermissionUtils.hasPermissions(getDelegateActivity(), permissions)) {
-                PermissionUtils.requestPermissions(getDelegateActivity(), permissions, new PermissionUtils.Callback() {
+            if (!PermissionUtils.hasPermissions(getContainerActivity(), permissions)) {
+                PermissionUtils.requestPermissions(getContainerActivity(), permissions, new PermissionUtils.Callback() {
                     @Override
                     public void onSuccess(String[] permissions, int[] grantResults) {
                         toAlbum();
@@ -94,7 +93,7 @@ public class PublishDelegate extends BaseDelegate {
     }
 
     public void toAlbum() {
-        MediaUtils.openAlbum(getDelegateActivity(), new ActivityUtils.Callback() {
+        MediaUtils.openAlbum(getContainerActivity(), new ActivityUtils.Callback() {
             @Override
             public void onSuccess(@Nullable Intent intent) {
                 String filePath = GetPhotoFromPhotoAlbum.getRealPathFromUri(getContext(),
@@ -122,7 +121,7 @@ public class PublishDelegate extends BaseDelegate {
     }
 
     public void addImage(String imagePath) {
-        ImageView imageView = new ImageView(getDelegateActivity());
+        ImageView imageView = new ImageView(getContainerActivity());
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(300, 300);
         imageView.setImageBitmap(BitmapFactory.decodeFile(imagePath));
         imageView.setLayoutParams(params);

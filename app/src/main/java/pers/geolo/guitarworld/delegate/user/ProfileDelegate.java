@@ -128,7 +128,7 @@ public class ProfileDelegate extends BaseDelegate {
     public void takePhoto() {
         String[] permissions = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
         if (!PermissionUtils.hasPermissions(getContext(), permissions)) {
-            PermissionUtils.requestPermissions(getDelegateActivity(), permissions, new PermissionUtils.Callback() {
+            PermissionUtils.requestPermissions(getContainerActivity(), permissions, new PermissionUtils.Callback() {
                 @Override
                 public void onSuccess(String[] permissions, int[] grantResults) {
                     toCamera();
@@ -147,7 +147,7 @@ public class ProfileDelegate extends BaseDelegate {
     public void toCamera() {
         File file = new File(Environment.getExternalStorageDirectory().getPath()
                 + "/guitarworld/" + System.currentTimeMillis() + ".jpg");
-        MediaUtils.openCamera(getDelegateActivity(), file, new ActivityUtils.Callback() {
+        MediaUtils.openCamera(getContainerActivity(), file, new ActivityUtils.Callback() {
             @Override
             public void onSuccess(@Nullable Intent intent) {
                 Glide.with(ProfileDelegate.this).load(file).into(ivAvatar);
@@ -164,7 +164,7 @@ public class ProfileDelegate extends BaseDelegate {
     public void onBtUpdateProfilePictureClicked() {
         String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
         if (!PermissionUtils.hasPermissions(getContext(), permissions)) {
-            PermissionUtils.requestPermissions(getDelegateActivity(), permissions, new PermissionUtils.Callback() {
+            PermissionUtils.requestPermissions(getContainerActivity(), permissions, new PermissionUtils.Callback() {
                 @Override
                 public void onSuccess(String[] permissions, int[] grantResults) {
                     openAlbum();
@@ -186,7 +186,7 @@ public class ProfileDelegate extends BaseDelegate {
     }
 
     public void openAlbum() {
-        MediaUtils.openAlbum(getDelegateActivity(), new ActivityUtils.Callback() {
+        MediaUtils.openAlbum(getContainerActivity(), new ActivityUtils.Callback() {
             @Override
             public void onSuccess(Intent intent) {
                 String filePath = GetPhotoFromPhotoAlbum.getRealPathFromUri(getContext(), intent.getData());

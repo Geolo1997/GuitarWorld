@@ -209,7 +209,7 @@ public class UserListDelegate extends BaseDelegate {
         @OnClick(R.id.ll_user_item)
         public void onLlUserItemClicked() {
             String username = userList.get(getAdapterPosition()).getUsername();
-            getDelegateActivity().start(ProfileDelegate.newInstance(username));
+            getContainerActivity().start(ProfileDelegate.newInstance(username));
         }
     }
 }
