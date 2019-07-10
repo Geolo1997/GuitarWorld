@@ -65,4 +65,7 @@
     <string name="music_show_list">表演列表</string>
     <string name="music_score_title">乐谱名称</string>
     <string name="music_score_author">乐谱作者</string>
+    <string name="music_teach">音乐教学</string>
+    <string name="music_show">作品展示</string>
+    <string name="music_score">乐谱</string>
 </resources>
