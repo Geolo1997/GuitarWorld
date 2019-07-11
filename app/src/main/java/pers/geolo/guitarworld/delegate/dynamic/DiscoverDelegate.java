@@ -9,7 +9,8 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.base.BaseDelegate;
-import pers.geolo.guitarworld.delegate.music.MusicDelegate;
+import pers.geolo.guitarworld.delegate.music.MusicDetailDelegate;
+import pers.geolo.guitarworld.delegate.music.MusicDiscoverNavigationDelegate;
 
 public class DiscoverDelegate extends BaseDelegate {
 
@@ -28,7 +29,7 @@ public class DiscoverDelegate extends BaseDelegate {
     // TODO test
     @OnClick(R.id.bt_show_music)
     public void show() {
-        getContainerActivity().start(new MusicDelegate());
+        getContainerActivity().start(new MusicDetailDelegate());
     }
 
     @Override
@@ -38,6 +39,6 @@ public class DiscoverDelegate extends BaseDelegate {
 
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
-
+        loadRootFragment(R.id.music_discover_navigation, new MusicDiscoverNavigationDelegate());
     }
 }
