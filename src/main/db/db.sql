@@ -69,9 +69,17 @@ CREATE TABLE Image (
 
 -- 乐曲
 CREATE TABLE music (
-
     -- 无符号自增主键
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(50) NOT NULL COMMENT ,
-
+    name VARCHAR(50) NOT NULL,
+    author VARCHAR(20) NOT NULL,
+    profile VARCHAR(200)
 );
+
+
+-- 测试数据
+INSERT INTO music(name, author, profile) VALUES('七里香', '周杰伦', '秋刀鱼的滋味，猫和鱼都想了解');
+INSERT INTO music(name, author, profile) VALUES('东风破', '周杰伦', '谁在用琵琶弹奏一曲东风破');
+INSERT INTO music(name, author, profile) VALUES('背对背拥抱', '林俊杰', '话总说不清楚，该怎么明了，一字一句像圈套');
+INSERT INTO music(name, author, profile) VALUES('Let\'s not fall in love', 'BIGBANG', '그녀가 떠나가요, 나는 아무거도');
+INSERT INTO music(name, author, profile) VALUES('Boy with Luv', 'BTS', 'oh my my my , oh my my my ');
