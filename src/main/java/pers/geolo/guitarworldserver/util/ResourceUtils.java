@@ -2,7 +2,7 @@ package pers.geolo.guitarworldserver.util;
 
 public class ResourceUtils {
     public static String getFilePath() {
-        String filePath = "/geolo/work/Java/file/GuitarWorld/user_file/";
+        String filePath = "D:/work/Java/file/GuitarWorld/user_file/";
         return filePath;
     }
 

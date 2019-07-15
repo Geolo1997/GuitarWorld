@@ -76,4 +76,11 @@ public class FileController {
         }
         ControllerUtils.returnFile(file, response);
     }
+
+    @RequestMapping(value = "/file", method = RequestMethod.GET)
+    public void download(String filePath, HttpServletResponse response) {
+
+    }
+
+    @RequestMapping
 }

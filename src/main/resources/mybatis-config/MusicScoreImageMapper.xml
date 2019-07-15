@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="pers.geolo.guitarworldserver.dao.MusicScoreImageMapper">
+
+    <select id="select" parameterType="musicScoreImageParam" resultType="string">
+        SELECT path
+        FROM musicscoreimage
+        <where>
+            <if test="musicScoreId != null">
+                AND music_score_id = #{musicScoreId}
+            </if>
+        </where>
+    </select>
+
+</mapper>

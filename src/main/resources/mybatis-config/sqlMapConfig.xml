@@ -11,5 +11,6 @@
     <!--类型别名，默认引入包下的所有类 -->
     <typeAliases>
         <package name="pers.geolo.guitarworldserver.entity"/>
+        <package name="pers.geolo.guitarworldserver.queryparam"/>
     </typeAliases>
 </configuration>

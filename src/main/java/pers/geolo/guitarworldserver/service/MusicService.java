@@ -3,7 +3,12 @@ package pers.geolo.guitarworldserver.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pers.geolo.guitarworldserver.dao.MusicMapper;
+import pers.geolo.guitarworldserver.dao.MusicScoreImageMapper;
+import pers.geolo.guitarworldserver.dao.MusicScoreMapper;
 import pers.geolo.guitarworldserver.entity.Music;
+import pers.geolo.guitarworldserver.entity.MusicScore;
+import pers.geolo.guitarworldserver.queryparam.MusicScoreImageParam;
+import pers.geolo.guitarworldserver.queryparam.MusicScoreParam;
 
 import java.util.List;
 import java.util.Map;
@@ -18,8 +23,20 @@ public class MusicService {
 
     @Autowired
     MusicMapper musicMapper;
+    @Autowired
+    MusicScoreMapper musicScoreMapper;
+    @Autowired
+    MusicScoreImageMapper musicScoreImageMapper;
 
     public List<Music> getMusicList(Map<String, Object> filter) {
         return musicMapper.select(filter);
+    }
+
+    public List<MusicScore> getMusicScoreList(MusicScoreParam param) {
+        return musicScoreMapper.select(param);
+    }
+
+    public List<String> getMusicScoreImageList(MusicScoreImageParam param) {
+        return musicScoreImageMapper.select(param);
     }
 }

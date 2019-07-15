@@ -76,6 +76,26 @@ CREATE TABLE music (
     profile VARCHAR(200)
 );
 
+-- 乐谱
+CREATE TABLE MusicScore (
+    -- 无符号自增主键
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    -- 乐曲id
+    music_id INT UNSIGNED,
+    name VARCHAR(50) NOT NULL,
+    author VARCHAR(20) NOT NULL
+);
+
+-- 乐谱图片
+CREATE TABLE MusicScoreImage (
+    -- 无符号自增主键
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    -- 乐谱id
+    music_score_id INT UNSIGNED,
+    -- 存储路径
+    path VARCHAR(100) NOT NULL
+);
+
 
 -- 测试数据
 INSERT INTO music(name, author, profile) VALUES('七里香', '周杰伦', '秋刀鱼的滋味，猫和鱼都想了解');
@@ -83,3 +103,15 @@ INSERT INTO music(name, author, profile) VALUES('东风破', '周杰伦', '谁�
 INSERT INTO music(name, author, profile) VALUES('背对背拥抱', '林俊杰', '话总说不清楚，该怎么明了，一字一句像圈套');
 INSERT INTO music(name, author, profile) VALUES('Let\'s not fall in love', 'BIGBANG', '그녀가 떠나가요, 나는 아무거도');
 INSERT INTO music(name, author, profile) VALUES('Boy with Luv', 'BTS', 'oh my my my , oh my my my ');
+
+
+INSERT INTO MusicScore(music_id, name, author) VALUES (2, '东风破（双吉他伴奏版）', 'Geolo');
+INSERT INTO MusicScore(music_id, name, author) VALUES (2, '东风破指弹吉他谱', 'Xiaoming');
+
+INSERT INTO MusicScoreImage(music_score_id, path) VALUES (1, 'http://192.168.1.107:8080/GuitarWorld/avatar?username=Geolo');
+INSERT INTO MusicScoreImage(music_score_id, path) VALUES (1, 'http://192.168.1.107:8080/GuitarWorld/avatar?username=Geolo');
+INSERT INTO MusicScoreImage(music_score_id, path) VALUES (1, 'http://192.168.1.107:8080/GuitarWorld/avatar?username=Geolo');
+
+INSERT INTO MusicScoreImage(music_score_id, path) VALUES (2, 'http://192.168.1.107:8080/GuitarWorld/avatar?username=Xiaoming');
+INSERT INTO MusicScoreImage(music_score_id, path) VALUES (2, 'http://192.168.1.107:8080/GuitarWorld/avatar?username=Xiaoming');
+INSERT INTO MusicScoreImage(music_score_id, path) VALUES (2, 'http://192.168.1.107:8080/GuitarWorld/avatar?username=Xiaoming');

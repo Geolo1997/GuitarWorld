@@ -3,12 +3,12 @@ package pers.geolo.guitarworldserver.controller;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import pers.geolo.guitarworldserver.entity.Music;
+import pers.geolo.guitarworldserver.entity.MusicScore;
 import pers.geolo.guitarworldserver.entity.ResponseJSONBody;
+import pers.geolo.guitarworldserver.queryparam.MusicScoreImageParam;
+import pers.geolo.guitarworldserver.queryparam.MusicScoreParam;
 import pers.geolo.guitarworldserver.service.MusicService;
 
 import java.util.List;
@@ -34,5 +34,21 @@ public class MusicController {
         logger.debug("收到获取音乐列表请求");
         List<Music> musicList = musicService.getMusicList(filter);
         return new ResponseJSONBody<>(0, musicList, null);
+    }
+
+    @RequestMapping(value = "/score", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseJSONBody<List<MusicScore>> getMusicScoreList(@RequestBody MusicScoreParam param) {
+        logger.debug("收到获取乐谱列表请求 musicId = " + param.getMusicId());
+        List<MusicScore> musicScoreList = musicService.getMusicScoreList(param);
+        return new ResponseJSONBody<>(0, musicScoreList, null);
+    }
+
+    @RequestMapping(value = "/score/image", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseJSONBody<List<String>> getMusicScoreImageList(@RequestBody MusicScoreImageParam param) {
+        logger.debug("收到获取乐谱图片列表请求");
+        List<String> musicScoreImageList = musicService.getMusicScoreImageList(param);
+        return new ResponseJSONBody<>(0, musicScoreImageList, null);
     }
 }
