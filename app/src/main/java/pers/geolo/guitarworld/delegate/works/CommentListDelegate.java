@@ -109,12 +109,12 @@ public class CommentListDelegate extends BaseDelegate {
             viewHolder.tvCreateTime.setText(comment.getCreateTime().toString());
             ImageModel.getAvatar(comment.getAuthor(), new FileListener<Bitmap>() {
                 @Override
-                public void onProgress(int currentLength, int totalLength) {
+                public void onProgress(long currentLength, long totalLength) {
 
                 }
 
                 @Override
-                public void onReturn(Bitmap bitmap) {
+                public void onFinish(Bitmap bitmap) {
                     viewHolder.civAvatar.setImageBitmap(bitmap);
                 }
 

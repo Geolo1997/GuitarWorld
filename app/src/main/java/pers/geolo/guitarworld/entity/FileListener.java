@@ -6,9 +6,9 @@ package pers.geolo.guitarworld.entity;
  */
 public interface FileListener<T> {
 
-    void onProgress(int currentLength, int totalLength);
+    void onProgress(long currentLength, long totalLength);
 
-    void onReturn(T t);
+    void onFinish(T t);
 
     void onError(String message);
 }

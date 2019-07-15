@@ -38,12 +38,12 @@ public class MineDelegate extends BaseDelegate {
         tvUsername.setText(currentUsername);
         ImageModel.getAvatar(currentUsername, new FileListener<Bitmap>() {
             @Override
-            public void onProgress(int currentLength, int totalLength) {
+            public void onProgress(long currentLength, long totalLength) {
 
             }
 
             @Override
-            public void onReturn(Bitmap bitmap) {
+            public void onFinish(Bitmap bitmap) {
                 civAvatar.setImageBitmap(bitmap);
             }
 

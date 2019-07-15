@@ -9,13 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.bumptech.glide.Glide;
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.base.BaseDelegate;
-import pers.geolo.guitarworld.entity.MusicScore;
-import pers.geolo.guitarworld.network.HttpClient;
+import pers.geolo.guitarworld.entity.DataListener;
+import pers.geolo.guitarworld.model.MusicModel;
 import pers.geolo.guitarworld.util.RecyclerViewUtils;
 
 import java.util.ArrayList;
@@ -28,17 +29,28 @@ import java.util.List;
  */
 public class MusicScoreDetailDelegate extends BaseDelegate {
 
-    private static final String ID = "ID";
+    private static final String MUSIC_SCORE_ID = "MUSIC_SCORE_ID";
 
     @BindView(R.id.score_recycler_view)
     RecyclerView scoreRecyclerView;
 
-    private MusicScore musicScore;
+    private List<String> musicScoreImages;
     private Adapter adapter;
+
+    MusicModel musicModel = new MusicModel();
 
     @Override
     public Object getLayout() {
         return R.layout.music_score_detail;
+    }
+
+    public static MusicScoreDetailDelegate newInstance(long musicScoreId) {
+
+        Bundle args = new Bundle();
+        args.putLong(MUSIC_SCORE_ID, musicScoreId);
+        MusicScoreDetailDelegate fragment = new MusicScoreDetailDelegate();
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
@@ -54,25 +66,23 @@ public class MusicScoreDetailDelegate extends BaseDelegate {
     }
 
     private void loadMusicScore() {
-        // TODO 加载乐谱信息
-        musicScore = new MusicScore();
-        List<String> imageUrls = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
-            imageUrls.add(HttpClient.baseUrl + "avatar?username=Xiaoming");
-        }
-        musicScore.setImageUrls(imageUrls);
-    }
+        musicScoreImages = new ArrayList<>();
+        long musicScoreId = getArguments().getLong(MUSIC_SCORE_ID);
+        musicModel.getMusicScoreImage(musicScoreId, new DataListener<List<String>>() {
+            @Override
+            public void onReturn(List<String> strings) {
+                musicScoreImages = strings;
+                adapter.notifyDataSetChanged();
+            }
 
-    public static MusicScoreDetailDelegate newInstance(Long id) {
-        Bundle args = new Bundle();
-        args.putLong(ID, id);
-        MusicScoreDetailDelegate fragment = new MusicScoreDetailDelegate();
-        fragment.setArguments(args);
-        return fragment;
+            @Override
+            public void onError(String message) {
+                Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
-
 
         @NonNull
         @Override
@@ -84,14 +94,14 @@ public class MusicScoreDetailDelegate extends BaseDelegate {
 
         @Override
         public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-            String url = musicScore.getImageUrls().get(i);
+            String url = musicScoreImages.get(i);
             viewHolder.itemIndex.setText(String.valueOf(i + 1));
             Glide.with(getContainerActivity()).load(url).into(viewHolder.itemImage);
         }
 
         @Override
         public int getItemCount() {
-            return musicScore.getImageUrls().size();
+            return musicScoreImages.size();
         }
 
         class ViewHolder extends RecyclerView.ViewHolder {

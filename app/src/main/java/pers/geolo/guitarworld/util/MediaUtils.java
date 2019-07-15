@@ -35,4 +35,21 @@ public class MediaUtils {
         intent.setType("image/*");
         ActivityUtils.startActivity(activity, intent, null, callback);
     }
+
+    public static void openVideoCamera(Activity activity, File file, ActivityUtils.Callback callback) {
+        Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+        File directory = FileUtils.getDirectory(file);
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
+        Uri uri;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            uri = FileProvider.getUriForFile(activity, "pers.geolo.guitarworld.fileprovider", file);
+        } else {
+            uri = Uri.fromFile(file);
+        }
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+        ActivityUtils.startActivity(activity, intent, null, callback);
+    }
 }

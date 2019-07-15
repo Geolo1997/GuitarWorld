@@ -38,13 +38,14 @@ public class ImageDetailDelegate extends BaseDelegate {
         Bundle bundle = getArguments();
         if (bundle != null) {
             String path = bundle.getString(IMAGE_PATH);
-            ImageModel.getImage(path, new FileListener<Bitmap>() {
+            ImageModel.getImage(path, new FileListener<Bitmap>(){
                 @Override
-                public void onProgress(int currentLength, int totalLength) {
+                public void onProgress(long currentLength, long totalLength) {
+
                 }
 
                 @Override
-                public void onReturn(Bitmap bitmap) {
+                public void onFinish(Bitmap bitmap) {
                     ivImage.setImageBitmap(bitmap);
                 }
 

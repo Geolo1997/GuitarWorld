@@ -91,14 +91,14 @@ public class ProfileDelegate extends BaseDelegate {
     }
 
     private void initAvatar() {
-        ImageModel.getAvatar(user.getUsername(), new FileListener<Bitmap>() {
+        ImageModel.getAvatar(user.getUsername(), new FileListener<Bitmap>(){
             @Override
-            public void onProgress(int currentLength, int totalLength) {
+            public void onProgress(long currentLength, long totalLength) {
 
             }
 
             @Override
-            public void onReturn(Bitmap bitmap) {
+            public void onFinish(Bitmap bitmap) {
                 ivAvatar.setImageBitmap(bitmap);
             }
 

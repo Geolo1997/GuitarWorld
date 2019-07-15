@@ -17,11 +17,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnLongClick;
 import de.hdodenhof.circleimageview.CircleImageView;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.base.BaseDelegate;
 import pers.geolo.guitarworld.delegate.user.ProfileDelegate;
@@ -33,6 +28,11 @@ import pers.geolo.guitarworld.model.ImageModel;
 import pers.geolo.guitarworld.model.WorksModel;
 import pers.geolo.guitarworld.network.HttpClient;
 import pers.geolo.guitarworld.util.RecyclerViewUtils;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author 桀骜(Geolo)
@@ -136,12 +136,13 @@ public class WorksListDelegate extends BaseDelegate {
             viewHolder.civAvatar.setImageBitmap(null);
             ImageModel.getAvatar(works.getAuthor(), new FileListener<Bitmap>() {
                 @Override
-                public void onProgress(int currentLength, int totalLength) {
+                public void onProgress(long currentLength, long totalLength) {
 
                 }
 
                 @Override
-                public void onReturn(Bitmap bitmap) {
+                public void onFinish(Bitmap bitmap) {
+
                     viewHolder.civAvatar.setImageBitmap(bitmap);
                 }
 
@@ -153,18 +154,20 @@ public class WorksListDelegate extends BaseDelegate {
             // 加载第一张图
             viewHolder.firstImage.setImageBitmap(null);
             if (works.getImagePaths().size() > 0) {
-                ImageModel.getImage(works.getImagePaths().get(0), new FileListener<Bitmap>() {
+                ImageModel.getImage(works.getImagePaths().get(0), new FileListener<Bitmap>(){
                     @Override
-                    public void onProgress(int currentLength, int totalLength) {
+                    public void onProgress(long currentLength, long totalLength) {
+
                     }
 
                     @Override
-                    public void onReturn(Bitmap bitmap) {
+                    public void onFinish(Bitmap bitmap) {
                         viewHolder.firstImage.setImageBitmap(bitmap);
                     }
 
                     @Override
                     public void onError(String message) {
+
                     }
                 });
             } else {

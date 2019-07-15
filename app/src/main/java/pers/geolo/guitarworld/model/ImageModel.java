@@ -38,7 +38,7 @@ public class ImageModel {
             protected void onResponseInputStream(InputStream inputStream) {
                 Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
                 new Handler(Looper.getMainLooper()).post(() -> {
-                    listener.onReturn(bitmap);
+                    listener.onFinish(bitmap);
                 });
             }
 
@@ -60,7 +60,7 @@ public class ImageModel {
             protected void onResponseInputStream(InputStream inputStream) {
                 Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
                 new Handler(Looper.getMainLooper()).post(() -> {
-                    listener.onReturn(bitmap);
+                    listener.onFinish(bitmap);
                 });
             }
 

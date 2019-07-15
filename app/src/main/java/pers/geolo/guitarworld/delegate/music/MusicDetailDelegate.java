@@ -53,7 +53,7 @@ public class MusicDetailDelegate extends BaseDelegate {
         ViewPagerNavigationHelper helper = new ViewPagerNavigationHelper.Builder(getChildFragmentManager())
                 .bottomNavigationView(bottomNavigationView)
                 .viewPager(vp)
-                .addItem(new MusicScoreListDelegate(), R.id.music_score_list)
+                .addItem(MusicScoreListDelegate.newInstance(getArguments().getLong(ID)), R.id.music_score_list)
                 .addItem(new WorksListDelegate(), R.id.music_teach_list)
                 .addItem(new WorksListDelegate(), R.id.music_show_list)
                 .build();

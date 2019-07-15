@@ -12,14 +12,23 @@
         android:orientation="vertical">
 
     </LinearLayout>
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/publish_works"
+
+    <FrameLayout
+        android:id="@+id/add_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:background="@color/tab_checked"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="60dp"
-        android:src="@drawable/publish_works"/>
+        android:layout_gravity="bottom|end">
+
+    </FrameLayout>
+
+    <!--<android.support.design.widget.FloatingActionButton-->
+    <!--android:id="@+id/publish_works"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="bottom|end"-->
+    <!--android:background="@color/tab_checked"-->
+    <!--android:layout_marginRight="10dp"-->
+    <!--android:layout_marginBottom="30dp"-->
+    <!--android:src="@drawable/publish_works"/>-->
 
 </FrameLayout>

@@ -3,7 +3,6 @@ package pers.geolo.guitarworld.network;
 import java.util.concurrent.TimeUnit;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import pers.geolo.android.http.DefaultCookieJar;
@@ -23,9 +22,9 @@ public class HttpClient {
                 // 连接 超时时间
                 .connectTimeout(2000, TimeUnit.MILLISECONDS)
                 // 写操作 超时时间
-                .writeTimeout(2000, TimeUnit.MILLISECONDS)
+                .writeTimeout(20000, TimeUnit.MILLISECONDS)
                 // 读操作 超时时间
-                .readTimeout(2000, TimeUnit.MILLISECONDS)
+                .readTimeout(20000, TimeUnit.MILLISECONDS)
                 // 错误重连
                 .retryOnConnectionFailure(true)
                 // 开启cookie
@@ -38,8 +37,6 @@ public class HttpClient {
                 .baseUrl(baseUrl)
                 // Gson转换支持
                 .addConverterFactory(GsonConverterFactory.create(DefaultGson.getInstance()))
-                // RxJava支持
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
     }
 

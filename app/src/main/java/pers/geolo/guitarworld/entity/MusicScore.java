@@ -4,17 +4,26 @@ import java.util.List;
 
 public class MusicScore {
 
-    private Long id;
+    private long id;
+    private long musicId;
     private String name;
     private String author;
     private List<String> imageUrls;
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
+    }
+
+    public long getMusicId() {
+        return musicId;
+    }
+
+    public void setMusicId(long musicId) {
+        this.musicId = musicId;
     }
 
     public String getName() {
