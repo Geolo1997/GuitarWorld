@@ -1,7 +1,7 @@
 package pers.geolo.guitarworldserver.dao;
 
 import org.springframework.stereotype.Repository;
-import pers.geolo.guitarworldserver.queryparam.MusicScoreImageParam;
+import pers.geolo.guitarworldserver.controller.param.MusicScoreImageParam;
 
 import java.util.List;
 

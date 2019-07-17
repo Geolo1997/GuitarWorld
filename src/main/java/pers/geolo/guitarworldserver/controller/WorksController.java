@@ -1,61 +1,77 @@
 package pers.geolo.guitarworldserver.controller;
 
-import java.util.List;
-import java.util.Map;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import pers.geolo.guitarworldserver.entity.ResponseJSONBody;
+import org.springframework.web.multipart.MultipartFile;
+import pers.geolo.guitarworldserver.entity.ResponseEntity;
 import pers.geolo.guitarworldserver.entity.Works;
+import pers.geolo.guitarworldserver.controller.param.WorksParam;
+import pers.geolo.guitarworldserver.service.FileService;
 import pers.geolo.guitarworldserver.service.ImageService;
 import pers.geolo.guitarworldserver.service.WorksService;
 import pers.geolo.guitarworldserver.util.ControllerUtils;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/works")
 public class WorksController {
 
+    Logger logger = Logger.getLogger(WorksController.class);
+
     @Autowired
     WorksService worksService;
     @Autowired
+    FileService fileService;
+    @Autowired
     ImageService imageService;
 
-    private Logger logger = Logger.getLogger(WorksController.class);
+    @RequestMapping(method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<List<Works>> getWorks(WorksParam param) {
+//        logger.debug("收到获取Works的请求:id = " + filter.get("id") + ", author = " + filter.get("author"));
+        List<Works> worksList = worksService.getWorksList(param);
+        for (int i = 0; i < worksList.size(); i++) {
+            List<String> imagePaths = imageService.getImagePaths(worksList.get(i).getId());
+            worksList.get(i).setImagePaths(imagePaths);
+        }
+        return new ResponseEntity<>(0, worksList, null);
+    }
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
-    public ResponseJSONBody<Void> publishWorks(@RequestBody Works works) {
+    public ResponseEntity<Void> publishWorks(@RequestBody Works works) {
         logger.debug("收到发布作品请求：" + works.getTitle());
         String currentUsername = (String) ControllerUtils.getSessionAttribute("username");
         if (currentUsername != null && currentUsername.equals(works.getAuthor())) {
             int code = worksService.publishWorks(works);
             imageService.addImages(works.getId(), works.getImagePaths());
-            return new ResponseJSONBody<>(code);
+            return new ResponseEntity<>(code);
         } else {
-            return new ResponseJSONBody<>(-1);
+            return new ResponseEntity<>(-1);
         }
     }
 
     @RequestMapping(method = RequestMethod.DELETE)
     @ResponseBody
-    public ResponseJSONBody<Void> removeWorks(@RequestParam Map<String, Object> filter) {
-        logger.debug("收到删除作品请求：" + filter);
+    public ResponseEntity<Void> removeWorks(WorksParam param) {
+        logger.debug("收到删除作品请求：");
         //TODO 删除的是自己的作品
-        int code = worksService.removeWorksList(filter);
-        return new ResponseJSONBody<>(code);
+        int code = worksService.removeWorks(param);
+        return new ResponseEntity<>(code);
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+
+    @RequestMapping(value = "/image", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseJSONBody<List<Works>> getWorks(@RequestParam Map<String, Object> filter) {
-        logger.debug("收到获取Works的请求:id = " + filter.get("id") + ", author = " + filter.get("author"));
-        List<Works> worksList = worksService.getWorksList(filter);
-        for (int i = 0; i < worksList.size(); i++) {
-            List<String> imagePaths = imageService.getImagePaths(worksList.get(i).getId());
-            worksList.get(i).setImagePaths(imagePaths);
-        }
-        return new ResponseJSONBody<>(0, worksList, null);
+    public ResponseEntity<String> uploadImage(MultipartFile image) throws IOException {
+        logger.debug("收到上传图片请求：" + image.getOriginalFilename());
+        String path = fileService.saveFile(image);
+        logger.debug("存储路径为：" + path);
+        return new ResponseEntity<>(0, path, null);
     }
 }

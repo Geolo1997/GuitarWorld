@@ -1,19 +1,18 @@
 package pers.geolo.guitarworldserver.dao;
 
+import org.springframework.stereotype.Repository;
+import pers.geolo.guitarworldserver.controller.param.WorksParam;
+import pers.geolo.guitarworldserver.entity.Works;
+
 import java.util.List;
 import java.util.Map;
-import org.springframework.stereotype.Repository;
-
-import pers.geolo.guitarworldserver.entity.Works;
 
 @Repository
 public interface WorksMapper {
 
+    List<Works> select(WorksParam param);
+
     void insert(Works works);
 
-    void delete(Map<String, Object> filter);
-
-    List<Works> select(Map<String, Object> filter);
-
-    List<Works> selectByFollower(String followerUsername);
+    void delete(WorksParam param);
 }

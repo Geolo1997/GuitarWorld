@@ -5,6 +5,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import pers.geolo.guitarworldserver.controller.param.WorksParam;
 import pers.geolo.guitarworldserver.dao.WorksMapper;
 import pers.geolo.guitarworldserver.entity.Works;
 
@@ -14,22 +15,17 @@ public class WorksService {
     @Autowired
     WorksMapper worksMapper;
 
+    public List<Works> getWorksList(WorksParam param) {
+        return worksMapper.select(param);
+    }
+
     public int publishWorks(Works works) {
         worksMapper.insert(works);
         return 0;
     }
 
-    public int removeWorksList(Map<String, Object> filter) {
-        worksMapper.delete(filter);
+    public int removeWorks(WorksParam param) {
+        worksMapper.delete(param);
         return 0;
-    }
-
-    public List<Works> getWorksList(Map<String, Object> filter) {
-        String following = (String) filter.get("follower");
-        if (following != null) { // 获取被关注者的works
-            return worksMapper.selectByFollower(following);
-        } else {
-            return worksMapper.select(filter);
-        }
     }
 }

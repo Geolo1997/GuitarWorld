@@ -1,20 +1,20 @@
 package pers.geolo.guitarworldserver.entity;
 
 //@Component
-public class ResponseJSONBody<T> {
+public class ResponseEntity<T> {
 
     private int code;
     private T data;
     private String message;
 
-    public ResponseJSONBody() {
+    public ResponseEntity() {
     }
 
-    public ResponseJSONBody(int code) {
+    public ResponseEntity(int code) {
         this.code = code;
     }
 
-    public ResponseJSONBody(int code, T data, String message) {
+    public ResponseEntity(int code, T data, String message) {
         this.code = code;
         this.data = data;
         this.message = message;
@@ -46,7 +46,7 @@ public class ResponseJSONBody<T> {
 
     @Override
     public String toString() {
-        return "ResponseJSONBody{" +
+        return "ResponseEntity{" +
                 "code=" + code +
                 ", data=" + data +
                 ", message='" + message + '\'' +

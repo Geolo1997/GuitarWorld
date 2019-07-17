@@ -1,6 +1,7 @@
 package pers.geolo.guitarworldserver.dao;
 
 import org.springframework.stereotype.Repository;
+import pers.geolo.guitarworldserver.controller.param.MusicParam;
 import pers.geolo.guitarworldserver.entity.Music;
 
 import java.util.List;
@@ -14,5 +15,5 @@ import java.util.Map;
 @Repository
 public interface MusicMapper {
 
-    List<Music> select(Map<String, Object> filter);
+    List<Music> select(MusicParam param);
 }

@@ -2,8 +2,8 @@ package pers.geolo.guitarworldserver.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pers.geolo.guitarworldserver.entity.User;
 import pers.geolo.guitarworldserver.dao.UserMapper;
+import pers.geolo.guitarworldserver.entity.User;
 import pers.geolo.guitarworldserver.value.LogState;
 
 import java.util.List;
@@ -71,5 +71,13 @@ public class UserService {
 
     public List<User> getFollowers(String username) {
         return userMapper.selectByFollowing(username);
+    }
+
+    public void updateAvatar(String username, String path) {
+        User user = userMapper.selectByUsername(username);
+        if (user != null) {
+            user.setAvatarPath(path);
+            userMapper.update(user);
+        }
     }
 }

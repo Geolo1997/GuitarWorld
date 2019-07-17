@@ -3,16 +3,19 @@ package pers.geolo.guitarworldserver.controller;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import pers.geolo.guitarworldserver.controller.param.MusicParam;
+import pers.geolo.guitarworldserver.controller.param.MusicScoreImageParam;
+import pers.geolo.guitarworldserver.controller.param.MusicScoreParam;
 import pers.geolo.guitarworldserver.entity.Music;
 import pers.geolo.guitarworldserver.entity.MusicScore;
-import pers.geolo.guitarworldserver.entity.ResponseJSONBody;
-import pers.geolo.guitarworldserver.queryparam.MusicScoreImageParam;
-import pers.geolo.guitarworldserver.queryparam.MusicScoreParam;
+import pers.geolo.guitarworldserver.entity.ResponseEntity;
 import pers.geolo.guitarworldserver.service.MusicService;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author 桀骜(Geolo)
@@ -30,25 +33,25 @@ public class MusicController {
 
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public ResponseJSONBody<List<Music>> getMusicList(@RequestParam Map<String, Object> filter) {
+    public ResponseEntity<List<Music>> getMusicList(MusicParam param) {
         logger.debug("收到获取音乐列表请求");
-        List<Music> musicList = musicService.getMusicList(filter);
-        return new ResponseJSONBody<>(0, musicList, null);
+        List<Music> musicList = musicService.getMusicList(param);
+        return new ResponseEntity<>(0, musicList, null);
     }
 
-    @RequestMapping(value = "/score", method = RequestMethod.POST)
+    @RequestMapping(value = "/score", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseJSONBody<List<MusicScore>> getMusicScoreList(@RequestBody MusicScoreParam param) {
+    public ResponseEntity<List<MusicScore>> getMusicScoreList(@RequestBody MusicScoreParam param) {
         logger.debug("收到获取乐谱列表请求 musicId = " + param.getMusicId());
         List<MusicScore> musicScoreList = musicService.getMusicScoreList(param);
-        return new ResponseJSONBody<>(0, musicScoreList, null);
+        return new ResponseEntity<>(0, musicScoreList, null);
     }
 
-    @RequestMapping(value = "/score/image", method = RequestMethod.POST)
+    @RequestMapping(value = "/score/image", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseJSONBody<List<String>> getMusicScoreImageList(@RequestBody MusicScoreImageParam param) {
+    public ResponseEntity<List<String>> getMusicScoreImageList(MusicScoreImageParam param) {
         logger.debug("收到获取乐谱图片列表请求");
         List<String> musicScoreImageList = musicService.getMusicScoreImageList(param);
-        return new ResponseJSONBody<>(0, musicScoreImageList, null);
+        return new ResponseEntity<>(0, musicScoreImageList, null);
     }
 }

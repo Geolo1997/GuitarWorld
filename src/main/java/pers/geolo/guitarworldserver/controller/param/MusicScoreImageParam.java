@@ -1,4 +1,4 @@
-package pers.geolo.guitarworldserver.queryparam;
+package pers.geolo.guitarworldserver.controller.param;
 
 /**
  * @author 桀骜(Geolo)

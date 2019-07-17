@@ -5,9 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import pers.geolo.guitarworldserver.entity.ResponseJSONBody;
+import pers.geolo.guitarworldserver.entity.ResponseEntity;
 import pers.geolo.guitarworldserver.entity.UserRelation;
-import pers.geolo.guitarworldserver.entity.UserRelationType;
 import pers.geolo.guitarworldserver.service.UserRelationService;
 import pers.geolo.guitarworldserver.util.ControllerUtils;
 
@@ -24,7 +23,7 @@ public class UserRelationController {
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
-    public ResponseJSONBody<Void> addRelation(@RequestBody UserRelation userRelation) {
+    public ResponseEntity<Void> addRelation(@RequestBody UserRelation userRelation) {
         logger.debug("收到关注请求：" + userRelation.toString());
         // 获取当前用户的用户名
         String currentUsername = (String) ControllerUtils.getSessionAttribute("username");
@@ -32,15 +31,15 @@ public class UserRelationController {
         String followerUsername = userRelation.getFollowerUsername();
         if (currentUsername != null && currentUsername.equals(followerUsername)) { // 当前用户是关系中的粉丝
             userRelationService.addRelation(userRelation);
-            return new ResponseJSONBody<>(0);
+            return new ResponseEntity<>(0);
         } else {
-            return new ResponseJSONBody<>(1);
+            return new ResponseEntity<>(1);
         }
     }
 
     @RequestMapping(method = RequestMethod.DELETE)
     @ResponseBody
-    public ResponseJSONBody<Void> removeRelation(@RequestBody UserRelation userRelation) {
+    public ResponseEntity<Void> removeRelation(@RequestBody UserRelation userRelation) {
         logger.debug("收到取关请求：" + userRelation.toString());
         // 获取当前用户的用户名
         String currentUsername = (String) ControllerUtils.getSessionAttribute("username");
@@ -48,21 +47,21 @@ public class UserRelationController {
         String followerUsername = userRelation.getFollowerUsername();
         if (currentUsername != null && currentUsername.equals(followerUsername)) { // 当前用户是关系中的粉丝
             userRelationService.removeRelation(userRelation);
-            return new ResponseJSONBody<>(0);
+            return new ResponseEntity<>(0);
         } else {
-            return new ResponseJSONBody<>(1);
+            return new ResponseEntity<>(1);
         }
     }
 
     @RequestMapping(value = "/with", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseJSONBody<UserRelation> getUserRelation(String otherUsername) {
+    public ResponseEntity<UserRelation> getUserRelation(String otherUsername) {
         logger.debug("收到获取关系请求：" + otherUsername);
         // 获取当前用户的用户名
         String currentUsername = (String) ControllerUtils.getSessionAttribute("username");
         // 获取用户关系类型
         UserRelation userRelation= userRelationService.getUserRelation(currentUsername, otherUsername);
-        return new ResponseJSONBody<>(0, userRelation, null);
+        return new ResponseEntity<>(0, userRelation, null);
     }
 
     /**
@@ -74,9 +73,9 @@ public class UserRelationController {
      */
     @RequestMapping(value = "/{username}/following", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseJSONBody<List<String>> getFollowing(@PathVariable("username") String username) {
+    public ResponseEntity<List<String>> getFollowing(@PathVariable("username") String username) {
         List<String> followings = userRelationService.getFollowings(username);
-        return new ResponseJSONBody<>(0, followings, null);
+        return new ResponseEntity<>(0, followings, null);
     }
 
     /**
@@ -88,8 +87,8 @@ public class UserRelationController {
      */
     @RequestMapping(value = "/{username}/follower", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseJSONBody<List<String>> getFollower(@PathVariable("username") String username) {
+    public ResponseEntity<List<String>> getFollower(@PathVariable("username") String username) {
         List<String> followers = userRelationService.getFollowers(username);
-        return new ResponseJSONBody<>(0, followers, null);
+        return new ResponseEntity<>(0, followers, null);
     }
 }

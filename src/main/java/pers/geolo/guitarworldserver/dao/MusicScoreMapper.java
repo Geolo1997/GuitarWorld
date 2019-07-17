@@ -2,7 +2,7 @@ package pers.geolo.guitarworldserver.dao;
 
 import org.springframework.stereotype.Repository;
 import pers.geolo.guitarworldserver.entity.MusicScore;
-import pers.geolo.guitarworldserver.queryparam.MusicScoreParam;
+import pers.geolo.guitarworldserver.controller.param.MusicScoreParam;
 
 import java.util.List;
 

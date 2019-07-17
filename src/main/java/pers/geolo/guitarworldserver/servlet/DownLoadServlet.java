@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 @WebServlet(name = "DownLoadServlet", urlPatterns = "/download")
 public class DownLoadServlet extends HttpServlet {
@@ -17,6 +18,6 @@ public class DownLoadServlet extends HttpServlet {
         System.out.println(realPath);
         resp.setStatus(200);
 //        URLEncoder.encode()
-
+//       Part req.getPart()
     }
 }

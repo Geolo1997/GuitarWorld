@@ -3,12 +3,12 @@
 
 <mapper namespace="pers.geolo.guitarworldserver.dao.MusicMapper">
 
-    <select id="select" parameterType="map" resultType="music">
+    <select id="select" parameterType="musicParam" resultType="music">
         SELECT *
         FROM music
         <where>
-            <if test="id != null">
-                AND id = #{id}
+            <if test="musicId != null">
+                AND id = #{musicId}
             </if>
         </where>
     </select>
