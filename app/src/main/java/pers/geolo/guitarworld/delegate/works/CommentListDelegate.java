@@ -22,13 +22,16 @@ import java.util.List;
 
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.base.BaseDelegate;
+import pers.geolo.guitarworld.base.BeanFactory;
 import pers.geolo.guitarworld.delegate.user.ProfileDelegate;
 import pers.geolo.guitarworld.entity.Comment;
 import pers.geolo.guitarworld.entity.DataListener;
 import pers.geolo.guitarworld.entity.FileListener;
+import pers.geolo.guitarworld.entity.User;
 import pers.geolo.guitarworld.model.AuthModel;
 import pers.geolo.guitarworld.model.CommentModel;
-import pers.geolo.guitarworld.model.ImageModel;
+import pers.geolo.guitarworld.model.UserModel;
+import pers.geolo.guitarworld.util.GlideUtils;
 import pers.geolo.guitarworld.util.RecyclerViewUtils;
 
 /**
@@ -47,6 +50,9 @@ public class CommentListDelegate extends BaseDelegate {
     private List<Comment> commentList = new ArrayList<>();
     private HashMap<String, Object> filter = new HashMap<>();
     private Adapter adapter = new Adapter();
+
+    UserModel userModel = BeanFactory.getBean(UserModel.class);
+    AuthModel authModel = BeanFactory.getBean(AuthModel.class);
 
     public static CommentListDelegate newInstance(HashMap<String, Object> filter) {
         Bundle args = new Bundle();
@@ -107,15 +113,10 @@ public class CommentListDelegate extends BaseDelegate {
             viewHolder.tvAuthor.setText(comment.getAuthor());
             viewHolder.tvComment.setText(comment.getContent());
             viewHolder.tvCreateTime.setText(comment.getCreateTime().toString());
-            ImageModel.getAvatar(comment.getAuthor(), new FileListener<Bitmap>() {
+            userModel.getPublicProfile(comment.getAuthor(), new DataListener<User>() {
                 @Override
-                public void onProgress(long currentLength, long totalLength) {
-
-                }
-
-                @Override
-                public void onFinish(Bitmap bitmap) {
-                    viewHolder.civAvatar.setImageBitmap(bitmap);
+                public void onReturn(User user) {
+                    GlideUtils.load(getContext(),user.getAvatarPath(),viewHolder.civAvatar);
                 }
 
                 @Override
@@ -159,7 +160,7 @@ public class CommentListDelegate extends BaseDelegate {
 
             Comment comment = commentList.get(getAdapterPosition());
             String username = comment.getAuthor();
-            if (username.equals(AuthModel.getCurrentLoginUser().getUsername())) {
+            if (username.equals(authModel.getCurrentLoginUser().getUsername())) {
                 options = new String[]{"删除"};
             }
             //添加列表

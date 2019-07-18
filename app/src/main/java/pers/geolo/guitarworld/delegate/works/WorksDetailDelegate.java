@@ -16,6 +16,7 @@ import java.util.Map;
 
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.base.BaseDelegate;
+import pers.geolo.guitarworld.base.BeanFactory;
 import pers.geolo.guitarworld.entity.Comment;
 import pers.geolo.guitarworld.entity.DataListener;
 import pers.geolo.guitarworld.entity.Works;
@@ -43,6 +44,8 @@ public class WorksDetailDelegate extends BaseDelegate {
     EditText etComment;
     @BindView(R.id.ll_fragment)
     LinearLayout llFragment;
+
+    AuthModel authModel = BeanFactory.getBean(AuthModel.class);
 
     private int worksId;
 
@@ -99,7 +102,7 @@ public class WorksDetailDelegate extends BaseDelegate {
 
     @OnClick(R.id.bt_comment)
     public void addComment() {
-        String author = AuthModel.getCurrentLoginUser().getUsername();
+        String author = authModel.getCurrentLoginUser().getUsername();
         Comment comment = new Comment(worksId, author, new Date(), etComment.getText().toString());
         CommentModel.addComment(comment, new DataListener<Void>() {
             @Override

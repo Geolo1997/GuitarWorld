@@ -13,6 +13,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.base.BaseDelegate;
+import pers.geolo.guitarworld.base.BeanFactory;
 import pers.geolo.guitarworld.entity.DataListener;
 import pers.geolo.guitarworld.entity.MusicScore;
 import pers.geolo.guitarworld.model.MusicModel;
@@ -32,7 +33,7 @@ public class MusicScoreListDelegate extends BaseDelegate {
 
     List<MusicScore> musicScoreList = new ArrayList<>();
     Adapter adapter = new Adapter();
-    MusicModel musicModel = new MusicModel();
+    MusicModel musicModel = BeanFactory.getBean(MusicModel.class);
 
     @Override
     public Object getLayout() {

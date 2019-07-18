@@ -14,10 +14,10 @@ import java.util.Date;
 
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.base.BaseDelegate;
+import pers.geolo.guitarworld.base.BeanFactory;
 import pers.geolo.guitarworld.entity.DataListener;
 import pers.geolo.guitarworld.entity.Works;
 import pers.geolo.guitarworld.model.AuthModel;
-import pers.geolo.guitarworld.model.ImageModel;
 import pers.geolo.guitarworld.model.WorksModel;
 import pers.geolo.guitarworld.util.*;
 
@@ -36,6 +36,9 @@ public class PublishDelegate extends BaseDelegate {
 
     private int imageCount = 0;
 
+    AuthModel authModel = BeanFactory.getBean(AuthModel.class);
+    WorksModel worksModel = BeanFactory.getBean(WorksModel.class);
+
     @Override
     public Object getLayout() {
         return R.layout.delegate_publish;
@@ -48,7 +51,7 @@ public class PublishDelegate extends BaseDelegate {
 
     @OnClick(R.id.bt_publish)
     public void publish() {
-        String username = AuthModel.getCurrentLoginUser().getUsername();
+        String username = authModel.getCurrentLoginUser().getUsername();
         works.setAuthor(username);
         works.setCreateTime(new Date());
         works.setTitle(etTitle.getText().toString());
@@ -99,18 +102,19 @@ public class PublishDelegate extends BaseDelegate {
                 String filePath = GetPhotoFromPhotoAlbum.getRealPathFromUri(getContext(),
                         intent.getData());
                 File file = new File(filePath);
-                ImageModel.upload(file, new DataListener<String>() {
-                    @Override
-                    public void onReturn(String s) {
-                        works.addImage(s);
-                        addImage(file.getAbsolutePath());
-                    }
-
-                    @Override
-                    public void onError(String message) {
-
-                    }
-                });
+                //TODO
+//                works.(file, new DataListener<String>() {
+//                    @Override
+//                    public void onReturn(String s) {
+//                        works.addImage(s);
+//                        addImage(file.getAbsolutePath());
+//                    }
+//
+//                    @Override
+//                    public void onError(String message) {
+//
+//                    }
+//                });
             }
 
             @Override

@@ -12,6 +12,7 @@ import com.yalantis.contextmenu.lib.MenuObject;
 import com.yalantis.contextmenu.lib.MenuParams;
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.base.BaseDelegate;
+import pers.geolo.guitarworld.base.BeanFactory;
 import pers.geolo.guitarworld.delegate.works.AddWorksOptionDelegate;
 import pers.geolo.guitarworld.delegate.works.WorksListDelegate;
 import pers.geolo.guitarworld.model.AuthModel;
@@ -24,6 +25,8 @@ public class DynamicDelegate extends BaseDelegate {
 
 //    @BindView(R.id.publish_works)
 //    FloatingActionButton publishWorks;
+
+    AuthModel authModel = BeanFactory.getBean(AuthModel.class);
 
     @Override
     public Object getLayout() {
@@ -38,7 +41,7 @@ public class DynamicDelegate extends BaseDelegate {
 
     private void initWorksListDelegate() {
         HashMap<String, Object> filter = new HashMap<>();
-        filter.put("username", AuthModel.getCurrentLoginUser().getUsername());
+        filter.put("username", authModel.getCurrentLoginUser().getUsername());
         loadRootFragment(R.id.ll_fragment, WorksListDelegate.newInstance(filter));
     }
 

@@ -1,4 +1,4 @@
-package pers.geolo.guitarworld.network.queryparam;
+package pers.geolo.guitarworld.network.param;
 
 /**
  * @author 桀骜(Geolo)

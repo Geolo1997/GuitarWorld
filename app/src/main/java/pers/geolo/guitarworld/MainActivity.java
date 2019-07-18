@@ -8,7 +8,9 @@ import com.joanzapata.iconify.Iconify;
 import com.joanzapata.iconify.fonts.FontAwesomeModule;
 import me.yokeyword.fragmentation.SupportActivity;
 import org.litepal.LitePal;
+import pers.geolo.guitarworld.base.BeanFactory;
 import pers.geolo.guitarworld.delegate.LauncherDelegate;
+import pers.geolo.guitarworld.model.*;
 import pers.geolo.guitarworld.ui.icon.FontModule;
 import pers.geolo.guitarworld.util.ActivityUtils;
 import pers.geolo.guitarworld.util.PermissionUtils;
@@ -17,18 +19,26 @@ import pers.geolo.guitarworld.util.PermissionUtils;
  * @author 桀骜(Geolo)
  * @date 2019-06-07
  */
-public class ContainerActivity extends SupportActivity {
+public class MainActivity extends SupportActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.container);
-        loadRootFragment(R.id.container, new LauncherDelegate());
         // LitePal 初始化
         LitePal.initialize(getApplicationContext());
 
         Iconify.with(new FontAwesomeModule())
                 .with(new FontModule());
+
+        BeanFactory.registerBean(new AuthModel());
+        BeanFactory.registerBean(new CommentModel());
+        BeanFactory.registerBean(new FileModel());
+        BeanFactory.registerBean(new MusicModel());
+        BeanFactory.registerBean(new UserModel());
+        BeanFactory.registerBean(new WorksModel());
+
+        loadRootFragment(R.id.container, new LauncherDelegate());
     }
 
     @Override

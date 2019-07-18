@@ -6,12 +6,17 @@ import pers.geolo.guitarworld.entity.DataListener;
  * @author 桀骜(Geolo)
  * @date 2019-06-08
  */
-public abstract class DataCallback<T> extends BaseCallback<T> {
+public class DataCallback<T> extends BaseCallback<T> {
 
     private DataListener<T> listener;
 
     public DataCallback(DataListener<T> listener) {
         this.listener = listener;
+    }
+
+    @Override
+    public void onSuccess(T t) {
+        listener.onReturn(t);
     }
 
     @Override

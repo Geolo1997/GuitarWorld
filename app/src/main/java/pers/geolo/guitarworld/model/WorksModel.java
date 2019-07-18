@@ -57,7 +57,7 @@ public class WorksModel {
         RequestBody requestBody = new ProgressRequestBody(video, "multipart/form-data", 1024, listener);
         MultipartBody.Part part = MultipartBody.Part.createFormData("image", video.getName(), requestBody);
         // TODO 改为文件上传接口
-        fileApi.uploadImage(part).enqueue(new BaseCallback<String>() {
+        worksApi.uploadImage(part).enqueue(new BaseCallback<String>() {
             @Override
             public void onSuccess(String s) {
                 listener.onFinish(s);

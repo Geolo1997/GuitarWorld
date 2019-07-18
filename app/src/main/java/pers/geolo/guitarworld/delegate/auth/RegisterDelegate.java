@@ -10,6 +10,7 @@ import butterknife.OnClick;
 
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.base.BaseDelegate;
+import pers.geolo.guitarworld.base.BeanFactory;
 import pers.geolo.guitarworld.entity.DataListener;
 import pers.geolo.guitarworld.entity.LogInfo;
 import pers.geolo.guitarworld.model.AuthModel;
@@ -25,6 +26,8 @@ public class RegisterDelegate extends BaseDelegate {
     @BindView(R.id.tv_registerHint)
     TextView tvRegisterHint;
 
+    AuthModel authModel = BeanFactory.getBean(AuthModel.class);
+
     @Override
     public Object getLayout() {
         return R.layout.delegate_register;
@@ -37,12 +40,13 @@ public class RegisterDelegate extends BaseDelegate {
 
     @OnClick(R.id.bt_register)
     protected void register() {
+        // 获取注册信息
         String username = etUsername.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
         String email = etEmail.getText().toString().trim();
-
-        LogInfo logInfo = new LogInfo(username, password, false, false);
-        AuthModel.register(username, password, email, null, new DataListener<Void>() {
+        // 发送注册请求
+        // TODO 增加验证码(verifyCode)
+        authModel.register(username, password, email, null, new DataListener<Void>() {
             @Override
             public void onReturn(Void aVoid) {
                 // 注册成功，返回登录界面

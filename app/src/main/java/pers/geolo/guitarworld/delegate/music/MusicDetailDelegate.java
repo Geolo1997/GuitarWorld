@@ -10,6 +10,7 @@ import android.widget.Toast;
 import butterknife.BindView;
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.base.BaseDelegate;
+import pers.geolo.guitarworld.base.BeanFactory;
 import pers.geolo.guitarworld.delegate.works.WorksListDelegate;
 import pers.geolo.guitarworld.entity.DataListener;
 import pers.geolo.guitarworld.entity.Music;
@@ -31,7 +32,7 @@ public class MusicDetailDelegate extends BaseDelegate {
     @BindView(R.id.bottomNavigationView)
     BottomNavigationView bottomNavigationView;
 
-    MusicModel musicModel = new MusicModel();
+    MusicModel musicModel = BeanFactory.getBean(MusicModel.class);
 
     @Override
     public Object getLayout() {

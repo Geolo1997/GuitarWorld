@@ -19,14 +19,17 @@ import butterknife.OnLongClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.base.BaseDelegate;
+import pers.geolo.guitarworld.base.BeanFactory;
 import pers.geolo.guitarworld.delegate.user.ProfileDelegate;
 import pers.geolo.guitarworld.entity.DataListener;
 import pers.geolo.guitarworld.entity.FileListener;
+import pers.geolo.guitarworld.entity.User;
 import pers.geolo.guitarworld.entity.Works;
 import pers.geolo.guitarworld.model.AuthModel;
-import pers.geolo.guitarworld.model.ImageModel;
+import pers.geolo.guitarworld.model.UserModel;
 import pers.geolo.guitarworld.model.WorksModel;
 import pers.geolo.guitarworld.network.HttpClient;
+import pers.geolo.guitarworld.util.GlideUtils;
 import pers.geolo.guitarworld.util.RecyclerViewUtils;
 
 import java.util.ArrayList;
@@ -53,6 +56,8 @@ public class WorksListDelegate extends BaseDelegate {
     Adapter adapter = new Adapter();
     Map<String, Object> filter = new HashMap<>();
 
+    AuthModel authModel = BeanFactory.getBean(AuthModel.class);
+    UserModel userModel = BeanFactory.getBean(UserModel.class);
 
     public static WorksListDelegate newInstance(HashMap<String, Object> filter) {
         Bundle args = new Bundle();
@@ -134,16 +139,10 @@ public class WorksListDelegate extends BaseDelegate {
             viewHolder.tvContent.setText(works.getContent());
             // 加载头像
             viewHolder.civAvatar.setImageBitmap(null);
-            ImageModel.getAvatar(works.getAuthor(), new FileListener<Bitmap>() {
+            userModel.getPublicProfile(works.getAuthor(), new DataListener<User>() {
                 @Override
-                public void onProgress(long currentLength, long totalLength) {
-
-                }
-
-                @Override
-                public void onFinish(Bitmap bitmap) {
-
-                    viewHolder.civAvatar.setImageBitmap(bitmap);
+                public void onReturn(User user) {
+                    GlideUtils.load(getContext(),user.getAvatarPath(), viewHolder.civAvatar);
                 }
 
                 @Override
@@ -154,22 +153,7 @@ public class WorksListDelegate extends BaseDelegate {
             // 加载第一张图
             viewHolder.firstImage.setImageBitmap(null);
             if (works.getImagePaths().size() > 0) {
-                ImageModel.getImage(works.getImagePaths().get(0), new FileListener<Bitmap>(){
-                    @Override
-                    public void onProgress(long currentLength, long totalLength) {
-
-                    }
-
-                    @Override
-                    public void onFinish(Bitmap bitmap) {
-                        viewHolder.firstImage.setImageBitmap(bitmap);
-                    }
-
-                    @Override
-                    public void onError(String message) {
-
-                    }
-                });
+                GlideUtils.load(getContext(), works.getImagePaths().get(0), viewHolder.firstImage);
             } else {
                 viewHolder.firstImage.setImageBitmap(null);
             }
@@ -236,7 +220,7 @@ public class WorksListDelegate extends BaseDelegate {
         public boolean onWorksItemLongClick() {
             Works works = worksList.get(getAdapterPosition());
             String username = works.getAuthor();
-            if (username.equals(AuthModel.getCurrentLoginUser().getUsername())) {
+            if (username.equals(authModel.getCurrentLoginUser().getUsername())) {
                 options = new String[]{"删除"};
             }
             //添加列表

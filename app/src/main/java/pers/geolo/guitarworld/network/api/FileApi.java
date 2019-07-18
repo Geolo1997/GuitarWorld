@@ -1,30 +1,14 @@
 package pers.geolo.guitarworld.network.api;
 
-import okhttp3.MultipartBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
-import retrofit2.http.*;
-
-import pers.geolo.guitarworld.network.callback.ResponseBody;
+import retrofit2.http.GET;
+import retrofit2.http.Multipart;
+import retrofit2.http.Query;
 
 public interface FileApi {
 
     @Multipart
-    @POST("avatar")
-    Call<ResponseBody<String>> uploadAvatar(@Part MultipartBody.Part file);
-
-    @Multipart
-    @POST("image")
-    Call<ResponseBody<String>> uploadImage(@Part MultipartBody.Part file);
-
-    @Streaming
-    @GET("avatar")
-    Call<okhttp3.ResponseBody> getAvatar(@Query("username") String username);
-
-    @Streaming
-    @GET("20180815101229911.jpg")
-    Call<okhttp3.ResponseBody> testGetPic();
-
-    @Streaming
-    @GET("image")
-    Call<okhttp3.ResponseBody> getImage(@Query("imagePath") String imagePath);
+    @GET("file")
+    Call<ResponseBody> getFile(@Query("filePath") String filePath);
 }

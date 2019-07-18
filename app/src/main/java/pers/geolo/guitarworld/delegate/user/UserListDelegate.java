@@ -22,6 +22,7 @@ import java.util.List;
 
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.base.BaseDelegate;
+import pers.geolo.guitarworld.base.BeanFactory;
 import pers.geolo.guitarworld.entity.DataListener;
 import pers.geolo.guitarworld.entity.User;
 import pers.geolo.guitarworld.entity.UserRelation;
@@ -44,6 +45,9 @@ public class UserListDelegate extends BaseDelegate {
     RecyclerView rvUserList;
     @BindView(R.id.srl_refresh)
     SwipeRefreshLayout srlRefresh;
+
+    AuthModel authModel = BeanFactory.getBean(AuthModel.class);
+    UserModel userModel = BeanFactory.getBean(UserModel.class);
 
     private List<User> userList = new ArrayList<>();
     private HashMap<String, Object> filter = new HashMap<>();
@@ -95,16 +99,16 @@ public class UserListDelegate extends BaseDelegate {
 
     void initUserList(HashMap<String, Object> filter) {
         if (filter.get("all") != null) {
-            UserModel.getAllUser(callback);
+            userModel.getAllUser(callback);
         } else if (filter.get("follower") != null) {
-            UserModel.getFollowing((String) filter.get("follower"), callback);
+            userModel.getFollowing((String) filter.get("follower"), callback);
         } else if (filter.get("following") != null) {
-            UserModel.getFollower((String) filter.get("following"), callback);
+            userModel.getFollower((String) filter.get("following"), callback);
         }
     }
 
     void loadRelation() {
-        String currentUsername = AuthModel.getCurrentLoginUser().getUsername();
+        String currentUsername = authModel.getCurrentLoginUser().getUsername();
         for (int i = 0; i < userList.size(); i++) {
             String username = userList.get(i).getUsername();
 //            UserModel.getUserRelation(currentUsername, username, new DataListener<UserRelation>() {
@@ -167,11 +171,11 @@ public class UserListDelegate extends BaseDelegate {
         @OnClick(R.id.bt_following)
         public void onBtFollowingClicked() {
             String text = btFollowing.getText().toString();
-            UserRelation userRelation = new UserRelation(AuthModel.getCurrentLoginUser().getUsername(),
+            UserRelation userRelation = new UserRelation(authModel.getCurrentLoginUser().getUsername(),
                     userList.get(getAdapterPosition()).getUsername());
             if (ADD_FOLLOWING.equals(text)) { // 未关注
                 // 添加关注
-                UserModel.addRelation(userRelation, new DataListener<Void>() {
+                userModel.addRelation(userRelation, new DataListener<Void>() {
                     @Override
                     public void onReturn(Void aVoid) {
                         btFollowing.setText(FOLLOWED);
@@ -187,7 +191,7 @@ public class UserListDelegate extends BaseDelegate {
                 builder.setTitle("警告");
                 builder.setMessage("确定取消关注吗？");
                 builder.setPositiveButton("确定", (dialog, which) -> {
-                    UserModel.removeRelation(userRelation, new DataListener<Void>() {
+                    userModel.removeRelation(userRelation, new DataListener<Void>() {
                         @Override
                         public void onReturn(Void aVoid) {
                             btFollowing.setText(ADD_FOLLOWING);

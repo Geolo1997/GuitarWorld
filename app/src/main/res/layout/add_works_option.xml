@@ -33,7 +33,7 @@
             fab:fab_colorNormal="@color/colorAccent"
             fab:fab_icon="@drawable/ic_profile"
             fab:fab_size="mini"
-            fab:fab_title="第1个FAB" />
+            fab:fab_title="发图文" />
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_2"
@@ -42,7 +42,7 @@
             fab:fab_colorNormal="@color/colorAccent"
             fab:fab_icon="@drawable/ic_profile"
             fab:fab_size="mini"
-            fab:fab_title="第2个FAB" />
+            fab:fab_title="发视频" />
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_3"

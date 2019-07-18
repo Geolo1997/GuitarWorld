@@ -12,17 +12,18 @@ import android.widget.*;
 import butterknife.BindView;
 import butterknife.OnClick;
 import com.bumptech.glide.Glide;
-import java.io.File;
-
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.base.BaseDelegate;
+import pers.geolo.guitarworld.base.BeanFactory;
 import pers.geolo.guitarworld.delegate.image.ImageDetailDelegate;
 import pers.geolo.guitarworld.entity.DataListener;
 import pers.geolo.guitarworld.entity.FileListener;
 import pers.geolo.guitarworld.entity.User;
-import pers.geolo.guitarworld.model.ImageModel;
+import pers.geolo.guitarworld.model.FileModel;
 import pers.geolo.guitarworld.model.UserModel;
 import pers.geolo.guitarworld.util.*;
+
+import java.io.File;
 
 public class ProfileDelegate extends BaseDelegate {
 
@@ -44,6 +45,9 @@ public class ProfileDelegate extends BaseDelegate {
     LinearLayout linearLayout;
     @BindView(R.id.iv_avatar)
     ImageView ivAvatar;
+
+    UserModel userModel = BeanFactory.getBean(UserModel.class);
+    FileModel fileModel = BeanFactory.getBean(FileModel.class);
 
     private User user;
 
@@ -67,13 +71,12 @@ public class ProfileDelegate extends BaseDelegate {
             ViewUtils.setViewGroupEnabled(linearLayout, false);
             user = new User();
             user.setUsername(getArguments().getString(USERNAME));
-            initAvatar();
             initProfile();
         }
     }
 
     private void initProfile() {
-        UserModel.getPublicProfile(user.getUsername(), new DataListener<User>() {
+        userModel.getPublicProfile(user.getUsername(), new DataListener<User>() {
             @Override
             public void onReturn(User user) {
                 ProfileDelegate.this.user = user;
@@ -81,6 +84,7 @@ public class ProfileDelegate extends BaseDelegate {
                 etPassword.setText(user.getPassword());
                 etEmail.setText(user.getEmail());
                 // TODO 完整赋值
+                initAvatar();
             }
 
             @Override
@@ -91,7 +95,7 @@ public class ProfileDelegate extends BaseDelegate {
     }
 
     private void initAvatar() {
-        ImageModel.getAvatar(user.getUsername(), new FileListener<Bitmap>(){
+        fileModel.loadImage(user.getAvatarPath(), new FileListener<Bitmap>() {
             @Override
             public void onProgress(long currentLength, long totalLength) {
 
@@ -190,9 +194,14 @@ public class ProfileDelegate extends BaseDelegate {
             @Override
             public void onSuccess(Intent intent) {
                 String filePath = GetPhotoFromPhotoAlbum.getRealPathFromUri(getContext(), intent.getData());
-                ImageModel.uploadAvatar(new File(filePath), new DataListener<String>() {
+                userModel.updateAvatar(new File(filePath), new FileListener<String>() {
                     @Override
-                    public void onReturn(String s) {
+                    public void onProgress(long currentLength, long totalLength) {
+
+                    }
+
+                    @Override
+                    public void onFinish(String s) {
                         Bitmap bitmap = BitmapFactory.decodeFile(filePath);
                         ivAvatar.setImageBitmap(bitmap);
                         Toast.makeText(getContext(), "上传成功！", Toast.LENGTH_SHORT).show();

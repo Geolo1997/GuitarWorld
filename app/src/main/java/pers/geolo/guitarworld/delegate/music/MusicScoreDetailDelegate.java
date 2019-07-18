@@ -15,7 +15,9 @@ import butterknife.ButterKnife;
 import com.bumptech.glide.Glide;
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.base.BaseDelegate;
+import pers.geolo.guitarworld.base.BeanFactory;
 import pers.geolo.guitarworld.entity.DataListener;
+import pers.geolo.guitarworld.entity.Music;
 import pers.geolo.guitarworld.model.MusicModel;
 import pers.geolo.guitarworld.util.RecyclerViewUtils;
 
@@ -37,7 +39,7 @@ public class MusicScoreDetailDelegate extends BaseDelegate {
     private List<String> musicScoreImages;
     private Adapter adapter;
 
-    MusicModel musicModel = new MusicModel();
+    MusicModel musicModel = BeanFactory.getBean(MusicModel.class);
 
     @Override
     public Object getLayout() {

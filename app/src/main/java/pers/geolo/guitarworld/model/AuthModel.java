@@ -14,10 +14,10 @@ import pers.geolo.guitarworld.network.callback.DataCallback;
  */
 public class AuthModel {
 
-    private static AuthApi authApi = HttpClient.getService(AuthApi.class);
+    private AuthApi authApi = HttpClient.getService(AuthApi.class);
 
-    public static void register(String username, String password, String email,
-                                String verifyCoed, DataListener<Void> listener) {
+    public void register(String username, String password, String email,
+                         String verifyCoed, DataListener<Void> listener) {
         authApi.register(username, password, email, verifyCoed).enqueue(new DataCallback<Void>(listener) {
             @Override
             public void onSuccess(Void aVoid) {
@@ -26,7 +26,7 @@ public class AuthModel {
         });
     }
 
-    public static void login(String username, String password, DataListener<Void> listener) {
+    public void login(String username, String password, DataListener<Void> listener) {
         authApi.login(username, password).enqueue(new DataCallback<Void>(listener) {
             @Override
             public void onSuccess(Void aVoid) {
@@ -35,7 +35,7 @@ public class AuthModel {
         });
     }
 
-    public static void getLastSavedLogInfo(DataListener<LogInfo> listener) {
+    public void getLastSavedLogInfo(DataListener<LogInfo> listener) {
         LogInfo logInfo = DataBaseManager.getLogInfoDAO().getLastSavedLogInfo();
         if (logInfo != null) {
             listener.onReturn(logInfo);
@@ -44,7 +44,7 @@ public class AuthModel {
         }
     }
 
-    public static void saveLogInfo(LogInfo logInfo) {
+    public void saveLogInfo(LogInfo logInfo) {
         LogInfoDAO logInfoDAO = DataBaseManager.getLogInfoDAO();
         if (logInfoDAO.getLogInfo(logInfo.getUsername()) != null) {
             logInfoDAO.update(logInfo);
@@ -53,7 +53,7 @@ public class AuthModel {
         }
     }
 
-    public static void logout(DataListener<Void> listener) {
+    public void logout(DataListener<Void> listener) {
         authApi.logout().enqueue(new DataCallback<Void>(listener) {
             @Override
             public void onSuccess(Void aVoid) {
@@ -62,11 +62,11 @@ public class AuthModel {
         });
     }
 
-    public static LogInfo getCurrentLoginUser() {
+    public LogInfo getCurrentLoginUser() {
         return DataBaseManager.getLogInfoDAO().getLastSavedLogInfo();
     }
 
-    public static void autoLogin(DataListener<Void> listener) {
+    public void autoLogin(DataListener<Void> listener) {
         getLastSavedLogInfo(new DataListener<LogInfo>() {
             @Override
             public void onReturn(LogInfo logInfo) {

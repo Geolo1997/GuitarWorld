@@ -16,6 +16,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.base.BaseDelegate;
+import pers.geolo.guitarworld.base.BeanFactory;
 import pers.geolo.guitarworld.entity.DataListener;
 import pers.geolo.guitarworld.entity.Music;
 import pers.geolo.guitarworld.model.MusicModel;
@@ -42,7 +43,7 @@ public class MusicListDelegate extends BaseDelegate {
     List<Music> musicList;
     Adapter adapter;
 
-    MusicModel musicModel = new MusicModel();
+    MusicModel musicModel = BeanFactory.getBean(MusicModel.class);
 
     @Override
     public Object getLayout() {

@@ -4,10 +4,12 @@ import pers.geolo.guitarworld.entity.DataListener;
 import pers.geolo.guitarworld.entity.Music;
 import pers.geolo.guitarworld.entity.MusicScore;
 import pers.geolo.guitarworld.network.HttpClient;
+import pers.geolo.guitarworld.network.ParamBeanHandler;
 import pers.geolo.guitarworld.network.api.MusicApi;
 import pers.geolo.guitarworld.network.callback.BaseCallback;
-import pers.geolo.guitarworld.network.queryparam.MusicScoreImageParam;
-import pers.geolo.guitarworld.network.queryparam.MusicScoreParam;
+import pers.geolo.guitarworld.network.callback.DataCallback;
+import pers.geolo.guitarworld.network.param.MusicScoreImageParam;
+import pers.geolo.guitarworld.network.param.MusicScoreParam;
 
 import java.util.HashMap;
 import java.util.List;
@@ -38,64 +40,21 @@ public class MusicModel {
     }
 
     public void getMusicList(HashMap<String, Object> filter, DataListener<List<Music>> listener) {
-        musicApi.getMusicList(filter).enqueue(new BaseCallback<List<Music>>() {
-            @Override
-            public void onSuccess(List<Music> music) {
-                listener.onReturn(music);
-            }
-
-            @Override
-            public void onError(int errorCode, String errorMessage) {
-                listener.onError(errorMessage);
-            }
-
-            @Override
-            public void onFailure() {
-                listener.onError("网络错误");
-            }
-        });
+        musicApi.getMusicList(filter).enqueue(new DataCallback<>(listener));
     }
 
 
     public void getMusicScoreList(long musicId, DataListener<List<MusicScore>> listener) {
         MusicScoreParam param = new MusicScoreParam();
         param.setMusicId(musicId);
-        musicApi.getMusicScore(param).enqueue(new BaseCallback<List<MusicScore>>() {
-            @Override
-            public void onSuccess(List<MusicScore> musicScores) {
-                listener.onReturn(musicScores);
-            }
-
-            @Override
-            public void onError(int errorCode, String errorMessage) {
-                listener.onError(errorMessage);
-            }
-
-            @Override
-            public void onFailure() {
-                listener.onError("网络错误");
-            }
-        });
+        musicApi.getMusicScore(ParamBeanHandler.handle(param))
+                .enqueue(new DataCallback<>(listener));
     }
 
     public void getMusicScoreImage(long musicScoreId, DataListener<List<String>> listener) {
         MusicScoreImageParam param = new MusicScoreImageParam();
         param.setMusicScoreId(musicScoreId);
-        musicApi.getMusicScoreImages(param).enqueue(new BaseCallback<List<String>>() {
-            @Override
-            public void onSuccess(List<String> strings) {
-                listener.onReturn(strings);
-            }
-
-            @Override
-            public void onError(int errorCode, String errorMessage) {
-                listener.onError(errorMessage);
-            }
-
-            @Override
-            public void onFailure() {
-                listener.onError("网络错误");
-            }
-        });
+        musicApi.getMusicScoreImages(ParamBeanHandler.handle(param))
+                .enqueue(new DataCallback<>(listener));
     }
 }

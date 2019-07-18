@@ -1,5 +1,6 @@
 package pers.geolo.guitarworld.network.api;
 
+import okhttp3.MultipartBody;
 import pers.geolo.guitarworld.entity.User;
 
 import pers.geolo.guitarworld.network.callback.ResponseBody;
@@ -18,8 +19,8 @@ public interface UserApi {
      *
      * @return 响应体
      */
-    @GET("user")
-    Call<ResponseBody<User>> getMyProfile();
+//    @GET("user")
+//    Call<ResponseBody<User>> getMyProfile();
 
     /**
      * 获取用户的公开资料
@@ -38,6 +39,15 @@ public interface UserApi {
      */
     @POST("user")
     Call<ResponseBody<Void>> updateMyProfile(@Body User user);
+
+    /**
+     * 更新用户头像
+     * @param avatar 用户头像文件
+     * @return 头像路径
+     */
+    @Multipart
+    @POST
+    Call<ResponseBody<String>> updateAvatar(@Part MultipartBody.Part avatar);
 
     /**
      * 获取某用户粉丝

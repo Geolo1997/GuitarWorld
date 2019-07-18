@@ -9,9 +9,9 @@ import butterknife.BindView;
 
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.base.BaseDelegate;
+import pers.geolo.guitarworld.base.BeanFactory;
 import pers.geolo.guitarworld.entity.FileListener;
-import pers.geolo.guitarworld.model.ImageModel;
-import pers.geolo.guitarworld.model.listener.GetImageListener;
+import pers.geolo.guitarworld.model.FileModel;
 
 public class ImageDetailDelegate extends BaseDelegate {
 
@@ -19,6 +19,8 @@ public class ImageDetailDelegate extends BaseDelegate {
 
     @BindView(R.id.iv_image)
     ImageView ivImage;
+
+    FileModel fileModel = BeanFactory.getBean(FileModel.class);
 
     public static ImageDetailDelegate newInstance(String imagePath) {
         Bundle args = new Bundle();
@@ -38,7 +40,7 @@ public class ImageDetailDelegate extends BaseDelegate {
         Bundle bundle = getArguments();
         if (bundle != null) {
             String path = bundle.getString(IMAGE_PATH);
-            ImageModel.getImage(path, new FileListener<Bitmap>(){
+            fileModel.loadImage(path, new FileListener<Bitmap>(){
                 @Override
                 public void onProgress(long currentLength, long totalLength) {
 
