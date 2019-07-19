@@ -4,7 +4,7 @@
 <mapper namespace="pers.geolo.guitarworldserver.dao.WorksMapper">
 
     <select id="select" parameterType="worksParam" resultType="works">
-        SELECT id, author, create_time, title, content
+        SELECT id, author, create_time, title, content, video_url, type
         FROM Works
         <!--<if test="follower != null">-->
             <!--,UserRelation-->
@@ -25,15 +25,15 @@
 
     <insert id="insert" parameterType="works" useGeneratedKeys="true"
             keyProperty="id">
-        INSERT INTO Works(author, create_time, title, content)
-        VALUES (#{author}, #{createTime}, #{title}, #{content});
+        INSERT INTO Works(author, create_time, title, content, video_url, type)
+        VALUES (#{author}, #{createTime}, #{title}, #{content}, #{videoUrl}, #{type});
     </insert>
 
     <delete id="delete" parameterType="worksParam">
         DELETE
         FROM Works
         <where>
-            <if test="worksId != null">
+            <if test="worksId != 0">
                 AND id = #{worksId}
             </if>
             <if test="author != null">

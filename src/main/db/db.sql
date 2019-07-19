@@ -115,3 +115,19 @@ INSERT INTO MusicScoreImage(music_score_id, path) VALUES (1, 'http://192.168.1.1
 INSERT INTO MusicScoreImage(music_score_id, path) VALUES (2, 'http://192.168.1.107:8080/GuitarWorld/avatar?username=Xiaoming');
 INSERT INTO MusicScoreImage(music_score_id, path) VALUES (2, 'http://192.168.1.107:8080/GuitarWorld/avatar?username=Xiaoming');
 INSERT INTO MusicScoreImage(music_score_id, path) VALUES (2, 'http://192.168.1.107:8080/GuitarWorld/avatar?username=Xiaoming');
+
+CREATE TABLE video_works (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    -- 作者用户名
+    author VARCHAR(20) NOT NULL REFERENCES User(username),
+    -- 创作时间
+    create_time DATETIME,
+    -- 标题
+    title VARCHAR(30),
+    video_url VARCHAR(100) NOT NULL
+);
+
+ALTER TABLE works add video_url VARCHAR(100), add type VARCHAR(10);
+
+UPDATE works
+SET type = 'IMAGE_TEXT';

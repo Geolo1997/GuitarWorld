@@ -7,7 +7,7 @@
         SELECT path
         FROM musicscoreimage
         <where>
-            <if test="musicScoreId != null">
+            <if test="musicScoreId != 0">
                 AND music_score_id = #{musicScoreId}
             </if>
         </where>

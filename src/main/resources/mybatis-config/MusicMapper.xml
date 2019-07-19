@@ -7,7 +7,7 @@
         SELECT *
         FROM music
         <where>
-            <if test="musicId != null">
+            <if test="musicId != 0">
                 AND id = #{musicId}
             </if>
         </where>

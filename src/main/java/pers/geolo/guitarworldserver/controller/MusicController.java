@@ -41,7 +41,7 @@ public class MusicController {
 
     @RequestMapping(value = "/score", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<List<MusicScore>> getMusicScoreList(@RequestBody MusicScoreParam param) {
+    public ResponseEntity<List<MusicScore>> getMusicScoreList(MusicScoreParam param) {
         logger.debug("收到获取乐谱列表请求 musicId = " + param.getMusicId());
         List<MusicScore> musicScoreList = musicService.getMusicScoreList(param);
         return new ResponseEntity<>(0, musicScoreList, null);

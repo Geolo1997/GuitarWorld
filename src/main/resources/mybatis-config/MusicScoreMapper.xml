@@ -7,7 +7,7 @@
         SELECT id, music_id, name, author
         FROM musicscore
         <where>
-            <if test="musicId != null">
+            <if test="musicId != 0">
                 AND music_id = #{musicId}
             </if>
         </where>

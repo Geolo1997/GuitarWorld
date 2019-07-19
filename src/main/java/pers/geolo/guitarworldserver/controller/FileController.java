@@ -20,6 +20,7 @@ public class FileController {
 
     @RequestMapping(value = "/file", method = RequestMethod.GET)
     public void download(String filePath, HttpServletResponse response) throws IOException {
+        logger.debug("收到获取文件请求；filePath=" + filePath);
         File file = fileService.getFile(filePath);
         if (file == null) {
             logger.debug("文件不存在：" + filePath);

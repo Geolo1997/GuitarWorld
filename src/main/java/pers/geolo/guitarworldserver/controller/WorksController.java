@@ -3,11 +3,14 @@ package pers.geolo.guitarworldserver.controller;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import pers.geolo.guitarworldserver.controller.param.WorksParam;
 import pers.geolo.guitarworldserver.entity.ResponseEntity;
 import pers.geolo.guitarworldserver.entity.Works;
-import pers.geolo.guitarworldserver.controller.param.WorksParam;
 import pers.geolo.guitarworldserver.service.FileService;
 import pers.geolo.guitarworldserver.service.ImageService;
 import pers.geolo.guitarworldserver.service.WorksService;
@@ -15,7 +18,6 @@ import pers.geolo.guitarworldserver.util.ControllerUtils;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/works")
@@ -35,17 +37,13 @@ public class WorksController {
     public ResponseEntity<List<Works>> getWorks(WorksParam param) {
 //        logger.debug("收到获取Works的请求:id = " + filter.get("id") + ", author = " + filter.get("author"));
         List<Works> worksList = worksService.getWorksList(param);
-        for (int i = 0; i < worksList.size(); i++) {
-            List<String> imagePaths = imageService.getImagePaths(worksList.get(i).getId());
-            worksList.get(i).setImagePaths(imagePaths);
-        }
         return new ResponseEntity<>(0, worksList, null);
     }
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<Void> publishWorks(@RequestBody Works works) {
-        logger.debug("收到发布作品请求：" + works.getTitle());
+        logger.debug("收到发布作品请求：" + works.toString());
         String currentUsername = (String) ControllerUtils.getSessionAttribute("username");
         if (currentUsername != null && currentUsername.equals(works.getAuthor())) {
             int code = worksService.publishWorks(works);
