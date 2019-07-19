@@ -7,13 +7,13 @@
         SELECT id, author, create_time, title, content, video_url, type
         FROM Works
         <!--<if test="follower != null">-->
-            <!--,UserRelation-->
+        <!--,UserRelation-->
         <!--</if>-->
         <where>
             <!--<if test="follower != null">-->
             <!--AND follower_username = #{follower}-->
             <!--AND following_username = author-->
-        <!--</if>-->
+            <!--</if>-->
             <if test="worksId != 0">
                 AND id = #{worksId}
             </if>
@@ -21,6 +21,7 @@
                 AND author = #{author}
             </if>
         </where>
+        ORDER BY create_time DESC;
     </select>
 
     <insert id="insert" parameterType="works" useGeneratedKeys="true"

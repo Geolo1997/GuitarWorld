@@ -98,11 +98,13 @@ public class FileService {
             dir.mkdirs();
         }
         file.transferTo(new File(filePath, fileName));
-        return relativeFilePath + fileName;
+        // TODO 动态获取
+        return "http://192.168.1.107:8080/GuitarWorld/file?filePath=" + relativeFilePath + fileName;
     }
 
     /**
      * 获取原始文件类型
+     *
      * @param file 文件
      * @return 文件类型
      */
@@ -114,6 +116,7 @@ public class FileService {
 
     /**
      * 根据当前年月日生成文件路径：年月/日
+     *
      * @return 生成的文件路径
      */
     private String makeFilePath() {
@@ -128,6 +131,7 @@ public class FileService {
 
     /**
      * 通过UUID生成随机文件名
+     *
      * @return
      */
     private String makeFileName() {
