@@ -47,7 +47,14 @@ public class MineDelegate extends BaseDelegate {
             @Override
             public void onReturn(User user) {
                 // TODO 控件赋值
-                GlideUtils.load(getContext(), user.getAvatarPath(), civAvatar);
+
+                String avatarPath = user.getAvatarPath();
+                if (avatarPath != null && !"".equals(avatarPath)) {
+                    GlideUtils.load(getContext(), avatarPath, civAvatar);
+                } else {
+                    // TODO 区分性别
+                    civAvatar.setImageResource(R.drawable.male_default_avatar);
+                }
             }
 
             @Override

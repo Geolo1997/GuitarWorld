@@ -119,7 +119,6 @@
     <orderEntry type="library" name="Gradle: com.android.support:localbroadcastmanager-28.0.0" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:support-vector-drawable-28.0.0" level="project" />
     <orderEntry type="library" name="Gradle: me.yokeyword:fragmentation-swipeback-1.3.6" level="project" />
-    <orderEntry type="library" name="Gradle: com.github.Yalantis:Context-Menu.Android-1.1.4" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:interpolator-28.0.0" level="project" />
     <orderEntry type="library" name="Gradle: com.getbase:floatingactionbutton-1.10.1" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:support-core-utils-28.0.0" level="project" />
@@ -150,6 +149,7 @@
     <orderEntry type="library" name="Gradle: com.android.support.constraint:constraint-layout-solver:1.1.3@jar" level="project" />
     <orderEntry type="library" name="Gradle: android.arch.lifecycle:runtime-1.1.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: net.sf.kxml:kxml2:2.3.0@jar" level="project" />
+    <orderEntry type="library" name="Gradle: com.github.clans:fab-1.6.4" level="project" />
     <orderEntry type="library" name="Gradle: pub.devrel:easypermissions-1.3.0" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:customview-28.0.0" level="project" />
     <orderEntry type="library" name="Gradle: com.jakewharton:butterknife-8.8.1" level="project" />
@@ -168,6 +168,7 @@
     <orderEntry type="library" name="Gradle: __local_aars__:D.\work\Android\GuitarWorld\app\libs\easyjavase-util-1.0.3.190419_alpha.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:collections:28.0.0@jar" level="project" />
     <orderEntry type="library" name="Gradle: org.litepal.android:core-3.0.0" level="project" />
+    <orderEntry type="library" name="Gradle: cn.jzvd:jiaozivideoplayer-7.0.5" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:documentfile-28.0.0" level="project" />
     <orderEntry type="library" name="Gradle: com.github.bumptech.glide:disklrucache:4.7.1@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:design-28.0.0" level="project" />

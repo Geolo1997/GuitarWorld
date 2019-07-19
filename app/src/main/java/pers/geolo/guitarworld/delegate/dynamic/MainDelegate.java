@@ -2,12 +2,14 @@ package pers.geolo.guitarworld.delegate.dynamic;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.OnClick;
-
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.base.BaseDelegate;
 import pers.geolo.guitarworld.delegate.shop.ShopDelegate;
@@ -17,9 +19,13 @@ public class MainDelegate extends BaseDelegate {
 
     @BindView(R.id.bt_dynamic)
     LinearLayout selectedLayout;
+    @BindView(R.id.drawer_layout)
+    DrawerLayout drawerLayout;
 
     private BaseDelegate[] delegates;
     private BaseDelegate currentDelegate;
+
+    private BackTimeCounter backTimeCounter = new BackTimeCounter();
 
     @Override
     public Object getLayout() {
@@ -28,6 +34,7 @@ public class MainDelegate extends BaseDelegate {
 
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
+        setSwipeBackEnable(false);
         selectedLayout = rootView.findViewById(R.id.bt_dynamic);
         initSubDelegates();
 //        // 标题
@@ -80,6 +87,50 @@ public class MainDelegate extends BaseDelegate {
             if (view instanceof TextView) {
                 TextView textView = (TextView) view;
                 textView.setTextColor(color);
+            }
+        }
+    }
+
+
+    @OnClick(R.id.iv_mine)
+    public void onIvMineClicked() {
+        drawerLayout.openDrawer(GravityCompat.START);
+    }
+
+    @OnClick(R.id.iv_option)
+    public void onIvOptionClicked() {
+        Toast.makeText(getContext(), "选项", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public boolean onBackPressedSupport() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+            return true;
+        } else if (backTimeCounter.isFirstTimeClick()) {
+            Toast.makeText(getContext(), "再次点击退出应用", Toast.LENGTH_SHORT).show();
+            backTimeCounter.setStartTime();
+            return true;
+        } else {
+            return super.onBackPressedSupport();
+        }
+    }
+
+    class BackTimeCounter {
+
+        private long startTime;
+
+        public void setStartTime() {
+            this.startTime = System.currentTimeMillis();
+        }
+
+        public boolean isFirstTimeClick() {
+            long currentTime = System.currentTimeMillis();
+            if (startTime == 0 || currentTime - startTime >= 2000) {
+                startTime = 0;
+                return true;
+            } else {
+                return false;
             }
         }
     }

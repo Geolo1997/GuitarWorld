@@ -2,24 +2,17 @@ package pers.geolo.guitarworld.delegate.dynamic;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.view.View;
-import butterknife.BindView;
 import butterknife.OnClick;
-import com.yalantis.contextmenu.lib.ContextMenuDialogFragment;
-import com.yalantis.contextmenu.lib.MenuGravity;
-import com.yalantis.contextmenu.lib.MenuObject;
-import com.yalantis.contextmenu.lib.MenuParams;
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.base.BaseDelegate;
 import pers.geolo.guitarworld.base.BeanFactory;
-import pers.geolo.guitarworld.delegate.works.AddWorksOptionDelegate;
+import pers.geolo.guitarworld.delegate.works.PublishImageTextDelegate;
+import pers.geolo.guitarworld.delegate.works.PublishVideoWorksDelegate;
 import pers.geolo.guitarworld.delegate.works.WorksListDelegate;
 import pers.geolo.guitarworld.model.AuthModel;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class DynamicDelegate extends BaseDelegate {
 
@@ -35,7 +28,7 @@ public class DynamicDelegate extends BaseDelegate {
 
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
-        loadRootFragment(R.id.add_layout, new AddWorksOptionDelegate());
+//        loadRootFragment(R.id.add_layout, new PublishWorksMenuDelegate());
         initWorksListDelegate();
     }
 
@@ -45,34 +38,13 @@ public class DynamicDelegate extends BaseDelegate {
         loadRootFragment(R.id.ll_fragment, WorksListDelegate.newInstance(filter));
     }
 
-//    @OnClick(R.id.publish_works)
-//    public void onBtPublishWorksClick() {
-////        getContainerActivity().start(new PublishImageTextDelegate());
-//        showMenu();
-//    }
-
-    public void showMenu() {
-        MenuParams menuParams = new MenuParams();
-        menuParams.setActionBarSize(150);
-        menuParams.setMenuObjects(getMenuObjects());
-        menuParams.setClosableOutside(true);
-        menuParams.setGravity(MenuGravity.END);
-        ContextMenuDialogFragment fragment = ContextMenuDialogFragment.newInstance(menuParams);
-        fragment.show(getChildFragmentManager(), ContextMenuDialogFragment.TAG);
+    @OnClick(R.id.publish_image_text_works)
+    public void onPublishImageTextWorksClicked() {
+        getContainerActivity().start(new PublishImageTextDelegate());
     }
 
-    public List<MenuObject> getMenuObjects() {
-        // init MenuObject
-        List<MenuObject> menuObjects = new ArrayList<>();
-        MenuObject articleMenu = new MenuObject("发动态");
-        articleMenu.setBgDrawable(getContext().getDrawable(R.drawable.ic_dynamic));
-        menuObjects.add(articleMenu);
-        MenuObject teachMenu = new MenuObject("发教程");
-        teachMenu.setDrawable(getContext().getDrawable(R.drawable.ic_dynamic));
-        menuObjects.add(teachMenu);
-        MenuObject showMenu = new MenuObject("发表演");
-        showMenu.setDrawable(getContext().getDrawable(R.drawable.ic_dynamic));
-        menuObjects.add(showMenu);
-        return menuObjects;
+    @OnClick(R.id.publish_video_works)
+    public void onPublishVideoWorksClicked() {
+        getContainerActivity().start(new PublishVideoWorksDelegate());
     }
 }

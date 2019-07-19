@@ -81,11 +81,16 @@
             android:maxHeight="200dp"/>
     </LinearLayout>
 
-    <VideoView
+    <!--<VideoView-->
+        <!--android:id="@+id/vv_video"-->
+        <!--android:visibility="gone"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="200dp"/>-->
+    <cn.jzvd.JzvdStd
         android:id="@+id/vv_video"
-        android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="200dp"/>
+        android:layout_height="200dp"
+        android:visibility="gone"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0.5dp"

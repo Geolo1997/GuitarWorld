@@ -17,5 +17,5 @@
 
         android:text="@string/timer"
         android:textColor="@color/white"
-        android:textSize="15sp"/>
+        android:textSize="20sp"/>
 </RelativeLayout>

@@ -84,26 +84,13 @@ public class ProfileDelegate extends BaseDelegate {
                 etPassword.setText(user.getPassword());
                 etEmail.setText(user.getEmail());
                 // TODO 完整赋值
-                initAvatar();
-            }
-
-            @Override
-            public void onError(String message) {
-
-            }
-        });
-    }
-
-    private void initAvatar() {
-        fileModel.loadImage(user.getAvatarPath(), new FileListener<Bitmap>() {
-            @Override
-            public void onProgress(long currentLength, long totalLength) {
-
-            }
-
-            @Override
-            public void onFinish(Bitmap bitmap) {
-                ivAvatar.setImageBitmap(bitmap);
+                String avatarPath = user.getAvatarPath();
+                if (avatarPath != null && !"".equals(avatarPath)) {
+                    GlideUtils.load(getContext(), avatarPath, ivAvatar);
+                } else {
+                    // TODO 区分性别
+                    ivAvatar.setImageResource(R.drawable.male_default_avatar);
+                }
             }
 
             @Override

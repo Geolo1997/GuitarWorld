@@ -1,6 +1,5 @@
 package pers.geolo.guitarworld.delegate.works;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,11 +9,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnLongClick;
+import cn.jzvd.Jzvd;
+import cn.jzvd.JzvdStd;
 import de.hdodenhof.circleimageview.CircleImageView;
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.base.BaseDelegate;
@@ -27,7 +31,9 @@ import pers.geolo.guitarworld.entity.WorksType;
 import pers.geolo.guitarworld.model.AuthModel;
 import pers.geolo.guitarworld.model.UserModel;
 import pers.geolo.guitarworld.model.WorksModel;
-import pers.geolo.guitarworld.network.HttpClient;
+import pers.geolo.guitarworld.network.ParamBeanHandler;
+import pers.geolo.guitarworld.network.param.WorksParam;
+import pers.geolo.guitarworld.util.DateUtils;
 import pers.geolo.guitarworld.util.GlideUtils;
 import pers.geolo.guitarworld.util.RecyclerViewUtils;
 
@@ -120,6 +126,20 @@ public class WorksListDelegate extends BaseDelegate {
         });
     }
 
+    @Override
+    public boolean onBackPressedSupport() {
+        if (Jzvd.backPress()) {
+            return true;
+        }
+        return super.onBackPressedSupport();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Jzvd.releaseAllVideos();
+    }
+
     class Adapter extends RecyclerView.Adapter<ViewHolder> {
 
         @NonNull
@@ -134,7 +154,7 @@ public class WorksListDelegate extends BaseDelegate {
         public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
             Works works = worksList.get(i);
             viewHolder.tvAuthor.setText(works.getAuthor());
-            viewHolder.tvCreateTime.setText(works.getCreateTime().toString());
+            viewHolder.tvCreateTime.setText(DateUtils.toFriendlyString(works.getCreateTime()));
             viewHolder.tvTitle.setText(works.getTitle());
 
             // 加载头像
@@ -152,10 +172,8 @@ public class WorksListDelegate extends BaseDelegate {
             });
 
             if (works.getType() == WorksType.IMAGE_TEXT) { // 图文创作
-                if (viewHolder.vvVideo.isPlaying()) {
-                    viewHolder.vvVideo.stopPlayback();
-                }
                 viewHolder.vvVideo.setVisibility(View.GONE);
+                viewHolder.tvContent.setVisibility(View.VISIBLE);
                 viewHolder.tvContent.setText(works.getContent());
                 // 加载第一张图
                 viewHolder.firstImage.setImageBitmap(null);
@@ -165,10 +183,11 @@ public class WorksListDelegate extends BaseDelegate {
                     viewHolder.firstImage.setImageBitmap(null);
                 }
             } else if (works.getType() == WorksType.VIDEO) { // 视频创作
-                String url = HttpClient.baseUrl + "file?filePath=" + works.getVideoUrl();
+                String url = works.getVideoUrl();
+                viewHolder.tvContent.setVisibility(View.GONE);
                 viewHolder.vvVideo.setVisibility(View.VISIBLE);
-                viewHolder.vvVideo.setVideoURI(Uri.parse(url));
-                viewHolder.vvVideo.start();
+                viewHolder.vvVideo.setUp(url, works.getTitle());
+                viewHolder.vvVideo.startVideo();
             }
         }
 
@@ -195,7 +214,8 @@ public class WorksListDelegate extends BaseDelegate {
         @BindView(R.id.first_image)
         ImageView firstImage;
         @BindView(R.id.vv_video)
-        VideoView vvVideo;
+        JzvdStd vvVideo;
+
         String[] options;
 
         public ViewHolder(@NonNull View itemView) {
@@ -229,21 +249,7 @@ public class WorksListDelegate extends BaseDelegate {
                         String text = options[i];
                         switch (text) {
                             case "删除":
-                                HashMap<String, Object> filter = new HashMap<>();
-                                filter.put("id", works.getId());
-                                worksModel.deleteWorks(filter, new DataListener<Void>() {
-                                    @Override
-                                    public void onReturn(Void aVoid) {
-                                        worksList.remove(works);
-                                        adapter.notifyItemRemoved(getAdapterPosition());
-                                        Toast.makeText(getContext(), "删除成功", Toast.LENGTH_SHORT).show();
-                                    }
-
-                                    @Override
-                                    public void onError(String message) {
-
-                                    }
-                                });
+                                removeWorks(works);
                                 break;
                             default:
                         }
@@ -251,6 +257,24 @@ public class WorksListDelegate extends BaseDelegate {
                     .create();
             alertDialog.show();
             return true;
+        }
+
+        private void removeWorks(Works works) {
+            WorksParam param = new WorksParam();
+            param.setWorksId(works.getId());
+            worksModel.deleteWorks(ParamBeanHandler.handle(param), new DataListener<Void>() {
+                @Override
+                public void onReturn(Void aVoid) {
+                    worksList.remove(works);
+                    adapter.notifyItemRemoved(getAdapterPosition());
+                    Toast.makeText(getContext(), "删除成功", Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onError(String message) {
+
+                }
+            });
         }
     }
 }
