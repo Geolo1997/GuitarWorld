@@ -14,10 +14,16 @@ public class Works {
     private String author;
     //创作时间
     private Date createTime;
+    // 创作类型
+    private WorksType type;
     // 标题
     private String title;
     // 内容
     private String content;
+    // 图片url
+    private List<String> imageUrls;
+    // 视频url
+    private String videoUrl;
     // 评论
     private List<Comment> comments;
 
@@ -25,6 +31,10 @@ public class Works {
 
     public void addImage(String imagePath) {
         imagePaths.add(imagePath);
+    }
+
+    public void setImagePaths(List<String> imagePaths) {
+        this.imagePaths = imagePaths;
     }
 
     public List<String> getImagePaths() {
@@ -82,15 +92,43 @@ public class Works {
         this.comments = comments;
     }
 
+    public WorksType getType() {
+        return type;
+    }
+
+    public void setType(WorksType type) {
+        this.type = type;
+    }
+
+    public List<String> getImageUrls() {
+        return imageUrls;
+    }
+
+    public void setImageUrls(List<String> imageUrls) {
+        this.imageUrls = imageUrls;
+    }
+
+    public String getVideoUrl() {
+        return videoUrl;
+    }
+
+    public void setVideoUrl(String videoUrl) {
+        this.videoUrl = videoUrl;
+    }
+
     @Override
     public String toString() {
         return "Works{" +
                 "id=" + id +
                 ", author='" + author + '\'' +
                 ", createTime=" + createTime +
+                ", type=" + type +
                 ", title='" + title + '\'' +
-                ", content=" + content +
+                ", content='" + content + '\'' +
+                ", imageUrls=" + imageUrls +
+                ", videoUrl='" + videoUrl + '\'' +
                 ", comments=" + comments +
+                ", imagePaths=" + imagePaths +
                 '}';
     }
 }

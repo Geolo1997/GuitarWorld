@@ -1,6 +1,5 @@
 package pers.geolo.guitarworld.delegate.works;
 
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -22,9 +21,9 @@ import pers.geolo.guitarworld.base.BaseDelegate;
 import pers.geolo.guitarworld.base.BeanFactory;
 import pers.geolo.guitarworld.delegate.user.ProfileDelegate;
 import pers.geolo.guitarworld.entity.DataListener;
-import pers.geolo.guitarworld.entity.FileListener;
 import pers.geolo.guitarworld.entity.User;
 import pers.geolo.guitarworld.entity.Works;
+import pers.geolo.guitarworld.entity.WorksType;
 import pers.geolo.guitarworld.model.AuthModel;
 import pers.geolo.guitarworld.model.UserModel;
 import pers.geolo.guitarworld.model.WorksModel;
@@ -58,6 +57,7 @@ public class WorksListDelegate extends BaseDelegate {
 
     AuthModel authModel = BeanFactory.getBean(AuthModel.class);
     UserModel userModel = BeanFactory.getBean(UserModel.class);
+    WorksModel worksModel = BeanFactory.getBean(WorksModel.class);
 
     public static WorksListDelegate newInstance(HashMap<String, Object> filter) {
         Bundle args = new Bundle();
@@ -106,7 +106,7 @@ public class WorksListDelegate extends BaseDelegate {
     }
 
     void loadWorksList() {
-        WorksModel.getWorks(filter, new DataListener<List<Works>>() {
+        worksModel.getWorks(filter, new DataListener<List<Works>>() {
             @Override
             public void onReturn(List<Works> worksList) {
                 WorksListDelegate.this.worksList = worksList;
@@ -136,13 +136,13 @@ public class WorksListDelegate extends BaseDelegate {
             viewHolder.tvAuthor.setText(works.getAuthor());
             viewHolder.tvCreateTime.setText(works.getCreateTime().toString());
             viewHolder.tvTitle.setText(works.getTitle());
-            viewHolder.tvContent.setText(works.getContent());
+
             // 加载头像
             viewHolder.civAvatar.setImageBitmap(null);
             userModel.getPublicProfile(works.getAuthor(), new DataListener<User>() {
                 @Override
                 public void onReturn(User user) {
-                    GlideUtils.load(getContext(),user.getAvatarPath(), viewHolder.civAvatar);
+                    GlideUtils.load(getContext(), user.getAvatarPath(), viewHolder.civAvatar);
                 }
 
                 @Override
@@ -150,26 +150,25 @@ public class WorksListDelegate extends BaseDelegate {
 
                 }
             });
-            // 加载第一张图
-            viewHolder.firstImage.setImageBitmap(null);
-            if (works.getImagePaths().size() > 0) {
-                GlideUtils.load(getContext(), works.getImagePaths().get(0), viewHolder.firstImage);
-            } else {
-                viewHolder.firstImage.setImageBitmap(null);
-            }
 
-
-            // TODO 播放视频
-            if (i == 1) {
-                String url = HttpClient.baseUrl + "video?videoPath=video/test.mp4";
-                viewHolder.vvVideo.setVisibility(View.VISIBLE);
-                viewHolder.vvVideo.setVideoURI(Uri.parse(url));
-                viewHolder.vvVideo.start();
-            } else {
+            if (works.getType() == WorksType.IMAGE_TEXT) { // 图文创作
                 if (viewHolder.vvVideo.isPlaying()) {
                     viewHolder.vvVideo.stopPlayback();
                 }
                 viewHolder.vvVideo.setVisibility(View.GONE);
+                viewHolder.tvContent.setText(works.getContent());
+                // 加载第一张图
+                viewHolder.firstImage.setImageBitmap(null);
+                if (works.getImagePaths().size() > 0) {
+                    GlideUtils.load(getContext(), works.getImagePaths().get(0), viewHolder.firstImage);
+                } else {
+                    viewHolder.firstImage.setImageBitmap(null);
+                }
+            } else if (works.getType() == WorksType.VIDEO) { // 视频创作
+                String url = HttpClient.baseUrl + "file?filePath=" + works.getVideoUrl();
+                viewHolder.vvVideo.setVisibility(View.VISIBLE);
+                viewHolder.vvVideo.setVideoURI(Uri.parse(url));
+                viewHolder.vvVideo.start();
             }
         }
 
@@ -232,7 +231,7 @@ public class WorksListDelegate extends BaseDelegate {
                             case "删除":
                                 HashMap<String, Object> filter = new HashMap<>();
                                 filter.put("id", works.getId());
-                                WorksModel.deleteWorks(filter, new DataListener<Void>() {
+                                worksModel.deleteWorks(filter, new DataListener<Void>() {
                                     @Override
                                     public void onReturn(Void aVoid) {
                                         worksList.remove(works);

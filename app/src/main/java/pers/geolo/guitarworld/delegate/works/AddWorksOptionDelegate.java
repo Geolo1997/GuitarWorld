@@ -29,7 +29,7 @@ public class AddWorksOptionDelegate extends BaseDelegate {
 
     @OnClick(R.id.add_image_text_works_button)
     public void onAddImageTextWorksButtonClicked() {
-        getContainerActivity().start(new PublishDelegate());
+        getContainerActivity().start(new PublishImageTextDelegate());
     }
 
     @OnClick(R.id.fab_2)

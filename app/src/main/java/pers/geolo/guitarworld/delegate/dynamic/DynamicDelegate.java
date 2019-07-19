@@ -47,7 +47,7 @@ public class DynamicDelegate extends BaseDelegate {
 
 //    @OnClick(R.id.publish_works)
 //    public void onBtPublishWorksClick() {
-////        getContainerActivity().start(new PublishDelegate());
+////        getContainerActivity().start(new PublishImageTextDelegate());
 //        showMenu();
 //    }
 

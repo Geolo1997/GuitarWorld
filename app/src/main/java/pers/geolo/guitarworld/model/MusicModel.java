@@ -8,6 +8,7 @@ import pers.geolo.guitarworld.network.ParamBeanHandler;
 import pers.geolo.guitarworld.network.api.MusicApi;
 import pers.geolo.guitarworld.network.callback.BaseCallback;
 import pers.geolo.guitarworld.network.callback.DataCallback;
+import pers.geolo.guitarworld.network.param.MusicParam;
 import pers.geolo.guitarworld.network.param.MusicScoreImageParam;
 import pers.geolo.guitarworld.network.param.MusicScoreParam;
 
@@ -19,24 +20,25 @@ public class MusicModel {
     MusicApi musicApi = HttpClient.getService(MusicApi.class);
 
     public void getMusic(long musicId, DataListener<Music> listener) {
-        HashMap<String, Object> filter = new HashMap<>();
-        filter.put("id", musicId);
-        musicApi.getMusicList(filter).enqueue(new BaseCallback<List<Music>>() {
-            @Override
-            public void onSuccess(List<Music> music) {
-                listener.onReturn(music.get(0));
-            }
+        MusicParam param = new MusicParam();
+        param.setMusicId(musicId);
+        musicApi.getMusicList(ParamBeanHandler.handle(param))
+                .enqueue(new BaseCallback<List<Music>>() {
+                    @Override
+                    public void onSuccess(List<Music> music) {
+                        listener.onReturn(music.get(0));
+                    }
 
-            @Override
-            public void onError(int errorCode, String errorMessage) {
-                listener.onError(errorMessage);
-            }
+                    @Override
+                    public void onError(int errorCode, String errorMessage) {
+                        listener.onError(errorMessage);
+                    }
 
-            @Override
-            public void onFailure() {
-                listener.onError("网络错误");
-            }
-        });
+                    @Override
+                    public void onFailure() {
+                        listener.onError("网络错误");
+                    }
+                });
     }
 
     public void getMusicList(HashMap<String, Object> filter, DataListener<List<Music>> listener) {

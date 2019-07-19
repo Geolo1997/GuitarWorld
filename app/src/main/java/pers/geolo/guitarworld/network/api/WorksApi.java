@@ -21,6 +21,6 @@ public interface WorksApi {
     Call<ResponseBody<Void>> deleteWorks(@QueryMap Map<String, Object> queryMap);
 
     @Multipart
-    @POST("image")
+    @POST("works/image")
     Call<ResponseBody<String>> uploadImage(@Part MultipartBody.Part image);
 }

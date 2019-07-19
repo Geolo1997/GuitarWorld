@@ -22,37 +22,22 @@ import java.util.Map;
  */
 public class WorksModel {
 
-    private static WorksApi worksApi = HttpClient.getService(WorksApi.class);
-    private static FileApi fileApi = HttpClient.getService(FileApi.class);
+    private WorksApi worksApi = HttpClient.getService(WorksApi.class);
+    private FileApi fileApi = HttpClient.getService(FileApi.class);
 
-    public static void publishWorks(Works works, DataListener<Void> listener) {
-        worksApi.publishWorks(works).enqueue(new DataCallback<Void>(listener) {
-            @Override
-            public void onSuccess(Void aVoid) {
-                listener.onReturn(aVoid);
-            }
-        });
+    public void publishWorks(Works works, DataListener<Void> listener) {
+        worksApi.publishWorks(works).enqueue(new DataCallback<>(listener));
     }
 
-    public static void getWorks(Map<String, Object> filter, DataListener<List<Works>> listener) {
-        worksApi.getWorks(filter).enqueue(new DataCallback<List<Works>>(listener) {
-            @Override
-            public void onSuccess(List<Works> worksList) {
-                listener.onReturn(worksList);
-            }
-        });
+    public void getWorks(Map<String, Object> filter, DataListener<List<Works>> listener) {
+        worksApi.getWorks(filter).enqueue(new DataCallback<>(listener));
     }
 
-    public static void deleteWorks(Map<String, Object> filter, DataListener<Void> listener) {
-        worksApi.deleteWorks(filter).enqueue(new DataCallback<Void>(listener) {
-            @Override
-            public void onSuccess(Void aVoid) {
-                listener.onReturn(aVoid);
-            }
-        });
+    public void deleteWorks(Map<String, Object> filter, DataListener<Void> listener) {
+        worksApi.deleteWorks(filter).enqueue(new DataCallback<>(listener));
     }
 
-    public static void publishVideoWorks(File video, FileListener<String> listener) {
+    public void publishVideoWorks(File video, FileListener<String> listener) {
 
         RequestBody requestBody = new ProgressRequestBody(video, "multipart/form-data", 1024, listener);
         MultipartBody.Part part = MultipartBody.Part.createFormData("image", video.getName(), requestBody);

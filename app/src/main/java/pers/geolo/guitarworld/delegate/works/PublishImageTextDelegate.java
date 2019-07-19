@@ -17,11 +17,18 @@ import pers.geolo.guitarworld.base.BaseDelegate;
 import pers.geolo.guitarworld.base.BeanFactory;
 import pers.geolo.guitarworld.entity.DataListener;
 import pers.geolo.guitarworld.entity.Works;
+import pers.geolo.guitarworld.entity.WorksType;
 import pers.geolo.guitarworld.model.AuthModel;
 import pers.geolo.guitarworld.model.WorksModel;
 import pers.geolo.guitarworld.util.*;
 
-public class PublishDelegate extends BaseDelegate {
+/**
+ * 发布图文页面
+ *
+ * @author 桀骜(Geolo)
+ * @version 1.0
+ */
+public class PublishImageTextDelegate extends BaseDelegate {
 
     public static final int MAX_IMAGE_COUNT = 3;
     @BindView(R.id.et_title)
@@ -52,11 +59,12 @@ public class PublishDelegate extends BaseDelegate {
     @OnClick(R.id.bt_publish)
     public void publish() {
         String username = authModel.getCurrentLoginUser().getUsername();
+        works.setType(WorksType.IMAGE_TEXT);
         works.setAuthor(username);
         works.setCreateTime(new Date());
         works.setTitle(etTitle.getText().toString());
         works.setContent(etContent.getText().toString());
-        WorksModel.publishWorks(works, new DataListener<Void>() {
+        worksModel.publishWorks(works, new DataListener<Void>() {
             @Override
             public void onReturn(Void aVoid) {
                 Toast.makeText(getContext(), "发布成功", Toast.LENGTH_SHORT).show();

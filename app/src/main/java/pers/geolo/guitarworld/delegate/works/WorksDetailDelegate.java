@@ -46,6 +46,7 @@ public class WorksDetailDelegate extends BaseDelegate {
     LinearLayout llFragment;
 
     AuthModel authModel = BeanFactory.getBean(AuthModel.class);
+    WorksModel worksModel = BeanFactory.getBean(WorksModel.class);
 
     private int worksId;
 
@@ -76,8 +77,8 @@ public class WorksDetailDelegate extends BaseDelegate {
 
     private void initWorks() {
         Map<String, Object> filter = new HashMap<>();
-        filter.put("id", worksId);
-        WorksModel.getWorks(filter, new DataListener<List<Works>>() {
+        filter.put("worksId", worksId);
+        worksModel.getWorks(filter, new DataListener<List<Works>>() {
             @Override
             public void onReturn(List<Works> worksList) {
                 Works works = worksList.get(0);
