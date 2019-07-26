@@ -76,7 +76,7 @@ public class UserService {
     public void updateAvatar(String username, String path) {
         User user = userMapper.selectByUsername(username);
         if (user != null) {
-            user.setAvatarPath(path);
+            user.setAvatarUrl(path);
             userMapper.update(user);
         }
     }

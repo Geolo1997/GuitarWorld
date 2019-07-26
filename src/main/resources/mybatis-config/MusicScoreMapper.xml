@@ -10,6 +10,9 @@
             <if test="musicId != 0">
                 AND music_id = #{musicId}
             </if>
+            <if test="musicScoreId != 0">
+                AND id = #{musicScoreId}
+            </if>
         </where>
     </select>
 

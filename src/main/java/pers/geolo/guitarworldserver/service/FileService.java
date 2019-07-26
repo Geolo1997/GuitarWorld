@@ -2,8 +2,10 @@ package pers.geolo.guitarworldserver.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import pers.geolo.guitarworldserver.util.ControllerUtils;
 import pers.geolo.guitarworldserver.util.ResourceUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.util.Calendar;
@@ -26,7 +28,7 @@ public class FileService {
 //            avatar.transferTo(file);
 //            // 更新user表avatar_path字段
 //            User user = userMapper.selectByUsername(username);
-//            user.setAvatarPath(username + "/avatar.jpg");
+//            user.setAvatarUrl(username + "/avatar.jpg");
 //            userMapper.update(user);
 //            return username + "/avatar.jpg";
 //        } catch (IOException e) {
@@ -99,7 +101,9 @@ public class FileService {
         }
         file.transferTo(new File(filePath, fileName));
         // TODO 动态获取
-        return "http://192.168.1.107:8080/GuitarWorld/file?filePath=" + relativeFilePath + fileName;
+        HttpServletRequest request = ControllerUtils.getRequest();
+        String baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
+        return baseUrl + "/file?filePath=" + relativeFilePath + fileName;
     }
 
     /**
@@ -123,7 +127,7 @@ public class FileService {
         StringBuilder fileNameBuilder = new StringBuilder();
         Calendar calendar = Calendar.getInstance();
         fileNameBuilder.append(calendar.get(Calendar.YEAR))
-                .append(calendar.get(Calendar.MONTH))
+                .append(calendar.get(Calendar.MONTH) + 1)
                 .append("/" + calendar.get(Calendar.DATE))
                 .append("/");
         return fileNameBuilder.toString();

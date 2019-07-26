@@ -11,6 +11,7 @@ public class Music {
     private String name;
     private String author;
     private String profile;
+    private String imageUrl;
 
     public long getId() {
         return id;
@@ -42,5 +43,13 @@ public class Music {
 
     public void setProfile(String profile) {
         this.profile = profile;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

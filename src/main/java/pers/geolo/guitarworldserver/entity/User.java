@@ -10,7 +10,7 @@ public class User {
     private String password;
     private String email;
     private LogState logState;
-    private String avatarPath;
+    private String avatarUrl;
 
     // 我的关注者（粉丝）
     private List<String> followingUsername;
@@ -26,12 +26,12 @@ public class User {
         this.email = email;
     }
 
-    public void setAvatarPath(String avatarPath) {
-        this.avatarPath = avatarPath;
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
     }
 
-    public String getAvatarPath() {
-        return avatarPath;
+    public String getAvatarUrl() {
+        return avatarUrl;
     }
 
     public void setState(LogState logState) {

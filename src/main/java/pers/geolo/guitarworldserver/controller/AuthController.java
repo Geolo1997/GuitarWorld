@@ -45,7 +45,12 @@ public class AuthController {
         int code = userService.login(username, password);
         // 保存username到session
         if (code == 0) ControllerUtils.setSessionAttribute("username", username);
-        return new ResponseEntity<>(code);
+        ResponseEntity<Void> entity = new ResponseEntity<>(code);
+        switch (code) {
+            case 1: entity.setMessage("用户名或密码错误"); break;
+            case 2: entity.setMessage("用户不存在"); break;
+        }
+        return entity;
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
