@@ -46,7 +46,7 @@ public interface UserApi {
      * @return 头像路径
      */
     @Multipart
-    @POST
+    @POST("user/avatar")
     Call<ResponseBody<String>> updateAvatar(@Part MultipartBody.Part avatar);
 
     /**

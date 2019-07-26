@@ -1,6 +1,5 @@
 package pers.geolo.guitarworld.delegate.works;
 
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -26,7 +25,6 @@ import pers.geolo.guitarworld.base.BeanFactory;
 import pers.geolo.guitarworld.delegate.user.ProfileDelegate;
 import pers.geolo.guitarworld.entity.Comment;
 import pers.geolo.guitarworld.entity.DataListener;
-import pers.geolo.guitarworld.entity.FileListener;
 import pers.geolo.guitarworld.entity.User;
 import pers.geolo.guitarworld.model.AuthModel;
 import pers.geolo.guitarworld.model.CommentModel;
@@ -116,7 +114,7 @@ public class CommentListDelegate extends BaseDelegate {
             userModel.getPublicProfile(comment.getAuthor(), new DataListener<User>() {
                 @Override
                 public void onReturn(User user) {
-                    GlideUtils.load(getContext(),user.getAvatarPath(),viewHolder.civAvatar);
+                    GlideUtils.load(getContext(),user.getAvatarUrl(),viewHolder.civAvatar);
                 }
 
                 @Override
@@ -165,7 +163,7 @@ public class CommentListDelegate extends BaseDelegate {
             }
             //添加列表
             AlertDialog alertDialog = new AlertDialog.Builder(getContext())
-                    .setTitle("选项")
+                    .setTitle("ic_option")
                     .setItems(options, (dialogInterface, i) -> {
                         String text = options[i];
                         switch (text) {

@@ -12,7 +12,6 @@ import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.base.BaseDelegate;
 import pers.geolo.guitarworld.base.BeanFactory;
 import pers.geolo.guitarworld.entity.DataListener;
-import pers.geolo.guitarworld.entity.LogInfo;
 import pers.geolo.guitarworld.model.AuthModel;
 
 public class RegisterDelegate extends BaseDelegate {
@@ -30,7 +29,7 @@ public class RegisterDelegate extends BaseDelegate {
 
     @Override
     public Object getLayout() {
-        return R.layout.delegate_register;
+        return R.layout.register;
     }
 
     @Override

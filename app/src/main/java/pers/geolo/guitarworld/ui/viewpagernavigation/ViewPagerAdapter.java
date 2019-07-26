@@ -20,12 +20,6 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
         notifyDataSetChanged();
     }
 
-    public void addFragment(Fragment fragment) {
-        if (list != null) {
-            list.add(fragment);
-        }
-    }
-
     public ViewPagerAdapter(FragmentManager fm) {
         super(fm);
     }

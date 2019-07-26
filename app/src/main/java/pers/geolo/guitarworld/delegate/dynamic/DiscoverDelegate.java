@@ -9,7 +9,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.base.BaseDelegate;
-import pers.geolo.guitarworld.delegate.music.MusicDetailDelegate;
+import pers.geolo.guitarworld.delegate.music.MusicIndexDelegate;
 import pers.geolo.guitarworld.delegate.music.MusicDiscoverNavigationDelegate;
 
 public class DiscoverDelegate extends BaseDelegate {
@@ -29,7 +29,7 @@ public class DiscoverDelegate extends BaseDelegate {
     // TODO test
     @OnClick(R.id.bt_show_music)
     public void show() {
-        getContainerActivity().start(new MusicDetailDelegate());
+        getContainerActivity().start(new MusicIndexDelegate());
     }
 
     @Override

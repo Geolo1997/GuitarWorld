@@ -59,4 +59,11 @@ public class MusicModel {
         musicApi.getMusicScoreImages(ParamBeanHandler.handle(param))
                 .enqueue(new DataCallback<>(listener));
     }
+
+    public void getMusicScore(long musicScoreId, DataListener<List<MusicScore>> listener) {
+        MusicScoreParam param = new MusicScoreParam();
+        param.setMusicScoreId(musicScoreId);
+        musicApi.getMusicScore(ParamBeanHandler.handle(param))
+                .enqueue(new DataCallback<>(listener));
+    }
 }

@@ -40,9 +40,9 @@ public class MusicScoreListDelegate extends BaseDelegate {
         return R.layout.delegate_music_score_list;
     }
 
-    public static MusicScoreListDelegate newInstance(Long musicId) {
+    public static MusicScoreListDelegate newInstance(int musicId) {
         Bundle args = new Bundle();
-        args.putLong(MUSIC_ID, musicId);
+        args.putInt(MUSIC_ID, musicId);
         MusicScoreListDelegate fragment = new MusicScoreListDelegate();
         fragment.setArguments(args);
         return fragment;
@@ -50,9 +50,9 @@ public class MusicScoreListDelegate extends BaseDelegate {
 
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
-        Long musicId = 0L;
+        int musicId = 0;
         if (getArguments() != null) {
-            musicId = getArguments().getLong(MUSIC_ID);
+            musicId = getArguments().getInt(MUSIC_ID);
         }
         initRecyclerView();
         loadMusicScore(musicId);
@@ -63,7 +63,7 @@ public class MusicScoreListDelegate extends BaseDelegate {
         rvScoreList.setAdapter(adapter);
     }
 
-    private void loadMusicScore(Long musicId) {
+    private void loadMusicScore(int musicId) {
         musicModel.getMusicScoreList(musicId, new DataListener<List<MusicScore>>() {
             @Override
             public void onReturn(List<MusicScore> musicScores) {

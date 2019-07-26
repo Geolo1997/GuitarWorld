@@ -7,16 +7,17 @@ package pers.geolo.guitarworld.entity;
  */
 public class Music {
 
-    private long id;
+    private int id;
     private String name;
     private String author;
     private String profile;
+    private String imageUrl;
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -42,5 +43,13 @@ public class Music {
 
     public void setProfile(String profile) {
         this.profile = profile;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

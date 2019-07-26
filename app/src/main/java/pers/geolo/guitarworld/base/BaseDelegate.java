@@ -1,11 +1,14 @@
 package pers.geolo.guitarworld.base;
 
+import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import me.yokeyword.fragmentation.SupportActivity;
@@ -18,6 +21,7 @@ import me.yokeyword.fragmentation_swipeback.SwipeBackFragment;
 public abstract class BaseDelegate extends SwipeBackFragment {
 
     private Unbinder unbinder;
+    private View rootView;
 
     public abstract Object getLayout();
 
@@ -37,8 +41,14 @@ public abstract class BaseDelegate extends SwipeBackFragment {
         }
         unbinder = ButterKnife.bind(this, rootView);
         onBindView(savedInstanceState, rootView);
-        return attachToSwipeBack(rootView);
+        this.rootView = rootView;
+        // 设置透明状态栏
+        setStatusBarFullTransparent();
+        // 设置状态栏边距
+        setStatusBarPadding();
+        return rootView;
     }
+
 
     public SupportActivity getContainerActivity() {
         return (SupportActivity) _mActivity;
@@ -51,4 +61,60 @@ public abstract class BaseDelegate extends SwipeBackFragment {
             unbinder.unbind();
         }
     }
+
+    public View getRootView() {
+        return rootView;
+    }
+
+    /**
+     * 全透状态栏
+     */
+    protected void setStatusBarFullTransparent() {
+        if (Build.VERSION.SDK_INT >= 21) {//21表示5.0
+            Window window = getContainerActivity().getWindow();
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(Color.TRANSPARENT);
+        } else if (Build.VERSION.SDK_INT >= 19) {//19表示4.4
+            getContainerActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            //虚拟键盘也透明
+            //getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        }
+    }
+
+    public static int getStatusBarHeight(Context context) {
+        Resources resources = context.getResources();
+        int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
+        int height = resources.getDimensionPixelSize(resourceId);
+        return height;
+    }
+
+
+    protected void setStatusBarPadding() {
+        int statusBarHeight = getStatusBarHeight(getContainerActivity());
+        View view = getStatueBarTopView();
+        if (view != null) {
+            // 测量原控件高度
+            int w = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+            int h = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+            view.measure(w, h);
+            int height = view.getMeasuredHeight();
+            // 修改控件高度
+            ViewGroup.LayoutParams params = view.getLayoutParams();
+            params.height = height + statusBarHeight;
+            view.setLayoutParams(params);
+            // 增加控件顶部内边距
+            view.setPadding(view.getPaddingLeft(),
+                    view.getPaddingTop() + statusBarHeight,
+                    view.getPaddingRight(),
+                    view.getPaddingBottom());
+        }
+    }
+
+    protected View getStatueBarTopView() {
+        return null;
+    }
+
 }

@@ -86,4 +86,12 @@ dependencies {
     implementation 'com.github.clans:fab:1.6.4'
     // 视频播放器
     implementation 'cn.jzvd:jiaozivideoplayer:7.0.5'
+    // 上传按钮
+    implementation 'com.github.dmytrodanylyk.android-process-button:library:1.0.4'
+    // 底部弹出抽屉
+    implementation 'me.shaohui:bottomdialog:1.1.9'
+    // titlebar
+    implementation 'com.hjq:titlebar:6.0'
+    // tastytoast
+    implementation 'com.sdsmdg.tastytoast:tastytoast:0.1.1'
 }

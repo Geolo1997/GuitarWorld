@@ -1,11 +1,13 @@
 package pers.geolo.guitarworld.network.param;
 
+import java.io.Serializable;
+
 /**
  * @author 桀骜(Geolo)
  * @version 1.0
  * @date 2019/7/17
  */
-public class WorksParam {
+public class WorksParam implements Serializable {
 
     private long worksId;
     private String author;

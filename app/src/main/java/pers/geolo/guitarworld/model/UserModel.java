@@ -80,7 +80,7 @@ public class UserModel {
 
     public void updateAvatar(File file, FileListener<String> listener) {
         RequestBody requestBody = new ProgressRequestBody(file, "multipart/form-data", 1024, listener);
-        MultipartBody.Part part = MultipartBody.Part.createFormData("image", file.getName(), requestBody);
+        MultipartBody.Part part = MultipartBody.Part.createFormData("avatar", file.getName(), requestBody);
         userApi.updateAvatar(part).enqueue(new BaseCallback<String>() {
             @Override
             public void onSuccess(String s) {

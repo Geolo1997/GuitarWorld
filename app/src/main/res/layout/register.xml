@@ -86,7 +86,8 @@
         <TextView
             android:id="@+id/tv_registerHint"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:textColor="@color/red"/>
 
         <Button
             android:id="@+id/bt_register"

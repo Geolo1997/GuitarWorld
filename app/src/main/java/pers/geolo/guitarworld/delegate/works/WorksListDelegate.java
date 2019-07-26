@@ -3,7 +3,6 @@ package pers.geolo.guitarworld.delegate.works;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -49,11 +48,12 @@ import java.util.Map;
 public class WorksListDelegate extends BaseDelegate {
 
     private static final String FILTER = "FILTER";
+    private static final String WORKS_PARAM = "WORKS_PARAM";
 
     @BindView(R.id.rv_works_list)
     RecyclerView rvWorksList;
-    @BindView(R.id.srl_refresh)
-    SwipeRefreshLayout srlRefresh;
+    //    @BindView(R.id.srl_refresh)
+//    SwipeRefreshLayout srlRefresh;
     @BindView(R.id.ll_works_list)
     LinearLayout llWorksList;
 
@@ -65,12 +65,23 @@ public class WorksListDelegate extends BaseDelegate {
     UserModel userModel = BeanFactory.getBean(UserModel.class);
     WorksModel worksModel = BeanFactory.getBean(WorksModel.class);
 
+    @Deprecated
     public static WorksListDelegate newInstance(HashMap<String, Object> filter) {
         Bundle args = new Bundle();
         args.putSerializable(FILTER, filter);
         WorksListDelegate worksListDelegate = new WorksListDelegate();
         worksListDelegate.setArguments(args);
         return worksListDelegate;
+    }
+
+    public static WorksListDelegate newInstance(WorksParam param) {
+
+        Bundle args = new Bundle();
+        // TODO 临时转换
+        args.putSerializable(FILTER, ParamBeanHandler.handle(param));
+        WorksListDelegate fragment = new WorksListDelegate();
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
@@ -105,10 +116,10 @@ public class WorksListDelegate extends BaseDelegate {
 
     private void initRefreshLayout() {
         // 设置刷新控件监听
-        srlRefresh.setOnRefreshListener(() -> {
-            loadWorksList();
-            srlRefresh.setRefreshing(false);
-        });
+//        srlRefresh.setOnRefreshListener(() -> {
+//            loadWorksList();
+//            srlRefresh.setRefreshing(false);
+//        });
     }
 
     void loadWorksList() {
@@ -162,7 +173,7 @@ public class WorksListDelegate extends BaseDelegate {
             userModel.getPublicProfile(works.getAuthor(), new DataListener<User>() {
                 @Override
                 public void onReturn(User user) {
-                    GlideUtils.load(getContext(), user.getAvatarPath(), viewHolder.civAvatar);
+                    GlideUtils.load(getContext(), user.getAvatarUrl(), viewHolder.civAvatar);
                 }
 
                 @Override
@@ -244,7 +255,7 @@ public class WorksListDelegate extends BaseDelegate {
             }
             //添加列表
             AlertDialog alertDialog = new AlertDialog.Builder(getContext())
-                    .setTitle("选项")
+                    .setTitle("ic_option")
                     .setItems(options, (dialogInterface, i) -> {
                         String text = options[i];
                         switch (text) {

@@ -1,7 +1,5 @@
 package pers.geolo.guitarworld.delegate.music;
 
-import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,15 +8,9 @@ import android.view.View;
 import butterknife.BindView;
 import net.lucode.hackware.magicindicator.FragmentContainerHelper;
 import net.lucode.hackware.magicindicator.MagicIndicator;
-import net.lucode.hackware.magicindicator.ViewPagerHelper;
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator;
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter;
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerIndicator;
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView;
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator;
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.ColorTransitionPagerTitleView;
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.base.BaseDelegate;
+import pers.geolo.guitarworld.ui.magicnavigator.MagicNavigator;
 import pers.geolo.guitarworld.ui.viewpagernavigation.ViewPagerAdapter;
 
 import java.util.ArrayList;
@@ -47,46 +39,52 @@ public class MusicDiscoverNavigationDelegate extends BaseDelegate {
 
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
-        // init ViewPager
-        viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
-        List<Fragment> fragments = getFragments();
-        viewPagerAdapter.setList(fragments);
-        viewPager.setAdapter(viewPagerAdapter);
-        // init MagicNavigator
-        List<String> titles = getTitles();
-        fragmentContainerHelper = new FragmentContainerHelper(magicIndicator);
-        CommonNavigator commonNavigator = new CommonNavigator(getContext());
-        commonNavigator.setAdapter(new CommonNavigatorAdapter() {
-            @Override
-            public int getCount() {
-                return fragments.size();
-            }
+//        // init ViewPager
+//        viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
+//        List<Fragment> fragments = getFragments();
+//        viewPagerAdapter.setList(fragments);
+//        viewPager.setAdapter(viewPagerAdapter);
+//        // init MagicNavigator
+//        List<String> titles = getTitles();
+//        fragmentContainerHelper = new FragmentContainerHelper(magicIndicator);
+//        CommonNavigator commonNavigator = new CommonNavigator(getContext());
+//        commonNavigator.setAdapter(new CommonNavigatorAdapter() {
+//            @Override
+//            public int getCount() {
+//                return fragments.size();
+//            }
+//
+//            @Override
+//            public IPagerTitleView getTitleView(Context context, int index) {
+//                ColorTransitionPagerTitleView colorTransitionPagerTitleView = new ColorTransitionPagerTitleView(context);
+//                colorTransitionPagerTitleView.setNormalColor(Color.GRAY);
+//                colorTransitionPagerTitleView.setSelectedColor(Color.BLACK);
+//                colorTransitionPagerTitleView.setText(titles.get(index));
+////                colorTransitionPagerTitleView.setMaxWidth(magicIndicator.getWidth() / 3);
+//                colorTransitionPagerTitleView.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        viewPager.setCurrentItem(index);
+//                    }
+//                });
+//                return colorTransitionPagerTitleView;
+//            }
+//
+//            @Override
+//            public IPagerIndicator getIndicator(Context context) {
+//                LinePagerIndicator indicator = new LinePagerIndicator(context);
+//                indicator.setMode(LinePagerIndicator.MODE_WRAP_CONTENT);
+//                return indicator;
+//            }
+//        });
+//        magicIndicator.setNavigator(commonNavigator);
+//        ViewPagerHelper.bind(magicIndicator, viewPager);
 
-            @Override
-            public IPagerTitleView getTitleView(Context context, int index) {
-                ColorTransitionPagerTitleView colorTransitionPagerTitleView = new ColorTransitionPagerTitleView(context);
-                colorTransitionPagerTitleView.setNormalColor(Color.GRAY);
-                colorTransitionPagerTitleView.setSelectedColor(Color.BLACK);
-                colorTransitionPagerTitleView.setText(titles.get(index));
-//                colorTransitionPagerTitleView.setMaxWidth(magicIndicator.getWidth() / 3);
-                colorTransitionPagerTitleView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        viewPager.setCurrentItem(index);
-                    }
-                });
-                return colorTransitionPagerTitleView;
-            }
-
-            @Override
-            public IPagerIndicator getIndicator(Context context) {
-                LinePagerIndicator indicator = new LinePagerIndicator(context);
-                indicator.setMode(LinePagerIndicator.MODE_WRAP_CONTENT);
-                return indicator;
-            }
-        });
-        magicIndicator.setNavigator(commonNavigator);
-        ViewPagerHelper.bind(magicIndicator, viewPager);
+        new MagicNavigator(getContext(), getChildFragmentManager(), viewPager, magicIndicator)
+                .setItem("推荐", MusicListDelegate.newInstance(new HashMap<>()))
+                .setItem("排行", MusicListDelegate.newInstance(new HashMap<>()))
+                .setItem("飙升", MusicListDelegate.newInstance(new HashMap<>()))
+                .init();
     }
 
     private List<String> getTitles() {

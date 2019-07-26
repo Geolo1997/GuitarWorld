@@ -9,12 +9,9 @@ import android.view.View;
 import android.widget.*;
 import butterknife.BindView;
 import butterknife.OnClick;
-import java.io.File;
-import java.util.Date;
-
 import pers.geolo.guitarworld.R;
-import pers.geolo.guitarworld.base.BaseDelegate;
 import pers.geolo.guitarworld.base.BeanFactory;
+import pers.geolo.guitarworld.base.SwipeBackDelegate;
 import pers.geolo.guitarworld.entity.DataListener;
 import pers.geolo.guitarworld.entity.Works;
 import pers.geolo.guitarworld.entity.WorksType;
@@ -22,13 +19,16 @@ import pers.geolo.guitarworld.model.AuthModel;
 import pers.geolo.guitarworld.model.WorksModel;
 import pers.geolo.guitarworld.util.*;
 
+import java.io.File;
+import java.util.Date;
+
 /**
  * 发布图文页面
  *
  * @author 桀骜(Geolo)
  * @version 1.0
  */
-public class PublishImageTextDelegate extends BaseDelegate {
+public class PublishImageTextDelegate extends SwipeBackDelegate {
 
     public static final int MAX_IMAGE_COUNT = 3;
     @BindView(R.id.et_title)

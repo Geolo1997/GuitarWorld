@@ -20,6 +20,7 @@ import pers.geolo.guitarworld.base.BeanFactory;
 import pers.geolo.guitarworld.entity.DataListener;
 import pers.geolo.guitarworld.entity.Music;
 import pers.geolo.guitarworld.model.MusicModel;
+import pers.geolo.guitarworld.util.GlideUtils;
 import pers.geolo.guitarworld.util.RecyclerViewUtils;
 
 import java.util.ArrayList;
@@ -62,6 +63,7 @@ public class MusicListDelegate extends BaseDelegate {
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
         musicList = new ArrayList<>();
+        recyclerRefresh.setOnRefreshListener(() -> loadMusicList());
         loadMusicList();
         initRecyclerView();
     }
@@ -73,11 +75,13 @@ public class MusicListDelegate extends BaseDelegate {
             public void onReturn(List<Music> music) {
                 musicList = music;
                 adapter.notifyDataSetChanged();
+                recyclerRefresh.setRefreshing(false);
             }
 
             @Override
             public void onError(String message) {
                 Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+                recyclerRefresh.setRefreshing(false);
             }
         });
     }
@@ -103,6 +107,7 @@ public class MusicListDelegate extends BaseDelegate {
             Music music = musicList.get(i);
             viewHolder.musicAuthorText.setText(music.getAuthor());
             viewHolder.musicNameText.setText(music.getName());
+            GlideUtils.load(getContext(), music.getImageUrl(), viewHolder.musicImage);
         }
 
         @Override
@@ -126,8 +131,8 @@ public class MusicListDelegate extends BaseDelegate {
 
             @OnClick(R.id.music_item)
             public void startMusicDetail() {
-                long id = musicList.get(getAdapterPosition()).getId();
-                getContainerActivity().start(MusicDetailDelegate.newInstance(id));
+                int id = musicList.get(getAdapterPosition()).getId();
+                getContainerActivity().start(MusicIndexDelegate.newInstance(id));
             }
         }
     }

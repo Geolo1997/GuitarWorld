@@ -64,6 +64,6 @@ public class ToolBarDelegate extends BaseDelegate {
 
     @OnClick(R.id.btn_option)
     public void onOptionClick() {
-        Toast.makeText(getContext(), "选项", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "ic_option", Toast.LENGTH_SHORT).show();
     }
 }

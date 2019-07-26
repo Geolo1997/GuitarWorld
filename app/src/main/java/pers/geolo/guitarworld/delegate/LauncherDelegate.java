@@ -29,6 +29,11 @@ public class LauncherDelegate extends BaseDelegate {
     }
 
     @Override
+    protected View getStatueBarTopView() {
+        return tvTimer;
+    }
+
+    @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
         // init launcherTimer
         launcherTimer = new LauncherTimer(5000, 1000);

@@ -10,6 +10,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.OnClick;
+import com.hjq.bar.OnTitleBarListener;
+import com.hjq.bar.TitleBar;
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.base.BaseDelegate;
 import pers.geolo.guitarworld.delegate.shop.ShopDelegate;
@@ -17,6 +19,8 @@ import pers.geolo.guitarworld.delegate.tools.ToolsDelegate;
 
 public class MainDelegate extends BaseDelegate {
 
+    @BindView(R.id.title_bar)
+    TitleBar titleBar;
     @BindView(R.id.bt_dynamic)
     LinearLayout selectedLayout;
     @BindView(R.id.drawer_layout)
@@ -29,16 +33,41 @@ public class MainDelegate extends BaseDelegate {
 
     @Override
     public Object getLayout() {
-        return R.layout.delegate_main;
+        return R.layout.main;
+    }
+
+    @Override
+    protected View getStatueBarTopView() {
+        return titleBar;
     }
 
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
         setSwipeBackEnable(false);
+        initTitleBar();
         selectedLayout = rootView.findViewById(R.id.bt_dynamic);
         initSubDelegates();
 //        // 标题
 //        loadRootFragment(R.id.container_tool_bar, ToolBarDelegate.newInstance("主页"));
+    }
+
+    private void initTitleBar() {
+        titleBar.setOnTitleBarListener(new OnTitleBarListener() {
+            @Override
+            public void onLeftClick(View v) {
+                drawerLayout.openDrawer(GravityCompat.START);
+            }
+
+            @Override
+            public void onTitleClick(View v) {
+
+            }
+
+            @Override
+            public void onRightClick(View v) {
+
+            }
+        });
     }
 
     private void initSubDelegates() {
@@ -60,18 +89,22 @@ public class MainDelegate extends BaseDelegate {
             case R.id.bt_dynamic:
                 showHideFragment(delegates[0], currentDelegate);
                 currentDelegate = delegates[0];
+                titleBar.setTitle("动态");
                 break;
             case R.id.bt_discover:
                 showHideFragment(delegates[1], currentDelegate);
                 currentDelegate = delegates[1];
+                titleBar.setTitle("发现");
                 break;
             case R.id.bt_tools:
                 showHideFragment(delegates[2], currentDelegate);
                 currentDelegate = delegates[2];
+                titleBar.setTitle("工具");
                 break;
             case R.id.bt_shop:
                 showHideFragment(delegates[3], currentDelegate);
                 currentDelegate = delegates[3];
+                titleBar.setTitle("商城");
                 break;
             default:
         }
@@ -89,17 +122,6 @@ public class MainDelegate extends BaseDelegate {
                 textView.setTextColor(color);
             }
         }
-    }
-
-
-    @OnClick(R.id.iv_mine)
-    public void onIvMineClicked() {
-        drawerLayout.openDrawer(GravityCompat.START);
-    }
-
-    @OnClick(R.id.iv_option)
-    public void onIvOptionClicked() {
-        Toast.makeText(getContext(), "选项", Toast.LENGTH_SHORT).show();
     }
 
     @Override

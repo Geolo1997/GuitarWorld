@@ -3,7 +3,10 @@ package pers.geolo.guitarworld.delegate.dynamic;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import butterknife.BindView;
 import butterknife.OnClick;
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.base.BaseDelegate;
 import pers.geolo.guitarworld.base.BeanFactory;
@@ -18,6 +21,8 @@ public class DynamicDelegate extends BaseDelegate {
 
 //    @BindView(R.id.publish_works)
 //    FloatingActionButton publishWorks;
+    @BindView(R.id.floating_menu)
+    FloatingActionMenu floatingMenu;
 
     AuthModel authModel = BeanFactory.getBean(AuthModel.class);
 
@@ -46,5 +51,11 @@ public class DynamicDelegate extends BaseDelegate {
     @OnClick(R.id.publish_video_works)
     public void onPublishVideoWorksClicked() {
         getContainerActivity().start(new PublishVideoWorksDelegate());
+    }
+
+    @Override
+    public void onSupportInvisible() {
+        super.onSupportInvisible();
+        floatingMenu.close(false);
     }
 }

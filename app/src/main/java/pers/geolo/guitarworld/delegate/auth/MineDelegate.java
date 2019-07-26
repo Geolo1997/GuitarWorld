@@ -1,9 +1,9 @@
 package pers.geolo.guitarworld.delegate.auth;
 
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.BindView;
@@ -29,6 +29,8 @@ public class MineDelegate extends BaseDelegate {
     TextView tvUsername;
     @BindView(R.id.civ_avatar)
     CircleImageView civAvatar;
+    @BindView(R.id.container_profile)
+    LinearLayout profileContainer;
 
     UserModel userModel = BeanFactory.getBean(UserModel.class);
     AuthModel authModel = BeanFactory.getBean(AuthModel.class);
@@ -36,6 +38,11 @@ public class MineDelegate extends BaseDelegate {
     @Override
     public Object getLayout() {
         return R.layout.mine;
+    }
+
+    @Override
+    protected View getStatueBarTopView() {
+        return profileContainer;
     }
 
     @Override
@@ -48,7 +55,7 @@ public class MineDelegate extends BaseDelegate {
             public void onReturn(User user) {
                 // TODO 控件赋值
 
-                String avatarPath = user.getAvatarPath();
+                String avatarPath = user.getAvatarUrl();
                 if (avatarPath != null && !"".equals(avatarPath)) {
                     GlideUtils.load(getContext(), avatarPath, civAvatar);
                 } else {

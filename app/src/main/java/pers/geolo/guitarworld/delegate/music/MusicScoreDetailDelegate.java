@@ -13,11 +13,13 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.bumptech.glide.Glide;
+import com.hjq.bar.OnTitleBarListener;
+import com.hjq.bar.TitleBar;
 import pers.geolo.guitarworld.R;
-import pers.geolo.guitarworld.base.BaseDelegate;
 import pers.geolo.guitarworld.base.BeanFactory;
+import pers.geolo.guitarworld.base.SwipeBackDelegate;
 import pers.geolo.guitarworld.entity.DataListener;
-import pers.geolo.guitarworld.entity.Music;
+import pers.geolo.guitarworld.entity.MusicScore;
 import pers.geolo.guitarworld.model.MusicModel;
 import pers.geolo.guitarworld.util.RecyclerViewUtils;
 
@@ -29,10 +31,12 @@ import java.util.List;
  * @version 1.0
  * @date 2019/7/10
  */
-public class MusicScoreDetailDelegate extends BaseDelegate {
+public class MusicScoreDetailDelegate extends SwipeBackDelegate {
 
     private static final String MUSIC_SCORE_ID = "MUSIC_SCORE_ID";
 
+    @BindView(R.id.title_bar)
+    TitleBar titleBar;
     @BindView(R.id.score_recycler_view)
     RecyclerView scoreRecyclerView;
 
@@ -46,6 +50,11 @@ public class MusicScoreDetailDelegate extends BaseDelegate {
         return R.layout.music_score_detail;
     }
 
+    @Override
+    protected View getStatueBarTopView() {
+        return titleBar;
+    }
+
     public static MusicScoreDetailDelegate newInstance(long musicScoreId) {
 
         Bundle args = new Bundle();
@@ -57,8 +66,28 @@ public class MusicScoreDetailDelegate extends BaseDelegate {
 
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
+        initTitleBar();
         initRecyclerView();
         loadMusicScore();
+    }
+
+    private void initTitleBar() {
+        titleBar.setOnTitleBarListener(new OnTitleBarListener() {
+            @Override
+            public void onLeftClick(View v) {
+                pop();
+            }
+
+            @Override
+            public void onTitleClick(View v) {
+
+            }
+
+            @Override
+            public void onRightClick(View v) {
+                Toast.makeText(getContext(), "option", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void initRecyclerView() {
@@ -80,6 +109,22 @@ public class MusicScoreDetailDelegate extends BaseDelegate {
             @Override
             public void onError(String message) {
                 Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+            }
+        });
+        musicModel.getMusicScore(musicScoreId, new DataListener<List<MusicScore>>() {
+            @Override
+            public void onReturn(List<MusicScore> musicScores) {
+                MusicScore musicScore = musicScores.get(0);
+                if (musicScore != null) {
+                    titleBar.setTitle(musicScore.getName());
+                } else {
+                    //TODO 异常
+                }
+            }
+
+            @Override
+            public void onError(String message) {
+
             }
         });
     }

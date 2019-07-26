@@ -10,7 +10,7 @@ import pers.geolo.android.http.DefaultGson;
 
 public class HttpClient {
 
-    public static String baseUrl = "http://192.168.1.107:8080/GuitarWorld/";
+    public static String baseUrl = "http://192.168.1.103:8080/GuitarWorld/";
     public static String hotPointBaseUrl = "http://192.168.43.191:8080/GuitarWorld/";
 
     private static Retrofit retrofit;

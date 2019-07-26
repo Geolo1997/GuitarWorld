@@ -27,12 +27,7 @@ public class AuthModel {
     }
 
     public void login(String username, String password, DataListener<Void> listener) {
-        authApi.login(username, password).enqueue(new DataCallback<Void>(listener) {
-            @Override
-            public void onSuccess(Void aVoid) {
-                listener.onReturn(aVoid);
-            }
-        });
+        authApi.login(username, password).enqueue(new DataCallback<>(listener));
     }
 
     public void getLastSavedLogInfo(DataListener<LogInfo> listener) {
