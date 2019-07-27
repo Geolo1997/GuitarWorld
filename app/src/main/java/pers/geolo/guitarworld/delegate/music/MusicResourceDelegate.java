@@ -27,6 +27,8 @@ public class MusicResourceDelegate extends BaseDelegate {
     MagicIndicator magicIndicator;
     @BindView(R.id.view_pager)
     ViewPager viewPager;
+    @BindView(R.id.place_holder)
+    View placeHolder;
 
     public static MusicResourceDelegate newInstance(int musicId) {
 
@@ -50,5 +52,9 @@ public class MusicResourceDelegate extends BaseDelegate {
                 .setItem("教学", WorksListDelegate.newInstance(new HashMap<>()))
                 .setItem("演奏", WorksListDelegate.newInstance(new HashMap<>()))
                 .init();
+    }
+
+    public void setPlaceHolderVisible(int visible) {
+        placeHolder.setVisibility(visible);
     }
 }

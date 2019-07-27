@@ -43,6 +43,7 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@color/colorPrimary"
             app:leftIcon="@drawable/ic_back_24"
-            app:rightIcon="@drawable/ic_option_24"/>
+            app:rightIcon="@drawable/ic_option_24"
+            app:lineVisible="false"/>
     </LinearLayout>
 </FrameLayout>

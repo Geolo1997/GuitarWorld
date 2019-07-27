@@ -90,12 +90,14 @@ public class MusicIndexDelegate extends SwipeBackDelegate {
         scrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
             @Override
             public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                System.out.println(scrollY + " " + oldScrollY);
                 ViewGroup musicResourceViewGroup = (ViewGroup) musicResourceDelegate.getRootView();
-                int changeHeight = musicProfileLayout.getHeight() - titleLayout.getHeight();
+                int changeHeight = musicProfileLayout.getHeight() - titleBar.getHeight();
                 if (oldScrollY < changeHeight && scrollY >= changeHeight) {
                     titleBar.setTitle(musicProfileDelegate.getMusicName());
                     View navigator = musicResourceViewGroup.findViewById(R.id.magic_indicator);
                     if (navigator != null) {
+                        musicResourceDelegate.setPlaceHolderVisible(View.VISIBLE);
                         musicResourceViewGroup.removeView(navigator);
                         titleLayout.addView(navigator);
                     }
@@ -103,6 +105,7 @@ public class MusicIndexDelegate extends SwipeBackDelegate {
                     titleBar.setTitle("");
                     View navigator = titleLayout.findViewById(R.id.magic_indicator);
                     if (navigator != null) {
+                        musicResourceDelegate.setPlaceHolderVisible(View.GONE);
                         titleLayout.removeView(navigator);
                         musicResourceViewGroup.addView(navigator, 0);
                     }
