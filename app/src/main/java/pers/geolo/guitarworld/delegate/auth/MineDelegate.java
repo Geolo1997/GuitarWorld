@@ -47,6 +47,10 @@ public class MineDelegate extends BaseDelegate {
 
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
+        init();
+    }
+
+    public void init() {
         String currentUsername = authModel.getCurrentLoginUser().getUsername();
         tvUsername.setText(currentUsername);
         String currentLoginUsername = authModel.getCurrentLoginUser().getUsername();
@@ -109,5 +113,11 @@ public class MineDelegate extends BaseDelegate {
 
             }
         });
+    }
+
+    @Override
+    public void onSupportVisible() {
+        super.onSupportVisible();
+        init();
     }
 }
