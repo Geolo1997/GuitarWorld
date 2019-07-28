@@ -21,8 +21,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import pers.geolo.guitarworld.R;
-import pers.geolo.guitarworld.base.BaseDelegate;
-import pers.geolo.guitarworld.base.BeanFactory;
+import pers.geolo.guitarworld.delegate.base.BaseDelegate;
+import pers.geolo.guitarworld.delegate.base.BeanFactory;
 import pers.geolo.guitarworld.entity.DataListener;
 import pers.geolo.guitarworld.entity.User;
 import pers.geolo.guitarworld.entity.UserRelation;

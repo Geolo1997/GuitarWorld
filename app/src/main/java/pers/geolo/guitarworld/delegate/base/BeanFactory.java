@@ -1,4 +1,4 @@
-package pers.geolo.guitarworld.base;
+package pers.geolo.guitarworld.delegate.base;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

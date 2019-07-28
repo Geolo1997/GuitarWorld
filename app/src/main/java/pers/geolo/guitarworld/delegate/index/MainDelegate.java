@@ -1,4 +1,4 @@
-package pers.geolo.guitarworld.delegate.dynamic;
+package pers.geolo.guitarworld.delegate.index;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,9 +13,7 @@ import butterknife.OnClick;
 import com.hjq.bar.OnTitleBarListener;
 import com.hjq.bar.TitleBar;
 import pers.geolo.guitarworld.R;
-import pers.geolo.guitarworld.base.BaseDelegate;
-import pers.geolo.guitarworld.delegate.shop.ShopDelegate;
-import pers.geolo.guitarworld.delegate.tools.ToolsDelegate;
+import pers.geolo.guitarworld.delegate.base.BaseDelegate;
 
 public class MainDelegate extends BaseDelegate {
 

@@ -1,4 +1,4 @@
-package pers.geolo.guitarworld.delegate.dynamic;
+package pers.geolo.guitarworld.delegate.index;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,7 +8,7 @@ import android.widget.EditText;
 import butterknife.BindView;
 import butterknife.OnClick;
 import pers.geolo.guitarworld.R;
-import pers.geolo.guitarworld.base.BaseDelegate;
+import pers.geolo.guitarworld.delegate.base.BaseDelegate;
 import pers.geolo.guitarworld.delegate.music.MusicIndexDelegate;
 import pers.geolo.guitarworld.delegate.music.MusicDiscoverNavigationDelegate;
 

@@ -9,7 +9,7 @@ import butterknife.BindView;
 import net.lucode.hackware.magicindicator.FragmentContainerHelper;
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import pers.geolo.guitarworld.R;
-import pers.geolo.guitarworld.base.BaseDelegate;
+import pers.geolo.guitarworld.delegate.base.BaseDelegate;
 import pers.geolo.guitarworld.ui.magicnavigator.MagicNavigator;
 import pers.geolo.guitarworld.ui.viewpagernavigation.ViewPagerAdapter;
 

@@ -1,15 +1,11 @@
 package pers.geolo.guitarworld.ui;
 
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.view.View;
+
 import java.util.List;
 
-import pers.geolo.guitarworld.base.BaseDelegate;
 import pers.geolo.guitarworld.delegate.user.UserListDelegate;
 
 /**

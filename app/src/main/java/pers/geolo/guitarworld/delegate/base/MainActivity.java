@@ -1,4 +1,4 @@
-package pers.geolo.guitarworld;
+package pers.geolo.guitarworld.delegate.base;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,12 +8,13 @@ import com.joanzapata.iconify.Iconify;
 import com.joanzapata.iconify.fonts.FontAwesomeModule;
 import me.yokeyword.fragmentation.SupportActivity;
 import org.litepal.LitePal;
-import pers.geolo.guitarworld.base.BeanFactory;
-import pers.geolo.guitarworld.delegate.LauncherDelegate;
+import pers.geolo.guitarworld.R;
+import pers.geolo.guitarworld.delegate.index.LauncherDelegate;
 import pers.geolo.guitarworld.model.*;
 import pers.geolo.guitarworld.ui.icon.FontModule;
 import pers.geolo.guitarworld.util.ActivityUtils;
 import pers.geolo.guitarworld.util.PermissionUtils;
+import pers.geolo.guitarworld.util.StatusBarUtils;
 
 /**
  * @author 桀骜(Geolo)
@@ -25,6 +26,8 @@ public class MainActivity extends SupportActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.container);
+        // 修改状态栏字体颜色
+        StatusBarUtils.setAndroidNativeLightStatusBar(this, true);
         // LitePal 初始化
         LitePal.initialize(getApplicationContext());
 

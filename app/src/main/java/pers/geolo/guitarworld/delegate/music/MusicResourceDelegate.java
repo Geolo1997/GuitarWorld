@@ -7,7 +7,7 @@ import android.view.View;
 import butterknife.BindView;
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import pers.geolo.guitarworld.R;
-import pers.geolo.guitarworld.base.BaseDelegate;
+import pers.geolo.guitarworld.delegate.base.BaseDelegate;
 import pers.geolo.guitarworld.delegate.works.WorksListDelegate;
 import pers.geolo.guitarworld.ui.magicnavigator.MagicNavigator;
 

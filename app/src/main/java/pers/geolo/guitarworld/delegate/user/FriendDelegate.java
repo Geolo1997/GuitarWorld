@@ -3,20 +3,17 @@ package pers.geolo.guitarworld.delegate.user;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import pers.geolo.guitarworld.R;
-import pers.geolo.guitarworld.base.BaseDelegate;
+import pers.geolo.guitarworld.delegate.base.BaseDelegate;
 import pers.geolo.guitarworld.ui.UserListAdapter;
 
 public class FriendDelegate extends BaseDelegate {

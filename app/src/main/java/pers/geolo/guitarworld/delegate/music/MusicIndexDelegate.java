@@ -12,7 +12,7 @@ import butterknife.BindView;
 import com.hjq.bar.OnTitleBarListener;
 import com.hjq.bar.TitleBar;
 import pers.geolo.guitarworld.R;
-import pers.geolo.guitarworld.base.SwipeBackDelegate;
+import pers.geolo.guitarworld.delegate.base.SwipeBackDelegate;
 
 /**
  * 音乐主页

@@ -1,4 +1,4 @@
-package pers.geolo.guitarworld.delegate.image;
+package pers.geolo.guitarworld.test.image;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -8,8 +8,8 @@ import android.widget.ImageView;
 import butterknife.BindView;
 
 import pers.geolo.guitarworld.R;
-import pers.geolo.guitarworld.base.BaseDelegate;
-import pers.geolo.guitarworld.base.BeanFactory;
+import pers.geolo.guitarworld.delegate.base.BaseDelegate;
+import pers.geolo.guitarworld.delegate.base.BeanFactory;
 import pers.geolo.guitarworld.entity.FileListener;
 import pers.geolo.guitarworld.model.FileModel;
 

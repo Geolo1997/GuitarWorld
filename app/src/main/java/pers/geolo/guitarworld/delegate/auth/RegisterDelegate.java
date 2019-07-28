@@ -9,8 +9,8 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 import pers.geolo.guitarworld.R;
-import pers.geolo.guitarworld.base.BaseDelegate;
-import pers.geolo.guitarworld.base.BeanFactory;
+import pers.geolo.guitarworld.delegate.base.BaseDelegate;
+import pers.geolo.guitarworld.delegate.base.BeanFactory;
 import pers.geolo.guitarworld.entity.DataListener;
 import pers.geolo.guitarworld.model.AuthModel;
 

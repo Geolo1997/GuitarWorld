@@ -1,4 +1,4 @@
-package pers.geolo.guitarworld.delegate.dynamic;
+package pers.geolo.guitarworld.delegate.index;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.delegate.user.UserListDelegate;
-import pers.geolo.guitarworld.base.BaseDelegate;
+import pers.geolo.guitarworld.delegate.base.BaseDelegate;
 
 public class SearchResultDelegate extends BaseDelegate {
 

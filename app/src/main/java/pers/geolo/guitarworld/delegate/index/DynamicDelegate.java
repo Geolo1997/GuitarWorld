@@ -1,15 +1,14 @@
-package pers.geolo.guitarworld.delegate.dynamic;
+package pers.geolo.guitarworld.delegate.index;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 import butterknife.BindView;
 import butterknife.OnClick;
-import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import pers.geolo.guitarworld.R;
-import pers.geolo.guitarworld.base.BaseDelegate;
-import pers.geolo.guitarworld.base.BeanFactory;
+import pers.geolo.guitarworld.delegate.base.BaseDelegate;
+import pers.geolo.guitarworld.delegate.base.BeanFactory;
 import pers.geolo.guitarworld.delegate.works.PublishImageTextDelegate;
 import pers.geolo.guitarworld.delegate.works.PublishVideoWorksDelegate;
 import pers.geolo.guitarworld.delegate.works.WorksListDelegate;

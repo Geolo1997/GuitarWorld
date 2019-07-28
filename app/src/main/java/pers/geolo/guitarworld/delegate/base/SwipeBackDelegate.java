@@ -1,4 +1,4 @@
-package pers.geolo.guitarworld.base;
+package pers.geolo.guitarworld.delegate.base;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;

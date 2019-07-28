@@ -6,9 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import butterknife.BindView;
 import pers.geolo.guitarworld.R;
-import pers.geolo.guitarworld.base.BaseDelegate;
-
-import java.util.List;
+import pers.geolo.guitarworld.delegate.base.BaseDelegate;
 
 public class MusicTeachListDelegate extends BaseDelegate {
 

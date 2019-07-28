@@ -1,4 +1,4 @@
-package pers.geolo.guitarworld.base;
+package pers.geolo.guitarworld.delegate.base;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.view.*;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import com.gyf.immersionbar.ImmersionBar;
 import me.yokeyword.fragmentation.SupportActivity;
 import me.yokeyword.fragmentation_swipeback.SwipeBackFragment;
 
@@ -45,6 +46,10 @@ public abstract class BaseDelegate extends SwipeBackFragment {
         setStatusBarFullTransparent();
         // 设置状态栏边距
         setStatusBarPadding();
+        // 设置状态栏字体黑色
+        ImmersionBar.with(this)
+                .statusBarDarkFont(true)
+                .init();
         return rootView;
     }
 
