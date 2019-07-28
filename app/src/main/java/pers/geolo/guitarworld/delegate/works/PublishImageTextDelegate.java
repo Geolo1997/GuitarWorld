@@ -9,18 +9,24 @@ import android.view.View;
 import android.widget.*;
 import butterknife.BindView;
 import butterknife.OnClick;
+import com.hjq.bar.OnTitleBarListener;
+import com.hjq.bar.TitleBar;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.delegate.base.BeanFactory;
 import pers.geolo.guitarworld.delegate.base.SwipeBackDelegate;
 import pers.geolo.guitarworld.entity.DataListener;
 import pers.geolo.guitarworld.entity.Works;
 import pers.geolo.guitarworld.entity.WorksType;
+import pers.geolo.guitarworld.entity.event.GetImageEvent;
 import pers.geolo.guitarworld.model.AuthModel;
 import pers.geolo.guitarworld.model.WorksModel;
 import pers.geolo.guitarworld.util.*;
 
 import java.io.File;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 发布图文页面
@@ -31,17 +37,21 @@ import java.util.Date;
 public class PublishImageTextDelegate extends SwipeBackDelegate {
 
     public static final int MAX_IMAGE_COUNT = 3;
+
+    @BindView(R.id.title_bar)
+    TitleBar titleBar;
     @BindView(R.id.et_title)
     EditText etTitle;
     @BindView(R.id.et_content)
     EditText etContent;
     @BindView(R.id.bt_upload)
     Button btUpload;
-    @BindView(R.id.ll_images)
-    LinearLayout llImages;
+    @BindView(R.id.images_layout)
+    LinearLayout imagesLayout;
     Works works = new Works();
 
     private int imageCount = 0;
+    private List<File> imageFiles;
 
     AuthModel authModel = BeanFactory.getBean(AuthModel.class);
     WorksModel worksModel = BeanFactory.getBean(WorksModel.class);
@@ -52,8 +62,14 @@ public class PublishImageTextDelegate extends SwipeBackDelegate {
     }
 
     @Override
-    public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
+    protected View getStatueBarTopView() {
+        return titleBar;
+    }
 
+    @Override
+    public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
+        initTitleBar();
+        loadRootFragment(R.id.images_layout, new AddImageManagerDelegate());
     }
 
     @OnClick(R.id.bt_publish)
@@ -69,7 +85,17 @@ public class PublishImageTextDelegate extends SwipeBackDelegate {
             public void onReturn(Void aVoid) {
                 Toast.makeText(getContext(), "发布成功", Toast.LENGTH_SHORT).show();
                 KeyBoardUtils.hideKeyBoard(getContext(), etContent);
-                pop();
+                ThreadUtils.runOnNewSubThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            Thread.sleep(3000);
+                            pop();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
             }
 
             @Override
@@ -104,7 +130,7 @@ public class PublishImageTextDelegate extends SwipeBackDelegate {
     }
 
     public void toAlbum() {
-        MediaUtils.openAlbum(getContainerActivity(), new ActivityUtils.Callback() {
+        PhotoUtils.openAlbum(getContainerActivity(), new ActivityUtils.Callback() {
             @Override
             public void onSuccess(@Nullable Intent intent) {
                 String filePath = GetPhotoFromPhotoAlbum.getRealPathFromUri(getContext(),
@@ -137,7 +163,27 @@ public class PublishImageTextDelegate extends SwipeBackDelegate {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(300, 300);
         imageView.setImageBitmap(BitmapFactory.decodeFile(imagePath));
         imageView.setLayoutParams(params);
-        llImages.addView(imageView);
+        imagesLayout.addView(imageView);
         imageCount++;
+    }
+
+    public void initTitleBar() {
+        titleBar.setOnTitleBarListener(new OnTitleBarListener() {
+            @Override
+            public void onLeftClick(View v) {
+                KeyBoardUtils.hideKeyBoard(getContext(), etContent);
+                pop();
+            }
+
+            @Override
+            public void onTitleClick(View v) {
+
+            }
+
+            @Override
+            public void onRightClick(View v) {
+                publish();
+            }
+        });
     }
 }

@@ -75,7 +75,7 @@ public class MainDelegate extends BaseDelegate {
                 new ToolsDelegate(),
                 new ShopDelegate()
         };
-        loadMultipleRootFragment(R.id.ll_fragment, 0, delegates);
+        loadMultipleRootFragment(R.id.delegates_layout, 0, delegates);
         currentDelegate = delegates[0];
         onButtonClicked(selectedLayout);
     }

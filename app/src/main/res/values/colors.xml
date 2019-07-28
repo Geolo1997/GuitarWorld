@@ -10,6 +10,6 @@
     <color name="black">#dd000000</color>
     <color name="red">#ff0000</color>
     <color name="alpha0">#00000000</color>
-    <color name="gray">#f4f4f4</color>
+    <color name="gray">#e2e2e2</color>
     <color name="loading_bg">#003372</color>
 </resources>

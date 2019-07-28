@@ -1,315 +1,157 @@
 package pers.geolo.guitarworld.util;
 
-import android.annotation.SuppressLint;
+import android.Manifest;
 import android.app.Activity;
-import android.content.ContentUris;
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
-import android.provider.DocumentsContract;
 import android.provider.MediaStore;
-import android.support.v4.app.Fragment;
+import android.support.v4.content.FileProvider;
+
+import java.io.File;
 
 /**
- * 相片工具类
- * ---------------------
- * 作者：RxWorld
- * 来源：CSDN
- * 原文：https://blog.csdn.net/android_xue/article/details/78854885
+ * @author 桀骜(Geolo)
+ * @date 2019-06-03
  */
-
 public class PhotoUtils {
 
-    private static final String TAG = "PhotoUtils";
+    public static final String[] CAMERA_PERMISSIONS = new String[]{
+            Manifest.permission.CAMERA,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+    };
 
+    public static final String[] PICK_PHOTO_PERMISSIONS = new String[]{
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+    };
 
-    @SuppressLint("NewApi")
-    public static String getRealPathFromUriAboveApi19(Context context, Uri uri) {
-        String filePath = null;
-        if (DocumentsContract.isDocumentUri(context, uri)) {
-            // 如果是document类型的 uri, 则通过document id来进行处理
-            String documentId = DocumentsContract.getDocumentId(uri);
-            if (isMediaDocument(uri)) {
-                // 使用':'分割
-                String id = documentId.split(":")[1];
-
-                String selection = MediaStore.Images.Media._ID + "=?";
-                String[] selectionArgs = {id};
-                filePath = getDataColumn(context, MediaStore.Images.Media.EXTERNAL_CONTENT_URI, selection,
-                        selectionArgs);
-            } else if (isDownloadsDocument(uri)) {
-                Uri contentUri = ContentUris.withAppendedId(Uri.parse("content://downloads/public_downloads"),
-                        Long.valueOf(documentId));
-                filePath = getDataColumn(context, contentUri, null, null);
-            }
-        } else if ("content".equalsIgnoreCase(uri.getScheme())) {
-            // 如果是 content 类型的 Uri
-            filePath = getDataColumn(context, uri, null, null);
-        } else if ("file".equals(uri.getScheme())) {
-            // 如果是 file 类型的 Uri,直接获取图片对应的路径
-            filePath = uri.getPath();
+    @Deprecated
+    public static void openCamera(Activity activity, File file, ActivityUtils.Callback callback) {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        File directory = FileUtils.getDirectory(file);
+        if (!directory.exists()) {
+            directory.mkdirs();
         }
-        return filePath;
-    }
-
-
-    /**
-     * @param activity    当前activity
-     * @param imageUri    拍照后照片存储路径
-     * @param requestCode 调用系统相机请求码
-     */
-    public static void takePicture(Activity activity, Uri imageUri, int requestCode) {
-        //调用系统相机
-        Intent intentCamera = new Intent();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            intentCamera.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION); //添加这一句表示对目标应用临时授权该Uri所代表的文件
-        }
-        intentCamera.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
-        //将拍照结果保存至photo_file的Uri中，不保留在相册中
-        intentCamera.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-        activity.startActivityForResult(intentCamera, requestCode);
-    }
-
-    /**
-     * @param fragment    当前fragment
-     * @param imageUri    拍照后照片存储路径
-     * @param requestCode 调用系统相机请求码
-     */
-    public static void takePicture(Fragment fragment, Uri imageUri, int requestCode) {
-        //调用系统相机
-        Intent intentCamera = new Intent();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            intentCamera.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION); //添加这一句表示对目标应用临时授权该Uri所代表的文件
-        }
-        intentCamera.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
-        //将拍照结果保存至photo_file的Uri中，不保留在相册中
-        intentCamera.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-        fragment.startActivityForResult(intentCamera, requestCode);
-    }
-
-
-    /**
-     * @param activity    当前activity
-     * @param requestCode 打开相册的请求码
-     */
-    public static void openPic(Activity activity, int requestCode) {
-        Intent photoPickerIntent = new Intent(Intent.ACTION_GET_CONTENT);
-        photoPickerIntent.setType("image/*");
-        activity.startActivityForResult(photoPickerIntent, requestCode);
-    }
-
-    /**
-     * @param fragment    当前fragment
-     * @param requestCode 打开相册的请求码
-     */
-    public static void openPic(Fragment fragment, int requestCode) {
-        Intent photoPickerIntent = new Intent(Intent.ACTION_GET_CONTENT);
-        photoPickerIntent.setType("image/*");
-        fragment.startActivityForResult(photoPickerIntent, requestCode);
-    }
-
-    /**
-     * @param activity    当前activity
-     * @param orgUri      剪裁原图的Uri
-     * @param desUri      剪裁后的图片的Uri
-     * @param aspectX     X方向的比例
-     * @param aspectY     Y方向的比例
-     * @param width       剪裁图片的宽度
-     * @param height      剪裁图片高度
-     * @param requestCode 剪裁图片的请求码
-     */
-    public static void cropImageUri(Activity activity, Uri orgUri,
-                                    Uri desUri, int aspectX, int aspectY,
-                                    int width, int height, int requestCode) {
-        Intent intent = new Intent("com.android.camera.action.CROP");
+        Uri uri;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            uri = FileProvider.getUriForFile(activity, "pers.geolo.guitarworld.fileprovider", file);
+        } else {
+            uri = Uri.fromFile(file);
         }
-        intent.setDataAndType(orgUri, "image/*");
-        intent.putExtra("crop", "true");
-      /*  intent.putExtra("aspectX", aspectX);
-        intent.putExtra("aspectY", aspectY);
-        intent.putExtra("outputX", width);
-        intent.putExtra("outputY", height);*/
-        intent.putExtra("scale", true);
-        //将剪切的图片保存到目标Uri中
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, desUri);
-        intent.putExtra("return-data", false);
-        intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
-        intent.putExtra("noFaceDetection", true);
-        activity.startActivityForResult(intent, requestCode);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+        ActivityUtils.startActivity(activity, intent, null, callback);
     }
 
-    /**
-     * @param fragment    当前activity
-     * @param orgUri      剪裁原图的Uri
-     * @param desUri      剪裁后的图片的Uri
-     * @param aspectX     X方向的比例
-     * @param aspectY     Y方向的比例
-     * @param width       剪裁图片的宽度
-     * @param height      剪裁图片高度
-     * @param requestCode 剪裁图片的请求码
-     */
-    public static void cropImageUri(Fragment fragment, Uri orgUri, Uri desUri,
-                                    int aspectX, int aspectY, int width,
-                                    int height, int requestCode) {
-        Intent intent = new Intent("com.android.camera.action.CROP");
+    public static void openCamera(Activity activity, Callback callback) {
+        // 申请权限
+        PermissionUtils.requestPermissions(activity, CAMERA_PERMISSIONS, new PermissionUtils.Callback() {
+            @Override
+            public void onSuccess(String[] permissions, int[] grantResults) {
+                // 拍摄照片
+                File file = new File(Environment.getExternalStorageDirectory().getPath()
+                        + "/guitarworld/" + System.currentTimeMillis() + ".jpg");
+                openCamera(activity, file, new ActivityUtils.Callback() {
+                    @Override
+                    public void onSuccess(Intent intent) {
+                        callback.onGetPhotoSuccess(file);
+                    }
+
+                    @Override
+                    public void onFailure(Intent intent) {
+                        //
+                        callback.onGetPhotoFailure(FailureType.USER_CANCEL);
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(String[] permissions, int[] grantResults) {
+                // 没有权限
+                callback.onGetPhotoFailure(FailureType.PERMISSION_DENIED);
+            }
+        });
+    }
+
+    public static void openAlbum(Activity activity, ActivityUtils.Callback callback) {
+        // 申请权限
+        PermissionUtils.requestPermissions(activity, PICK_PHOTO_PERMISSIONS, new PermissionUtils.Callback() {
+            @Override
+            public void onSuccess(String[] permissions, int[] grantResults) {
+                // 选择照片
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType("image/*");
+                ActivityUtils.startActivity(activity, intent, null, callback);
+            }
+
+            @Override
+            public void onFailure(String[] permissions, int[] grantResults) {
+                callback.onFailure(null);
+            }
+        });
+    }
+
+    public static void openAlbum(Activity activity, Callback callback) {
+        // 申请权限
+        PermissionUtils.requestPermissions(activity, PICK_PHOTO_PERMISSIONS, new PermissionUtils.Callback() {
+            @Override
+            public void onSuccess(String[] permissions, int[] grantResults) {
+                // 选择照片
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType("image/*");
+                ActivityUtils.startActivity(activity, intent, null, new ActivityUtils.Callback() {
+                    @Override
+                    public void onSuccess(Intent intent) {
+                        String filePath = GetPhotoFromPhotoAlbum.getRealPathFromUri(activity, intent.getData());
+                        callback.onGetPhotoSuccess(new File(filePath));
+                    }
+
+                    @Override
+                    public void onFailure(Intent intent) {
+                        callback.onGetPhotoFailure(FailureType.USER_CANCEL);
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(String[] permissions, int[] grantResults) {
+                callback.onGetPhotoFailure(FailureType.PERMISSION_DENIED);
+            }
+        });
+    }
+
+    public static void openVideoCamera(Activity activity, File file, ActivityUtils.Callback callback) {
+        Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+        File directory = FileUtils.getDirectory(file);
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
+        Uri uri;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            uri = FileProvider.getUriForFile(activity, "pers.geolo.guitarworld.fileprovider", file);
+        } else {
+            uri = Uri.fromFile(file);
         }
-        intent.setDataAndType(orgUri, "image/*");
-        intent.putExtra("crop", "true");
-        intent.putExtra("aspectX", aspectX);
-        intent.putExtra("aspectY", aspectY);
-        intent.putExtra("outputX", width);
-        intent.putExtra("outputY", height);
-        intent.putExtra("scale", true);
-        //将剪切的图片保存到目标Uri中
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, desUri);
-        intent.putExtra("return-data", false);
-        intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
-        intent.putExtra("noFaceDetection", true);
-        fragment.startActivityForResult(intent, requestCode);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+        ActivityUtils.startActivity(activity, intent, null, callback);
     }
 
-    /**
-     * 读取uri所在的图片
-     *
-     * @param uri      图片对应的Uri
-     * @param mContext 上下文对象
-     * @return 获取图像的Bitmap
-     */
-    public static Bitmap getBitmapFromUri(Uri uri, Context mContext) {
-        try {
-            Bitmap bitmap = MediaStore.Images.Media.
-                    getBitmap(mContext.getContentResolver(), uri);
-            return bitmap;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+    public interface Callback {
+        void onGetPhotoSuccess(File photo);
+
+        void onGetPhotoFailure(FailureType failureType);
     }
 
-    /**
-     * @param context 上下文对象
-     * @param uri     当前相册照片的Uri
-     * @return 解析后的Uri对应的String
-     */
-    @SuppressLint("NewApi")
-    public static String getPath(final Context context, final Uri uri) {
-
-        final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
-        String pathHead = "file:///";
-        // DocumentProvider
-        if (isKitKat && DocumentsContract.isDocumentUri(context, uri)) {
-            // ExternalStorageProvider
-            if (isExternalStorageDocument(uri)) {
-                final String docId = DocumentsContract.getDocumentId(uri);
-                final String[] split = docId.split(":");
-                final String type = split[0];
-                if ("primary".equalsIgnoreCase(type)) {
-                    return pathHead + Environment.getExternalStorageDirectory() + "/" + split[1];
-                }
-            }
-            // DownloadsProvider
-            else if (isDownloadsDocument(uri)) {
-
-                final String id = DocumentsContract.getDocumentId(uri);
-
-                final Uri contentUri = ContentUris.
-                        withAppendedId(Uri.parse("content://downloads/public_downloads"),
-                                Long.valueOf(id));
-
-                return pathHead + getDataColumn(context,
-                        contentUri, null, null);
-            }
-            // MediaProvider
-            else if (isMediaDocument(uri)) {
-                final String docId = DocumentsContract.getDocumentId(uri);
-                final String[] split = docId.split(":");
-                final String type = split[0];
-
-                Uri contentUri = null;
-                if ("image".equals(type)) {
-                    contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-                } else if ("video".equals(type)) {
-                    contentUri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
-                } else if ("audio".equals(type)) {
-                    contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
-                }
-
-                final String selection = "_id=?";
-                final String[] selectionArgs = new String[]{split[1]};
-
-                return pathHead + getDataColumn(context, contentUri, selection, selectionArgs);
-            }
-        }
-        // MediaStore (and general)
-        else if ("content".equalsIgnoreCase(uri.getScheme())) {
-            return pathHead + getDataColumn(context, uri, null, null);
-        }
-        // File
-        else if ("file".equalsIgnoreCase(uri.getScheme())) {
-            return pathHead + uri.getPath();
-        }
-        return null;
-    }
-
-    /**
-     * Get the value of the data column for this Uri. This is useful for
-     * MediaStore Uris, and other file-based ContentProviders.
-     *
-     * @param context       The context.
-     * @param uri           The Uri to query.
-     * @param selection     (Optional) Filter used in the query.
-     * @param selectionArgs (Optional) Selection arguments used in the query.
-     * @return The value of the _data column, which is typically a file path.
-     */
-    private static String getDataColumn(Context context, Uri uri,
-                                        String selection, String[] selectionArgs) {
-
-        Cursor cursor = null;
-        final String column = "_data";
-        final String[] projection = {column};
-        try {
-            cursor = context.getContentResolver().query(uri, projection, selection,
-                    selectionArgs, null);
-            if (cursor != null && cursor.moveToFirst()) {
-                final int column_index = cursor.getColumnIndexOrThrow(column);
-                return cursor.getString(column_index);
-            }
-        } finally {
-            if (cursor != null)
-                cursor.close();
-        }
-        return null;
-    }
-
-    /**
-     * @param uri The Uri to check.
-     * @return Whether the Uri authority is ExternalStorageProvider.
-     */
-    private static boolean isExternalStorageDocument(Uri uri) {
-        return "com.android.externalstorage.documents".equals(uri.getAuthority());
-    }
-
-    /**
-     * @param uri The Uri to check.
-     * @return Whether the Uri authority is DownloadsProvider.
-     */
-    private static boolean isDownloadsDocument(Uri uri) {
-        return "com.android.providers.downloads.documents".equals(uri.getAuthority());
-    }
-
-    /**
-     * @param uri The Uri to check.
-     * @return Whether the Uri authority is MediaProvider.
-     */
-    private static boolean isMediaDocument(Uri uri) {
-        return "com.android.providers.media.documents".equals(uri.getAuthority());
+    public enum FailureType {
+        // 没有权限
+        PERMISSION_DENIED,
+        // 用户取消
+        USER_CANCEL,
+        // 相机错误
+        CAMERA_ERROR,
+        // 文件系统错误
+        FILE_SYSTEM_ERROR
     }
 }

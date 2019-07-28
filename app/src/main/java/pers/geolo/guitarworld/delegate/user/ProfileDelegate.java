@@ -177,7 +177,7 @@ public class ProfileDelegate extends SwipeBackDelegate{
     public void toCamera() {
         File file = new File(Environment.getExternalStorageDirectory().getPath()
                 + "/guitarworld/" + System.currentTimeMillis() + ".jpg");
-        MediaUtils.openCamera(getContainerActivity(), file, new ActivityUtils.Callback() {
+        PhotoUtils.openCamera(getContainerActivity(), file, new ActivityUtils.Callback() {
             @Override
             public void onSuccess(@Nullable Intent intent) {
                 uploadAvatar(file);
@@ -210,7 +210,7 @@ public class ProfileDelegate extends SwipeBackDelegate{
     }
 
     public void openAlbum() {
-        MediaUtils.openAlbum(getContainerActivity(), new ActivityUtils.Callback() {
+        PhotoUtils.openAlbum(getContainerActivity(), new ActivityUtils.Callback() {
             @Override
             public void onSuccess(Intent intent) {
                 String filePath = GetPhotoFromPhotoAlbum.getRealPathFromUri(getContext(), intent.getData());

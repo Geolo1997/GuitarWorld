@@ -72,4 +72,5 @@
     <string name="update_video">上传视频</string>
     <string name="title">标题</string>
     <string name="job">工作</string>
+    <string name="publish_dynamic">发动态</string>
 </resources>

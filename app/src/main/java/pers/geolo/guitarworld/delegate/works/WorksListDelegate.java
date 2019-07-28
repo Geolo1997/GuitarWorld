@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -122,7 +123,7 @@ public class WorksListDelegate extends BaseDelegate {
 //        });
     }
 
-    void loadWorksList() {
+    public void loadWorksList() {
         worksModel.getWorks(filter, new DataListener<List<Works>>() {
             @Override
             public void onReturn(List<Works> worksList) {
@@ -135,6 +136,14 @@ public class WorksListDelegate extends BaseDelegate {
 
             }
         });
+    }
+
+    public int getScollYDistance() {
+        LinearLayoutManager layoutManager = (LinearLayoutManager) rvWorksList.getLayoutManager();
+        int position = layoutManager.findFirstVisibleItemPosition();
+        View firstVisiableChildView = layoutManager.findViewByPosition(position);
+        int itemHeight = firstVisiableChildView.getHeight();
+        return (position) * itemHeight - firstVisiableChildView.getTop();
     }
 
     @Override

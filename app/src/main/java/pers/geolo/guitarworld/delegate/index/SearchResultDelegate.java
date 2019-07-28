@@ -20,6 +20,6 @@ public class SearchResultDelegate extends BaseDelegate {
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
         HashMap<String, Object> filter = new HashMap<>();
         filter.put("all", true);
-        loadRootFragment(R.id.ll_fragment, UserListDelegate.newInstance(filter));
+        loadRootFragment(R.id.works_list_layout, UserListDelegate.newInstance(filter));
     }
 }

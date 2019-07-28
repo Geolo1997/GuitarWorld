@@ -22,7 +22,7 @@ import pers.geolo.guitarworld.entity.WorksType;
 import pers.geolo.guitarworld.model.AuthModel;
 import pers.geolo.guitarworld.model.WorksModel;
 import pers.geolo.guitarworld.util.ActivityUtils;
-import pers.geolo.guitarworld.util.MediaUtils;
+import pers.geolo.guitarworld.util.PhotoUtils;
 import pers.geolo.guitarworld.util.PermissionUtils;
 
 import java.io.File;
@@ -84,7 +84,7 @@ public class PublishVideoWorksDelegate extends SwipeBackDelegate {
         // 打开拍摄视频Activity（打开视频文件选择Activity）
         video = new File(Environment.getExternalStorageDirectory().getPath()
                 + "/guitarworld/" + System.currentTimeMillis() + ".mp4");
-        MediaUtils.openVideoCamera(getContainerActivity(), video, new ActivityUtils.Callback() {
+        PhotoUtils.openVideoCamera(getContainerActivity(), video, new ActivityUtils.Callback() {
             @Override
             public void onSuccess(Intent intent) {
                 previewVideo.setVisibility(View.VISIBLE);

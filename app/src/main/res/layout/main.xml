@@ -24,7 +24,7 @@
         </com.hjq.bar.TitleBar>
 
         <FrameLayout
-            android:id="@+id/ll_fragment"
+            android:id="@+id/delegates_layout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"

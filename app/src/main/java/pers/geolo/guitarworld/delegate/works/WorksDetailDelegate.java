@@ -42,7 +42,7 @@ public class WorksDetailDelegate extends BaseDelegate {
     LinearLayout llAddComment;
     @BindView(R.id.et_comment)
     EditText etComment;
-    @BindView(R.id.ll_fragment)
+    @BindView(R.id.works_list_layout)
     LinearLayout llFragment;
 
     AuthModel authModel = BeanFactory.getBean(AuthModel.class);
@@ -71,7 +71,7 @@ public class WorksDetailDelegate extends BaseDelegate {
             filter.put("worksId", worksId);
             initWorks();
             // 加载CommentListDelegate
-            loadRootFragment(R.id.ll_fragment, CommentListDelegate.newInstance(filter));
+            loadRootFragment(R.id.works_list_layout, CommentListDelegate.newInstance(filter));
         }
     }
 

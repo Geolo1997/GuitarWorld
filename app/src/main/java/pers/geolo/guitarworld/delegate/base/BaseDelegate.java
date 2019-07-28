@@ -13,6 +13,9 @@ import butterknife.Unbinder;
 import com.gyf.immersionbar.ImmersionBar;
 import me.yokeyword.fragmentation.SupportActivity;
 import me.yokeyword.fragmentation_swipeback.SwipeBackFragment;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import pers.geolo.guitarworld.entity.event.Event;
 
 /**
  * @author 桀骜(Geolo)
@@ -31,17 +34,8 @@ public abstract class BaseDelegate extends SwipeBackFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        final View rootView;
-        if (getLayout() instanceof Integer) {
-            rootView = inflater.inflate((Integer) getLayout(), container, false);
-        } else if (getLayout() instanceof View) {
-            rootView = (View) getLayout();
-        } else {
-            throw new ClassCastException("getLayout() type must be int or View!");
-        }
-        unbinder = ButterKnife.bind(this, rootView);
+        inflateView(inflater, container, savedInstanceState);
         onBindView(savedInstanceState, rootView);
-        this.rootView = rootView;
         // 设置透明状态栏
         setStatusBarFullTransparent();
         // 设置状态栏边距
@@ -50,7 +44,21 @@ public abstract class BaseDelegate extends SwipeBackFragment {
         ImmersionBar.with(this)
                 .statusBarDarkFont(true)
                 .init();
+        // 注册EventBus
+        EventBus.getDefault().register(this);
         return rootView;
+    }
+
+    public void inflateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                            @Nullable Bundle savedInstanceState) {
+        if (getLayout() instanceof Integer) {
+            rootView = inflater.inflate((Integer) getLayout(), container, false);
+        } else if (getLayout() instanceof View) {
+            rootView = (View) getLayout();
+        } else {
+            throw new ClassCastException("getLayout() type must be int or View!");
+        }
+        unbinder = ButterKnife.bind(this, rootView);
     }
 
 
@@ -64,6 +72,7 @@ public abstract class BaseDelegate extends SwipeBackFragment {
         if (unbinder != null) {
             unbinder.unbind();
         }
+        EventBus.getDefault().unregister(this);
     }
 
     public View getRootView() {
@@ -112,8 +121,7 @@ public abstract class BaseDelegate extends SwipeBackFragment {
             // 增加控件顶部内边距
             view.setPadding(view.getPaddingLeft(),
                     view.getPaddingTop() + statusBarHeight,
-                    view.getPaddingRight(),
-                    view.getPaddingBottom());
+                    view.getPaddingRight(), view.getPaddingBottom());
         }
     }
 
@@ -121,4 +129,8 @@ public abstract class BaseDelegate extends SwipeBackFragment {
         return null;
     }
 
+    @Subscribe
+    public void onEvent(Event event) {
+
+    }
 }

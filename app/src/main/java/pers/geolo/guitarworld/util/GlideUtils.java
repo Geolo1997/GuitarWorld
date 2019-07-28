@@ -9,6 +9,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.FutureTarget;
 import pers.geolo.guitarworld.entity.DataListener;
 
+import java.io.File;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -20,6 +21,10 @@ public class GlideUtils {
 
     public static void load(Context context, String url, ImageView imageView) {
         Glide.with(context).load(url).into(imageView);
+    }
+
+    public static void load(Context context, File file, ImageView imageView) {
+        Glide.with(context).load(file).into(imageView);
     }
 
     public static void getBitmap(Context context, String url, DataListener<Bitmap> listener) {

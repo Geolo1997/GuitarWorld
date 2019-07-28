@@ -1,8 +1,11 @@
 package pers.geolo.guitarworld.delegate.index;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
+import android.widget.LinearLayout;
 import butterknife.BindView;
 import butterknife.OnClick;
 import com.github.clans.fab.FloatingActionMenu;
@@ -18,28 +21,52 @@ import java.util.HashMap;
 
 public class DynamicDelegate extends BaseDelegate {
 
-//    @BindView(R.id.publish_works)
-//    FloatingActionButton publishWorks;
+    @BindView(R.id.refresh_layout)
+    SwipeRefreshLayout refreshLayout;
+    @BindView(R.id.works_list_layout)
+    LinearLayout worksListLayout;
     @BindView(R.id.floating_menu)
     FloatingActionMenu floatingMenu;
 
     AuthModel authModel = BeanFactory.getBean(AuthModel.class);
+    WorksListDelegate worksListDelegate;
 
     @Override
     public Object getLayout() {
-        return R.layout.delegate_dynamic;
+        return R.layout.dynamic;
     }
 
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
 //        loadRootFragment(R.id.add_layout, new PublishWorksMenuDelegate());
+        // 初始化刷新控件
+        initRefreshLayout();
         initWorksListDelegate();
+    }
+
+    private void initRefreshLayout() {
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                worksListDelegate.loadWorksList();
+                refreshLayout.setRefreshing(false);
+            }
+        });
+        // 修复嵌套滑动冲突
+        refreshLayout.setOnChildScrollUpCallback(new SwipeRefreshLayout.OnChildScrollUpCallback() {
+            @Override
+            public boolean canChildScrollUp(@NonNull SwipeRefreshLayout swipeRefreshLayout, @Nullable View view) {
+                return worksListDelegate.getScollYDistance() > 0;
+            }
+        });
+
     }
 
     private void initWorksListDelegate() {
         HashMap<String, Object> filter = new HashMap<>();
         filter.put("username", authModel.getCurrentLoginUser().getUsername());
-        loadRootFragment(R.id.ll_fragment, WorksListDelegate.newInstance(filter));
+        worksListDelegate = WorksListDelegate.newInstance(filter);
+        loadRootFragment(R.id.works_list_layout, worksListDelegate);
     }
 
     @OnClick(R.id.publish_image_text_works)
