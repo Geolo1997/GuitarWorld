@@ -47,7 +47,7 @@ public class WorksController {
         String currentUsername = (String) ControllerUtils.getSessionAttribute("username");
         if (currentUsername != null && currentUsername.equals(works.getAuthor())) {
             int code = worksService.publishWorks(works);
-            imageService.addImages(works.getId(), works.getImagePaths());
+            imageService.addImages(works.getId(), works.getImageUrls());
             return new ResponseEntity<>(code);
         } else {
             return new ResponseEntity<>(-1);

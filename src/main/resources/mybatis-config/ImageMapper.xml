@@ -3,12 +3,12 @@
 
 <mapper namespace="pers.geolo.guitarworldserver.dao.ImageMapper">
     <insert id="insert">
-        INSERT INTO Image(works_id, path)
-        VALUES (#{works_id}, #{path});
+        INSERT INTO Image(works_id, image_url)
+        VALUES (#{works_id}, #{imageUrl});
     </insert>
 
     <select id="selectByWorksId" parameterType="int" resultType="string">
-        SELECT path
+        SELECT image_url
         FROM Image
         WHERE works_id = #{worksId};
     </select>

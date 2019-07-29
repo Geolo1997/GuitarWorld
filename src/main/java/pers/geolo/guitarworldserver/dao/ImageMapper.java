@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface ImageMapper {
-    void insert(@Param("works_id") int worksId, @Param("path") String path);
+    void insert(@Param("works_id") int worksId, @Param("imageUrl") String imageUrl);
 
     List<String> selectByWorksId(int worksId);
 }

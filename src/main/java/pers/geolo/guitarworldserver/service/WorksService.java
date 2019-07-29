@@ -21,7 +21,7 @@ public class WorksService {
         List<Works> worksList = worksMapper.select(param);
         for (int i = 0; i < worksList.size(); i++) {
             List<String> imagePaths = imageMapper.selectByWorksId(worksList.get(i).getId());
-            worksList.get(i).setImagePaths(imagePaths);
+            worksList.get(i).setImageUrls(imagePaths);
         }
         return worksList;
     }
