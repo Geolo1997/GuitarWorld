@@ -1,30 +1,30 @@
 package pers.geolo.guitarworld.delegate.works;
 
-import android.Manifest;
-import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.*;
 import butterknife.BindView;
-import butterknife.OnClick;
 import com.hjq.bar.OnTitleBarListener;
 import com.hjq.bar.TitleBar;
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.delegate.base.BeanFactory;
 import pers.geolo.guitarworld.delegate.base.SwipeBackDelegate;
 import pers.geolo.guitarworld.entity.DataListener;
+import pers.geolo.guitarworld.entity.FileListener;
 import pers.geolo.guitarworld.entity.Works;
 import pers.geolo.guitarworld.entity.WorksType;
-import pers.geolo.guitarworld.entity.event.GetImageEvent;
+import pers.geolo.guitarworld.entity.event.UploadImageSuccessEvent;
 import pers.geolo.guitarworld.model.AuthModel;
 import pers.geolo.guitarworld.model.WorksModel;
-import pers.geolo.guitarworld.util.*;
+import pers.geolo.guitarworld.util.KeyBoardUtils;
+import pers.geolo.guitarworld.util.ThreadUtils;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -44,21 +44,20 @@ public class PublishImageTextDelegate extends SwipeBackDelegate {
     EditText etTitle;
     @BindView(R.id.et_content)
     EditText etContent;
-    @BindView(R.id.bt_upload)
-    Button btUpload;
     @BindView(R.id.images_layout)
     LinearLayout imagesLayout;
+    @BindView(R.id.progress_text)
+    TextView progressText;
     Works works = new Works();
-
-    private int imageCount = 0;
-    private List<File> imageFiles;
 
     AuthModel authModel = BeanFactory.getBean(AuthModel.class);
     WorksModel worksModel = BeanFactory.getBean(WorksModel.class);
 
+    AddImageManagerDelegate addImageManagerDelegate;
+
     @Override
     public Object getLayout() {
-        return R.layout.delegate_publish;
+        return R.layout.publish_image_text;
     }
 
     @Override
@@ -69,11 +68,13 @@ public class PublishImageTextDelegate extends SwipeBackDelegate {
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
         initTitleBar();
-        loadRootFragment(R.id.images_layout, new AddImageManagerDelegate());
+        addImageManagerDelegate = new AddImageManagerDelegate();
+        loadRootFragment(R.id.images_layout, addImageManagerDelegate);
     }
 
-    @OnClick(R.id.bt_publish)
-    public void publish() {
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void publish(UploadImageSuccessEvent event) {
+        works.setImageUrls(imageUrls);
         String username = authModel.getCurrentLoginUser().getUsername();
         works.setType(WorksType.IMAGE_TEXT);
         works.setAuthor(username);
@@ -105,66 +106,29 @@ public class PublishImageTextDelegate extends SwipeBackDelegate {
         });
     }
 
-    @OnClick(R.id.bt_upload)
-    public void onViewClicked() {
-        if (imageCount >= MAX_IMAGE_COUNT) {
-            Toast.makeText(getContext(), "最多上传" + MAX_IMAGE_COUNT + "张图片", Toast.LENGTH_SHORT).show();
-        } else {
-            String[] permissions = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
-            if (!PermissionUtils.hasPermissions(getContainerActivity(), permissions)) {
-                PermissionUtils.requestPermissions(getContainerActivity(), permissions, new PermissionUtils.Callback() {
-                    @Override
-                    public void onSuccess(String[] permissions, int[] grantResults) {
-                        toAlbum();
-                    }
+    private List<String> imageUrls;
 
-                    @Override
-                    public void onFailure(String[] permissions, int[] grantResults) {
-
-                    }
-                });
-            } else {
-                toAlbum();
-            }
-        }
-    }
-
-    public void toAlbum() {
-        PhotoUtils.openAlbum(getContainerActivity(), new ActivityUtils.Callback() {
+    private void uploadImageFiles() {
+        List<File> imageFiles = addImageManagerDelegate.getImageFiles();
+        imageUrls = new ArrayList<>(imageFiles.size());
+        worksModel.uploadImageUrls(imageFiles, new FileListener<List<String>>() {
             @Override
-            public void onSuccess(@Nullable Intent intent) {
-                String filePath = GetPhotoFromPhotoAlbum.getRealPathFromUri(getContext(),
-                        intent.getData());
-                File file = new File(filePath);
-                //TODO
-//                works.(file, new DataListener<String>() {
-//                    @Override
-//                    public void onReturn(String s) {
-//                        works.addImage(s);
-//                        addImage(file.getAbsolutePath());
-//                    }
-//
-//                    @Override
-//                    public void onError(String message) {
-//
-//                    }
-//                });
+            public void onProgress(long currentLength, long totalLength) {
+                progressText.setText("" + (currentLength * 100 / totalLength) + "%");
             }
 
             @Override
-            public void onFailure(@Nullable Intent intent) {
+            public void onFinish(List<String> strings) {
+                progressText.setText("上传成功！");
+                imageUrls = strings;
+                EventBus.getDefault().post(new UploadImageSuccessEvent());
+            }
 
+            @Override
+            public void onError(String message) {
+                progressText.setText(message);
             }
         });
-    }
-
-    public void addImage(String imagePath) {
-        ImageView imageView = new ImageView(getContainerActivity());
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(300, 300);
-        imageView.setImageBitmap(BitmapFactory.decodeFile(imagePath));
-        imageView.setLayoutParams(params);
-        imagesLayout.addView(imageView);
-        imageCount++;
     }
 
     public void initTitleBar() {
@@ -182,7 +146,7 @@ public class PublishImageTextDelegate extends SwipeBackDelegate {
 
             @Override
             public void onRightClick(View v) {
-                publish();
+                uploadImageFiles();
             }
         });
     }

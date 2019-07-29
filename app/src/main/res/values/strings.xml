@@ -73,4 +73,7 @@
     <string name="title">标题</string>
     <string name="job">工作</string>
     <string name="publish_dynamic">发动态</string>
+    <string name="publish_video">发视频</string>
+    <string name="detail">详情</string>
+    <string name="image_detail">图片详情</string>
 </resources>

@@ -139,6 +139,7 @@ public class WorksListDelegate extends BaseDelegate {
     }
 
     public int getScollYDistance() {
+        // TODO 空指针异常
         LinearLayoutManager layoutManager = (LinearLayoutManager) rvWorksList.getLayoutManager();
         int position = layoutManager.findFirstVisibleItemPosition();
         View firstVisiableChildView = layoutManager.findViewByPosition(position);
@@ -166,10 +167,11 @@ public class WorksListDelegate extends BaseDelegate {
         @Override
         public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
             View view = LayoutInflater.from(viewGroup.getContext())
-                    .inflate(R.layout.item_works_view, viewGroup, false);
+                    .inflate(R.layout.works_content, viewGroup, false);
             return new ViewHolder(view);
         }
 
+        // TODO ViewHolder回收后残留，导致加载混乱
         @Override
         public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
             Works works = worksList.get(i);
@@ -190,24 +192,28 @@ public class WorksListDelegate extends BaseDelegate {
 
                 }
             });
-
             if (works.getType() == WorksType.IMAGE_TEXT) { // 图文创作
-                viewHolder.vvVideo.setVisibility(View.GONE);
+                viewHolder.video.setVisibility(View.GONE);
                 viewHolder.tvContent.setVisibility(View.VISIBLE);
                 viewHolder.tvContent.setText(works.getContent());
-                // 加载第一张图
-                viewHolder.firstImage.setImageBitmap(null);
-                if (works.getImagePaths().size() > 0) {
-                    GlideUtils.load(getContext(), works.getImagePaths().get(0), viewHolder.firstImage);
-                } else {
+                if (works.getImageUrls().size() == 1) {
+                    // 加载一张图
                     viewHolder.firstImage.setImageBitmap(null);
+                    if (works.getImageUrls().size() > 0) {
+                        GlideUtils.load(getContext(), works.getImageUrls().get(0), viewHolder.firstImage);
+                    } else {
+                        viewHolder.firstImage.setImageBitmap(null);
+                    }
+                } else {
+                    loadRootFragment(R.id.image_list_layout,
+                            ImageListDelegate.newInstance(new ArrayList<>(works.getImageUrls())));
                 }
             } else if (works.getType() == WorksType.VIDEO) { // 视频创作
                 String url = works.getVideoUrl();
                 viewHolder.tvContent.setVisibility(View.GONE);
-                viewHolder.vvVideo.setVisibility(View.VISIBLE);
-                viewHolder.vvVideo.setUp(url, works.getTitle());
-                viewHolder.vvVideo.startVideo();
+                viewHolder.video.setVisibility(View.VISIBLE);
+                viewHolder.video.setUp(url, works.getTitle());
+                viewHolder.video.startVideo();
             }
         }
 
@@ -219,43 +225,43 @@ public class WorksListDelegate extends BaseDelegate {
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.civ_avatar)
+        @BindView(R.id.avatar_image)
         CircleImageView civAvatar;
-        @BindView(R.id.tv_id)
-        TextView tvId;
-        @BindView(R.id.tv_author)
+        @BindView(R.id.author_text)
         TextView tvAuthor;
-        @BindView(R.id.tv_create_time)
+        @BindView(R.id.create_time_text)
         TextView tvCreateTime;
-        @BindView(R.id.tv_title)
+        @BindView(R.id.title_text)
         TextView tvTitle;
-        @BindView(R.id.tv_content)
+        @BindView(R.id.content_text)
         TextView tvContent;
         @BindView(R.id.first_image)
         ImageView firstImage;
-        @BindView(R.id.vv_video)
-        JzvdStd vvVideo;
+        @BindView(R.id.video)
+        JzvdStd video;
 
         String[] options;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            tvTitle.setMaxLines(2);
+            tvContent.setMaxLines(4);
         }
 
-        @OnClick({R.id.civ_avatar, R.id.tv_author})
+        @OnClick({R.id.avatar_image, R.id.author_text})
         public void onViewClicked(View view) {
             String author = worksList.get(getAdapterPosition()).getAuthor();
             getContainerActivity().start(ProfileDelegate.newInstance(author));
         }
 
-        @OnClick(R.id.ll_works_item)
+        @OnClick(R.id.works_content_layout)
         public void onWorksItemClicked() {
             int worksId = worksList.get(getAdapterPosition()).getId();
             getContainerActivity().start(WorksDetailDelegate.newInstance(worksId));
         }
 
-        @OnLongClick(R.id.ll_works_item)
+        @OnLongClick(R.id.works_content_layout)
         public boolean onWorksItemLongClick() {
             Works works = worksList.get(getAdapterPosition());
             String username = works.getAuthor();

@@ -9,14 +9,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.OnClick;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import com.hjq.bar.OnTitleBarListener;
+import com.hjq.bar.TitleBar;
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.delegate.base.BaseDelegate;
 import pers.geolo.guitarworld.delegate.base.BeanFactory;
+import pers.geolo.guitarworld.delegate.base.SwipeBackDelegate;
 import pers.geolo.guitarworld.entity.Comment;
 import pers.geolo.guitarworld.entity.DataListener;
 import pers.geolo.guitarworld.entity.Works;
@@ -25,17 +23,17 @@ import pers.geolo.guitarworld.model.CommentModel;
 import pers.geolo.guitarworld.model.WorksModel;
 import pers.geolo.guitarworld.util.KeyBoardUtils;
 
-public class WorksDetailDelegate extends BaseDelegate {
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class WorksDetailDelegate extends SwipeBackDelegate {
 
     private static final String WORKS_ID = "WORKS_ID";
-    @BindView(R.id.tv_author)
-    TextView tvAuthor;
-    @BindView(R.id.tv_create_time)
-    TextView tvCreateTime;
-    @BindView(R.id.tv_title)
-    TextView tvTitle;
-    @BindView(R.id.tv_content)
-    TextView tvContent;
+
+    @BindView(R.id.title_bar)
+    TitleBar titleBar;
     //    @BindView(R.id.srl_refresh)
 //    SwipeRefreshLayout srlRefresh;
     @BindView(R.id.ll_add_comment)
@@ -60,37 +58,43 @@ public class WorksDetailDelegate extends BaseDelegate {
 
     @Override
     public Object getLayout() {
-        return R.layout.delegate_works_detail;
+        return R.layout.works_detail;
+    }
+
+    @Override
+    protected View getStatueBarTopView() {
+        return titleBar;
     }
 
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
+        initTitleBar();
         if (getArguments() != null) {
             worksId = getArguments().getInt(WORKS_ID);
             HashMap<String, Object> filter = new HashMap<>();
             filter.put("worksId", worksId);
-            initWorks();
+            // 加载WorksContentDelegate
+            loadRootFragment(R.id.works_content_layout, WorksContentDelegate.newInstance(worksId));
             // 加载CommentListDelegate
             loadRootFragment(R.id.works_list_layout, CommentListDelegate.newInstance(filter));
         }
     }
 
-    private void initWorks() {
-        Map<String, Object> filter = new HashMap<>();
-        filter.put("worksId", worksId);
-        worksModel.getWorks(filter, new DataListener<List<Works>>() {
+    private void initTitleBar() {
+        titleBar.setOnTitleBarListener(new OnTitleBarListener() {
             @Override
-            public void onReturn(List<Works> worksList) {
-                Works works = worksList.get(0);
-                tvAuthor.setText(works.getAuthor());
-                tvCreateTime.setText(works.getCreateTime().toString());
-                tvTitle.setText(works.getTitle());
-                tvContent.setText(works.getContent());
+            public void onLeftClick(View v) {
+                pop();
             }
 
             @Override
-            public void onError(String message) {
-                Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+            public void onTitleClick(View v) {
+
+            }
+
+            @Override
+            public void onRightClick(View v) {
+
             }
         });
     }
@@ -109,7 +113,6 @@ public class WorksDetailDelegate extends BaseDelegate {
             @Override
             public void onReturn(Void aVoid) {
                 Toast.makeText(getContext(), "评论成功", Toast.LENGTH_SHORT).show();
-                tvContent.setText("");
                 llAddComment.setVisibility(View.GONE);
                 KeyBoardUtils.hideKeyBoard(getContext(), etComment);
             }

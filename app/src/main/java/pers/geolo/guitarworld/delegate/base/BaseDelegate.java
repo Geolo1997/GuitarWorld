@@ -45,7 +45,9 @@ public abstract class BaseDelegate extends SwipeBackFragment {
                 .statusBarDarkFont(true)
                 .init();
         // 注册EventBus
-        EventBus.getDefault().register(this);
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
         return rootView;
     }
 
@@ -58,6 +60,8 @@ public abstract class BaseDelegate extends SwipeBackFragment {
         } else {
             throw new ClassCastException("getLayout() type must be int or View!");
         }
+        // 为根视图生成tag
+        rootView.setTag(this);
         unbinder = ButterKnife.bind(this, rootView);
     }
 
@@ -72,7 +76,9 @@ public abstract class BaseDelegate extends SwipeBackFragment {
         if (unbinder != null) {
             unbinder.unbind();
         }
-        EventBus.getDefault().unregister(this);
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
     }
 
     public View getRootView() {

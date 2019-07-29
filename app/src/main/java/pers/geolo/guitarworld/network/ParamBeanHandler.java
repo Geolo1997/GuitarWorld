@@ -29,8 +29,10 @@ public class ParamBeanHandler {
                 } catch (InvocationTargetException e) {
                     e.printStackTrace();
                 }
-                queryMap.put(fieldName, fieldValue);
-             }
+                if (fieldValue != null) {
+                    queryMap.put(fieldName, fieldValue);
+                }
+            }
         }
         return queryMap;
     }

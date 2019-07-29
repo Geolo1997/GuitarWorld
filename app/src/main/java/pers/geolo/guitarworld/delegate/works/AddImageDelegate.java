@@ -43,6 +43,10 @@ public class AddImageDelegate extends BaseDelegate implements PhotoUtils.Callbac
 
     }
 
+    public File getImage() {
+        return image;
+    }
+
     @OnClick(R.id.add_image_button)
     public void addImage() {
         if (image != null) { // 有图片

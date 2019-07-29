@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.OnClick;
+import com.gyf.immersionbar.ImmersionBar;
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.delegate.base.BaseDelegate;
 import pers.geolo.guitarworld.delegate.base.BeanFactory;
@@ -35,6 +36,9 @@ public class LauncherDelegate extends BaseDelegate {
 
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
+        ImmersionBar.with(this)
+                .statusBarDarkFont(false)
+                .init();
         // init launcherTimer
         launcherTimer = new LauncherTimer(5000, 1000);
         launcherTimer.start();

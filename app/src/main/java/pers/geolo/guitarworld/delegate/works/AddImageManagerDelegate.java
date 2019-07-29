@@ -53,6 +53,20 @@ public class AddImageManagerDelegate extends BaseDelegate {
         adapter.notifyDataSetChanged();
     }
 
+    public List<File> getImageFiles() {
+        checkListNotNull();
+        return imageFiles;
+    }
+
+    private void checkListNotNull() {
+        for (int i = 0; i < imageFiles.size(); i++) {
+            if (imageFiles.get(i) == null) {
+                imageFiles.remove(i);
+                i--;
+            }
+        }
+    }
+
     class GridViewAdapter extends BaseAdapter {
 
         @Override
@@ -70,9 +84,11 @@ public class AddImageManagerDelegate extends BaseDelegate {
             return position;
         }
 
+        //TODO -----------------------------代码优化------------------------------------
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             ViewHolder holder = null;
+            convertView = null;
             if (convertView == null) {
                 //第一次加载创建View，其余复用 View
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.add_image, null);
@@ -100,7 +116,18 @@ public class AddImageManagerDelegate extends BaseDelegate {
                 }
             });
             File image = imageFiles.get(position);
+            holder.index = position;
             holder.setImage(image);
+//            convertView.setId(View.generateViewId());
+            ViewTreeObserver observer = convertView.getViewTreeObserver();
+            View finalConvertView1 = convertView;
+            observer.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+                @Override
+                public boolean onPreDraw() {
+                    System.out.println("" + position + ":" + finalConvertView1.getId());
+                    return true;
+                }
+            });
             return convertView;
         }
 
@@ -111,6 +138,7 @@ public class AddImageManagerDelegate extends BaseDelegate {
             @BindView(R.id.close_button)
             ImageButton closeButton;
 
+            int index;
             File image;
             PhotoCallback callback;
             BottomDialog dialog;
@@ -124,6 +152,11 @@ public class AddImageManagerDelegate extends BaseDelegate {
                 this.image = image;
                 if (image != null) {
                     GlideUtils.load(getContext(), image, addImageButton);
+                    closeButton.setVisibility(View.VISIBLE);
+                } else {
+                    addImageButton.setImageDrawable(null);
+                    addImageButton.setImageResource(R.drawable.ic_add_64);
+                    closeButton.setVisibility(View.GONE);
                 }
             }
 
@@ -144,9 +177,6 @@ public class AddImageManagerDelegate extends BaseDelegate {
             public void close() {
                 imageFiles.remove(image);
                 notifyDataSetChanged();
-                image = null;
-                addImageButton.setImageResource(R.drawable.ic_add_64);
-                closeButton.setVisibility(View.GONE);
             }
 
             class PhotoCallback implements PhotoUtils.Callback {
@@ -154,8 +184,8 @@ public class AddImageManagerDelegate extends BaseDelegate {
                 @Override
                 public void onGetPhotoSuccess(File photo) {
                     dialog.dismiss();
-                    image = photo;
-                    GlideUtils.load(getContext(), photo, addImageButton);
+                    imageFiles.remove(null);
+                    imageFiles.add(photo);
                     closeButton.setVisibility(View.VISIBLE);
                     addImagePlaceHolder();
                 }

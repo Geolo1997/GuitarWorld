@@ -27,20 +27,6 @@ public class Works {
     // 评论
     private List<Comment> comments;
 
-    private List<String> imagePaths = new ArrayList<>();
-
-    public void addImage(String imagePath) {
-        imagePaths.add(imagePath);
-    }
-
-    public void setImagePaths(List<String> imagePaths) {
-        this.imagePaths = imagePaths;
-    }
-
-    public List<String> getImagePaths() {
-        return imagePaths;
-    }
-
     public Works() {
     }
 
@@ -128,7 +114,6 @@ public class Works {
                 ", imageUrls=" + imageUrls +
                 ", videoUrl='" + videoUrl + '\'' +
                 ", comments=" + comments +
-                ", imagePaths=" + imagePaths +
                 '}';
     }
 }

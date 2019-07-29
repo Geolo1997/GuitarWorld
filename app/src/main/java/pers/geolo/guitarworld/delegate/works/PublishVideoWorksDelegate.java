@@ -12,6 +12,8 @@ import android.widget.VideoView;
 import butterknife.BindView;
 import butterknife.OnClick;
 import com.dd.processbutton.iml.ActionProcessButton;
+import com.hjq.bar.OnTitleBarListener;
+import com.hjq.bar.TitleBar;
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.delegate.base.BeanFactory;
 import pers.geolo.guitarworld.delegate.base.SwipeBackDelegate;
@@ -22,8 +24,8 @@ import pers.geolo.guitarworld.entity.WorksType;
 import pers.geolo.guitarworld.model.AuthModel;
 import pers.geolo.guitarworld.model.WorksModel;
 import pers.geolo.guitarworld.util.ActivityUtils;
-import pers.geolo.guitarworld.util.PhotoUtils;
 import pers.geolo.guitarworld.util.PermissionUtils;
+import pers.geolo.guitarworld.util.PhotoUtils;
 
 import java.io.File;
 import java.util.Date;
@@ -37,6 +39,8 @@ import java.util.Date;
  */
 public class PublishVideoWorksDelegate extends SwipeBackDelegate {
 
+    @BindView(R.id.title_bar)
+    TitleBar titleBar;
     @BindView(R.id.title_text)
     EditText titleEditText;
     @BindView(R.id.preview_video)
@@ -55,8 +59,33 @@ public class PublishVideoWorksDelegate extends SwipeBackDelegate {
     }
 
     @Override
+    protected View getStatueBarTopView() {
+        return titleBar;
+    }
+
+    @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
+        initTitleBar();
         videoWorks = new Works();
+    }
+
+    private void initTitleBar() {
+        titleBar.setOnTitleBarListener(new OnTitleBarListener() {
+            @Override
+            public void onLeftClick(View v) {
+                pop();
+            }
+
+            @Override
+            public void onTitleClick(View v) {
+
+            }
+
+            @Override
+            public void onRightClick(View v) {
+                updateVideo();
+            }
+        });
     }
 
     @OnClick(R.id.update_video_button)
