@@ -39,12 +39,12 @@ public class MusicDiscoverNavigationDelegate extends BaseDelegate {
 
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
-//        // init ViewPager
+//        // onBindView ViewPager
 //        viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
 //        List<Fragment> fragments = getFragments();
 //        viewPagerAdapter.setList(fragments);
 //        viewPager.setAdapter(viewPagerAdapter);
-//        // init MagicNavigator
+//        // onBindView MagicNavigator
 //        List<String> titles = getTitles();
 //        fragmentContainerHelper = new FragmentContainerHelper(magicIndicator);
 //        CommonNavigator commonNavigator = new CommonNavigator(getContext());

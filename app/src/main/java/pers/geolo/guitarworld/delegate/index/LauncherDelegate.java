@@ -7,12 +7,10 @@ import android.view.View;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.OnClick;
-import com.gyf.immersionbar.ImmersionBar;
 import pers.geolo.guitarworld.R;
+import pers.geolo.guitarworld.delegate.auth.LoginDelegate;
 import pers.geolo.guitarworld.delegate.base.BaseDelegate;
 import pers.geolo.guitarworld.delegate.base.BeanFactory;
-import pers.geolo.guitarworld.delegate.auth.LoginDelegate;
-import pers.geolo.guitarworld.delegate.index.MainDelegate;
 import pers.geolo.guitarworld.entity.DataListener;
 import pers.geolo.guitarworld.model.AuthModel;
 
@@ -36,10 +34,8 @@ public class LauncherDelegate extends BaseDelegate {
 
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
-        ImmersionBar.with(this)
-                .statusBarDarkFont(false)
-                .init();
-        // init launcherTimer
+        setStatusBarDark(false);
+        // onBindView launcherTimer
         launcherTimer = new LauncherTimer(5000, 1000);
         launcherTimer.start();
     }

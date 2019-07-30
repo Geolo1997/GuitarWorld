@@ -42,7 +42,7 @@ public class LoginDelegate extends BaseDelegate {
 
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
-        // init logInfo
+        // onBindView logInfo
         authModel.getLastSavedLogInfo(new DataListener<LogInfo>() {
             @Override
             public void onReturn(LogInfo logInfo) {

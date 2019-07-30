@@ -26,6 +26,8 @@ public abstract class BaseDelegate extends SwipeBackFragment {
     private Unbinder unbinder;
     private View rootView;
 
+    private boolean isDark = true;
+
     public abstract Object getLayout();
 
     public abstract void onBindView(@Nullable Bundle savedInstanceState, View rootView);
@@ -41,9 +43,11 @@ public abstract class BaseDelegate extends SwipeBackFragment {
         // 设置状态栏边距
         setStatusBarPadding();
         // 设置状态栏字体黑色
-        ImmersionBar.with(this)
-                .statusBarDarkFont(true)
-                .init();
+        if (isDark) {
+            ImmersionBar.with(this)
+                    .statusBarDarkFont(true)
+                    .init();
+        }
         // 注册EventBus
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
@@ -129,6 +133,10 @@ public abstract class BaseDelegate extends SwipeBackFragment {
                     view.getPaddingTop() + statusBarHeight,
                     view.getPaddingRight(), view.getPaddingBottom());
         }
+    }
+
+    public void setStatusBarDark(boolean isDark) {
+        this.isDark = isDark;
     }
 
     protected View getStatueBarTopView() {

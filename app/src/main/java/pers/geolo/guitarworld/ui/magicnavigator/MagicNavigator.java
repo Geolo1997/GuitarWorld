@@ -56,7 +56,7 @@ public class MagicNavigator {
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(fragmentManager);
         viewPagerAdapter.setList(fragments);
         viewPager.setAdapter(viewPagerAdapter);
-        // init MagicNavigator
+        // onBindView MagicNavigator
         FragmentContainerHelper fragmentContainerHelper = new FragmentContainerHelper(magicIndicator);
         CommonNavigator commonNavigator = new CommonNavigator(context);
         commonNavigator.setAdapter(new CommonNavigatorAdapter() {
