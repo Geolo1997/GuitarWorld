@@ -17,6 +17,9 @@ public class ImageService {
     ImageMapper imageMapper;
 
     public void addImages(int id, List<String> imagePaths) {
+        if (imagePaths == null) {
+            return;
+        }
         for (String imagePath : imagePaths) {
             imageMapper.insert(id, imagePath);
         }

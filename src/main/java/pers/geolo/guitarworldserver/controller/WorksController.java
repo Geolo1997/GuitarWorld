@@ -72,4 +72,20 @@ public class WorksController {
         logger.debug("存储路径为：" + path);
         return new ResponseEntity<>(0, path, null);
     }
+
+    @RequestMapping(value = "/like", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<Void> addLikeWorks(String username, int worksId) {
+        logger.debug("用户" + username + "对worksId=" + worksId + "的作品点赞");
+        worksService.addLikeWorks(username, worksId);
+        return new ResponseEntity<>(0);
+    }
+
+    @RequestMapping(value = "/like", method = RequestMethod.DELETE)
+    @ResponseBody
+    public ResponseEntity<Void> cancelLikeWorks(String username, int worksId) {
+        logger.debug("用户" + username + "对worksId=" + worksId + "的作品取消点赞");
+        worksService.cancelLikeWorks(username, worksId);
+        return new ResponseEntity<>(0);
+    }
 }

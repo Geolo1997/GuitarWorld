@@ -26,6 +26,8 @@ public class Works {
     private String videoUrl;
     // 评论
     private List<Comment> comments;
+    // 点赞数
+    private int likeCount;
 
     public Works() {
     }
@@ -100,6 +102,14 @@ public class Works {
 
     public void setVideoUrl(String videoUrl) {
         this.videoUrl = videoUrl;
+    }
+
+    public int getLikeCount() {
+        return likeCount;
+    }
+
+    public void setLikeCount(int likeCount) {
+        this.likeCount = likeCount;
     }
 
     @Override

@@ -131,3 +131,15 @@ ALTER TABLE works add video_url VARCHAR(100), add type VARCHAR(10);
 
 UPDATE works
 SET type = 'IMAGE_TEXT';
+
+create table like_works (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    like_username VARCHAR(20) NOT NULL,
+    works_id INT UNSIGNED NOT NULL
+);
+
+INSERT INTO like_works(like_username, works_id) VALUES ('Xiaoxiao', 28);
+INSERT INTO like_works(like_username, works_id) VALUES ('Xiaoxiao', 28);
+INSERT INTO like_works(like_username, works_id) VALUES ('Xiaoxiao', 28);
+INSERT INTO like_works(like_username, works_id) VALUES ('Xiaoxiao', 28);
+INSERT INTO like_works(like_username, works_id) VALUES ('Xiaoxiao', 28);

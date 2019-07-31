@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pers.geolo.guitarworldserver.controller.param.WorksParam;
 import pers.geolo.guitarworldserver.dao.ImageMapper;
+import pers.geolo.guitarworldserver.dao.LikeWorksMapper;
 import pers.geolo.guitarworldserver.dao.WorksMapper;
 import pers.geolo.guitarworldserver.entity.Works;
 
@@ -16,12 +17,19 @@ public class WorksService {
     WorksMapper worksMapper;
     @Autowired
     ImageMapper imageMapper;
+    @Autowired
+    LikeWorksMapper likeWorksMapper;
 
     public List<Works> getWorksList(WorksParam param) {
         List<Works> worksList = worksMapper.select(param);
         for (int i = 0; i < worksList.size(); i++) {
-            List<String> imagePaths = imageMapper.selectByWorksId(worksList.get(i).getId());
-            worksList.get(i).setImageUrls(imagePaths);
+            Works works = worksList.get(i);
+            // 获取作品图片列表url
+            List<String> imagePaths = imageMapper.selectByWorksId(works.getId());
+            works.setImageUrls(imagePaths);
+            // 获取作品点赞数
+            int likeCount = likeWorksMapper.countLikeWorksByWorksId(works.getId());
+            works.setLikeCount(likeCount);
         }
         return worksList;
     }
@@ -34,5 +42,13 @@ public class WorksService {
     public int removeWorks(WorksParam param) {
         worksMapper.delete(param);
         return 0;
+    }
+
+    public void addLikeWorks(String username, int worksId) {
+        likeWorksMapper.insert(username, worksId);
+    }
+
+    public void cancelLikeWorks(String username, int worksId) {
+        likeWorksMapper.delete(username,worksId);
     }
 }

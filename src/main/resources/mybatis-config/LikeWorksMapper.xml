@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="pers.geolo.guitarworldserver.dao.LikeWorksMapper">
+
+    <insert id="insert">
+        INSERT INTO like_works(like_username, works_id)
+        VALUES (#{username}, #{worksId});
+    </insert>
+
+
+    <select id="countLikeWorksByWorksId" resultType="int">
+        SELECT COUNT(*)
+        FROM like_works
+        WHERE works_id = #{worksId};
+    </select>
+
+    <insert id="delete">
+        DELETE
+        FROM like_works
+        WHERE like_username = #{username}
+          AND works_id = #{worksId};
+    </insert>
+</mapper>
