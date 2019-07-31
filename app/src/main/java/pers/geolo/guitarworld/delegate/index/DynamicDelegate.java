@@ -9,12 +9,15 @@ import android.widget.LinearLayout;
 import butterknife.BindView;
 import butterknife.OnClick;
 import com.github.clans.fab.FloatingActionMenu;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.delegate.base.BaseDelegate;
 import pers.geolo.guitarworld.delegate.base.BeanFactory;
-import pers.geolo.guitarworld.delegate.works.PublishImageTextDelegate;
+import pers.geolo.guitarworld.delegate.works.PublishImageTextWorksDelegate;
 import pers.geolo.guitarworld.delegate.works.PublishVideoWorksDelegate;
 import pers.geolo.guitarworld.delegate.works.WorksListDelegate;
+import pers.geolo.guitarworld.entity.GetWorksListSuccessEvent;
 import pers.geolo.guitarworld.model.AuthModel;
 
 import java.util.HashMap;
@@ -42,6 +45,7 @@ public class DynamicDelegate extends BaseDelegate {
         // 初始化刷新控件
         initRefreshLayout();
         initWorksListDelegate();
+        refreshLayout.setRefreshing(true);
     }
 
     private void initRefreshLayout() {
@@ -49,7 +53,6 @@ public class DynamicDelegate extends BaseDelegate {
             @Override
             public void onRefresh() {
                 worksListDelegate.loadWorksList();
-                refreshLayout.setRefreshing(false);
             }
         });
         // 修复嵌套滑动冲突
@@ -71,7 +74,7 @@ public class DynamicDelegate extends BaseDelegate {
 
     @OnClick(R.id.publish_image_text_works)
     public void onPublishImageTextWorksClicked() {
-        getContainerActivity().start(new PublishImageTextDelegate());
+        getContainerActivity().start(new PublishImageTextWorksDelegate());
     }
 
     @OnClick(R.id.publish_video_works)
@@ -84,4 +87,10 @@ public class DynamicDelegate extends BaseDelegate {
         super.onSupportInvisible();
         floatingMenu.close(false);
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onGetWorksListSuccessEvent(GetWorksListSuccessEvent event) {
+        refreshLayout.setRefreshing(false);
+    }
+
 }

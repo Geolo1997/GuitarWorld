@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.BindView;
 import com.hjq.bar.OnTitleBarListener;
@@ -31,6 +32,8 @@ public class WorksDetailDelegate extends SwipeBackDelegate {
 
     @BindView(R.id.title_bar)
     TitleBar titleBar;
+    @BindView(R.id.comment_count_text)
+    TextView commentCountText;
     @BindView(R.id.scroll_view)
     NestedScrollView scrollView;
     @BindView(R.id.refresh_layout)
@@ -82,7 +85,7 @@ public class WorksDetailDelegate extends SwipeBackDelegate {
             commentListDelegate = CommentListDelegate.newInstance(filter);
             loadRootFragment(R.id.comment_list_layout, commentListDelegate);
             //
-            worksOptionDelegate = new WorksOptionDelegate();
+            worksOptionDelegate = WorksOptionDelegate.newInstance(worksId);
             loadRootFragment(R.id.works_option_layout, worksOptionDelegate);
 
             refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

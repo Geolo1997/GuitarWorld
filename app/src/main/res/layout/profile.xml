@@ -12,14 +12,14 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:title="个人资料"
-        app:leftIcon="@drawable/ic_back_24"
-        app:rightIcon="@drawable/ic_save_24"/>
+        app:leftIcon="@drawable/ic_back_24"/>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <LinearLayout
+            android:id="@+id/edits_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">

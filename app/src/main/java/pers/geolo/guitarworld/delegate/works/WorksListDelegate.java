@@ -20,14 +20,13 @@ import butterknife.OnLongClick;
 import cn.jzvd.Jzvd;
 import cn.jzvd.JzvdStd;
 import de.hdodenhof.circleimageview.CircleImageView;
+import org.greenrobot.eventbus.EventBus;
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.delegate.base.BaseDelegate;
 import pers.geolo.guitarworld.delegate.base.BeanFactory;
 import pers.geolo.guitarworld.delegate.user.ProfileDelegate;
-import pers.geolo.guitarworld.entity.DataListener;
-import pers.geolo.guitarworld.entity.User;
-import pers.geolo.guitarworld.entity.Works;
-import pers.geolo.guitarworld.entity.WorksType;
+import pers.geolo.guitarworld.entity.*;
+import pers.geolo.guitarworld.entity.event.Event;
 import pers.geolo.guitarworld.model.AuthModel;
 import pers.geolo.guitarworld.model.UserModel;
 import pers.geolo.guitarworld.model.WorksModel;
@@ -129,6 +128,7 @@ public class WorksListDelegate extends BaseDelegate {
             public void onReturn(List<Works> worksList) {
                 WorksListDelegate.this.worksList = worksList;
                 adapter.notifyDataSetChanged();
+                EventBus.getDefault().post(new GetWorksListSuccessEvent(worksList));
             }
 
             @Override
@@ -174,17 +174,17 @@ public class WorksListDelegate extends BaseDelegate {
         // TODO ViewHolder回收后残留，导致加载混乱
         @Override
         public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+            viewHolder.init();
             Works works = worksList.get(i);
-            viewHolder.tvAuthor.setText(works.getAuthor());
-            viewHolder.tvCreateTime.setText(DateUtils.toFriendlyString(works.getCreateTime()));
-            viewHolder.tvTitle.setText(works.getTitle());
+            viewHolder.authorText.setText(works.getAuthor());
+            viewHolder.createTimeText.setText(DateUtils.toFriendlyString(works.getCreateTime()));
+            viewHolder.titleText.setText(works.getTitle());
 
             // 加载头像
-            viewHolder.civAvatar.setImageBitmap(null);
             userModel.getPublicProfile(works.getAuthor(), new DataListener<User>() {
                 @Override
                 public void onReturn(User user) {
-                    GlideUtils.load(getContext(), user.getAvatarUrl(), viewHolder.civAvatar);
+                    GlideUtils.load(getContext(), user.getAvatarUrl(), viewHolder.avatarImage);
                 }
 
                 @Override
@@ -193,27 +193,19 @@ public class WorksListDelegate extends BaseDelegate {
                 }
             });
             if (works.getType() == WorksType.IMAGE_TEXT) { // 图文创作
-                viewHolder.video.setVisibility(View.GONE);
-                viewHolder.tvContent.setVisibility(View.VISIBLE);
-                viewHolder.tvContent.setText(works.getContent());
-                if (works.getImageUrls().size() == 1) {
+                viewHolder.contentText.setVisibility(View.VISIBLE);
+                viewHolder.contentText.setText(works.getContent());
+                int imageSize = works.getImageUrls().size();
+                if (imageSize == 1) {
                     // 加载一张图
-                    viewHolder.firstImage.setImageBitmap(null);
-                    if (works.getImageUrls().size() > 0) {
-                        GlideUtils.load(getContext(), works.getImageUrls().get(0), viewHolder.firstImage);
-                    } else {
-                        viewHolder.firstImage.setImageBitmap(null);
-                    }
-                } else {
-                    loadRootFragment(R.id.image_list_layout,
-                            ImageListDelegate.newInstance(new ArrayList<>(works.getImageUrls())));
+                    GlideUtils.load(getContext(), works.getImageUrls().get(0), viewHolder.firstImage);
+                } else if (imageSize > 1) {
+                    viewHolder.setImageList(works.getImageUrls());
                 }
             } else if (works.getType() == WorksType.VIDEO) { // 视频创作
                 String url = works.getVideoUrl();
-                viewHolder.tvContent.setVisibility(View.GONE);
                 viewHolder.video.setVisibility(View.VISIBLE);
                 viewHolder.video.setUp(url, works.getTitle());
-                viewHolder.video.startVideo();
             }
         }
 
@@ -226,27 +218,52 @@ public class WorksListDelegate extends BaseDelegate {
     class ViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.avatar_image)
-        CircleImageView civAvatar;
+        CircleImageView avatarImage;
         @BindView(R.id.author_text)
-        TextView tvAuthor;
+        TextView authorText;
         @BindView(R.id.create_time_text)
-        TextView tvCreateTime;
+        TextView createTimeText;
         @BindView(R.id.title_text)
-        TextView tvTitle;
+        TextView titleText;
         @BindView(R.id.content_text)
-        TextView tvContent;
+        TextView contentText;
         @BindView(R.id.first_image)
         ImageView firstImage;
+        @BindView(R.id.image_list_layout)
+        ViewGroup imageListLayout;
         @BindView(R.id.video)
         JzvdStd video;
+
+        ImageListDelegate delegate;
 
         String[] options;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            tvTitle.setMaxLines(2);
-            tvContent.setMaxLines(4);
+            delegate = new ImageListDelegate();
+            delegate.inflateView(LayoutInflater.from(getContext()), imageListLayout);
+            delegate.setActivity(getContainerActivity());
+            imageListLayout.addView(delegate.getRootView());
+            init();
+
+        }
+
+        public void init() {
+            titleText.setMaxLines(2);
+            contentText.setMaxLines(4);
+            avatarImage.setImageBitmap(null);
+            authorText.setText("");
+            createTimeText.setText("");
+            titleText.setText("");
+            contentText.setText("");
+            firstImage.setImageBitmap(null);
+            video.reset();
+            // 设置不可见
+            contentText.setVisibility(View.GONE);
+            firstImage.setVisibility(View.GONE);
+            imageListLayout.setVisibility(View.GONE);
+            video.setVisibility(View.GONE);
         }
 
         @OnClick({R.id.avatar_image, R.id.author_text})
@@ -270,7 +287,7 @@ public class WorksListDelegate extends BaseDelegate {
             }
             //添加列表
             AlertDialog alertDialog = new AlertDialog.Builder(getContext())
-                    .setTitle("ic_option")
+                    .setTitle("选项")
                     .setItems(options, (dialogInterface, i) -> {
                         String text = options[i];
                         switch (text) {
@@ -301,6 +318,11 @@ public class WorksListDelegate extends BaseDelegate {
 
                 }
             });
+        }
+
+        public void setImageList(List<String> imageUrls) {
+            imageListLayout.setVisibility(View.VISIBLE);
+            delegate.onNewList(imageUrls);
         }
     }
 }

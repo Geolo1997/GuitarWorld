@@ -10,8 +10,10 @@ import android.widget.*;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import org.greenrobot.eventbus.EventBus;
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.delegate.base.BaseDelegate;
+import pers.geolo.guitarworld.entity.event.Event;
 import pers.geolo.guitarworld.util.GlideUtils;
 import pers.geolo.guitarworld.util.WidgetUtils;
 
@@ -29,8 +31,8 @@ public class ImageListDelegate extends BaseDelegate {
     @BindView(R.id.grid_view)
     GridView gridView;
 
-    List<String> imageUrls;
-    GridViewAdapter adapter;
+    List<String> imageUrls = new ArrayList<>();
+    GridViewAdapter adapter = new GridViewAdapter();
 
     @Override
     public Object getLayout() {
@@ -46,14 +48,30 @@ public class ImageListDelegate extends BaseDelegate {
         return fragment;
     }
 
+    public void onNewList(List<String> imageUrls) {
+        gridView.setAdapter(adapter);
+        this.imageUrls = imageUrls;
+    }
+
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
         Bundle arguments = getArguments();
         if (arguments != null) {
             imageUrls = (List<String>) arguments.getSerializable(IMAGE_URLS);
+        } else {
+            imageUrls = new ArrayList<>();
         }
         adapter = new GridViewAdapter();
         gridView.setAdapter(adapter);
+    }
+
+    public void postOnclickEvent() {
+        getRootView().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                EventBus.getDefault().post(Event.Const.ON_CLICK_IMAGE_LIST_);
+            }
+        });
     }
 
     class GridViewAdapter extends BaseAdapter {
@@ -95,7 +113,13 @@ public class ImageListDelegate extends BaseDelegate {
                     int height = width;
                     AbsListView.LayoutParams param = new AbsListView.LayoutParams(width, height);
                     finalConvertView.setLayoutParams(param);
-                    LinearLayout.LayoutParams gridViewParam = new LinearLayout.LayoutParams(width * 3, height * 3);
+                    int imageSize = imageUrls.size();
+                    if (imageSize > 3 && imageSize <= 6) {
+                        height *= 2;
+                    } else if (imageSize > 6) {
+                        height *= 3;
+                    }
+                    LinearLayout.LayoutParams gridViewParam = new LinearLayout.LayoutParams(width * 3, height);
                     if (gridView != null) {
                         gridView.setLayoutParams(gridViewParam);
                     }

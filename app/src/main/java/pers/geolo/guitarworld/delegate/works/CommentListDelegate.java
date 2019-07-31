@@ -15,10 +15,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnLongClick;
 import de.hdodenhof.circleimageview.CircleImageView;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
+import org.greenrobot.eventbus.EventBus;
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.delegate.base.BaseDelegate;
 import pers.geolo.guitarworld.delegate.base.BeanFactory;
@@ -26,11 +23,17 @@ import pers.geolo.guitarworld.delegate.user.ProfileDelegate;
 import pers.geolo.guitarworld.entity.Comment;
 import pers.geolo.guitarworld.entity.DataListener;
 import pers.geolo.guitarworld.entity.User;
+import pers.geolo.guitarworld.entity.event.Event;
 import pers.geolo.guitarworld.model.AuthModel;
 import pers.geolo.guitarworld.model.CommentModel;
 import pers.geolo.guitarworld.model.UserModel;
+import pers.geolo.guitarworld.util.DateUtils;
 import pers.geolo.guitarworld.util.GlideUtils;
 import pers.geolo.guitarworld.util.RecyclerViewUtils;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author 桀骜(Geolo)
@@ -81,6 +84,7 @@ public class CommentListDelegate extends BaseDelegate {
             public void onReturn(List<Comment> comments) {
                 commentList = comments;
                 adapter.notifyDataSetChanged();
+                EventBus.getDefault().post(new Event(Event.Const.GET_COMMENT_LIST_SUCCESS.name(), commentList));
             }
 
             @Override
@@ -110,11 +114,11 @@ public class CommentListDelegate extends BaseDelegate {
             Comment comment = commentList.get(i);
             viewHolder.tvAuthor.setText(comment.getAuthor());
             viewHolder.tvComment.setText(comment.getContent());
-            viewHolder.tvCreateTime.setText(comment.getCreateTime().toString());
+            viewHolder.tvCreateTime.setText(DateUtils.toFriendlyString(comment.getCreateTime()));
             userModel.getPublicProfile(comment.getAuthor(), new DataListener<User>() {
                 @Override
                 public void onReturn(User user) {
-                    GlideUtils.load(getContext(),user.getAvatarUrl(),viewHolder.civAvatar);
+                    GlideUtils.load(getContext(), user.getAvatarUrl(), viewHolder.civAvatar);
                 }
 
                 @Override
@@ -163,7 +167,7 @@ public class CommentListDelegate extends BaseDelegate {
             }
             //添加列表
             AlertDialog alertDialog = new AlertDialog.Builder(getContext())
-                    .setTitle("ic_option")
+                    .setTitle("选项")
                     .setItems(options, (dialogInterface, i) -> {
                         String text = options[i];
                         switch (text) {

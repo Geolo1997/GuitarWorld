@@ -55,13 +55,13 @@ public class PhotoUtils {
                 openCamera(activity, file, new ActivityUtils.Callback() {
                     @Override
                     public void onSuccess(Intent intent) {
-                        callback.onGetPhotoSuccess(file);
+                        callback.onSuccess(file);
                     }
 
                     @Override
                     public void onFailure(Intent intent) {
                         //
-                        callback.onGetPhotoFailure(FailureType.USER_CANCEL);
+                        callback.onFailure(FailureType.USER_CANCEL);
                     }
                 });
             }
@@ -69,7 +69,7 @@ public class PhotoUtils {
             @Override
             public void onFailure(String[] permissions, int[] grantResults) {
                 // 没有权限
-                callback.onGetPhotoFailure(FailureType.PERMISSION_DENIED);
+                callback.onFailure(FailureType.PERMISSION_DENIED);
             }
         });
     }
@@ -104,19 +104,19 @@ public class PhotoUtils {
                     @Override
                     public void onSuccess(Intent intent) {
                         String filePath = GetPhotoFromPhotoAlbum.getRealPathFromUri(activity, intent.getData());
-                        callback.onGetPhotoSuccess(new File(filePath));
+                        callback.onSuccess(new File(filePath));
                     }
 
                     @Override
                     public void onFailure(Intent intent) {
-                        callback.onGetPhotoFailure(FailureType.USER_CANCEL);
+                        callback.onFailure(FailureType.USER_CANCEL);
                     }
                 });
             }
 
             @Override
             public void onFailure(String[] permissions, int[] grantResults) {
-                callback.onGetPhotoFailure(FailureType.PERMISSION_DENIED);
+                callback.onFailure(FailureType.PERMISSION_DENIED);
             }
         });
     }
@@ -139,9 +139,9 @@ public class PhotoUtils {
     }
 
     public interface Callback {
-        void onGetPhotoSuccess(File photo);
+        void onSuccess(File photo);
 
-        void onGetPhotoFailure(FailureType failureType);
+        void onFailure(FailureType failureType);
     }
 
     public enum FailureType {

@@ -66,24 +66,27 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/content"
+            android:visibility="gone"
             android:textSize="15sp"/>
 
         <ImageView
             android:id="@+id/first_image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:maxHeight="200dp"/>
         <FrameLayout
             android:id="@+id/image_list_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
 
-    <cn.jzvd.JzvdStd
-        android:id="@+id/video"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:visibility="gone"/>
+        <cn.jzvd.JzvdStd
+            android:id="@+id/video"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:visibility="gone"/>
+    </LinearLayout>
 
     <!--<LinearLayout-->
         <!--android:layout_width="match_parent"-->

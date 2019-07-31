@@ -6,14 +6,14 @@ import android.view.ViewGroup;
 public class ViewUtils {
 
     public static void setViewGroupEnabled(View view, Class viewType, Boolean enabled) {
-        view.setEnabled(enabled);
+        if (view.getClass() == viewType) {
+            view.setEnabled(enabled);
+        }
         if (view instanceof ViewGroup) {
             ViewGroup viewGroup = (ViewGroup) view;
             for (int i = 0; i < viewGroup.getChildCount(); i++) {
                 View subView = viewGroup.getChildAt(i);
-                if (subView.getClass() == viewType) {
-                    subView.setEnabled(enabled);
-                }
+                setViewGroupEnabled(subView, viewType, enabled);
             }
         }
     }

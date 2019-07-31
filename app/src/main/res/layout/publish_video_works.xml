@@ -14,6 +14,11 @@
         app:title="@string/publish_video"
         app:rightTitle="@string/publish"/>
 
+    <com.daimajia.numberprogressbar.NumberProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
     <EditText
         android:id="@+id/title_text"
         android:layout_width="match_parent"
@@ -23,31 +28,10 @@
         android:maxLines="2"
         android:background="@null"/>
 
-    <Button
-        android:id="@+id/update_video_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/update_video"/>
-
-    <VideoView
+    <cn.jzvd.JzvdStd
         android:id="@+id/preview_video"
-        android:visibility="gone"
-        android:layout_width="wrap_content"
-        android:layout_height="200dp"/>
-
-    <!--TODO 更换进度条-->
-    <com.dd.processbutton.iml.ActionProcessButton
-        android:id="@+id/publish_works_button"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_marginBottom="16dp"
-        android:text="@string/publish"
-        android:textColor="@android:color/white"
-        android:textSize="18sp"
-        custom:pb_colorComplete="@color/green_complete"
-        custom:pb_colorNormal="@color/blue_normal"
-        custom:pb_colorPressed="@color/blue_pressed"
-        custom:pb_colorProgress="@color/purple_progress"
-        custom:pb_textComplete="@string/Success"
-        custom:pb_textProgress="@string/Loading"/>
+        android:layout_height="200dp"
+        android:layout_margin="10dp"
+        android:visibility="gone"/>
 </LinearLayout>

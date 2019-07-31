@@ -3,8 +3,11 @@ package pers.geolo.guitarworld.delegate.works;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
-import android.widget.*;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 import butterknife.BindView;
+import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.hjq.bar.OnTitleBarListener;
 import com.hjq.bar.TitleBar;
 import org.greenrobot.eventbus.EventBus;
@@ -24,9 +27,10 @@ import pers.geolo.guitarworld.util.KeyBoardUtils;
 import pers.geolo.guitarworld.util.ThreadUtils;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * 发布图文页面
@@ -34,20 +38,20 @@ import java.util.List;
  * @author 桀骜(Geolo)
  * @version 1.0
  */
-public class PublishImageTextDelegate extends SwipeBackDelegate {
+public class PublishImageTextWorksDelegate extends SwipeBackDelegate {
 
     public static final int MAX_IMAGE_COUNT = 3;
 
     @BindView(R.id.title_bar)
     TitleBar titleBar;
+    @BindView(R.id.progress_bar)
+    NumberProgressBar progressBar;
     @BindView(R.id.et_title)
     EditText etTitle;
     @BindView(R.id.et_content)
     EditText etContent;
     @BindView(R.id.images_layout)
     LinearLayout imagesLayout;
-    @BindView(R.id.progress_text)
-    TextView progressText;
     Works works = new Works();
 
     AuthModel authModel = BeanFactory.getBean(AuthModel.class);
@@ -72,8 +76,7 @@ public class PublishImageTextDelegate extends SwipeBackDelegate {
         loadRootFragment(R.id.images_layout, addImageManagerDelegate);
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void publish(UploadImageSuccessEvent event) {
+    public void publish() {
         works.setImageUrls(imageUrls);
         String username = authModel.getCurrentLoginUser().getUsername();
         works.setType(WorksType.IMAGE_TEXT);
@@ -90,7 +93,7 @@ public class PublishImageTextDelegate extends SwipeBackDelegate {
                     @Override
                     public void run() {
                         try {
-                            Thread.sleep(3000);
+                            Thread.sleep(1000);
                             pop();
                         } catch (InterruptedException e) {
                             e.printStackTrace();
@@ -109,26 +112,53 @@ public class PublishImageTextDelegate extends SwipeBackDelegate {
     private List<String> imageUrls;
 
     private void uploadImageFiles() {
+        progressBar.setVisibility(View.VISIBLE);
         List<File> imageFiles = addImageManagerDelegate.getImageFiles();
-        imageUrls = new ArrayList<>(imageFiles.size());
-        worksModel.uploadImageUrls(imageFiles, new FileListener<List<String>>() {
-            @Override
-            public void onProgress(long currentLength, long totalLength) {
-                progressText.setText("" + (currentLength * 100 / totalLength) + "%");
-            }
+        imageUrls = imageFiles.stream()
+                .map(new Function<File, String>() {
+                    @Override
+                    public String apply(File file) {
+                        return file.getPath();
+                    }
+                })
+                .collect(Collectors.toList());
+        for (int i = 0; i < imageFiles.size(); i++) {
+            File imageFile = imageFiles.get(i);
+            int finalI = i;
+            worksModel.uploadImage(imageFile, new FileListener<String>() {
+                @Override
+                public void onProgress(long currentLength, long totalLength) {
 
-            @Override
-            public void onFinish(List<String> strings) {
-                progressText.setText("上传成功！");
-                imageUrls = strings;
-                EventBus.getDefault().post(new UploadImageSuccessEvent());
-            }
+                }
 
-            @Override
-            public void onError(String message) {
-                progressText.setText(message);
+                @Override
+                public void onFinish(String s) {
+                    imageUrls.set(finalI, s);
+                    EventBus.getDefault().post(new UploadImageSuccessEvent());
+                }
+
+                @Override
+                public void onError(String message) {
+                    existFailure = true;
+                }
+            });
+        }
+    }
+
+    private int uploadImageCount = 0;
+    private boolean existFailure = false;
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onUploadImageSuccess(UploadImageSuccessEvent event) {
+        uploadImageCount++;
+        progressBar.setProgress(uploadImageCount * 100 / imageUrls.size());
+        if (uploadImageCount == imageUrls.size()) {
+            if (existFailure) {
+                Toast.makeText(getContext(), "上传失败", Toast.LENGTH_SHORT).show();
+            } else {
+                publish();
             }
-        });
+        }
     }
 
     public void initTitleBar() {
@@ -146,7 +176,11 @@ public class PublishImageTextDelegate extends SwipeBackDelegate {
 
             @Override
             public void onRightClick(View v) {
-                uploadImageFiles();
+                if (addImageManagerDelegate.getImageFiles().size() == 0) {
+                    publish();
+                } else {
+                    uploadImageFiles();
+                }
             }
         });
     }

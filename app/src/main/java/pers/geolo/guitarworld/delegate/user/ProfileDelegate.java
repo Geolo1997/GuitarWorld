@@ -5,8 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.AppCompatEditText;
 import android.view.View;
-import android.widget.*;
+import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.OnClick;
 import com.hjq.bar.OnTitleBarListener;
@@ -18,18 +23,21 @@ import pers.geolo.guitarworld.delegate.base.SwipeBackDelegate;
 import pers.geolo.guitarworld.entity.DataListener;
 import pers.geolo.guitarworld.entity.FileListener;
 import pers.geolo.guitarworld.entity.User;
+import pers.geolo.guitarworld.model.AuthModel;
 import pers.geolo.guitarworld.model.FileModel;
 import pers.geolo.guitarworld.model.UserModel;
 import pers.geolo.guitarworld.util.*;
 
 import java.io.File;
 
-public class ProfileDelegate extends SwipeBackDelegate{
+public class ProfileDelegate extends SwipeBackDelegate {
 
     private static final String USERNAME = "USERNAME";
 
     @BindView(R.id.title_bar)
     TitleBar titleBar;
+    @BindView(R.id.edits_layout)
+    ViewGroup editsLayout;
     @BindView(R.id.tv_username)
     TextView tvUsername;
     @BindView(R.id.et_password)
@@ -45,10 +53,12 @@ public class ProfileDelegate extends SwipeBackDelegate{
     @BindView(R.id.iv_avatar)
     ImageView ivAvatar;
 
+    AuthModel authModel = BeanFactory.getBean(AuthModel.class);
     UserModel userModel = BeanFactory.getBean(UserModel.class);
     FileModel fileModel = BeanFactory.getBean(FileModel.class);
 
     private User user;
+    private boolean isEditLayoutEnable;
 
     public static ProfileDelegate newInstance(String username) {
         Bundle args = new Bundle();
@@ -70,15 +80,22 @@ public class ProfileDelegate extends SwipeBackDelegate{
 
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
-        initTitleBar();
         if (getArguments() != null) {
             user = new User();
             user.setUsername(getArguments().getString(USERNAME));
+            initTitleBar();
             initProfile();
         }
     }
 
     private void initTitleBar() {
+        String currentUsername = authModel.getCurrentLoginUser().getUsername();
+        if (!currentUsername.equals(user.getUsername())) {
+            titleBar.setRightIcon(null);
+        } else {
+            titleBar.setRightTitle("编辑");
+        }
+        setEditsLayoutEnable(false);
         titleBar.setOnTitleBarListener(new OnTitleBarListener() {
             @Override
             public void onLeftClick(View v) {
@@ -92,9 +109,35 @@ public class ProfileDelegate extends SwipeBackDelegate{
 
             @Override
             public void onRightClick(View v) {
-                saveProfile();
+                if (isEditLayoutEnable) {
+                    saveProfile();
+                } else {
+                    if (titleBar.getRightTitle().equals("编辑")) {
+                        titleBar.setRightTitle("");
+                        titleBar.setRightIcon(R.drawable.ic_save_24);
+                        setEditsLayoutEnable(true);
+                    }
+                }
             }
         });
+    }
+
+    private void setEditsLayoutEnable(boolean isEnable) {
+        isEditLayoutEnable = isEnable;
+        setViewGroupEnabled(editsLayout, isEnable);
+    }
+
+    public static void setViewGroupEnabled(View view, Boolean enabled) {
+        if (view.getClass() == AppCompatEditText.class) {
+            view.setEnabled(enabled);
+        }
+        if (view instanceof ViewGroup) {
+            ViewGroup viewGroup = (ViewGroup) view;
+            for (int i = 0; i < viewGroup.getChildCount(); i++) {
+                View subView = viewGroup.getChildAt(i);
+                setViewGroupEnabled(subView, enabled);
+            }
+        }
     }
 
     private void initProfile() {
@@ -130,6 +173,9 @@ public class ProfileDelegate extends SwipeBackDelegate{
             @Override
             public void onReturn(Void aVoid) {
                 Toast.makeText(getContext(), "保存成功！", Toast.LENGTH_SHORT).show();
+                setEditsLayoutEnable(false);
+                titleBar.setRightTitle("编辑");
+                titleBar.setRightIcon(null);
             }
 
             @Override
@@ -141,6 +187,10 @@ public class ProfileDelegate extends SwipeBackDelegate{
 
     @OnClick(R.id.iv_avatar)
     public void onIvAvatarClicked() {
+        String username = authModel.getCurrentLoginUser().getUsername();
+        if (!username.equals(user.getUsername())) {
+            return;
+        }
 //        start(ImageDetailDelegate.newInstance(user.getAvatarUrl()));
         BottomDialog.create(getChildFragmentManager())
                 .setViewListener(v -> {

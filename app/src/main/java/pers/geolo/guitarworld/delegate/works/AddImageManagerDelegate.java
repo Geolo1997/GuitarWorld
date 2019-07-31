@@ -29,6 +29,8 @@ import java.util.List;
  */
 public class AddImageManagerDelegate extends BaseDelegate {
 
+    public static final int MAX_IMAGE_NUM = 9;
+
     @BindView(R.id.grid_view)
     GridView gridView;
 
@@ -119,15 +121,6 @@ public class AddImageManagerDelegate extends BaseDelegate {
             holder.index = position;
             holder.setImage(image);
 //            convertView.setId(View.generateViewId());
-            ViewTreeObserver observer = convertView.getViewTreeObserver();
-            View finalConvertView1 = convertView;
-            observer.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-                @Override
-                public boolean onPreDraw() {
-                    System.out.println("" + position + ":" + finalConvertView1.getId());
-                    return true;
-                }
-            });
             return convertView;
         }
 
@@ -165,6 +158,10 @@ public class AddImageManagerDelegate extends BaseDelegate {
                 if (image != null) { // 有图片
                     // TODO 编辑图片
                 } else { // 没有图片
+                    if (imageFiles.size() >= 9) {
+                        Toast.makeText(getContext(), "最多上传9张图片！", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     dialog = PhotoOptionDialog.show(getChildFragmentManager(), v -> {
                         PhotoUtils.openCamera(getActivity(), callback);
                     }, v -> {
@@ -182,7 +179,7 @@ public class AddImageManagerDelegate extends BaseDelegate {
             class PhotoCallback implements PhotoUtils.Callback {
 
                 @Override
-                public void onGetPhotoSuccess(File photo) {
+                public void onSuccess(File photo) {
                     dialog.dismiss();
                     imageFiles.remove(null);
                     imageFiles.add(photo);
@@ -191,7 +188,7 @@ public class AddImageManagerDelegate extends BaseDelegate {
                 }
 
                 @Override
-                public void onGetPhotoFailure(PhotoUtils.FailureType failureType) {
+                public void onFailure(PhotoUtils.FailureType failureType) {
                     dialog.dismiss();
                     Toast.makeText(getContext(), failureType.name(), Toast.LENGTH_SHORT).show();
                 }

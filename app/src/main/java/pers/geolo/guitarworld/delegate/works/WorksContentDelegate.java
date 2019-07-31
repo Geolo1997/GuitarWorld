@@ -12,6 +12,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.jzvd.JzvdStd;
 import de.hdodenhof.circleimageview.CircleImageView;
+import org.greenrobot.eventbus.EventBus;
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.delegate.base.BaseDelegate;
 import pers.geolo.guitarworld.delegate.base.BeanFactory;
@@ -20,6 +21,7 @@ import pers.geolo.guitarworld.entity.DataListener;
 import pers.geolo.guitarworld.entity.User;
 import pers.geolo.guitarworld.entity.Works;
 import pers.geolo.guitarworld.entity.WorksType;
+import pers.geolo.guitarworld.entity.event.Event;
 import pers.geolo.guitarworld.model.UserModel;
 import pers.geolo.guitarworld.model.WorksModel;
 import pers.geolo.guitarworld.util.DateUtils;
@@ -89,6 +91,7 @@ public class WorksContentDelegate extends BaseDelegate {
                     return;
                 }
                 WorksContentDelegate.this.works = works;
+                EventBus.getDefault().postSticky(new Event(Event.Const.GET_WORKS_SUCCESS.name(), works));
                 authorText.setText(works.getAuthor());
                 createTimeText.setText(DateUtils.toFriendlyString(works.getCreateTime()));
                 titleText.setText(works.getTitle());
@@ -104,27 +107,21 @@ public class WorksContentDelegate extends BaseDelegate {
                     }
                 });
                 if (works.getType() == WorksType.IMAGE_TEXT) { // 图文创作
-                    video.setVisibility(View.GONE);
                     contentText.setVisibility(View.VISIBLE);
                     contentText.setText(works.getContent());
-                    if (works.getImageUrls().size() == 1) {
+                    int imageSize = works.getImageUrls().size();
+                    if (imageSize == 1) {
                         // 加载一张图
-                        firstImage.setImageBitmap(null);
-                        if (works.getImageUrls().size() > 0) {
-                            GlideUtils.load(getContext(), works.getImageUrls().get(0), firstImage);
-                        } else {
-                            firstImage.setImageBitmap(null);
-                        }
-                    } else {
-                        loadRootFragment(R.id.image_list_layout,
-                                ImageListDelegate.newInstance(new ArrayList<>(works.getImageUrls())));
+                        GlideUtils.load(getContext(), works.getImageUrls().get(0), firstImage);
+                    } else if (imageSize > 1) {
+                        imageListLayout.setVisibility(View.VISIBLE);
+                        loadRootFragment(R.id.image_list_layout, ImageListDelegate
+                                .newInstance(new ArrayList<>(works.getImageUrls())));
                     }
                 } else if (works.getType() == WorksType.VIDEO) { // 视频创作
                     String url = works.getVideoUrl();
-                    contentText.setVisibility(View.GONE);
                     video.setVisibility(View.VISIBLE);
                     video.setUp(url, works.getTitle());
-                    video.startVideo();
                 }
             }
 

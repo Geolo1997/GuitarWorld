@@ -90,7 +90,6 @@ public class MusicIndexDelegate extends SwipeBackDelegate {
         scrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
             @Override
             public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                System.out.println(scrollY + " " + oldScrollY);
                 ViewGroup musicResourceViewGroup = (ViewGroup) musicResourceDelegate.getRootView();
                 int changeHeight = musicProfileLayout.getHeight() - titleBar.getHeight();
                 if (oldScrollY < changeHeight && scrollY >= changeHeight) {

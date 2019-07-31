@@ -8,10 +8,9 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-import android.widget.VideoView;
 import butterknife.BindView;
-import butterknife.OnClick;
-import com.dd.processbutton.iml.ActionProcessButton;
+import cn.jzvd.JzvdStd;
+import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.hjq.bar.OnTitleBarListener;
 import com.hjq.bar.TitleBar;
 import pers.geolo.guitarworld.R;
@@ -41,12 +40,12 @@ public class PublishVideoWorksDelegate extends SwipeBackDelegate {
 
     @BindView(R.id.title_bar)
     TitleBar titleBar;
+    @BindView(R.id.progress_bar)
+    NumberProgressBar progressBar;
     @BindView(R.id.title_text)
     EditText titleEditText;
     @BindView(R.id.preview_video)
-    VideoView previewVideo;
-    @BindView(R.id.publish_works_button)
-    ActionProcessButton publishWorksButton;
+    JzvdStd previewVideo;
 
     private WorksModel worksModel = BeanFactory.getBean(WorksModel.class);
     private AuthModel authModel = BeanFactory.getBean(AuthModel.class);
@@ -67,6 +66,7 @@ public class PublishVideoWorksDelegate extends SwipeBackDelegate {
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
         initTitleBar();
         videoWorks = new Works();
+        openCamera();
     }
 
     private void initTitleBar() {
@@ -88,72 +88,42 @@ public class PublishVideoWorksDelegate extends SwipeBackDelegate {
         });
     }
 
-    @OnClick(R.id.update_video_button)
-    public void onUpdateVideoButton() {
-        // 申请权限
-        String[] writeStoragePermission = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
-        if (!PermissionUtils.hasPermissions(getContext(), writeStoragePermission)) {
-            PermissionUtils.requestPermissions(getContainerActivity(), writeStoragePermission, new PermissionUtils.Callback() {
-                @Override
-                public void onSuccess(String[] permissions, int[] grantResults) {
-                    openCamera();
-                }
-
-                @Override
-                public void onFailure(String[] permissions, int[] grantResults) {
-
-                }
-            });
-        } else {
-            openCamera();
-        }
-    }
-
     private void openCamera() {
-        // 打开拍摄视频Activity（打开视频文件选择Activity）
-        video = new File(Environment.getExternalStorageDirectory().getPath()
-                + "/guitarworld/" + System.currentTimeMillis() + ".mp4");
-        PhotoUtils.openVideoCamera(getContainerActivity(), video, new ActivityUtils.Callback() {
+        PhotoUtils.openCamera(getContainerActivity(), new PhotoUtils.Callback() {
             @Override
-            public void onSuccess(Intent intent) {
+            public void onSuccess(File photo) {
+                video = photo;
                 previewVideo.setVisibility(View.VISIBLE);
-                previewVideo.setVideoPath(video.getPath());
-                previewVideo.start();
+                previewVideo.setUp(photo.getPath(), "");
             }
 
             @Override
-            public void onFailure(Intent intent) {
+            public void onFailure(PhotoUtils.FailureType failureType) {
 
             }
         });
     }
 
     private void updateVideo() {
-        publishWorksButton.setMode(ActionProcessButton.Mode.PROGRESS);
+        progressBar.setVisibility(View.VISIBLE);
         worksModel.publishVideoWorks(video, new FileListener<String>() {
             @Override
             public void onProgress(long currentLength, long totalLength) {
                 int percent = (int) (currentLength * 100 / totalLength);
-                publishWorksButton.setProgress(percent);
+                progressBar.setProgress(percent);
             }
 
             @Override
             public void onFinish(String s) {
-                publishWorksButton.setProgress(100);
                 videoWorks.setVideoUrl(s);
                 publishWorks();
             }
 
             @Override
             public void onError(String message) {
-                publishWorksButton.setProgress(-1);
+                Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    @OnClick(R.id.publish_works_button)
-    public void onPublishWorksButtonClick() {
-        updateVideo();
     }
 
     public void publishWorks() {

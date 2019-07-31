@@ -23,4 +23,10 @@ public interface WorksApi {
     @Multipart
     @POST("works/image")
     Call<ResponseBody<String>> uploadImage(@Part MultipartBody.Part image);
+
+    @POST("works/like")
+    Call<ResponseBody<Void>> likeWorks(@Query("username") String username, @Query("worksId") int worksId);
+
+    @DELETE("works/like")
+    Call<ResponseBody<Void>> cancelLikeWorks(@Query("username") String username, @Query("worksId") int worksId);
 }

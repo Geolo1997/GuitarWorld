@@ -68,7 +68,7 @@ public class AddImageDelegate extends BaseDelegate implements PhotoUtils.Callbac
     }
 
     @Override
-    public void onGetPhotoSuccess(File photo) {
+    public void onSuccess(File photo) {
         image = photo;
         GlideUtils.load(getContext(), photo, addImageButton);
         closeButton.setVisibility(View.VISIBLE);
@@ -76,7 +76,7 @@ public class AddImageDelegate extends BaseDelegate implements PhotoUtils.Callbac
     }
 
     @Override
-    public void onGetPhotoFailure(PhotoUtils.FailureType failureType) {
+    public void onFailure(PhotoUtils.FailureType failureType) {
         Toast.makeText(getContext(), failureType.name(), Toast.LENGTH_SHORT).show();
     }
 }

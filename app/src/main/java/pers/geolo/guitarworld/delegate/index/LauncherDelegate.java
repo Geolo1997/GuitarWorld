@@ -36,7 +36,7 @@ public class LauncherDelegate extends BaseDelegate {
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
         setStatusBarDark(false);
         // onBindView launcherTimer
-        launcherTimer = new LauncherTimer(5000, 1000);
+        launcherTimer = new LauncherTimer(1000, 1000);
         launcherTimer.start();
     }
 

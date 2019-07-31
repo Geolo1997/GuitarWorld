@@ -2,6 +2,7 @@ package pers.geolo.guitarworld.model;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import pers.geolo.guitarworld.dao.DataBaseManager;
 import pers.geolo.guitarworld.entity.DataListener;
 import pers.geolo.guitarworld.entity.FileListener;
 import pers.geolo.guitarworld.entity.Works;
@@ -12,6 +13,7 @@ import pers.geolo.guitarworld.network.api.FileApi;
 import pers.geolo.guitarworld.network.api.WorksApi;
 import pers.geolo.guitarworld.network.callback.BaseCallback;
 import pers.geolo.guitarworld.network.callback.DataCallback;
+import pers.geolo.guitarworld.network.callback.FileCallback;
 import pers.geolo.guitarworld.network.param.WorksParam;
 
 import java.io.File;
@@ -89,6 +91,19 @@ public class WorksModel {
         });
     }
 
+    /**
+     * 上传本地图片文件
+     *
+     * @param imageFile 本地图片文件
+     * @param listener  上传进度监听器
+     */
+    public void uploadImage(File imageFile, FileListener<String> listener) {
+        RequestBody requestBody = new ProgressRequestBody(imageFile, "multipart/form-data",
+                1024, listener);
+        MultipartBody.Part part = MultipartBody.Part.createFormData("image", imageFile.getName(), requestBody);
+        worksApi.uploadImage(part).enqueue(new FileCallback<>(listener));
+    }
+
     public void uploadImageUrls(List<File> imageFiles, FileListener<List<String>> listener) {
         List<String> imageUrls = new ArrayList<>(imageFiles.size());
         final Boolean[] hasError = {false};
@@ -139,5 +154,15 @@ public class WorksModel {
                 }
             });
         }
+    }
+
+    public void likeWorks(int worksId, DataListener<Void> listener) {
+        String username = DataBaseManager.getLogInfoDAO().getLastSavedLogInfo().getUsername();
+        worksApi.likeWorks(username, worksId).enqueue(new DataCallback<>(listener));
+    }
+
+    public void cancelLikeWorks(int worksId, DataListener<Void> listener) {
+        String username = DataBaseManager.getLogInfoDAO().getLastSavedLogInfo().getUsername();
+        worksApi.cancelLikeWorks(username, worksId).enqueue(new DataCallback<>(listener));
     }
 }

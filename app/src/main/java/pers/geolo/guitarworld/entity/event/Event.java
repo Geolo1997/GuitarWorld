@@ -35,7 +35,11 @@ public class Event {
 
     public enum Const {
         CREATE_DELEGATE_FINISH,
-        GET_COMMENT_SUCCESS
+        GET_COMMENT_SUCCESS,
+        LIKE_WORKS,
+        GET_WORKS_SUCCESS,
+        LIKE_WORKS_SUCCESS,
+        GET_COMMENT_LIST_SUCCESS
     }
 }
 

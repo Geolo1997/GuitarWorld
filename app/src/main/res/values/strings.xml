@@ -76,4 +76,5 @@
     <string name="publish_video">发视频</string>
     <string name="detail">详情</string>
     <string name="image_detail">图片详情</string>
+    <string name="comment">评论</string>
 </resources>

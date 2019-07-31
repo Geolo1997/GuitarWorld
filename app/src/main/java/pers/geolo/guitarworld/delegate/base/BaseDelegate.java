@@ -36,7 +36,7 @@ public abstract class BaseDelegate extends SwipeBackFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        inflateView(inflater, container, savedInstanceState);
+        inflateView(inflater, container);
         onBindView(savedInstanceState, rootView);
         // 设置透明状态栏
         setStatusBarFullTransparent();
@@ -55,8 +55,7 @@ public abstract class BaseDelegate extends SwipeBackFragment {
         return rootView;
     }
 
-    public void inflateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                            @Nullable Bundle savedInstanceState) {
+    public void inflateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container) {
         if (getLayout() instanceof Integer) {
             rootView = inflater.inflate((Integer) getLayout(), container, false);
         } else if (getLayout() instanceof View) {
@@ -71,7 +70,11 @@ public abstract class BaseDelegate extends SwipeBackFragment {
 
 
     public SupportActivity getContainerActivity() {
-        return (SupportActivity) _mActivity;
+        SupportActivity activity = (SupportActivity) _mActivity;
+        if (activity == null) {
+            activity = this.activity;
+        }
+        return activity;
     }
 
     @Override
@@ -146,5 +149,21 @@ public abstract class BaseDelegate extends SwipeBackFragment {
     @Subscribe
     public void onEvent(Event event) {
 
+    }
+
+    @Nullable
+    @Override
+    public Context getContext() {
+        Context context = super.getContext();
+        if (context == null) {
+            context = rootView.getContext();
+        }
+        return context;
+    }
+
+    private SupportActivity activity;
+
+    public void setActivity(SupportActivity activity) {
+        this.activity = activity;
     }
 }
