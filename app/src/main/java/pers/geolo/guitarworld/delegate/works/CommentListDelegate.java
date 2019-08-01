@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -30,6 +29,7 @@ import pers.geolo.guitarworld.model.UserModel;
 import pers.geolo.guitarworld.util.DateUtils;
 import pers.geolo.guitarworld.util.GlideUtils;
 import pers.geolo.guitarworld.util.RecyclerViewUtils;
+import pers.geolo.guitarworld.util.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -179,12 +179,12 @@ public class CommentListDelegate extends BaseDelegate {
                                     public void onReturn(Void aVoid) {
                                         commentList.remove(comment);
                                         adapter.notifyItemRemoved(getAdapterPosition());
-                                        Toast.makeText(getContext(), "删除成功", Toast.LENGTH_SHORT).show();
+                                        ToastUtils.showSuccessToast(getContext(), "删除成功");
                                     }
 
                                     @Override
                                     public void onError(String message) {
-
+                                        ToastUtils.showErrorToast(getContext(), message);
                                     }
                                 });
                                 break;

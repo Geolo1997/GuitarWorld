@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.OnClick;
 import org.greenrobot.eventbus.EventBus;
@@ -14,6 +13,7 @@ import pers.geolo.guitarworld.entity.event.GetImageEvent;
 import pers.geolo.guitarworld.ui.PhotoOptionDialog;
 import pers.geolo.guitarworld.util.GlideUtils;
 import pers.geolo.guitarworld.util.PhotoUtils;
+import pers.geolo.guitarworld.util.ToastUtils;
 
 import java.io.File;
 
@@ -77,6 +77,6 @@ public class AddImageDelegate extends BaseDelegate implements PhotoUtils.Callbac
 
     @Override
     public void onFailure(PhotoUtils.FailureType failureType) {
-        Toast.makeText(getContext(), failureType.name(), Toast.LENGTH_SHORT).show();
+        ToastUtils.showErrorToast(getContext(), failureType.name());
     }
 }

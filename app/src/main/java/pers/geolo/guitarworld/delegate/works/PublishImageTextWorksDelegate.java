@@ -25,6 +25,7 @@ import pers.geolo.guitarworld.model.AuthModel;
 import pers.geolo.guitarworld.model.WorksModel;
 import pers.geolo.guitarworld.util.KeyBoardUtils;
 import pers.geolo.guitarworld.util.ThreadUtils;
+import pers.geolo.guitarworld.util.ToastUtils;
 
 import java.io.File;
 import java.util.Date;
@@ -87,7 +88,7 @@ public class PublishImageTextWorksDelegate extends SwipeBackDelegate {
         worksModel.publishWorks(works, new DataListener<Void>() {
             @Override
             public void onReturn(Void aVoid) {
-                Toast.makeText(getContext(), "发布成功", Toast.LENGTH_SHORT).show();
+                ToastUtils.showSuccessToast(getContext(), "发布成功");
                 KeyBoardUtils.hideKeyBoard(getContext(), etContent);
                 ThreadUtils.runOnNewSubThread(new Runnable() {
                     @Override
@@ -104,7 +105,7 @@ public class PublishImageTextWorksDelegate extends SwipeBackDelegate {
 
             @Override
             public void onError(String message) {
-                Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+                ToastUtils.showErrorToast(getContext(), message);
             }
         });
     }
@@ -154,7 +155,7 @@ public class PublishImageTextWorksDelegate extends SwipeBackDelegate {
         progressBar.setProgress(uploadImageCount * 100 / imageUrls.size());
         if (uploadImageCount == imageUrls.size()) {
             if (existFailure) {
-                Toast.makeText(getContext(), "上传失败", Toast.LENGTH_SHORT).show();
+                ToastUtils.showErrorToast(getContext(), "上传失败");
             } else {
                 publish();
             }

@@ -16,6 +16,7 @@ import pers.geolo.guitarworld.delegate.base.BaseDelegate;
 import pers.geolo.guitarworld.ui.PhotoOptionDialog;
 import pers.geolo.guitarworld.util.GlideUtils;
 import pers.geolo.guitarworld.util.PhotoUtils;
+import pers.geolo.guitarworld.util.ToastUtils;
 import pers.geolo.guitarworld.util.WidgetUtils;
 
 import java.io.File;
@@ -159,7 +160,7 @@ public class AddImageManagerDelegate extends BaseDelegate {
                     // TODO 编辑图片
                 } else { // 没有图片
                     if (imageFiles.size() >= 9) {
-                        Toast.makeText(getContext(), "最多上传9张图片！", Toast.LENGTH_SHORT).show();
+                        ToastUtils.showInfoToast(getContext(), "最多上传9张图片");
                         return;
                     }
                     dialog = PhotoOptionDialog.show(getChildFragmentManager(), v -> {
@@ -190,7 +191,7 @@ public class AddImageManagerDelegate extends BaseDelegate {
                 @Override
                 public void onFailure(PhotoUtils.FailureType failureType) {
                     dialog.dismiss();
-                    Toast.makeText(getContext(), failureType.name(), Toast.LENGTH_SHORT).show();
+                    ToastUtils.showErrorToast(getContext(), failureType.name());
                 }
             }
 

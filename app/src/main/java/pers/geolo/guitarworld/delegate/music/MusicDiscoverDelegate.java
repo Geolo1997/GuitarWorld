@@ -10,7 +10,7 @@ import net.lucode.hackware.magicindicator.FragmentContainerHelper;
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.delegate.base.BaseDelegate;
-import pers.geolo.guitarworld.ui.magicnavigator.MagicNavigator;
+import pers.geolo.guitarworld.ui.MagicNavigator;
 import pers.geolo.guitarworld.ui.viewpagernavigation.ViewPagerAdapter;
 
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ import java.util.List;
  * @version 1.0
  * @date 2019/7/11
  */
-public class MusicDiscoverNavigationDelegate extends BaseDelegate {
+public class MusicDiscoverDelegate extends BaseDelegate {
 
     @BindView(R.id.magic_indicator)
     MagicIndicator magicIndicator;
@@ -34,7 +34,7 @@ public class MusicDiscoverNavigationDelegate extends BaseDelegate {
 
     @Override
     public Object getLayout() {
-        return R.layout.music_discover_navigation;
+        return R.layout.music_discover;
     }
 
     @Override

@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.jzvd.JzvdStd;
@@ -26,6 +25,7 @@ import pers.geolo.guitarworld.model.UserModel;
 import pers.geolo.guitarworld.model.WorksModel;
 import pers.geolo.guitarworld.util.DateUtils;
 import pers.geolo.guitarworld.util.GlideUtils;
+import pers.geolo.guitarworld.util.ToastUtils;
 
 import java.util.ArrayList;
 
@@ -127,7 +127,7 @@ public class WorksContentDelegate extends BaseDelegate {
 
             @Override
             public void onError(String message) {
-                Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+                ToastUtils.showErrorToast(getContext(), message);
             }
         });
     }

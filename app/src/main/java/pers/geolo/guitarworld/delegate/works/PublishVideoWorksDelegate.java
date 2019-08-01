@@ -1,13 +1,9 @@
 package pers.geolo.guitarworld.delegate.works;
 
-import android.Manifest;
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 import butterknife.BindView;
 import cn.jzvd.JzvdStd;
 import com.daimajia.numberprogressbar.NumberProgressBar;
@@ -22,9 +18,8 @@ import pers.geolo.guitarworld.entity.Works;
 import pers.geolo.guitarworld.entity.WorksType;
 import pers.geolo.guitarworld.model.AuthModel;
 import pers.geolo.guitarworld.model.WorksModel;
-import pers.geolo.guitarworld.util.ActivityUtils;
-import pers.geolo.guitarworld.util.PermissionUtils;
 import pers.geolo.guitarworld.util.PhotoUtils;
+import pers.geolo.guitarworld.util.ToastUtils;
 
 import java.io.File;
 import java.util.Date;
@@ -89,7 +84,7 @@ public class PublishVideoWorksDelegate extends SwipeBackDelegate {
     }
 
     private void openCamera() {
-        PhotoUtils.openCamera(getContainerActivity(), new PhotoUtils.Callback() {
+        PhotoUtils.openVideoCamera(getContainerActivity(), new PhotoUtils.Callback() {
             @Override
             public void onSuccess(File photo) {
                 video = photo;
@@ -121,7 +116,7 @@ public class PublishVideoWorksDelegate extends SwipeBackDelegate {
 
             @Override
             public void onError(String message) {
-                Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+                ToastUtils.showErrorToast(getContext(), message);
             }
         });
     }
@@ -135,13 +130,13 @@ public class PublishVideoWorksDelegate extends SwipeBackDelegate {
         worksModel.publishWorks(videoWorks, new DataListener<Void>() {
             @Override
             public void onReturn(Void aVoid) {
-                Toast.makeText(getContext(), "发布成功！", Toast.LENGTH_SHORT).show();
+                ToastUtils.showSuccessToast(getContext(), "发布成功");
                 pop();
             }
 
             @Override
             public void onError(String message) {
-                Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+                ToastUtils.showErrorToast(getContext(), message);
             }
         });
     }

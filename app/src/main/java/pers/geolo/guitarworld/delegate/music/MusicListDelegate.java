@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -22,6 +21,7 @@ import pers.geolo.guitarworld.entity.Music;
 import pers.geolo.guitarworld.model.MusicModel;
 import pers.geolo.guitarworld.util.GlideUtils;
 import pers.geolo.guitarworld.util.RecyclerViewUtils;
+import pers.geolo.guitarworld.util.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -80,7 +80,7 @@ public class MusicListDelegate extends BaseDelegate {
 
             @Override
             public void onError(String message) {
-                Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+                ToastUtils.showErrorToast(getContext(), message);
                 recyclerRefresh.setRefreshing(false);
             }
         });

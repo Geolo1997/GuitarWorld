@@ -1,7 +1,9 @@
 package pers.geolo.guitarworld.test.fragview;
 
-import android.view.ViewGroup;
-import android.widget.*;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.jzvd.JzvdStd;
@@ -11,6 +13,7 @@ import pers.geolo.guitarworld.delegate.base.BeanFactory;
 import pers.geolo.guitarworld.entity.DataListener;
 import pers.geolo.guitarworld.entity.Works;
 import pers.geolo.guitarworld.model.WorksModel;
+import pers.geolo.guitarworld.util.ToastUtils;
 
 /**
  * @author 桀骜(Geolo)
@@ -57,7 +60,7 @@ public class WorksContentController extends BaseController {
 
             @Override
             public void onError(String message) {
-                Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+                ToastUtils.showErrorToast(getContext(), message);
             }
         });
     }

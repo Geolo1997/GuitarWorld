@@ -1,52 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+
+<pers.geolo.guitarworld.ui.VerticalScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/et_search"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="8"
-            android:hint="@string/search"/>
+        <FrameLayout
+            android:id="@+id/banner_layout"
+            android:layout_width="match_parent"
+            android:layout_height="200dp">
+        </FrameLayout>
 
-        <Button
-            android:id="@+id/bt_search"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:text="@string/search"/>
+        <FrameLayout
+            android:id="@+id/music_discover_layout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+        </FrameLayout>
+
     </LinearLayout>
 
-    <Button
-        android:id="@+id/bt_show_music"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="显示音乐"/>
-    <FrameLayout
-        android:id="@+id/banner"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:background="@color/colorPrimary">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="广告位"
-            android:layout_gravity="center"/>
-    </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/music_discover_navigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-    </FrameLayout>
-
-</LinearLayout>
+</pers.geolo.guitarworld.ui.VerticalScrollView>

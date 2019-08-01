@@ -2,35 +2,20 @@ package pers.geolo.guitarworld.delegate.index;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import butterknife.BindView;
-import butterknife.OnClick;
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.delegate.base.BaseDelegate;
-import pers.geolo.guitarworld.delegate.music.MusicIndexDelegate;
-import pers.geolo.guitarworld.delegate.music.MusicDiscoverNavigationDelegate;
+import pers.geolo.guitarworld.delegate.music.MusicDiscoverDelegate;
 
 public class DiscoverDelegate extends BaseDelegate {
 
-    @BindView(R.id.et_search)
-    EditText etSearch;
-    @BindView(R.id.bt_search)
-    Button btSearch;
+//    @BindView(R.id.refresh_layout)
+//    SwipeRefreshLayout refreshLayout;
 
-    @OnClick(R.id.bt_search)
-    public void onBtSearchClicked() {
-        // 获取输入文本
-        String searchText = etSearch.getText().toString();
-        getContainerActivity().start(new SearchResultDelegate());
-    }
-
-    // TODO test
-    @OnClick(R.id.bt_show_music)
-    public void show() {
-        getContainerActivity().start(new MusicIndexDelegate());
-    }
+    private BannerDelegate bannerDelegate;
+    private MusicDiscoverDelegate musicDiscoverDelegate;
 
     @Override
     public Object getLayout() {
@@ -39,6 +24,19 @@ public class DiscoverDelegate extends BaseDelegate {
 
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
-        loadRootFragment(R.id.music_discover_navigation, new MusicDiscoverNavigationDelegate());
+        initRefreshLayout();
+        bannerDelegate = new BannerDelegate();
+        loadRootFragment(R.id.banner_layout, bannerDelegate);
+        musicDiscoverDelegate = new MusicDiscoverDelegate();
+        loadRootFragment(R.id.music_discover_layout, musicDiscoverDelegate);
+    }
+
+    private void initRefreshLayout() {
+//        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//
+//            }
+//        });
     }
 }

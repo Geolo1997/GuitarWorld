@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.bumptech.glide.Glide;
@@ -22,6 +21,7 @@ import pers.geolo.guitarworld.entity.DataListener;
 import pers.geolo.guitarworld.entity.MusicScore;
 import pers.geolo.guitarworld.model.MusicModel;
 import pers.geolo.guitarworld.util.RecyclerViewUtils;
+import pers.geolo.guitarworld.util.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,7 +85,6 @@ public class MusicScoreDetailDelegate extends SwipeBackDelegate {
 
             @Override
             public void onRightClick(View v) {
-                Toast.makeText(getContext(), "option", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -108,7 +107,7 @@ public class MusicScoreDetailDelegate extends SwipeBackDelegate {
 
             @Override
             public void onError(String message) {
-                Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+                ToastUtils.showErrorToast(getContext(), message);
             }
         });
         musicModel.getMusicScore(musicScoreId, new DataListener<List<MusicScore>>() {

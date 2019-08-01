@@ -3,6 +3,8 @@ package pers.geolo.guitarworld.util;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
@@ -26,24 +28,6 @@ public class PhotoUtils {
             Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
 
-    @Deprecated
-    public static void openCamera(Activity activity, File file, ActivityUtils.Callback callback) {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        File directory = FileUtils.getDirectory(file);
-        if (!directory.exists()) {
-            directory.mkdirs();
-        }
-        Uri uri;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            uri = FileProvider.getUriForFile(activity, "pers.geolo.guitarworld.fileprovider", file);
-        } else {
-            uri = Uri.fromFile(file);
-        }
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-        ActivityUtils.startActivity(activity, intent, null, callback);
-    }
-
     public static void openCamera(Activity activity, Callback callback) {
         // 申请权限
         PermissionUtils.requestPermissions(activity, CAMERA_PERMISSIONS, new PermissionUtils.Callback() {
@@ -52,7 +36,20 @@ public class PhotoUtils {
                 // 拍摄照片
                 File file = new File(Environment.getExternalStorageDirectory().getPath()
                         + "/guitarworld/" + System.currentTimeMillis() + ".jpg");
-                openCamera(activity, file, new ActivityUtils.Callback() {
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                File directory = FileUtils.getDirectory(file);
+                if (!directory.exists()) {
+                    directory.mkdirs();
+                }
+                Uri uri;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    uri = FileProvider.getUriForFile(activity, "pers.geolo.guitarworld.fileprovider", file);
+                } else {
+                    uri = Uri.fromFile(file);
+                }
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+                ActivityUtils.startActivity(activity, intent, null, new ActivityUtils.Callback() {
                     @Override
                     public void onSuccess(Intent intent) {
                         callback.onSuccess(file);
@@ -60,7 +57,6 @@ public class PhotoUtils {
 
                     @Override
                     public void onFailure(Intent intent) {
-                        //
                         callback.onFailure(FailureType.USER_CANCEL);
                     }
                 });
@@ -70,24 +66,6 @@ public class PhotoUtils {
             public void onFailure(String[] permissions, int[] grantResults) {
                 // 没有权限
                 callback.onFailure(FailureType.PERMISSION_DENIED);
-            }
-        });
-    }
-
-    public static void openAlbum(Activity activity, ActivityUtils.Callback callback) {
-        // 申请权限
-        PermissionUtils.requestPermissions(activity, PICK_PHOTO_PERMISSIONS, new PermissionUtils.Callback() {
-            @Override
-            public void onSuccess(String[] permissions, int[] grantResults) {
-                // 选择照片
-                Intent intent = new Intent(Intent.ACTION_PICK);
-                intent.setType("image/*");
-                ActivityUtils.startActivity(activity, intent, null, callback);
-            }
-
-            @Override
-            public void onFailure(String[] permissions, int[] grantResults) {
-                callback.onFailure(null);
             }
         });
     }
@@ -121,21 +99,50 @@ public class PhotoUtils {
         });
     }
 
-    public static void openVideoCamera(Activity activity, File file, ActivityUtils.Callback callback) {
-        Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-        File directory = FileUtils.getDirectory(file);
-        if (!directory.exists()) {
-            directory.mkdirs();
-        }
-        Uri uri;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            uri = FileProvider.getUriForFile(activity, "pers.geolo.guitarworld.fileprovider", file);
-        } else {
-            uri = Uri.fromFile(file);
-        }
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-        ActivityUtils.startActivity(activity, intent, null, callback);
+    public static void openVideoCamera(Activity activity, Callback callback) {
+        PermissionUtils.requestPermissions(activity, CAMERA_PERMISSIONS, new PermissionUtils.Callback() {
+            @Override
+            public void onSuccess(String[] permissions, int[] grantResults) {
+                File file = new File(Environment.getExternalStorageDirectory().getPath()
+                        + "/guitarworld/" + System.currentTimeMillis() + ".mp4");
+
+                Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+                File directory = FileUtils.getDirectory(file);
+                if (!directory.exists()) {
+                    directory.mkdirs();
+                }
+                Uri uri;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    uri = FileProvider.getUriForFile(activity, "pers.geolo.guitarworld.fileprovider", file);
+                } else {
+                    uri = Uri.fromFile(file);
+                }
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+                ActivityUtils.startActivity(activity, intent, null, new ActivityUtils.Callback() {
+                    @Override
+                    public void onSuccess(Intent intent) {
+                        callback.onSuccess(file);
+                    }
+
+                    @Override
+                    public void onFailure(Intent intent) {
+                        callback.onFailure(FailureType.USER_CANCEL);
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(String[] permissions, int[] grantResults) {
+                callback.onFailure(FailureType.PERMISSION_DENIED);
+            }
+        });
+    }
+
+    public static Bitmap getVideoThumb(String path) {
+        MediaMetadataRetriever media = new MediaMetadataRetriever();
+        media.setDataSource(path);
+        return media.getFrameAtTime();
     }
 
     public interface Callback {

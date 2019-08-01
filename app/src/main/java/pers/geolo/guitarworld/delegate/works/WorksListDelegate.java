@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -26,7 +25,6 @@ import pers.geolo.guitarworld.delegate.base.BaseDelegate;
 import pers.geolo.guitarworld.delegate.base.BeanFactory;
 import pers.geolo.guitarworld.delegate.user.ProfileDelegate;
 import pers.geolo.guitarworld.entity.*;
-import pers.geolo.guitarworld.entity.event.Event;
 import pers.geolo.guitarworld.model.AuthModel;
 import pers.geolo.guitarworld.model.UserModel;
 import pers.geolo.guitarworld.model.WorksModel;
@@ -35,6 +33,7 @@ import pers.geolo.guitarworld.network.param.WorksParam;
 import pers.geolo.guitarworld.util.DateUtils;
 import pers.geolo.guitarworld.util.GlideUtils;
 import pers.geolo.guitarworld.util.RecyclerViewUtils;
+import pers.geolo.guitarworld.util.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -91,7 +90,7 @@ public class WorksListDelegate extends BaseDelegate {
 
     @Override
     public Object getLayout() {
-        return R.layout.delegate_works_list;
+        return R.layout.works_list;
     }
 
     @Override
@@ -198,6 +197,7 @@ public class WorksListDelegate extends BaseDelegate {
                 int imageSize = works.getImageUrls().size();
                 if (imageSize == 1) {
                     // 加载一张图
+                    viewHolder.firstImage.setVisibility(View.VISIBLE);
                     GlideUtils.load(getContext(), works.getImageUrls().get(0), viewHolder.firstImage);
                 } else if (imageSize > 1) {
                     viewHolder.setImageList(works.getImageUrls());
@@ -310,12 +310,12 @@ public class WorksListDelegate extends BaseDelegate {
                 public void onReturn(Void aVoid) {
                     worksList.remove(works);
                     adapter.notifyItemRemoved(getAdapterPosition());
-                    Toast.makeText(getContext(), "删除成功", Toast.LENGTH_SHORT).show();
+                    ToastUtils.showSuccessToast(getContext(), "删除成功");
                 }
 
                 @Override
                 public void onError(String message) {
-
+                    ToastUtils.showErrorToast(getContext(), message);
                 }
             });
         }

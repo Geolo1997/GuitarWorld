@@ -9,7 +9,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.OnClick;
-
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.delegate.base.BaseDelegate;
 import pers.geolo.guitarworld.delegate.base.BeanFactory;
@@ -17,6 +16,7 @@ import pers.geolo.guitarworld.delegate.index.MainDelegate;
 import pers.geolo.guitarworld.entity.DataListener;
 import pers.geolo.guitarworld.entity.LogInfo;
 import pers.geolo.guitarworld.model.AuthModel;
+import pers.geolo.guitarworld.util.ToastUtils;
 
 public class LoginDelegate extends BaseDelegate {
 
@@ -89,7 +89,7 @@ public class LoginDelegate extends BaseDelegate {
     public void onFragmentResult(int requestCode, int resultCode, Bundle data) {
         super.onFragmentResult(requestCode, resultCode, data);
         if (requestCode == REGISTER && resultCode == RESULT_OK) {
-            Toast.makeText(getContext(), "注册成功！",Toast.LENGTH_SHORT).show();
+            ToastUtils.showSuccessToast(getContext(), "注册成功");
             etUsername.setText(data.getString("username"));
             etPassword.setText(data.getString("password"));
             login();

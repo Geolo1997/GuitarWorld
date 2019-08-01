@@ -6,7 +6,6 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 import butterknife.BindView;
 import com.hjq.bar.OnTitleBarListener;
 import com.hjq.bar.TitleBar;
@@ -22,6 +21,7 @@ import pers.geolo.guitarworld.entity.event.Event;
 import pers.geolo.guitarworld.model.AuthModel;
 import pers.geolo.guitarworld.model.CommentModel;
 import pers.geolo.guitarworld.model.WorksModel;
+import pers.geolo.guitarworld.util.ToastUtils;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -175,7 +175,7 @@ public class WorksDetailDelegate extends SwipeBackDelegate {
         CommentModel.addComment(comment, new DataListener<Void>() {
             @Override
             public void onReturn(Void aVoid) {
-                Toast.makeText(getContext(), "评论成功", Toast.LENGTH_SHORT).show();
+                ToastUtils.showSuccessToast(getContext(), "评论成功");
                 lastScrollY = currentScrollY;
                 refreshLayout.setRefreshing(true);
 //                initDelegateCreateStatus();

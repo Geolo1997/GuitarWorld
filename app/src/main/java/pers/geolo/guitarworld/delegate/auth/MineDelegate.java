@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -20,6 +19,7 @@ import pers.geolo.guitarworld.entity.User;
 import pers.geolo.guitarworld.model.AuthModel;
 import pers.geolo.guitarworld.model.UserModel;
 import pers.geolo.guitarworld.util.GlideUtils;
+import pers.geolo.guitarworld.util.ToastUtils;
 
 import java.util.HashMap;
 
@@ -70,7 +70,7 @@ public class MineDelegate extends BaseDelegate {
 
             @Override
             public void onError(String message) {
-                Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+                ToastUtils.showSuccessToast(getContext(), message);
             }
         });
     }

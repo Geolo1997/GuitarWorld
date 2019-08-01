@@ -91,4 +91,8 @@ dependencies {
     implementation 'com.gyf.immersionbar:immersionbar:3.0.0-beta05'
     // 进度条
     implementation 'com.daimajia.numberprogressbar:library:1.4@aar'
+    // 轮播图
+    implementation 'com.github.rtugeek:materialbanner:1.0.2'
+    // webview
+    implementation 'com.thefinestartist:finestwebview:1.2.7'
 }

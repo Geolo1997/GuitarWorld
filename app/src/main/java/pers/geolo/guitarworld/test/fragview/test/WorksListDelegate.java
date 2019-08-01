@@ -82,7 +82,7 @@ public class WorksListDelegate extends BaseDelegate {
 
     @Override
     public Object getLayout() {
-        return R.layout.delegate_works_list;
+        return R.layout.works_list;
     }
 
     @Override

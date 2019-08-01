@@ -10,8 +10,12 @@ import com.sdsmdg.tastytoast.TastyToast;
  */
 public class ToastUtils {
 
-    public static void showToast(Context context, String message) {
+    public static void showInfoToast(Context context, String message) {
         TastyToast.makeText(context, message, TastyToast.LENGTH_SHORT, TastyToast.INFO);
+    }
+
+    public static void showSuccessToast(Context context, String message) {
+        TastyToast.makeText(context, message, TastyToast.LENGTH_SHORT, TastyToast.SUCCESS);
     }
 
     public static void showErrorToast(Context context, String message) {

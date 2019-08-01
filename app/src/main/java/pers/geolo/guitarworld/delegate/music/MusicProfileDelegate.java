@@ -8,16 +8,17 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import butterknife.BindView;
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.delegate.base.BaseDelegate;
 import pers.geolo.guitarworld.delegate.base.BeanFactory;
+import pers.geolo.guitarworld.delegate.works.ImageDetailDelegate;
 import pers.geolo.guitarworld.entity.DataListener;
 import pers.geolo.guitarworld.entity.Music;
 import pers.geolo.guitarworld.model.MusicModel;
 import pers.geolo.guitarworld.ui.ImageFilter;
 import pers.geolo.guitarworld.util.GlideUtils;
+import pers.geolo.guitarworld.util.ToastUtils;
 
 /**
  * @author 桀骜(Geolo)
@@ -36,6 +37,8 @@ public class MusicProfileDelegate extends BaseDelegate {
     TextView musicAuthorText;
     @BindView(R.id.music_profile_text)
     TextView musicProfileText;
+
+    private Music music;
 
     @Override
     public Object getLayout() {
@@ -57,6 +60,15 @@ public class MusicProfileDelegate extends BaseDelegate {
             int musicId = arguments.getInt(MUSIC_ID);
             loadMusicProfile(musicId);
         }
+        musicImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (music != null) {
+                    String imageUrl = music.getImageUrl();
+                    getContainerActivity().start(ImageDetailDelegate.newInstance(imageUrl));
+                }
+            }
+        });
     }
 
 
@@ -67,6 +79,7 @@ public class MusicProfileDelegate extends BaseDelegate {
         musicModel.getMusic(musicId, new DataListener<Music>() {
             @Override
             public void onReturn(Music music) {
+                MusicProfileDelegate.this.music = music;
                 musicNameText.setText(music.getName());
                 musicAuthorText.setText(music.getAuthor());
                 musicProfileText.setText(music.getProfile());
@@ -87,7 +100,7 @@ public class MusicProfileDelegate extends BaseDelegate {
 
             @Override
             public void onError(String message) {
-                Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+                ToastUtils.showErrorToast(getContext(), message);
             }
         });
     }

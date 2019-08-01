@@ -16,10 +16,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.delegate.base.BaseDelegate;
 import pers.geolo.guitarworld.delegate.base.BeanFactory;
@@ -29,6 +25,11 @@ import pers.geolo.guitarworld.entity.UserRelation;
 import pers.geolo.guitarworld.model.AuthModel;
 import pers.geolo.guitarworld.model.UserModel;
 import pers.geolo.guitarworld.util.RecyclerViewUtils;
+import pers.geolo.guitarworld.util.ToastUtils;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author 桀骜(Geolo)
@@ -62,7 +63,7 @@ public class UserListDelegate extends BaseDelegate {
 
         @Override
         public void onError(String message) {
-            Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+            ToastUtils.showErrorToast(getContext(), message);
         }
     };
 

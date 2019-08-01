@@ -40,6 +40,7 @@ public class MainActivity extends SupportActivity {
         BeanFactory.registerBean(new MusicModel());
         BeanFactory.registerBean(new UserModel());
         BeanFactory.registerBean(new WorksModel());
+        BeanFactory.registerBean(new InformationModel());
 
         loadRootFragment(R.id.container, new LauncherDelegate());
     }

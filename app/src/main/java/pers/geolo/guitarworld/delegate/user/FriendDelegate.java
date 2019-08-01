@@ -7,14 +7,14 @@ import android.view.View;
 import android.widget.Button;
 import butterknife.BindView;
 import butterknife.OnClick;
+import com.hjq.bar.TitleBar;
+import net.lucode.hackware.magicindicator.MagicIndicator;
+import pers.geolo.guitarworld.R;
+import pers.geolo.guitarworld.delegate.base.BaseDelegate;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import pers.geolo.guitarworld.R;
-import pers.geolo.guitarworld.delegate.base.BaseDelegate;
-import pers.geolo.guitarworld.ui.UserListAdapter;
 
 public class FriendDelegate extends BaseDelegate {
 
@@ -25,6 +25,10 @@ public class FriendDelegate extends BaseDelegate {
     Button btFollowing;
     @BindView(R.id.bt_follower)
     Button btFollower;
+    @BindView(R.id.title_bar)
+    TitleBar titleBar;
+    @BindView(R.id.magic_indicator)
+    MagicIndicator magicIndicator;
     @BindView(R.id.vp_user_list)
     ViewPager viewPager;
     @BindView(R.id.btn_black_list)

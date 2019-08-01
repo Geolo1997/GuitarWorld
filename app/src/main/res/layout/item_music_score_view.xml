@@ -5,13 +5,14 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="10dp"
     android:background="?android:attr/selectableItemBackground">
 
     <TextView
         android:id="@+id/tv_music_score_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:textStyle="bold"
         android:text="@string/music_score_title"/>
     <TextView

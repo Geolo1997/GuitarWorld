@@ -1,9 +1,6 @@
 package pers.geolo.guitarworld.delegate.user;
 
-import android.Manifest;
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatEditText;
 import android.view.View;
@@ -11,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.OnClick;
 import com.hjq.bar.OnTitleBarListener;
@@ -24,9 +20,10 @@ import pers.geolo.guitarworld.entity.DataListener;
 import pers.geolo.guitarworld.entity.FileListener;
 import pers.geolo.guitarworld.entity.User;
 import pers.geolo.guitarworld.model.AuthModel;
-import pers.geolo.guitarworld.model.FileModel;
 import pers.geolo.guitarworld.model.UserModel;
-import pers.geolo.guitarworld.util.*;
+import pers.geolo.guitarworld.util.GlideUtils;
+import pers.geolo.guitarworld.util.PhotoUtils;
+import pers.geolo.guitarworld.util.ToastUtils;
 
 import java.io.File;
 
@@ -55,7 +52,6 @@ public class ProfileDelegate extends SwipeBackDelegate {
 
     AuthModel authModel = BeanFactory.getBean(AuthModel.class);
     UserModel userModel = BeanFactory.getBean(UserModel.class);
-    FileModel fileModel = BeanFactory.getBean(FileModel.class);
 
     private User user;
     private boolean isEditLayoutEnable;
@@ -172,7 +168,7 @@ public class ProfileDelegate extends SwipeBackDelegate {
         userModel.updateMyProfile(user, new DataListener<Void>() {
             @Override
             public void onReturn(Void aVoid) {
-                Toast.makeText(getContext(), "保存成功！", Toast.LENGTH_SHORT).show();
+                ToastUtils.showSuccessToast(getContext(), "保存成功");
                 setEditsLayoutEnable(false);
                 titleBar.setRightTitle("编辑");
                 titleBar.setRightIcon(null);
@@ -180,7 +176,7 @@ public class ProfileDelegate extends SwipeBackDelegate {
 
             @Override
             public void onError(String message) {
-                Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+                ToastUtils.showErrorToast(getContext(), message);
             }
         });
     }
@@ -206,69 +202,28 @@ public class ProfileDelegate extends SwipeBackDelegate {
     }
 
     public void takePhoto() {
-        String[] permissions = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
-        if (!PermissionUtils.hasPermissions(getContext(), permissions)) {
-            PermissionUtils.requestPermissions(getContainerActivity(), permissions, new PermissionUtils.Callback() {
-                @Override
-                public void onSuccess(String[] permissions, int[] grantResults) {
-                    toCamera();
-                }
-
-                @Override
-                public void onFailure(String[] permissions, int[] grantResults) {
-
-                }
-            });
-        } else {
-            toCamera();
-        }
-    }
-
-    public void toCamera() {
-        File file = new File(Environment.getExternalStorageDirectory().getPath()
-                + "/guitarworld/" + System.currentTimeMillis() + ".jpg");
-        PhotoUtils.openCamera(getContainerActivity(), file, new ActivityUtils.Callback() {
+        PhotoUtils.openCamera(getContainerActivity(), new PhotoUtils.Callback() {
             @Override
-            public void onSuccess(@Nullable Intent intent) {
-                uploadAvatar(file);
+            public void onSuccess(File photo) {
+                uploadAvatar(photo);
             }
 
             @Override
-            public void onFailure(@Nullable Intent intent) {
-                Toast.makeText(getContext(), "拍照失败", Toast.LENGTH_SHORT).show();
+            public void onFailure(PhotoUtils.FailureType failureType) {
+                ToastUtils.showErrorToast(getContext(), failureType.name());
             }
         });
     }
 
     public void selectPhoto() {
-        String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
-        if (!PermissionUtils.hasPermissions(getContext(), permissions)) {
-            PermissionUtils.requestPermissions(getContainerActivity(), permissions, new PermissionUtils.Callback() {
-                @Override
-                public void onSuccess(String[] permissions, int[] grantResults) {
-                    openAlbum();
-                }
-
-                @Override
-                public void onFailure(String[] permissions, int[] grantResults) {
-
-                }
-            });
-        } else {
-            openAlbum();
-        }
-    }
-
-    public void openAlbum() {
-        PhotoUtils.openAlbum(getContainerActivity(), new ActivityUtils.Callback() {
+        PhotoUtils.openAlbum(getContainerActivity(), new PhotoUtils.Callback() {
             @Override
-            public void onSuccess(Intent intent) {
-                String filePath = GetPhotoFromPhotoAlbum.getRealPathFromUri(getContext(), intent.getData());
-                uploadAvatar(new File(filePath));
+            public void onSuccess(File photo) {
+                uploadAvatar(photo);
             }
 
             @Override
-            public void onFailure(Intent intent) {
+            public void onFailure(PhotoUtils.FailureType failureType) {
 
             }
         });
@@ -285,12 +240,12 @@ public class ProfileDelegate extends SwipeBackDelegate {
             public void onFinish(String s) {
                 user.setAvatarUrl(s);
                 GlideUtils.load(getContext(), s, ivAvatar);
-                Toast.makeText(getContext(), "上传成功！", Toast.LENGTH_SHORT).show();
+                ToastUtils.showSuccessToast(getContext(), "上传成功");
             }
 
             @Override
             public void onError(String message) {
-                Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+                ToastUtils.showErrorToast(getContext(), message);
             }
         });
     }

@@ -81,7 +81,6 @@ public class MusicIndexDelegate extends SwipeBackDelegate {
 
             @Override
             public void onRightClick(View v) {
-                Toast.makeText(getContext(), "option", Toast.LENGTH_SHORT).show();
             }
         });
     }

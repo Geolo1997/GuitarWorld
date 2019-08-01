@@ -1,4 +1,4 @@
-package pers.geolo.guitarworld.ui.magicnavigator;
+package pers.geolo.guitarworld.ui;
 
 import android.content.Context;
 import android.graphics.Color;

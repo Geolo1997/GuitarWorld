@@ -1,4 +1,4 @@
-package pers.geolo.guitarworld.ui;
+package pers.geolo.guitarworld.delegate.user;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

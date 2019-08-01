@@ -7,13 +7,13 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.OnClick;
 import com.hjq.bar.OnTitleBarListener;
 import com.hjq.bar.TitleBar;
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.delegate.base.BaseDelegate;
+import pers.geolo.guitarworld.util.ToastUtils;
 
 public class MainDelegate extends BaseDelegate {
 
@@ -128,7 +128,7 @@ public class MainDelegate extends BaseDelegate {
             drawerLayout.closeDrawer(GravityCompat.START);
             return true;
         } else if (backTimeCounter.isFirstTimeClick()) {
-            Toast.makeText(getContext(), "再次点击退出应用", Toast.LENGTH_SHORT).show();
+            ToastUtils.showInfoToast(getContext(), "再次点击退出应用");
             backTimeCounter.setStartTime();
             return true;
         } else {

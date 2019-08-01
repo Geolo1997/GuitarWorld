@@ -27,7 +27,7 @@ public abstract class BaseCallback<T> implements Callback<ResponseBody<T>> {
         Headers headers = response.headers();
 
         if (responseBody == null) {
-            Log.d(TAG, "网络错误");
+            Log.d(TAG, "网络错误：" + "code: " + response.code() + " message:" + response.message());
             onFailure();
             return;
         }
@@ -45,7 +45,7 @@ public abstract class BaseCallback<T> implements Callback<ResponseBody<T>> {
 
     @Override
     public void onFailure(Call<ResponseBody<T>> call, Throwable t) {
-        Log.d(TAG, "网络错误");
+        Log.d(TAG, "网络错误: " + t.getMessage());
         onFailure();
     }
 
