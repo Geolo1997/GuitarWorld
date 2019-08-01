@@ -143,3 +143,10 @@ INSERT INTO like_works(like_username, works_id) VALUES ('Xiaoxiao', 28);
 INSERT INTO like_works(like_username, works_id) VALUES ('Xiaoxiao', 28);
 INSERT INTO like_works(like_username, works_id) VALUES ('Xiaoxiao', 28);
 INSERT INTO like_works(like_username, works_id) VALUES ('Xiaoxiao', 28);
+
+CREATE TABLE information (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(100) NOT NULL,
+    image_url VARCHAR(200) NOT NULL,
+    detail_url VARCHAR(200) NOT NULL
+);

@@ -45,7 +45,7 @@ public class WorksController {
     public ResponseEntity<Void> publishWorks(@RequestBody Works works) {
         logger.debug("收到发布作品请求：" + works.toString());
         String currentUsername = (String) ControllerUtils.getSessionAttribute("username");
-        if (currentUsername != null && currentUsername.equals(works.getAuthor())) {
+            if (currentUsername != null && currentUsername.equals(works.getAuthor())) {
             int code = worksService.publishWorks(works);
             imageService.addImages(works.getId(), works.getImageUrls());
             return new ResponseEntity<>(code);

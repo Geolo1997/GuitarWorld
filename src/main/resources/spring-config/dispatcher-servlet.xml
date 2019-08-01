@@ -11,13 +11,13 @@
     <!--<resources mapping="/**" location="/images/" />-->
     <mvc:resources mapping="/js/**" location="/js/"/>
 
-    <!--&lt;!&ndash; 配置拦截器 &ndash;&gt;-->
-    <!--<mvc:interceptors>-->
-        <!--<mvc:interceptor>-->
-            <!--<mvc:mapping path="/**"/>-->
-            <!--<bean class="pers.geolo.guitarworldserver.interceptor.AuthInterceptor"/>-->
-        <!--</mvc:interceptor>-->
-    <!--</mvc:interceptors>-->
+    <!-- 配置拦截器 -->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <bean class="pers.geolo.guitarworldserver.interceptor.AuthInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
 
     <mvc:annotation-driven>
         <!-- 处理responseBody 里面日期类型 -->

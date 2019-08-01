@@ -1,6 +1,5 @@
 package pers.geolo.guitarworldserver.entity;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,7 +11,7 @@ public class Works {
     private int id;
     // 作者
     private String author;
-    //创作时间
+    // 创作时间
     private Date createTime;
     // 创作类型
     private WorksType type;
@@ -24,6 +23,8 @@ public class Works {
     private List<String> imageUrls;
     // 视频url
     private String videoUrl;
+    // 视频预览图url
+    private String videoPreviewUrl;
     // 评论
     private List<Comment> comments;
     // 点赞数
@@ -110,6 +111,14 @@ public class Works {
 
     public void setLikeCount(int likeCount) {
         this.likeCount = likeCount;
+    }
+
+    public String getVideoPreviewUrl() {
+        return videoPreviewUrl;
+    }
+
+    public void setVideoPreviewUrl(String videoPreviewUrl) {
+        this.videoPreviewUrl = videoPreviewUrl;
     }
 
     @Override
