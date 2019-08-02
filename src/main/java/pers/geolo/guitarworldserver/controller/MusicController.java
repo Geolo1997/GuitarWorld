@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import pers.geolo.guitarworldserver.annotation.Auth;
+import pers.geolo.guitarworldserver.annotation.AuthType;
 import pers.geolo.guitarworldserver.controller.param.MusicParam;
 import pers.geolo.guitarworldserver.controller.param.MusicScoreImageParam;
 import pers.geolo.guitarworldserver.controller.param.MusicScoreParam;
@@ -24,6 +26,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/music")
+@Auth(AuthType.LOGGED)
 public class MusicController {
 
     @Autowired

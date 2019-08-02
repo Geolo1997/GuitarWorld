@@ -3,11 +3,10 @@ package pers.geolo.guitarworldserver.controller;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import pers.geolo.guitarworldserver.annotation.Auth;
+import pers.geolo.guitarworldserver.annotation.AuthType;
 import pers.geolo.guitarworldserver.controller.param.WorksParam;
 import pers.geolo.guitarworldserver.entity.ResponseEntity;
 import pers.geolo.guitarworldserver.entity.Works;
@@ -21,6 +20,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/works")
+@Auth(AuthType.LOGGED)
 public class WorksController {
 
     Logger logger = Logger.getLogger(WorksController.class);
@@ -42,10 +42,10 @@ public class WorksController {
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<Void> publishWorks(@RequestBody Works works) {
+    public ResponseEntity<Void> publishWorks(@SessionAttribute("username") String username,
+                                             @RequestBody Works works) {
         logger.debug("收到发布作品请求：" + works.toString());
-        String currentUsername = (String) ControllerUtils.getSessionAttribute("username");
-            if (currentUsername != null && currentUsername.equals(works.getAuthor())) {
+        if (username != null && username.equals(works.getAuthor())) {
             int code = worksService.publishWorks(works);
             imageService.addImages(works.getId(), works.getImageUrls());
             return new ResponseEntity<>(code);

@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import pers.geolo.guitarworldserver.annotation.Auth;
+import pers.geolo.guitarworldserver.annotation.AuthType;
 import pers.geolo.guitarworldserver.entity.ResponseEntity;
 import pers.geolo.guitarworldserver.entity.User;
 import pers.geolo.guitarworldserver.service.FileService;
@@ -16,6 +18,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/user")
+@Auth(AuthType.LOGGED)
 public class UserController {
 
     Logger logger = Logger.getLogger(UserController.class);
@@ -46,9 +49,11 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<Void> updateUserInfo(@RequestBody User user) {
-        logger.debug("收到更新信息请求：" + user.getUsername() + " " + user.getPassword() + " " + user.getEmail());
-        if (user.getUsername().equals(ControllerUtils.getSessionAttribute("username"))) {
+    public ResponseEntity<Void> updateUserInfo(@SessionAttribute("username") String username,
+                                               @RequestBody User user) {
+        logger.debug("收到更新信息请求：" + user.getUsername() + " " + user.getPassword()
+                + " " + user.getEmail());
+        if (user.getUsername().equals(username)) {
             int code = userService.update(user);
             return new ResponseEntity<>(code);
         } else {
@@ -58,9 +63,9 @@ public class UserController {
 
     @RequestMapping(value = "/avatar", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<String> uploadAvatar(MultipartFile avatar) throws IOException {
+    public ResponseEntity<String> uploadAvatar(@SessionAttribute("username") String username,
+                                               MultipartFile avatar) throws IOException {
         logger.debug("收到更新头像请求：" + avatar.getName());
-        String username = (String) ControllerUtils.getSessionAttribute("username");
         String path = fileService.saveFile(avatar);
         // 更新User表头像路径字段
         userService.updateAvatar(username, path);

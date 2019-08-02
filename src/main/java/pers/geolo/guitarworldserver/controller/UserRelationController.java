@@ -4,7 +4,8 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
+import pers.geolo.guitarworldserver.annotation.Auth;
+import pers.geolo.guitarworldserver.annotation.AuthType;
 import pers.geolo.guitarworldserver.entity.ResponseEntity;
 import pers.geolo.guitarworldserver.entity.UserRelation;
 import pers.geolo.guitarworldserver.service.UserRelationService;
@@ -14,6 +15,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("relation")
+@Auth(AuthType.LOGGED)
 public class UserRelationController {
 
     Logger logger = Logger.getLogger(UserRelationController.class);
@@ -23,13 +25,12 @@ public class UserRelationController {
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<Void> addRelation(@RequestBody UserRelation userRelation) {
+    public ResponseEntity<Void> addRelation(@SessionAttribute("username") String username,
+                                            @RequestBody UserRelation userRelation) {
         logger.debug("收到关注请求：" + userRelation.toString());
-        // 获取当前用户的用户名
-        String currentUsername = (String) ControllerUtils.getSessionAttribute("username");
         // 获取粉丝用户名
         String followerUsername = userRelation.getFollowerUsername();
-        if (currentUsername != null && currentUsername.equals(followerUsername)) { // 当前用户是关系中的粉丝
+        if (username != null && username.equals(followerUsername)) { // 当前用户是关系中的粉丝
             userRelationService.addRelation(userRelation);
             return new ResponseEntity<>(0);
         } else {
@@ -39,13 +40,12 @@ public class UserRelationController {
 
     @RequestMapping(method = RequestMethod.DELETE)
     @ResponseBody
-    public ResponseEntity<Void> removeRelation(@RequestBody UserRelation userRelation) {
+    public ResponseEntity<Void> removeRelation(@SessionAttribute("username") String username,
+                                               @RequestBody UserRelation userRelation) {
         logger.debug("收到取关请求：" + userRelation.toString());
-        // 获取当前用户的用户名
-        String currentUsername = (String) ControllerUtils.getSessionAttribute("username");
         // 获取粉丝用户名
         String followerUsername = userRelation.getFollowerUsername();
-        if (currentUsername != null && currentUsername.equals(followerUsername)) { // 当前用户是关系中的粉丝
+        if (username != null && username.equals(followerUsername)) { // 当前用户是关系中的粉丝
             userRelationService.removeRelation(userRelation);
             return new ResponseEntity<>(0);
         } else {
@@ -55,12 +55,11 @@ public class UserRelationController {
 
     @RequestMapping(value = "/with", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<UserRelation> getUserRelation(String otherUsername) {
+    public ResponseEntity<UserRelation> getUserRelation(@SessionAttribute("username") String username,
+                                                        String otherUsername) {
         logger.debug("收到获取关系请求：" + otherUsername);
-        // 获取当前用户的用户名
-        String currentUsername = (String) ControllerUtils.getSessionAttribute("username");
         // 获取用户关系类型
-        UserRelation userRelation= userRelationService.getUserRelation(currentUsername, otherUsername);
+        UserRelation userRelation = userRelationService.getUserRelation(username, otherUsername);
         return new ResponseEntity<>(0, userRelation, null);
     }
 
