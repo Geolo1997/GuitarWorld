@@ -20,6 +20,9 @@
 <span><img width="290" height="580" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-111821_Guitar%20World.jpg"/></span>
 <span><img width="290" height="580" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-111827_Guitar%20World.jpg"/></span>
 <span><img width="290" height="580" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-111831_Guitar%20World.jpg"/></span>
+<span><img width="290" height="580" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-173949_Guitar%20World.jpg"/></span>
+<span><img width="290" height="580" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-173858_Guitar%20World.jpg"/></span>
+<span><img width="290" height="580" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-173937_Guitar%20World.jpg"/></span>
 <span><img width="290" height="580" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-112009_Guitar%20World.jpg"/></span>
 <span><img width="290" height="580" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-112034_Guitar%20World.jpg"/></span>
 <span><img width="290" height="580" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-163253_Guitar%20World.jpg"/></span>
@@ -27,9 +30,6 @@
 <span><img width="290" height="580" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-173517_Guitar%20World.jpg"/></span>
 <span><img width="290" height="580" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-173757_Guitar%20World.jpg"/></span>
 <span><img width="290" height="580" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-173810_Guitar%20World.jpg"/></span>
-<span><img width="290" height="580" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-173858_Guitar%20World.jpg"/></span>
-<span><img width="290" height="580" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-173937_Guitar%20World.jpg"/></span>
-<span><img width="290" height="580" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-173949_Guitar%20World.jpg"/></span>
 <span><img width="290" height="580" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-174517_Guitar%20World.jpg"/></span>
 <span><img width="290" height="580" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-174713_Guitar%20World.jpg"/></span>
 <span><img width="290" height="580" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-174718_Guitar%20World.jpg"/></span>
@@ -37,7 +37,6 @@
 <span><img width="290" height="580" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-174733_Guitar%20World.jpg"/></span>
 <span><img width="290" height="580" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-175154_Guitar%20World.jpg"/></span>
 <span><img width="290" height="580" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-175538_Guitar%20World.jpg"/></span>
-
 
 
 ## 未来开发计划
