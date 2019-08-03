@@ -25,12 +25,12 @@
 <span><img width="290" height="580" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-173937_Guitar%20World.jpg"/></span>
 <span><img width="290" height="580" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-112009_Guitar%20World.jpg"/></span>
 <span><img width="290" height="580" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-112034_Guitar%20World.jpg"/></span>
-<span><img width="290" height="580" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-163253_Guitar%20World.jpg"/></span>
-<span><img width="290" height="580" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-164927_Guitar%20World.jpg"/></span>
 <span><img width="290" height="580" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-173517_Guitar%20World.jpg"/></span>
+<span><img width="290" height="580" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-163253_Guitar%20World.jpg"/></span>
 <span><img width="290" height="580" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-173757_Guitar%20World.jpg"/></span>
-<span><img width="290" height="580" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-173810_Guitar%20World.jpg"/></span>
+<span><img width="290" height="580" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-164927_Guitar%20World.jpg"/></span>
 <span><img width="290" height="580" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-174517_Guitar%20World.jpg"/></span>
+<span><img width="290" height="580" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-173810_Guitar%20World.jpg"/></span>
 <span><img width="290" height="580" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-174713_Guitar%20World.jpg"/></span>
 <span><img width="290" height="580" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-174718_Guitar%20World.jpg"/></span>
 <span><img width="290" height="580" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-174724_Guitar%20World.jpg"/></span>
@@ -46,3 +46,6 @@
 4. 使用Dagger或Spring对各层进行依赖注入，替换目前临时使用的“低配版”BeanFactory。
 5. 单Activity + 多Fragment虽可以大幅度对视图控制层解耦，但因为Fragment同样是Android的系统组件，并非是仅仅持有布局和控件以及相应操作的普通Java类，所以大量解耦导致一个页面多个Fragment层层嵌套会降低性能，而且因为其view的创建和绑定(attach)过程不受程序员控制，所以难以应用于依赖于适配器(Adapter)创建的各种列表控件(ListView,RecyclerView等)。  
 因此打算尝试开发新的ViewController层，只持有控件对象引用和事件监听等操作，提供createView()、getView()、getContext()、 init()等方法，作为轻量级的"Fragment"替代现在Fragment的角色，供Activity、Fragment、Adapter等调用，进一步优化性能，复用代码，解耦视图控制层。
+
+## 版权声明
+&emsp;&emsp;本项目为开源项目，开发项目同时也旨在提高编程技术、交流分享，目前并无任何商业目的，应用截图中许多测试内容来自互联网，如有不妥请联系本人及时处理。
