@@ -53,6 +53,11 @@ public class FriendDelegate extends BaseDelegate {
     }
 
     @Override
+    protected View getStatueBarTopView() {
+        return titleBar;
+    }
+
+    @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
         Bundle args = getArguments();
         if (args != null) {

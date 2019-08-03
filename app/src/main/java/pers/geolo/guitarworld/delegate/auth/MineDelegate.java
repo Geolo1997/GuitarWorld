@@ -70,7 +70,7 @@ public class MineDelegate extends BaseDelegate {
 
             @Override
             public void onError(String message) {
-                ToastUtils.showSuccessToast(getContext(), message);
+                ToastUtils.showErrorToast(getContext(), message);
             }
         });
     }

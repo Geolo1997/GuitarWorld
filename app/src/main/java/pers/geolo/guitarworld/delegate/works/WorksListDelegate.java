@@ -1,6 +1,8 @@
 package pers.geolo.guitarworld.delegate.works;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -18,6 +20,7 @@ import butterknife.OnClick;
 import butterknife.OnLongClick;
 import cn.jzvd.Jzvd;
 import cn.jzvd.JzvdStd;
+import com.bumptech.glide.Glide;
 import de.hdodenhof.circleimageview.CircleImageView;
 import org.greenrobot.eventbus.EventBus;
 import pers.geolo.guitarworld.R;
@@ -30,11 +33,9 @@ import pers.geolo.guitarworld.model.UserModel;
 import pers.geolo.guitarworld.model.WorksModel;
 import pers.geolo.guitarworld.network.ParamBeanHandler;
 import pers.geolo.guitarworld.network.param.WorksParam;
-import pers.geolo.guitarworld.util.DateUtils;
-import pers.geolo.guitarworld.util.GlideUtils;
-import pers.geolo.guitarworld.util.RecyclerViewUtils;
-import pers.geolo.guitarworld.util.ToastUtils;
+import pers.geolo.guitarworld.util.*;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -128,6 +129,26 @@ public class WorksListDelegate extends BaseDelegate {
                 WorksListDelegate.this.worksList = worksList;
                 adapter.notifyDataSetChanged();
                 EventBus.getDefault().post(new GetWorksListSuccessEvent(worksList));
+                initThumbList();
+            }
+
+            @Override
+            public void onError(String message) {
+
+            }
+        });
+    }
+
+    private List<Bitmap> bitmapList = new ArrayList<>();
+
+    public void initThumbList() {
+        File file = new File(Environment.getExternalStorageDirectory().getPath()
+                + "/guitarworld/1564646546523.mp4");
+        PhotoUtils.getViedeoThumbAsync(file.getPath(), worksList.size(), new DataListener<List<Bitmap>>() {
+            @Override
+            public void onReturn(List<Bitmap> bitmaps) {
+                bitmapList = bitmaps;
+                adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -206,6 +227,9 @@ public class WorksListDelegate extends BaseDelegate {
                 String url = works.getVideoUrl();
                 viewHolder.video.setVisibility(View.VISIBLE);
                 viewHolder.video.setUp(url, works.getTitle());
+                if (bitmapList.size() > i) {
+                    Glide.with(getContext()).load(bitmapList.get(i)).into(viewHolder.video.thumbImageView);
+                }
             }
         }
 

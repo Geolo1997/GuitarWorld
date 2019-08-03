@@ -1,11 +1,13 @@
 package pers.geolo.guitarworld.delegate.works;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.EditText;
 import butterknife.BindView;
 import cn.jzvd.JzvdStd;
+import com.bumptech.glide.Glide;
 import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.hjq.bar.OnTitleBarListener;
 import com.hjq.bar.TitleBar;
@@ -18,6 +20,7 @@ import pers.geolo.guitarworld.entity.Works;
 import pers.geolo.guitarworld.entity.WorksType;
 import pers.geolo.guitarworld.model.AuthModel;
 import pers.geolo.guitarworld.model.WorksModel;
+import pers.geolo.guitarworld.util.GlideUtils;
 import pers.geolo.guitarworld.util.PhotoUtils;
 import pers.geolo.guitarworld.util.ToastUtils;
 
@@ -88,8 +91,10 @@ public class PublishVideoWorksDelegate extends SwipeBackDelegate {
             @Override
             public void onSuccess(File photo) {
                 video = photo;
+                Bitmap bitmap = PhotoUtils.getVideoThumb(photo.getPath());
                 previewVideo.setVisibility(View.VISIBLE);
                 previewVideo.setUp(photo.getPath(), "");
+                Glide.with(getContext()).load(bitmap).into(previewVideo.thumbImageView);
             }
 
             @Override

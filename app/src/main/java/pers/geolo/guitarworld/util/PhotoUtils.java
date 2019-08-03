@@ -5,13 +5,19 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.MediaMetadataRetriever;
+import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
+import pers.geolo.guitarworld.entity.DataListener;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author 桀骜(Geolo)
@@ -143,6 +149,30 @@ public class PhotoUtils {
         MediaMetadataRetriever media = new MediaMetadataRetriever();
         media.setDataSource(path);
         return media.getFrameAtTime();
+    }
+
+    public static void getViedeoThumbAsync(String path, int size, DataListener<List<Bitmap>> listener) {
+        ThreadUtils.runOnNewSubThread(() -> {
+            List<Bitmap> bitmapList = new ArrayList<>();
+            for (int i = 0; i < size; i++) {
+                Bitmap bitmap = getVideoThumb(path);
+                bitmapList.add(bitmap);
+            }
+            ThreadUtils.runOnUiThread(() -> {
+                listener.onReturn(bitmapList);
+            });
+        });
+    }
+
+    public static Bitmap getVideoThumbnail(String videoPath, int width, int height, int kind) {
+        Bitmap bitmap = null;
+        // 获取视频的缩略图
+        bitmap = ThumbnailUtils.createVideoThumbnail(videoPath, kind); //調用ThumbnailUtils類的靜態方法createVideoThumbnail獲取視頻的截圖；
+        if (bitmap != null) {
+            bitmap = ThumbnailUtils.extractThumbnail(bitmap, width, height,
+                    ThumbnailUtils.OPTIONS_RECYCLE_INPUT);//調用ThumbnailUtils類的靜態方法extractThumbnail將原圖片（即上方截取的圖片）轉化為指定大小；
+        }
+        return bitmap;
     }
 
     public interface Callback {
