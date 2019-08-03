@@ -17,27 +17,26 @@
 &emsp;&emsp;除此之外使用了众多开源UI库，实现了很多炫酷的视图效果。
 
 ## 应用截图
-<div style="float:left;"><img width="150" height="150" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-111821_Guitar%20World.jpg"/></div>
-<div style="float:left;"><img width="150" height="150" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-111827_Guitar%20World.jpg"/></div>
-<div style="float:left;"><img width="150" height="150" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-111831_Guitar%20World.jpg"/></div>
-<div style="float:left;"><img width="150" height="150" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-112009_Guitar%20World.jpg"/></div>
-<div style="float:left;"><img width="150" height="150" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-112034_Guitar%20World.jpg"/></div>
-<div style="float:left;"><img width="150" height="150" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-163253_Guitar%20World.jpg"/></div>
-<div style="float:left;"><img width="150" height="150" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-164927_Guitar%20World.jpg"/></div>
-<div style="float:left;"><img width="150" height="150" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-173517_Guitar%20World.jpg"/></div>
-<div style="float:left;"><img width="150" height="150" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-173757_Guitar%20World.jpg"/></div>
-<div style="float:left;"><img width="150" height="150" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-173810_Guitar%20World.jpg"/></div>
-<div style="float:left;"><img width="150" height="150" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-173858_Guitar%20World.jpg"/></div>
-<div style="float:left;"><img width="150" height="150" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-173937_Guitar%20World.jpg"/></div>
-<div style="float:left;"><img width="150" height="150" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-173949_Guitar%20World.jpg"/></div>
-<div style="float:left;"><img width="150" height="150" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-174517_Guitar%20World.jpg"/></div>
-<div style="float:left;"><img width="150" height="150" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-174713_Guitar%20World.jpg"/></div>
-<div style="float:left;"><img width="150" height="150" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-174718_Guitar%20World.jpg"/></div>
-<div style="float:left;"><img width="150" height="150" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-174724_Guitar%20World.jpg"/></div>
-<div style="float:left;"><img width="150" height="150" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-174733_Guitar%20World.jpg"/></div>
-<div style="float:left;"><img width="150" height="150" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-175154_Guitar%20World.jpg"/></div>
-<div style="float:left;"><img width="150" height="150" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-175538_Guitar%20World.jpg"/></div>
-
+<span><img width="250" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-111821_Guitar%20World.jpg"/></span>
+<span><img width="250" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-111827_Guitar%20World.jpg"/></span>
+<span><img width="250" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-111831_Guitar%20World.jpg"/></span>
+<span><img width="250" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-112009_Guitar%20World.jpg"/></span>
+<span><img width="250" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-112034_Guitar%20World.jpg"/></span>
+<span><img width="250" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-163253_Guitar%20World.jpg"/></span>
+<span><img width="250" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-164927_Guitar%20World.jpg"/></span>
+<span><img width="250" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-173517_Guitar%20World.jpg"/></span>
+<span><img width="250" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-173757_Guitar%20World.jpg"/></span>
+<span><img width="250" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-173810_Guitar%20World.jpg"/></span>
+<span><img width="250" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-173858_Guitar%20World.jpg"/></span>
+<span><img width="250" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-173937_Guitar%20World.jpg"/></span>
+<span><img width="250" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-173949_Guitar%20World.jpg"/></span>
+<span><img width="250" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-174517_Guitar%20World.jpg"/></span>
+<span><img width="250" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-174713_Guitar%20World.jpg"/></span>
+<span><img width="250" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-174718_Guitar%20World.jpg"/></span>
+<span><img width="250" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-174724_Guitar%20World.jpg"/></span>
+<span><img width="250" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-174733_Guitar%20World.jpg"/></span>
+<span><img width="250" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-175154_Guitar%20World.jpg"/></span>
+<span><img width="250" src="https://github.com/Geolo1997/GuitarWorld/blob/master/images/Screenshot_20190803-175538_Guitar%20World.jpg"/></span>
 
 ## 未来开发计划
 1. 完善已有功能，优化数据获取接口和表单验证。
