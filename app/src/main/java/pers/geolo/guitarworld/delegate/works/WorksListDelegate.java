@@ -20,7 +20,6 @@ import butterknife.OnClick;
 import butterknife.OnLongClick;
 import cn.jzvd.Jzvd;
 import cn.jzvd.JzvdStd;
-import com.bumptech.glide.Glide;
 import de.hdodenhof.circleimageview.CircleImageView;
 import org.greenrobot.eventbus.EventBus;
 import pers.geolo.guitarworld.R;
@@ -129,26 +128,6 @@ public class WorksListDelegate extends BaseDelegate {
                 WorksListDelegate.this.worksList = worksList;
                 adapter.notifyDataSetChanged();
                 EventBus.getDefault().post(new GetWorksListSuccessEvent(worksList));
-                initThumbList();
-            }
-
-            @Override
-            public void onError(String message) {
-
-            }
-        });
-    }
-
-    private List<Bitmap> bitmapList = new ArrayList<>();
-
-    public void initThumbList() {
-        File file = new File(Environment.getExternalStorageDirectory().getPath()
-                + "/guitarworld/1564646546523.mp4");
-        PhotoUtils.getViedeoThumbAsync(file.getPath(), worksList.size(), new DataListener<List<Bitmap>>() {
-            @Override
-            public void onReturn(List<Bitmap> bitmaps) {
-                bitmapList = bitmaps;
-                adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -227,8 +206,9 @@ public class WorksListDelegate extends BaseDelegate {
                 String url = works.getVideoUrl();
                 viewHolder.video.setVisibility(View.VISIBLE);
                 viewHolder.video.setUp(url, works.getTitle());
-                if (bitmapList.size() > i) {
-                    Glide.with(getContext()).load(bitmapList.get(i)).into(viewHolder.video.thumbImageView);
+                String previewImageUrl = works.getVideoPreviewUrl();
+                if (previewImageUrl != null && !"".equals(previewImageUrl)) {
+                    GlideUtils.load(getContext(), previewImageUrl, viewHolder.video.thumbImageView);
                 }
             }
         }
@@ -283,6 +263,7 @@ public class WorksListDelegate extends BaseDelegate {
             contentText.setText("");
             firstImage.setImageBitmap(null);
             video.reset();
+            video.thumbImageView.setImageBitmap(null);
             // 设置不可见
             contentText.setVisibility(View.GONE);
             firstImage.setVisibility(View.GONE);

@@ -122,6 +122,10 @@ public class WorksContentDelegate extends BaseDelegate {
                     String url = works.getVideoUrl();
                     video.setVisibility(View.VISIBLE);
                     video.setUp(url, works.getTitle());
+                    String previewImageUrl = works.getVideoPreviewUrl();
+                    if (previewImageUrl != null && !"".equals(previewImageUrl)) {
+                        GlideUtils.load(getContext(), previewImageUrl, video.thumbImageView);
+                    }
                 }
             }
 
