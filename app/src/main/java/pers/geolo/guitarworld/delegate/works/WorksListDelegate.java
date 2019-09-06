@@ -83,13 +83,13 @@ public class WorksListDelegate extends BaseDelegate {
         return fragment;
     }
 
-    @Override
-    public void onNewBundle(Bundle args) {
-        super.onNewBundle(args);
-    }
+//    @Override
+//    public void onNewBundle(Bundle args) {
+//        super.onNewBundle(args);
+//    }
 
     @Override
-    public Object getLayout() {
+    public Object getLayoutView() {
         return R.layout.works_list;
     }
 
@@ -146,19 +146,19 @@ public class WorksListDelegate extends BaseDelegate {
         return (position) * itemHeight - firstVisiableChildView.getTop();
     }
 
-    @Override
-    public boolean onBackPressedSupport() {
-        if (Jzvd.backPress()) {
-            return true;
-        }
-        return super.onBackPressedSupport();
-    }
+//    @Override
+//    public boolean onBackPressedSupport() {
+//        if (Jzvd.backPress()) {
+//            return true;
+//        }
+//        return super.onBackPressedSupport();
+//    }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        Jzvd.releaseAllVideos();
-    }
+//    @Override
+//    public void onPause() {
+//        super.onPause();
+//        Jzvd.releaseAllVideos();
+//    }
 
     class Adapter extends RecyclerView.Adapter<ViewHolder> {
 
@@ -246,8 +246,8 @@ public class WorksListDelegate extends BaseDelegate {
             super(itemView);
             ButterKnife.bind(this, itemView);
             delegate = new ImageListDelegate();
-            delegate.inflateView(LayoutInflater.from(getContext()), imageListLayout);
-            delegate.setActivity(getContainerActivity());
+            delegate.createView(imageListLayout);
+//            delegate.setActivity(getContainerActivity());
             imageListLayout.addView(delegate.getRootView());
             init();
 

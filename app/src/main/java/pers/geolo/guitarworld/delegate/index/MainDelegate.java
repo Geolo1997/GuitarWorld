@@ -12,6 +12,7 @@ import butterknife.OnClick;
 import com.hjq.bar.OnTitleBarListener;
 import com.hjq.bar.TitleBar;
 import pers.geolo.guitarworld.R;
+import pers.geolo.guitarworld.delegate.auth.MineDelegate;
 import pers.geolo.guitarworld.delegate.base.BaseDelegate;
 import pers.geolo.guitarworld.util.ToastUtils;
 
@@ -30,7 +31,7 @@ public class MainDelegate extends BaseDelegate {
     private BackTimeCounter backTimeCounter = new BackTimeCounter();
 
     @Override
-    public Object getLayout() {
+    public Object getLayoutView() {
         return R.layout.main;
     }
 
@@ -41,10 +42,11 @@ public class MainDelegate extends BaseDelegate {
 
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
-        setSwipeBackEnable(false);
+//        setSwipeBackEnable(false);
         initTitleBar();
         selectedLayout = rootView.findViewById(R.id.bt_dynamic);
         initSubDelegates();
+        loadRootFragment(R.id.slide_container, new MineDelegate());
 //        // 标题
 //        loadRootFragment(R.id.container_tool_bar, ToolBarDelegate.newInstance("主页"));
     }
@@ -75,7 +77,7 @@ public class MainDelegate extends BaseDelegate {
                 new ToolsDelegate(),
                 new ShopDelegate()
         };
-        loadMultipleRootFragment(R.id.delegates_layout, 0, delegates);
+        loadMultipleRootFragment(R.id.delegates_layout, 4, delegates);
         currentDelegate = delegates[0];
         onButtonClicked(selectedLayout);
     }
@@ -85,22 +87,22 @@ public class MainDelegate extends BaseDelegate {
     public void onButtonClicked(View view) {
         switch (view.getId()) {
             case R.id.bt_dynamic:
-                showHideFragment(delegates[0], currentDelegate);
+                showHideFragment(R.id.delegates_layout,delegates[0], currentDelegate);
                 currentDelegate = delegates[0];
                 titleBar.setTitle("动态");
                 break;
             case R.id.bt_discover:
-                showHideFragment(delegates[1], currentDelegate);
+                showHideFragment(R.id.delegates_layout,delegates[1], currentDelegate);
                 currentDelegate = delegates[1];
                 titleBar.setTitle("发现");
                 break;
             case R.id.bt_tools:
-                showHideFragment(delegates[2], currentDelegate);
+                showHideFragment(R.id.delegates_layout,delegates[2], currentDelegate);
                 currentDelegate = delegates[2];
                 titleBar.setTitle("工具");
                 break;
             case R.id.bt_shop:
-                showHideFragment(delegates[3], currentDelegate);
+                showHideFragment(R.id.delegates_layout,delegates[3], currentDelegate);
                 currentDelegate = delegates[3];
                 titleBar.setTitle("商城");
                 break;
@@ -122,19 +124,20 @@ public class MainDelegate extends BaseDelegate {
         }
     }
 
-    @Override
-    public boolean onBackPressedSupport() {
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            drawerLayout.closeDrawer(GravityCompat.START);
-            return true;
-        } else if (backTimeCounter.isFirstTimeClick()) {
-            ToastUtils.showInfoToast(getContext(), "再次点击退出应用");
-            backTimeCounter.setStartTime();
-            return true;
-        } else {
-            return super.onBackPressedSupport();
-        }
-    }
+////    @Override
+//    public boolean onBackPressedSupport() {
+//        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+//            drawerLayout.closeDrawer(GravityCompat.START);
+//            return true;
+//        } else if (backTimeCounter.isFirstTimeClick()) {
+//            ToastUtils.showInfoToast(getContext(), "再次点击退出应用");
+//            backTimeCounter.setStartTime();
+//            return true;
+//        } else {
+////            return super.onBackPressedSupport();
+//        }
+//
+//    }
 
     class BackTimeCounter {
 

@@ -33,7 +33,7 @@ public class BannerDelegate extends BaseDelegate {
     private List<Information> dataList;
 
     @Override
-    public Object getLayout() {
+    public Object getLayoutView() {
         return R.layout.banner;
     }
 

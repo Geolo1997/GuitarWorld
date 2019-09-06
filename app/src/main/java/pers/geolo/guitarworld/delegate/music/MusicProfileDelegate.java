@@ -41,7 +41,7 @@ public class MusicProfileDelegate extends BaseDelegate {
     private Music music;
 
     @Override
-    public Object getLayout() {
+    public Object getLayoutView() {
         return R.layout.music_profile;
     }
 

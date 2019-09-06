@@ -32,6 +32,7 @@ public class UserListAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int i) {
-        return delegates.get(i);
+//        return delegates.get(i);
+        return null;
     }
 }

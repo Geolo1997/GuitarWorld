@@ -1,18 +1,18 @@
 package pers.geolo.guitarworld.delegate.base;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import com.joanzapata.iconify.Iconify;
 import com.joanzapata.iconify.fonts.FontAwesomeModule;
-import me.yokeyword.fragmentation.SupportActivity;
 import org.litepal.LitePal;
-import pers.geolo.guitarworld.R;
-import pers.geolo.guitarworld.delegate.index.LauncherDelegate;
+import pers.geolo.guitarworld.delegate.auth.LoginDelegate;
+import pers.geolo.guitarworld.microview.MicroviewActivity;
+import pers.geolo.guitarworld.microview.ViewManager;
 import pers.geolo.guitarworld.model.*;
 import pers.geolo.guitarworld.ui.icon.FontModule;
 import pers.geolo.guitarworld.util.ActivityUtils;
+import pers.geolo.guitarworld.util.MicroviewTransferUtils;
 import pers.geolo.guitarworld.util.PermissionUtils;
 import pers.geolo.guitarworld.util.StatusBarUtils;
 
@@ -20,12 +20,10 @@ import pers.geolo.guitarworld.util.StatusBarUtils;
  * @author 桀骜(Geolo)
  * @date 2019-06-07
  */
-public class MainActivity extends SupportActivity {
+public class MainActivity extends MicroviewActivity {
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.container);
+    protected void init() {
         // 修改状态栏字体颜色
         StatusBarUtils.setAndroidNativeLightStatusBar(this, true);
         // LitePal 初始化
@@ -41,8 +39,8 @@ public class MainActivity extends SupportActivity {
         BeanFactory.registerBean(new UserModel());
         BeanFactory.registerBean(new WorksModel());
         BeanFactory.registerBean(new InformationModel());
-
-        loadRootFragment(R.id.container, new LauncherDelegate());
+        ViewManager.setActivity(this);
+        ViewManager.start(new LoginDelegate());
     }
 
     @Override
@@ -56,5 +54,13 @@ public class MainActivity extends SupportActivity {
                                            @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         PermissionUtils.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    public void loadRootFragment(int containerId, @NonNull BaseDelegate toFragment) {
+        MicroviewTransferUtils.start(toFragment);
+    }
+
+    public void start(BaseDelegate delegate) {
+        MicroviewTransferUtils.start(delegate);
     }
 }

@@ -34,7 +34,7 @@ public class ImageDetailDelegate extends SwipeBackDelegate {
     }
 
     @Override
-    public Object getLayout() {
+    public Object getLayoutView() {
         return R.layout.image_detail;
     }
 

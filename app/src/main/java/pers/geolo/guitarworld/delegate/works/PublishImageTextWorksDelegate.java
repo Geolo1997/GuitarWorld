@@ -61,7 +61,7 @@ public class PublishImageTextWorksDelegate extends SwipeBackDelegate {
     AddImageManagerDelegate addImageManagerDelegate;
 
     @Override
-    public Object getLayout() {
+    public Object getLayoutView() {
         return R.layout.publish_image_text;
     }
 

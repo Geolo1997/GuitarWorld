@@ -76,7 +76,7 @@ public class UserListDelegate extends BaseDelegate {
     }
 
     @Override
-    public Object getLayout() {
+    public Object getLayoutView() {
         return R.layout.delegate_user_list;
     }
 

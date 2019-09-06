@@ -36,7 +36,7 @@ public class MusicScoreListDelegate extends BaseDelegate {
     MusicModel musicModel = BeanFactory.getBean(MusicModel.class);
 
     @Override
-    public Object getLayout() {
+    public Object getLayoutView() {
         return R.layout.delegate_music_score_list;
     }
 

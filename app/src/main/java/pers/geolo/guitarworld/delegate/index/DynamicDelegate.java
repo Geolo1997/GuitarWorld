@@ -35,7 +35,7 @@ public class DynamicDelegate extends BaseDelegate {
     WorksListDelegate worksListDelegate;
 
     @Override
-    public Object getLayout() {
+    public Object getLayoutView() {
         return R.layout.dynamic;
     }
 
@@ -82,9 +82,9 @@ public class DynamicDelegate extends BaseDelegate {
         getContainerActivity().start(new PublishVideoWorksDelegate());
     }
 
-    @Override
+//    @Override
     public void onSupportInvisible() {
-        super.onSupportInvisible();
+//        super.onSupportInvisible();
         floatingMenu.close(false);
     }
 

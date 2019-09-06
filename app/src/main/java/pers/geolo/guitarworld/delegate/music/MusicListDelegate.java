@@ -47,7 +47,7 @@ public class MusicListDelegate extends BaseDelegate {
     MusicModel musicModel = BeanFactory.getBean(MusicModel.class);
 
     @Override
-    public Object getLayout() {
+    public Object getLayoutView() {
         return R.layout.music_list;
     }
 
@@ -132,7 +132,7 @@ public class MusicListDelegate extends BaseDelegate {
             @OnClick(R.id.music_item)
             public void startMusicDetail() {
                 int id = musicList.get(getAdapterPosition()).getId();
-                getContainerActivity().start(MusicIndexDelegate.newInstance(id));
+                getActivity().start(MusicIndexDelegate.newInstance(id));
             }
         }
     }

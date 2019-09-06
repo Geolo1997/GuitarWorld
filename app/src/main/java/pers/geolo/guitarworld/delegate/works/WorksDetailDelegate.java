@@ -60,7 +60,7 @@ public class WorksDetailDelegate extends SwipeBackDelegate {
     }
 
     @Override
-    public Object getLayout() {
+    public Object getLayoutView() {
         return R.layout.works_detail;
     }
 

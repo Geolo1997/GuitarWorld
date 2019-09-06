@@ -36,7 +36,7 @@ public class LoginDelegate extends BaseDelegate {
     AuthModel authModel = BeanFactory.getBean(AuthModel.class);
 
     @Override
-    public Object getLayout() {
+    public Object getLayoutView() {
         return R.layout.login;
     }
 
@@ -82,17 +82,17 @@ public class LoginDelegate extends BaseDelegate {
 
     @OnClick(R.id.bt_register)
     public void startRegisterActivity() {
-        startForResult(new RegisterDelegate(), REGISTER);
+//        startForResult(new RegisterDelegate(), REGISTER);
     }
 
-    @Override
-    public void onFragmentResult(int requestCode, int resultCode, Bundle data) {
-        super.onFragmentResult(requestCode, resultCode, data);
-        if (requestCode == REGISTER && resultCode == RESULT_OK) {
-            ToastUtils.showSuccessToast(getContext(), "注册成功");
-            etUsername.setText(data.getString("username"));
-            etPassword.setText(data.getString("password"));
-            login();
-        }
-    }
+//    @Override
+//    public void onFragmentResult(int requestCode, int resultCode, Bundle data) {
+//        super.onFragmentResult(requestCode, resultCode, data);
+//        if (requestCode == REGISTER && resultCode == RESULT_OK) {
+//            ToastUtils.showSuccessToast(getContext(), "注册成功");
+//            etUsername.setText(data.getString("username"));
+//            etPassword.setText(data.getString("password"));
+//            login();
+//        }
+//    }
 }

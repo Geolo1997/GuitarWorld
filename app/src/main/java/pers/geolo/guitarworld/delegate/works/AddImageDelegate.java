@@ -34,7 +34,7 @@ public class AddImageDelegate extends BaseDelegate implements PhotoUtils.Callbac
     private File image;
 
     @Override
-    public Object getLayout() {
+    public Object getLayoutView() {
         return R.layout.add_image;
     }
 
@@ -52,11 +52,11 @@ public class AddImageDelegate extends BaseDelegate implements PhotoUtils.Callbac
         if (image != null) { // 有图片
             // TODO 编辑图片
         } else { // 没有图片
-            PhotoOptionDialog.show(getChildFragmentManager(), v -> {
-                PhotoUtils.openCamera(getActivity(), this);
-            }, v -> {
-                PhotoUtils.openAlbum(getActivity(), this);
-            });
+//            PhotoOptionDialog.show(getChildFragmentManager(), v -> {
+//                PhotoUtils.openCamera(getActivity(), this);
+//            }, v -> {
+//                PhotoUtils.openAlbum(getActivity(), this);
+//            });
         }
     }
 

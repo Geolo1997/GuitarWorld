@@ -51,7 +51,7 @@ public class PublishVideoWorksDelegate extends SwipeBackDelegate {
     private Works videoWorks;
 
     @Override
-    public Object getLayout() {
+    public Object getLayoutView() {
         return R.layout.publish_video_works;
     }
 

@@ -18,7 +18,7 @@ public class DiscoverDelegate extends BaseDelegate {
     private MusicDiscoverDelegate musicDiscoverDelegate;
 
     @Override
-    public Object getLayout() {
+    public Object getLayoutView() {
         return R.layout.delegate_discover;
     }
 

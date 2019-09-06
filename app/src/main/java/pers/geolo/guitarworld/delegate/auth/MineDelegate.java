@@ -36,7 +36,7 @@ public class MineDelegate extends BaseDelegate {
     AuthModel authModel = BeanFactory.getBean(AuthModel.class);
 
     @Override
-    public Object getLayout() {
+    public Object getLayoutView() {
         return R.layout.mine;
     }
 
@@ -105,7 +105,7 @@ public class MineDelegate extends BaseDelegate {
         authModel.logout(new DataListener<Void>() {
             @Override
             public void onReturn(Void aVoid) {
-                getContainerActivity().startWithPop(new LoginDelegate());
+                startWithPop(new LoginDelegate());
             }
 
             @Override
@@ -115,9 +115,9 @@ public class MineDelegate extends BaseDelegate {
         });
     }
 
-    @Override
-    public void onSupportVisible() {
-        super.onSupportVisible();
-        init();
-    }
+//    @Override
+//    public void onSupportVisible() {
+//        super.onSupportVisible();
+//        init();
+//    }
 }

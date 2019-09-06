@@ -28,7 +28,7 @@ public class RegisterDelegate extends BaseDelegate {
     AuthModel authModel = BeanFactory.getBean(AuthModel.class);
 
     @Override
-    public Object getLayout() {
+    public Object getLayoutView() {
         return R.layout.register;
     }
 
@@ -52,7 +52,7 @@ public class RegisterDelegate extends BaseDelegate {
                 Bundle bundle = new Bundle();
                 bundle.putString("username", username);
                 bundle.putString("password", password);
-                setFragmentResult(RESULT_OK, bundle);
+//                setFragmentResult(RESULT_OK, bundle);
                 pop();
             }
 

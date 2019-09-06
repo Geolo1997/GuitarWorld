@@ -12,7 +12,7 @@ import pers.geolo.guitarworld.delegate.base.BaseDelegate;
 public class SearchResultDelegate extends BaseDelegate {
 
     @Override
-    public Object getLayout() {
+    public Object getLayoutView() {
         return R.layout.delegate_search_result;
     }
 

@@ -40,18 +40,18 @@ public class MusicResourceDelegate extends BaseDelegate {
     }
 
     @Override
-    public Object getLayout() {
+    public Object getLayoutView() {
         return R.layout.music_resource;
     }
 
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
         int musicId = getArguments().getInt(MUSIC_ID);
-        new MagicNavigator(getContext(), getChildFragmentManager(), viewPager, magicIndicator)
-                .setItem("乐谱", MusicScoreListDelegate.newInstance(musicId))
-                .setItem("教学", WorksListDelegate.newInstance(new HashMap<>()))
-                .setItem("演奏", WorksListDelegate.newInstance(new HashMap<>()))
-                .init();
+//        new MagicNavigator(getContext(), getChildFragmentManager(), viewPager, magicIndicator)
+//                .setItem("乐谱", MusicScoreListDelegate.newInstance(musicId))
+//                .setItem("教学", WorksListDelegate.newInstance(new HashMap<>()))
+//                .setItem("演奏", WorksListDelegate.newInstance(new HashMap<>()))
+//                .init();
     }
 
     public void setPlaceHolderVisible(int visible) {

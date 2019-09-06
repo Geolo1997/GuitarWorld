@@ -34,7 +34,7 @@ public class MusicIndexDelegate extends SwipeBackDelegate {
     MusicResourceDelegate musicResourceDelegate;
 
     @Override
-    public Object getLayout() {
+    public Object getLayoutView() {
         return R.layout.music_index;
     }
 

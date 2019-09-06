@@ -39,7 +39,7 @@ public class AddImageManagerDelegate extends BaseDelegate {
     GridViewAdapter adapter;
 
     @Override
-    public Object getLayout() {
+    public Object getLayoutView() {
         return R.layout.add_image_manager;
     }
 
@@ -163,11 +163,11 @@ public class AddImageManagerDelegate extends BaseDelegate {
                         ToastUtils.showInfoToast(getContext(), "最多上传9张图片");
                         return;
                     }
-                    dialog = PhotoOptionDialog.show(getChildFragmentManager(), v -> {
-                        PhotoUtils.openCamera(getActivity(), callback);
-                    }, v -> {
-                        PhotoUtils.openAlbum(getActivity(), callback);
-                    });
+//                    dialog = PhotoOptionDialog.show(getChildFragmentManager(), v -> {
+//                        PhotoUtils.openCamera(getActivity(), callback);
+//                    }, v -> {
+//                        PhotoUtils.openAlbum(getActivity(), callback);
+//                    });
                 }
             }
 

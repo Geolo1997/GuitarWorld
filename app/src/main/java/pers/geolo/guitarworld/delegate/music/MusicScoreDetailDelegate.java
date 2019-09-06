@@ -46,7 +46,7 @@ public class MusicScoreDetailDelegate extends SwipeBackDelegate {
     MusicModel musicModel = BeanFactory.getBean(MusicModel.class);
 
     @Override
-    public Object getLayout() {
+    public Object getLayoutView() {
         return R.layout.music_score_detail;
     }
 

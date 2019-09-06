@@ -63,7 +63,7 @@ public class WorksContentDelegate extends BaseDelegate {
     Works works;
 
     @Override
-    public Object getLayout() {
+    public Object getLayoutView() {
         return R.layout.works_content;
     }
 

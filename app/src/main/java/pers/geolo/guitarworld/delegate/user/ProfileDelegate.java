@@ -65,7 +65,7 @@ public class ProfileDelegate extends SwipeBackDelegate {
     }
 
     @Override
-    public Object getLayout() {
+    public Object getLayoutView() {
         return R.layout.profile;
     }
 
@@ -188,17 +188,17 @@ public class ProfileDelegate extends SwipeBackDelegate {
             return;
         }
 //        start(ImageDetailDelegate.newInstance(user.getAvatarUrl()));
-        BottomDialog.create(getChildFragmentManager())
-                .setViewListener(v -> {
-                    v.findViewById(R.id.take_photo_button).setOnClickListener(view -> {
-                        takePhoto();
-                    });
-                    v.findViewById(R.id.select_photo_button).setOnClickListener(view -> {
-                        selectPhoto();
-                    });
-                })
-                .setLayoutRes(R.layout.upload_photo_option)      // dialog layout
-                .show();
+//        BottomDialog.create(getChildFragmentManager())
+//                .setViewListener(v -> {
+//                    v.findViewById(R.id.take_photo_button).setOnClickListener(view -> {
+//                        takePhoto();
+//                    });
+//                    v.findViewById(R.id.select_photo_button).setOnClickListener(view -> {
+//                        selectPhoto();
+//                    });
+//                })
+//                .setLayoutRes(R.layout.upload_photo_option)      // dialog layout
+//                .show();
     }
 
     public void takePhoto() {

@@ -65,7 +65,7 @@ public class WorksOptionDelegate extends BaseDelegate {
     WorksModel worksModel = BeanFactory.getBean(WorksModel.class);
 
     @Override
-    public Object getLayout() {
+    public Object getLayoutView() {
         return R.layout.works_option;
     }
 
@@ -146,7 +146,7 @@ public class WorksOptionDelegate extends BaseDelegate {
             commentEdit.setVisibility(View.VISIBLE);
             isCommenting = true;
 //            KeyBoardUtils.showKeyBoard(getContext(), commentEdit);
-            showSoftInput(commentEdit);
+//            showSoftInput(commentEdit);
         } else {
 
             String commentText = commentEdit.getText().toString().trim();
@@ -191,7 +191,7 @@ public class WorksOptionDelegate extends BaseDelegate {
                 intent.putExtra(Intent.EXTRA_STREAM, videoUri);
                 break;
         }
-        startActivity(Intent.createChooser(intent, "分享到"));
+//        startActivity(Intent.createChooser(intent, "分享到"));
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)

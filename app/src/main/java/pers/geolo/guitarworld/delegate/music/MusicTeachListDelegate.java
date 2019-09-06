@@ -16,7 +16,7 @@ public class MusicTeachListDelegate extends BaseDelegate {
 //    List<Works>
 
     @Override
-    public Object getLayout() {
+    public Object getLayoutView() {
         return R.layout.delegate_music_teach_list;
     }
 

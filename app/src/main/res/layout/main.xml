@@ -128,15 +128,10 @@
 
     <!-- 侧滑栏 -->
     <FrameLayout
+        android:id="@+id/slide_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         >
-
-        <fragment
-            android:name="pers.geolo.guitarworld.delegate.auth.MineDelegate"
-            android:id="@+id/container_mine"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
     </FrameLayout>
 </android.support.v4.widget.DrawerLayout>

@@ -48,7 +48,7 @@ public class FriendDelegate extends BaseDelegate {
     }
 
     @Override
-    public Object getLayout() {
+    public Object getLayoutView() {
         return R.layout.delegate_friend;
     }
 
@@ -79,7 +79,7 @@ public class FriendDelegate extends BaseDelegate {
     }
 
     private void initViewPager() {
-        userListAdapter = new UserListAdapter(getChildFragmentManager());
+//        userListAdapter = new UserListAdapter(getChildFragmentManager());
         userListAdapter.setDelegates(delegates);
         viewPager.setAdapter(userListAdapter);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {

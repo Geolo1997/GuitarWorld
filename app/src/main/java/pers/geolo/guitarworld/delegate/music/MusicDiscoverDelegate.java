@@ -33,7 +33,7 @@ public class MusicDiscoverDelegate extends BaseDelegate {
     ViewPagerAdapter viewPagerAdapter;
 
     @Override
-    public Object getLayout() {
+    public Object getLayoutView() {
         return R.layout.music_discover;
     }
 
@@ -80,11 +80,11 @@ public class MusicDiscoverDelegate extends BaseDelegate {
 //        magicIndicator.setNavigator(commonNavigator);
 //        ViewPagerHelper.bind(magicIndicator, viewPager);
 
-        new MagicNavigator(getContext(), getChildFragmentManager(), viewPager, magicIndicator)
-                .setItem("推荐", MusicListDelegate.newInstance(new HashMap<>()))
-                .setItem("排行", MusicListDelegate.newInstance(new HashMap<>()))
-                .setItem("飙升", MusicListDelegate.newInstance(new HashMap<>()))
-                .init();
+//        new MagicNavigator(getContext(), getChildFragmentManager(), viewPager, magicIndicator)
+//                .setItem("推荐", MusicListDelegate.newInstance(new HashMap<>()))
+//                .setItem("排行", MusicListDelegate.newInstance(new HashMap<>()))
+//                .setItem("飙升", MusicListDelegate.newInstance(new HashMap<>()))
+//                .init();
     }
 
     private List<String> getTitles() {
@@ -99,13 +99,13 @@ public class MusicDiscoverDelegate extends BaseDelegate {
         List<Fragment> fragments = new ArrayList<>();
         HashMap<String, Object> filter1 = new HashMap<>();
         filter1.put("recommand", true);
-        fragments.add(MusicListDelegate.newInstance(filter1));
-        HashMap<String, Object> filter2 = new HashMap<>();
-        filter1.put("sort", true);
-        fragments.add(MusicListDelegate.newInstance(filter2));
-        HashMap<String, Object> filter3 = new HashMap<>();
-        filter1.put("trending", true);
-        fragments.add(MusicListDelegate.newInstance(filter3));
+//        fragments.add(MusicListDelegate.newInstance(filter1));
+//        HashMap<String, Object> filter2 = new HashMap<>();
+//        filter1.put("sort", true);
+//        fragments.add(MusicListDelegate.newInstance(filter2));
+//        HashMap<String, Object> filter3 = new HashMap<>();
+//        filter1.put("trending", true);
+//        fragments.add(MusicListDelegate.newInstance(filter3));
         return fragments;
     }
 }

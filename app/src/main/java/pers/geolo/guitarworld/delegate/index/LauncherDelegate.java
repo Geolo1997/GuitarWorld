@@ -23,18 +23,18 @@ public class LauncherDelegate extends BaseDelegate {
     LauncherTimer launcherTimer;
 
     @Override
-    public Object getLayout() {
+    public Object getLayoutView() {
         return R.layout.launcher;
     }
 
-    @Override
-    protected View getStatueBarTopView() {
-        return tvTimer;
-    }
+//    @Override
+//    protected View getStatueBarTopView() {
+//        return tvTimer;
+//    }
 
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
-        setStatusBarDark(false);
+//        setStatusBarDark(false);
         // onBindView launcherTimer
         launcherTimer = new LauncherTimer(1000, 1000);
         launcherTimer.start();

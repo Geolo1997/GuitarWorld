@@ -35,7 +35,7 @@ public class ImageListDelegate extends BaseDelegate {
     GridViewAdapter adapter = new GridViewAdapter();
 
     @Override
-    public Object getLayout() {
+    public Object getLayoutView() {
         return R.layout.image_list;
     }
 
