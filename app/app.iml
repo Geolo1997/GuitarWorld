@@ -207,7 +207,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/libs/microview-1.0.0.190908_alpha.jar!/" />
+          <root url="jar://$MODULE_DIR$/libs/microview-1.0.1.190908_alpha.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

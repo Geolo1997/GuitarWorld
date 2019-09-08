@@ -12,7 +12,6 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import com.hjq.bar.OnTitleBarListener;
 import com.hjq.bar.TitleBar;
-import me.shaohui.bottomdialog.BottomDialog;
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.controller.base.BeanFactory;
 import pers.geolo.guitarworld.controller.base.SwipeBackController;
@@ -37,9 +36,9 @@ public class ProfileController extends SwipeBackController {
     ViewGroup editsLayout;
     @BindView(R.id.tv_username)
     TextView tvUsername;
-    @BindView(R.id.et_password)
+    @BindView(R.id.password_text)
     EditText etPassword;
-    @BindView(R.id.et_email)
+    @BindView(R.id.email_text)
     EditText etEmail;
     @BindView(R.id.et_sex)
     EditText etSex;

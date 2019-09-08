@@ -1,30 +1,24 @@
 package pers.geolo.guitarworld.controller.auth;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.OnClick;
+import org.microview.core.ViewManager;
+import org.microview.core.ViewParams;
 import pers.geolo.guitarworld.R;
-import pers.geolo.guitarworld.controller.base.BaseController;
+import pers.geolo.guitarworld.controller.BaseController;
 import pers.geolo.guitarworld.controller.base.BeanFactory;
-import pers.geolo.guitarworld.controller.index.MainController;
 import pers.geolo.guitarworld.entity.DataListener;
 import pers.geolo.guitarworld.entity.LogInfo;
 import pers.geolo.guitarworld.model.AuthModel;
-import pers.geolo.guitarworld.util.ToastUtils;
 
 public class LoginController extends BaseController {
 
-    private static final int REGISTER = 1;
-
-    @BindView(R.id.et_username)
+    @BindView(R.id.username_text)
     EditText etUsername;
-    @BindView(R.id.et_password)
+    @BindView(R.id.password_text)
     EditText etPassword;
     @BindView(R.id.tv_loginHint)
     TextView tvLoginHint;
@@ -36,12 +30,12 @@ public class LoginController extends BaseController {
     AuthModel authModel = BeanFactory.getBean(AuthModel.class);
 
     @Override
-    public Object getLayoutView() {
+    protected int getLayout() {
         return R.layout.login;
     }
 
     @Override
-    public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
+    public void initView(ViewParams viewParams) {
         // onBindView logInfo
         authModel.getLastSavedLogInfo(new DataListener<LogInfo>() {
             @Override
@@ -70,7 +64,7 @@ public class LoginController extends BaseController {
             @Override
             public void onReturn(Void aVoid) {
                 authModel.saveLogInfo(logInfo);
-                startWithPop(new MainController());
+//                startWithPop(new MainController());
             }
 
             @Override
@@ -82,16 +76,17 @@ public class LoginController extends BaseController {
 
     @OnClick(R.id.bt_register)
     public void startRegisterActivity() {
-//        startForResult(new RegisterController(), REGISTER);
+        ViewManager.start(new RegisterController());
     }
 
+    //TODO 注册成功回调
 //    @Override
 //    public void onFragmentResult(int requestCode, int resultCode, Bundle data) {
 //        super.onFragmentResult(requestCode, resultCode, data);
 //        if (requestCode == REGISTER && resultCode == RESULT_OK) {
 //            ToastUtils.showSuccessToast(getContext(), "注册成功");
-//            etUsername.setText(data.getString("username"));
-//            etPassword.setText(data.getString("password"));
+//            usernameText.setText(data.getString("username"));
+//            passwordText.setText(data.getString("password"));
 //            login();
 //        }
 //    }

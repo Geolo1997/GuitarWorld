@@ -1,15 +1,14 @@
 package pers.geolo.guitarworld.controller.index;
 
-import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.support.annotation.Nullable;
-import android.view.View;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.OnClick;
+import org.microview.core.ViewManager;
+import org.microview.core.ViewParams;
 import pers.geolo.guitarworld.R;
+import pers.geolo.guitarworld.controller.BaseController;
 import pers.geolo.guitarworld.controller.auth.LoginController;
-import pers.geolo.guitarworld.controller.base.BaseController;
 import pers.geolo.guitarworld.controller.base.BeanFactory;
 import pers.geolo.guitarworld.entity.DataListener;
 import pers.geolo.guitarworld.model.AuthModel;
@@ -23,17 +22,17 @@ public class LauncherController extends BaseController {
     LauncherTimer launcherTimer;
 
     @Override
-    public Object getLayoutView() {
+    protected int getLayout() {
         return R.layout.launcher;
     }
 
-//    @Override
+
+    //    @Override
 //    protected View getStatueBarTopView() {
 //        return tvTimer;
 //    }
-
     @Override
-    public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
+    public void initView(ViewParams viewParams) {
 //        setStatusBarDark(false);
         // onBindView launcherTimer
         launcherTimer = new LauncherTimer(1000, 1000);
@@ -50,15 +49,17 @@ public class LauncherController extends BaseController {
         authModel.autoLogin(new DataListener<Void>() {
             @Override
             public void onReturn(Void aVoid) {
-                startWithPop(new MainController());
+//                ViewManager.start(new MainController());
             }
 
             @Override
             public void onError(String message) {
-                startWithPop(new LoginController());
+                ViewManager.start(new LoginController());
+                ViewManager.destroy(LauncherController.this);
             }
         });
     }
+
 
     private class LauncherTimer extends CountDownTimer {
 

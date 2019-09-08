@@ -105,7 +105,7 @@ public class MineController extends BaseController {
         authModel.logout(new DataListener<Void>() {
             @Override
             public void onReturn(Void aVoid) {
-                startWithPop(new LoginController());
+//                startWithPop(new LoginController());
             }
 
             @Override

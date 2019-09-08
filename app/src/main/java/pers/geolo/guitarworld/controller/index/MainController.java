@@ -77,7 +77,7 @@ public class MainController extends BaseController {
                 new ToolsController(),
                 new ShopController()
         };
-        loadMultipleRootFragment(R.id.controllers_layout, 4, controllers);
+        loadMultipleRootFragment(R.id.delegates_layout, 4, controllers);
         currentController = controllers[0];
         onButtonClicked(selectedLayout);
     }
@@ -87,22 +87,22 @@ public class MainController extends BaseController {
     public void onButtonClicked(View view) {
         switch (view.getId()) {
             case R.id.bt_dynamic:
-                showHideFragment(R.id.controllers_layout,controllers[0], currentController);
+                showHideFragment(R.id.delegates_layout,controllers[0], currentController);
                 currentController = controllers[0];
                 titleBar.setTitle("动态");
                 break;
             case R.id.bt_discover:
-                showHideFragment(R.id.controllers_layout,controllers[1], currentController);
+                showHideFragment(R.id.delegates_layout,controllers[1], currentController);
                 currentController = controllers[1];
                 titleBar.setTitle("发现");
                 break;
             case R.id.bt_tools:
-                showHideFragment(R.id.controllers_layout,controllers[2], currentController);
+                showHideFragment(R.id.delegates_layout,controllers[2], currentController);
                 currentController = controllers[2];
                 titleBar.setTitle("工具");
                 break;
             case R.id.bt_shop:
-                showHideFragment(R.id.controllers_layout,controllers[3], currentController);
+                showHideFragment(R.id.delegates_layout,controllers[3], currentController);
                 currentController = controllers[3];
                 titleBar.setTitle("商城");
                 break;

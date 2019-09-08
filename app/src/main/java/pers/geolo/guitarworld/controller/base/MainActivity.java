@@ -40,7 +40,7 @@ public class MainActivity extends MicroviewActivity {
         BeanFactory.registerBean(new WorksModel());
         BeanFactory.registerBean(new InformationModel());
         ViewManager.setActivity(this);
-        ViewManager.start(new LoginController());
+//        ViewManager.start(new LoginController());
     }
 
     @Override
