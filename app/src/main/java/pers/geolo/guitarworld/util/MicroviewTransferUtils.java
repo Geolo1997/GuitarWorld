@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.view.ViewGroup;
 import me.yokeyword.fragmentation.ISupportFragment;
 import me.yokeyword.fragmentation.SupportFragment;
-import pers.geolo.guitarworld.delegate.base.BaseDelegate;
+import pers.geolo.guitarworld.controller.base.BaseController;
 import pers.geolo.guitarworld.microview.ViewController;
 import pers.geolo.guitarworld.microview.ViewManager;
 import pers.geolo.guitarworld.microview.ViewParam;
@@ -19,17 +19,17 @@ import java.util.Set;
  */
 public class MicroviewTransferUtils {
 
-    public static void start(BaseDelegate toFragment) {
+    public static void start(BaseController toFragment) {
 //        if (toFragment instanceof ViewController) {
-            Bundle arguments = ((BaseDelegate) toFragment).getArguments();
+            Bundle arguments = ((BaseController) toFragment).getArguments();
             ViewParam param = toViewParam(arguments);
             ViewManager.start((ViewController) toFragment, param);
 //        }
     }
 
-    public static void load(ViewGroup container, BaseDelegate toFragment) {
+    public static void load(ViewGroup container, BaseController toFragment) {
 //        if (toFragment instanceof ViewController) {
-            Bundle arguments = ((BaseDelegate) toFragment).getArguments();
+            Bundle arguments = ((BaseController) toFragment).getArguments();
             ViewParam param = toViewParam(arguments);
             ViewManager.load(container, (ViewController) toFragment, param);
 //        }
