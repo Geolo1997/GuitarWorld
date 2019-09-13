@@ -3,9 +3,8 @@ package pers.geolo.guitarworld;
 import com.joanzapata.iconify.Iconify;
 import com.joanzapata.iconify.fonts.FontAwesomeModule;
 import org.litepal.LitePal;
-import org.microview.core.ViewManager;
+import org.microview.core.ControllerManager;
 import org.microview.support.MicroviewActivity;
-import pers.geolo.guitarworld.controller.auth.LoginController;
 import pers.geolo.guitarworld.controller.base.BeanFactory;
 import pers.geolo.guitarworld.controller.index.LauncherController;
 import pers.geolo.guitarworld.model.*;
@@ -36,6 +35,6 @@ public class MainActivity extends MicroviewActivity {
         BeanFactory.registerBean(new WorksModel());
         BeanFactory.registerBean(new InformationModel());
 
-        ViewManager.start(new LauncherController());
+        ControllerManager.start(new LauncherController());
     }
 }

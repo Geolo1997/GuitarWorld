@@ -1,96 +1,90 @@
 package pers.geolo.guitarworld.controller.index;
 
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.view.View;
-import android.widget.LinearLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.widget.FrameLayout;
 import butterknife.BindView;
-import butterknife.OnClick;
-import com.github.clans.fab.FloatingActionMenu;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
+import org.microview.core.ControllerManager;
+import org.microview.core.ViewParams;
+import org.microview.support.MicroviewRVAdapter;
 import pers.geolo.guitarworld.R;
-import pers.geolo.guitarworld.controller.base.BaseController;
+import pers.geolo.guitarworld.controller.BaseController;
 import pers.geolo.guitarworld.controller.base.BeanFactory;
-import pers.geolo.guitarworld.controller.works.PublishImageTextWorksController;
-import pers.geolo.guitarworld.controller.works.PublishVideoWorksController;
-import pers.geolo.guitarworld.controller.works.WorksListController;
-import pers.geolo.guitarworld.entity.GetWorksListSuccessEvent;
-import pers.geolo.guitarworld.model.AuthModel;
+import pers.geolo.guitarworld.controller.works.PublishWorksMenuController;
+import pers.geolo.guitarworld.controller.works.WorksContentController;
+import pers.geolo.guitarworld.entity.DataCallback;
+import pers.geolo.guitarworld.entity.Works;
+import pers.geolo.guitarworld.model.WorksModel;
+import pers.geolo.guitarworld.network.param.WorksParams;
+import pers.geolo.guitarworld.util.ToastUtils;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class DynamicController extends BaseController {
 
     @BindView(R.id.refresh_layout)
     SwipeRefreshLayout refreshLayout;
-    @BindView(R.id.works_list_layout)
-    LinearLayout worksListLayout;
-    @BindView(R.id.floating_menu)
-    FloatingActionMenu floatingMenu;
+    @BindView(R.id.works_list_view)
+    RecyclerView worksListView;
+    @BindView(R.id.publish_works_menu_container)
+    FrameLayout publishWorksMenuContainer;
 
-    AuthModel authModel = BeanFactory.getBean(AuthModel.class);
-    WorksListController worksListController;
+    WorksModel worksModel = BeanFactory.getBean(WorksModel.class);
+
+    private MicroviewRVAdapter adapter;
 
     @Override
-    public Object getLayoutView() {
+    protected int getLayout() {
         return R.layout.dynamic;
     }
 
     @Override
-    public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
-//        loadRootFragment(R.id.add_layout, new PublishWorksMenuController());
-        // 初始化刷新控件
-        initRefreshLayout();
-        initWorksListController();
-        refreshLayout.setRefreshing(true);
-    }
-
-    private void initRefreshLayout() {
+    public void initView(ViewParams viewParams) {
+        ControllerManager.load(publishWorksMenuContainer, new PublishWorksMenuController());
+        worksListView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        adapter = new MicroviewRVAdapter(WorksContentController.class, new ArrayList<>());
+        worksListView.setAdapter(adapter);
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                worksListController.loadWorksList();
+                loadWorksList();
+                refreshLayout.setRefreshing(false);
             }
         });
-        // 修复嵌套滑动冲突
-        refreshLayout.setOnChildScrollUpCallback(new SwipeRefreshLayout.OnChildScrollUpCallback() {
+        loadWorksList();
+    }
+
+    private void loadWorksList() {
+        WorksParams params = new WorksParams();
+        worksModel.getWorks(params, new DataCallback<List<Works>>() {
             @Override
-            public boolean canChildScrollUp(@NonNull SwipeRefreshLayout swipeRefreshLayout, @Nullable View view) {
-                return worksListController.getScollYDistance() > 0;
+            public void onReturn(List<Works> works) {
+                List<ViewParams> viewParams = works.stream()
+                        .map(new Function<Works, ViewParams>() {
+                            @Override
+                            public ViewParams apply(Works works) {
+                                return new ViewParams("works", works);
+                            }
+                        })
+                        .collect(Collectors.toList());
+                adapter.updateDataList(viewParams);
+            }
+
+            @Override
+            public void onError(String message) {
+                ToastUtils.showErrorToast(getActivity(), message);
             }
         });
-
     }
-
-    private void initWorksListController() {
-        HashMap<String, Object> filter = new HashMap<>();
-        filter.put("username", authModel.getCurrentLoginUser().getUsername());
-        worksListController = WorksListController.newInstance(filter);
-        loadRootFragment(R.id.works_list_layout, worksListController);
-    }
-
-    @OnClick(R.id.publish_image_text_works)
-    public void onPublishImageTextWorksClicked() {
-        getContainerActivity().start(new PublishImageTextWorksController());
-    }
-
-    @OnClick(R.id.publish_video_works)
-    public void onPublishVideoWorksClicked() {
-        getContainerActivity().start(new PublishVideoWorksController());
-    }
-
-//    @Override
-    public void onSupportInvisible() {
-//        super.onSupportInvisible();
-        floatingMenu.close(false);
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onGetWorksListSuccessEvent(GetWorksListSuccessEvent event) {
-        refreshLayout.setRefreshing(false);
-    }
-
+    //        // 修复嵌套滑动冲突
+//        refreshLayout.setOnChildScrollUpCallback(new SwipeRefreshLayout.OnChildScrollUpCallback() {
+//            @Override
+//            public boolean canChildScrollUp(@NonNull SwipeRefreshLayout swipeRefreshLayout, @Nullable View view) {
+//                return worksListController.getScollYDistance() > 0;
+//            }
+//        });
 }

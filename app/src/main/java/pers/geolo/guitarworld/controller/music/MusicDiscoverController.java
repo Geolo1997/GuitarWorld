@@ -1,21 +1,33 @@
 package pers.geolo.guitarworld.controller.music;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.content.Context;
+import android.graphics.Color;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import butterknife.BindView;
 import net.lucode.hackware.magicindicator.FragmentContainerHelper;
 import net.lucode.hackware.magicindicator.MagicIndicator;
+import net.lucode.hackware.magicindicator.ViewPagerHelper;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerIndicator;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.ColorTransitionPagerTitleView;
+import org.microview.core.ViewController;
+import org.microview.core.ViewParams;
+import org.microview.support.MicroviewPageAdapter;
 import pers.geolo.guitarworld.R;
-import pers.geolo.guitarworld.controller.base.BaseController;
+import pers.geolo.guitarworld.controller.BaseController;
 import pers.geolo.guitarworld.ui.MagicNavigator;
-import pers.geolo.guitarworld.ui.viewpagernavigation.ViewPagerAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
 
 /**
  * @author 桀骜(Geolo)
@@ -29,83 +41,77 @@ public class MusicDiscoverController extends BaseController {
     @BindView(R.id.view_pager)
     ViewPager viewPager;
 
-    FragmentContainerHelper fragmentContainerHelper;
-    ViewPagerAdapter viewPagerAdapter;
-
     @Override
-    public Object getLayoutView() {
+    protected int getLayout() {
         return R.layout.music_discover;
     }
 
     @Override
-    public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
-//        // onBindView ViewPager
-//        viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
-//        List<Fragment> fragments = getFragments();
-//        viewPagerAdapter.setList(fragments);
-//        viewPager.setAdapter(viewPagerAdapter);
-//        // onBindView MagicNavigator
-//        List<String> titles = getTitles();
-//        fragmentContainerHelper = new FragmentContainerHelper(magicIndicator);
-//        CommonNavigator commonNavigator = new CommonNavigator(getContext());
-//        commonNavigator.setAdapter(new CommonNavigatorAdapter() {
-//            @Override
-//            public int getCount() {
-//                return fragments.size();
-//            }
-//
-//            @Override
-//            public IPagerTitleView getTitleView(Context context, int index) {
-//                ColorTransitionPagerTitleView colorTransitionPagerTitleView = new ColorTransitionPagerTitleView(context);
-//                colorTransitionPagerTitleView.setNormalColor(Color.GRAY);
-//                colorTransitionPagerTitleView.setSelectedColor(Color.BLACK);
-//                colorTransitionPagerTitleView.setText(titles.get(index));
-////                colorTransitionPagerTitleView.setMaxWidth(magicIndicator.getWidth() / 3);
-//                colorTransitionPagerTitleView.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        viewPager.setCurrentItem(index);
-//                    }
-//                });
-//                return colorTransitionPagerTitleView;
-//            }
-//
-//            @Override
-//            public IPagerIndicator getIndicator(Context context) {
-//                LinePagerIndicator indicator = new LinePagerIndicator(context);
-//                indicator.setMode(LinePagerIndicator.MODE_WRAP_CONTENT);
-//                return indicator;
-//            }
-//        });
-//        magicIndicator.setNavigator(commonNavigator);
-//        ViewPagerHelper.bind(magicIndicator, viewPager);
+    public void initView(ViewParams viewParams) {
+        List<MusicListItem> musicListItems = new ArrayList<>();
+        musicListItems.add(new MusicListItem(new MusicDiscoverController(), new ViewParams(), "推荐"));
+        musicListItems.add(new MusicListItem(new MusicDiscoverController(), new ViewParams(), "排行"));
+        musicListItems.add(new MusicListItem(new MusicDiscoverController(), new ViewParams(), "飙升"));
+        MicroviewPageAdapter pageAdapter = new MicroviewPageAdapter(musicListItems.stream()
+                .map(new Function<MusicListItem, ViewController>() {
+                    @Override
+                    public ViewController apply(MusicListItem musicListItem) {
+                        return musicListItem.controller;
+                    }
+                })
+                .collect(Collectors.toList()), musicListItems.stream()
+                .map(new Function<MusicListItem, ViewParams>() {
+                    @Override
+                    public ViewParams apply(MusicListItem musicListItem) {
+                        return musicListItem.params;
+                    }
+                })
+                .collect(Collectors.toList()));
+        viewPager.setAdapter(pageAdapter);
+        // 初始化MagicIndicator
+        CommonNavigator commonNavigator = new CommonNavigator(getActivity());
+        commonNavigator.setAdapter(new CommonNavigatorAdapter() {
+            @Override
+            public int getCount() {
+                return musicListItems.size();
+            }
 
-//        new MagicNavigator(getContext(), getChildFragmentManager(), viewPager, magicIndicator)
-//                .setItem("推荐", MusicListController.newInstance(new HashMap<>()))
-//                .setItem("排行", MusicListController.newInstance(new HashMap<>()))
-//                .setItem("飙升", MusicListController.newInstance(new HashMap<>()))
-//                .init();
+            @Override
+            public IPagerTitleView getTitleView(Context context, int index) {
+                ColorTransitionPagerTitleView colorTransitionPagerTitleView = new ColorTransitionPagerTitleView(context);
+                colorTransitionPagerTitleView.setNormalColor(Color.GRAY);
+                colorTransitionPagerTitleView.setSelectedColor(Color.BLACK);
+                colorTransitionPagerTitleView.setText(musicListItems.get(index).title);
+//                colorTransitionPagerTitleView.setMaxWidth(magicIndicator.getWidth() / 3);
+                colorTransitionPagerTitleView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        viewPager.setCurrentItem(index);
+                    }
+                });
+                return colorTransitionPagerTitleView;
+            }
+
+            @Override
+            public IPagerIndicator getIndicator(Context context) {
+                LinePagerIndicator indicator = new LinePagerIndicator(context);
+                indicator.setMode(LinePagerIndicator.MODE_WRAP_CONTENT);
+                return indicator;
+            }
+        });
+        magicIndicator.setNavigator(commonNavigator);
+        ViewPagerHelper.bind(magicIndicator, viewPager);
     }
 
-    private List<String> getTitles() {
-        List<String> titles = new ArrayList<>();
-        titles.add("推荐");
-        titles.add("排行");
-        titles.add("飙升");
-        return titles;
-    }
+    private static class MusicListItem {
+        private ViewController controller;
+        private ViewParams params;
+        private String title;
 
-    List<Fragment> getFragments() {
-        List<Fragment> fragments = new ArrayList<>();
-        HashMap<String, Object> filter1 = new HashMap<>();
-        filter1.put("recommand", true);
-//        fragments.add(MusicListController.newInstance(filter1));
-//        HashMap<String, Object> filter2 = new HashMap<>();
-//        filter1.put("sort", true);
-//        fragments.add(MusicListController.newInstance(filter2));
-//        HashMap<String, Object> filter3 = new HashMap<>();
-//        filter1.put("trending", true);
-//        fragments.add(MusicListController.newInstance(filter3));
-        return fragments;
+        public MusicListItem(ViewController controller, ViewParams params, String title) {
+            this.controller = controller;
+            this.params = params;
+            this.title = title;
+        }
     }
 }

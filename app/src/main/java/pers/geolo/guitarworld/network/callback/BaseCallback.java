@@ -2,7 +2,7 @@ package pers.geolo.guitarworld.network.callback;
 
 import android.util.Log;
 import okhttp3.Headers;
-import pers.geolo.guitarworld.entity.DataListener;
+import pers.geolo.guitarworld.entity.DataCallback;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -15,9 +15,9 @@ public abstract class BaseCallback<T> implements Callback<ResponseBody<T>> {
 
     }
 
-    private DataListener<T> listener;
+    private DataCallback<T> listener;
 
-    public BaseCallback(DataListener<T> listener) {
+    public BaseCallback(DataCallback<T> listener) {
         this.listener = listener;
     }
 

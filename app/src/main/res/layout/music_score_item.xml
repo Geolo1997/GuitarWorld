@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    android:id="@+id/item_music_score"
+    android:id="@+id/music_score_item"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -9,14 +9,14 @@
     android:background="?android:attr/selectableItemBackground">
 
     <TextView
-        android:id="@+id/tv_music_score_name"
+        android:id="@+id/music_score_name_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="18sp"
         android:textStyle="bold"
         android:text="@string/music_score_title"/>
     <TextView
-        android:id="@+id/tv_music_score_author"
+        android:id="@+id/music_score_author_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/music_score_author"/>

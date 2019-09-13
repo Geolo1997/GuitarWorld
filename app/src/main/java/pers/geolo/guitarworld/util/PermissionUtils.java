@@ -41,7 +41,7 @@ public class PermissionUtils {
         permissionCallbackHolder.add(requestCode, null);
         if (callback != null) {
             for (int i = 0; i < grantResults.length; i++) {
-                if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
                     callback.onFailure(permissions, grantResults);
                     return;
                 }

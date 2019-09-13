@@ -2,24 +2,22 @@ package pers.geolo.guitarworld.controller.music;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ScrollView;
-import android.widget.Toast;
 import butterknife.BindView;
 import com.hjq.bar.OnTitleBarListener;
 import com.hjq.bar.TitleBar;
+import org.microview.core.ControllerManager;
+import org.microview.core.ViewParams;
 import pers.geolo.guitarworld.R;
-import pers.geolo.guitarworld.controller.base.SwipeBackController;
+import pers.geolo.guitarworld.controller.BaseController;
 
 /**
  * 音乐主页
  */
-public class MusicIndexController extends SwipeBackController {
-
-    private static final String ID = "ID";
+public class MusicIndexController extends BaseController {
 
     @BindView(R.id.title_layout)
     ViewGroup titleLayout;
@@ -29,49 +27,25 @@ public class MusicIndexController extends SwipeBackController {
     ScrollView scrollView;
     @BindView(R.id.music_profile_layout)
     ViewGroup musicProfileLayout;
-
-    MusicProfileController musicProfileController;
-    MusicResourceController musicResourceController;
+    @BindView(R.id.music_resource_layout)
+    FrameLayout musicResourceLayout;
 
     @Override
-    public Object getLayoutView() {
+    protected int getLayout() {
         return R.layout.music_index;
     }
 
     @Override
-    protected View getStatueBarTopView() {
-        return titleBar;
-    }
-
-    public static MusicIndexController newInstance(int id) {
-        Bundle args = new Bundle();
-        args.putInt(ID, id);
-        MusicIndexController fragment = new MusicIndexController();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
-        initTitleBar();
-        initScrollView();
-        // 获取musicId
-        int musicId = getArguments().getInt(ID);
-        // 设置渐变色
-        setTitleColor(titleBar, 1, 0);
-        // 设置子controller
-        musicProfileController = MusicProfileController.newInstance(musicId);
-        loadRootFragment(R.id.music_profile_layout, musicProfileController);
-        musicResourceController = MusicResourceController.newInstance(musicId);
-        loadRootFragment(R.id.music_resource_layout, musicResourceController);
-
-    }
-
-    private void initTitleBar() {
+    public void initView(ViewParams viewParams) {
+        // 加载子Controller
+        int musicId = (int) viewParams.get("musicId");
+        ControllerManager.load(musicProfileLayout, new MusicProfileController(), new ViewParams("musicId", musicId));
+        ControllerManager.load(musicResourceLayout, new MusicResourceController(), new ViewParams("musicId", musicId));
+        // 初始化titleBar
         titleBar.setOnTitleBarListener(new OnTitleBarListener() {
             @Override
             public void onLeftClick(View v) {
-                pop();
+                ControllerManager.destroy(MusicIndexController.this);
             }
 
             @Override
@@ -81,44 +55,46 @@ public class MusicIndexController extends SwipeBackController {
 
             @Override
             public void onRightClick(View v) {
+
             }
         });
+        // 初始化滑动视图
+//        scrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+//            @Override
+//            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+//                ViewGroup musicResourceViewGroup = (ViewGroup) musicResourceController.getRootView();
+//                int changeHeight = musicProfileLayout.getHeight() - titleBar.getHeight();
+//                if (oldScrollY < changeHeight && scrollY >= changeHeight) {
+//                    titleBar.setTitle(musicProfileController.getMusicName());
+//                    View navigator = musicResourceViewGroup.findViewById(R.id.magic_indicator);
+//                    if (navigator != null) {
+//                        musicResourceController.setPlaceHolderVisible(View.VISIBLE);
+//                        musicResourceViewGroup.removeView(navigator);
+//                        titleLayout.addView(navigator);
+//                    }
+//                } else if (scrollY < changeHeight && oldScrollY >= changeHeight) {
+//                    titleBar.setTitle("");
+//                    View navigator = titleLayout.findViewById(R.id.magic_indicator);
+//                    if (navigator != null) {
+//                        musicResourceController.setPlaceHolderVisible(View.GONE);
+//                        titleLayout.removeView(navigator);
+//                        musicResourceViewGroup.addView(navigator, 0);
+//                    }
+//                }
+//                // 设置渐变色
+//                setTitleColor(titleBar, changeHeight, scrollY);
+//            }
+//        });
+        // 设置渐变色
+        setTitleColor(titleBar, 1, 0);
     }
 
-    private void initScrollView() {
-        scrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                ViewGroup musicResourceViewGroup = (ViewGroup) musicResourceController.getRootView();
-                int changeHeight = musicProfileLayout.getHeight() - titleBar.getHeight();
-                if (oldScrollY < changeHeight && scrollY >= changeHeight) {
-                    titleBar.setTitle(musicProfileController.getMusicName());
-                    View navigator = musicResourceViewGroup.findViewById(R.id.magic_indicator);
-                    if (navigator != null) {
-                        musicResourceController.setPlaceHolderVisible(View.VISIBLE);
-                        musicResourceViewGroup.removeView(navigator);
-                        titleLayout.addView(navigator);
-                    }
-                } else if (scrollY < changeHeight && oldScrollY >= changeHeight) {
-                    titleBar.setTitle("");
-                    View navigator = titleLayout.findViewById(R.id.magic_indicator);
-                    if (navigator != null) {
-                        musicResourceController.setPlaceHolderVisible(View.GONE);
-                        titleLayout.removeView(navigator);
-                        musicResourceViewGroup.addView(navigator, 0);
-                    }
-                }
-                // 设置渐变色
-                setTitleColor(titleBar, changeHeight, scrollY);
-            }
-        });
-    }
 
-    private int getNavigatorHeight() {
-        View navigator = musicResourceController.getRootView().findViewById(R.id.magic_indicator);
-        navigator = navigator == null ? titleLayout.findViewById(R.id.magic_indicator) : navigator;
-        return navigator.getHeight();
-    }
+//    private int getNavigatorHeight() {
+//        View navigator = musicResourceController.getRootView().findViewById(R.id.magic_indicator);
+//        navigator = navigator == null ? titleLayout.findViewById(R.id.magic_indicator) : navigator;
+//        return navigator.getHeight();
+//    }
 
     private void setTitleColor(View view, int criticalValue, int currentValue) {
         float percent = currentValue > criticalValue ? 1 : (float) (currentValue * 1.0 / criticalValue);
@@ -142,4 +118,5 @@ public class MusicIndexController extends SwipeBackController {
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (dpValue * scale + 0.5f);
     }
+
 }

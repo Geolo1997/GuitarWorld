@@ -14,13 +14,12 @@ import com.hjq.bar.TitleBar;
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.controller.base.BeanFactory;
 import pers.geolo.guitarworld.controller.base.SwipeBackController;
-import pers.geolo.guitarworld.entity.DataListener;
+import pers.geolo.guitarworld.entity.DataCallback;
 import pers.geolo.guitarworld.entity.FileListener;
 import pers.geolo.guitarworld.entity.Works;
 import pers.geolo.guitarworld.entity.WorksType;
 import pers.geolo.guitarworld.model.AuthModel;
 import pers.geolo.guitarworld.model.WorksModel;
-import pers.geolo.guitarworld.util.GlideUtils;
 import pers.geolo.guitarworld.util.PhotoUtils;
 import pers.geolo.guitarworld.util.ToastUtils;
 
@@ -129,10 +128,10 @@ public class PublishVideoWorksController extends SwipeBackController {
     public void publishWorks() {
         String title = titleEditText.getText().toString().trim();
         videoWorks.setType(WorksType.VIDEO);
-        videoWorks.setAuthor(authModel.getCurrentLoginUser().getUsername());
+        videoWorks.setAuthor(authModel.getLoginUser().getUsername());
         videoWorks.setCreateTime(new Date());
         videoWorks.setTitle(title);
-        worksModel.publishWorks(videoWorks, new DataListener<Void>() {
+        worksModel.publishWorks(videoWorks, new DataCallback<Void>() {
             @Override
             public void onReturn(Void aVoid) {
                 ToastUtils.showSuccessToast(getContext(), "发布成功");

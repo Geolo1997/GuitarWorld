@@ -15,7 +15,7 @@ import com.hjq.bar.TitleBar;
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.controller.base.BeanFactory;
 import pers.geolo.guitarworld.controller.base.SwipeBackController;
-import pers.geolo.guitarworld.entity.DataListener;
+import pers.geolo.guitarworld.entity.DataCallback;
 import pers.geolo.guitarworld.entity.FileListener;
 import pers.geolo.guitarworld.entity.User;
 import pers.geolo.guitarworld.model.AuthModel;
@@ -84,7 +84,7 @@ public class ProfileController extends SwipeBackController {
     }
 
     private void initTitleBar() {
-        String currentUsername = authModel.getCurrentLoginUser().getUsername();
+        String currentUsername = authModel.getLoginUser().getUsername();
         if (!currentUsername.equals(user.getUsername())) {
             titleBar.setRightIcon(null);
         } else {
@@ -136,7 +136,7 @@ public class ProfileController extends SwipeBackController {
     }
 
     private void initProfile() {
-        userModel.getPublicProfile(user.getUsername(), new DataListener<User>() {
+        userModel.getPublicProfile(user.getUsername(), new DataCallback<User>() {
             @Override
             public void onReturn(User user) {
                 ProfileController.this.user = user;
@@ -164,7 +164,7 @@ public class ProfileController extends SwipeBackController {
     public void saveProfile() {
         user.setPassword(etPassword.getText().toString().trim());
         user.setEmail(etEmail.getText().toString().trim());
-        userModel.updateMyProfile(user, new DataListener<Void>() {
+        userModel.updateMyProfile(user, new DataCallback<Void>() {
             @Override
             public void onReturn(Void aVoid) {
                 ToastUtils.showSuccessToast(getContext(), "保存成功");
@@ -182,7 +182,7 @@ public class ProfileController extends SwipeBackController {
 
     @OnClick(R.id.iv_avatar)
     public void onIvAvatarClicked() {
-        String username = authModel.getCurrentLoginUser().getUsername();
+        String username = authModel.getLoginUser().getUsername();
         if (!username.equals(user.getUsername())) {
             return;
         }

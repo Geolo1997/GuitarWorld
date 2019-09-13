@@ -16,7 +16,7 @@ import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.controller.base.BeanFactory;
 import pers.geolo.guitarworld.controller.base.SwipeBackController;
 import pers.geolo.guitarworld.entity.Comment;
-import pers.geolo.guitarworld.entity.DataListener;
+import pers.geolo.guitarworld.entity.DataCallback;
 import pers.geolo.guitarworld.entity.event.Event;
 import pers.geolo.guitarworld.model.AuthModel;
 import pers.geolo.guitarworld.model.CommentModel;
@@ -79,8 +79,8 @@ public class WorksDetailController extends SwipeBackController {
             HashMap<String, Object> filter = new HashMap<>();
             filter.put("worksId", worksId);
             // 加载WorksContentController
-            worksContentController = WorksContentController.newInstance(worksId);
-            loadRootFragment(R.id.works_content_layout, worksContentController);
+//            worksContentController = WorksContentController.newInstance(worksId);
+//            loadRootFragment(R.id.works_content_layout, worksContentController);
             // 加载CommentListController
             commentListController = CommentListController.newInstance(filter);
             loadRootFragment(R.id.comment_list_layout, commentListController);
@@ -111,7 +111,7 @@ public class WorksDetailController extends SwipeBackController {
     }
 
     public void initLayout() {
-        worksContentController.onBindView(null, worksContentController.getRootView());
+//        worksContentController.onBindView(null, worksContentController.getRootView());
         commentListController.onBindView(null, commentListController.getRootView());
         worksOptionController.onBindView(null, worksOptionController.getRootView());
     }
@@ -170,9 +170,9 @@ public class WorksDetailController extends SwipeBackController {
             return;
         }
         EventBus.getDefault().post(new Event(Event.Const.GET_COMMENT_SUCCESS.name(), new Object()));
-        String author = authModel.getCurrentLoginUser().getUsername();
+        String author = authModel.getLoginUser().getUsername();
         Comment comment = new Comment(worksId, author, new Date(), commentText);
-        CommentModel.addComment(comment, new DataListener<Void>() {
+        CommentModel.addComment(comment, new DataCallback<Void>() {
             @Override
             public void onReturn(Void aVoid) {
                 ToastUtils.showSuccessToast(getContext(), "评论成功");

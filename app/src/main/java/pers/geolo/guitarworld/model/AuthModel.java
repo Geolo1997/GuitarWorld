@@ -2,11 +2,10 @@ package pers.geolo.guitarworld.model;
 
 import pers.geolo.guitarworld.dao.DataBaseManager;
 import pers.geolo.guitarworld.dao.LogInfoDAO;
-import pers.geolo.guitarworld.entity.DataListener;
+import pers.geolo.guitarworld.entity.DataCallback;
 import pers.geolo.guitarworld.entity.LogInfo;
 import pers.geolo.guitarworld.network.HttpClient;
 import pers.geolo.guitarworld.network.api.AuthApi;
-import pers.geolo.guitarworld.network.callback.DataCallback;
 
 /**
  * @author 桀骜(Geolo)
@@ -17,20 +16,15 @@ public class AuthModel {
     private AuthApi authApi = HttpClient.getService(AuthApi.class);
 
     public void register(String username, String password, String email,
-                         String verifyCoed, DataListener<Void> listener) {
-        authApi.register(username, password, email, verifyCoed).enqueue(new DataCallback<Void>(listener) {
-            @Override
-            public void onSuccess(Void aVoid) {
-                listener.onReturn(aVoid);
-            }
-        });
+                         String verifyCoed, DataCallback<Void> listener) {
+        authApi.register(username, password, email, verifyCoed).enqueue(new pers.geolo.guitarworld.network.callback.DataCallback(listener));
     }
 
-    public void login(String username, String password, DataListener<Void> listener) {
-        authApi.login(username, password).enqueue(new DataCallback<>(listener));
+    public void login(String username, String password, DataCallback<Void> listener) {
+        authApi.login(username, password).enqueue(new pers.geolo.guitarworld.network.callback.DataCallback(listener));
     }
 
-    public void getLastSavedLogInfo(DataListener<LogInfo> listener) {
+    public void getLastSavedLogInfo(DataCallback<LogInfo> listener) {
         LogInfo logInfo = DataBaseManager.getLogInfoDAO().getLastSavedLogInfo();
         if (logInfo != null) {
             listener.onReturn(logInfo);
@@ -48,21 +42,16 @@ public class AuthModel {
         }
     }
 
-    public void logout(DataListener<Void> listener) {
-        authApi.logout().enqueue(new DataCallback<Void>(listener) {
-            @Override
-            public void onSuccess(Void aVoid) {
-                listener.onReturn(aVoid);
-            }
-        });
+    public void logout(DataCallback<Void> listener) {
+        authApi.logout().enqueue(new pers.geolo.guitarworld.network.callback.DataCallback(listener));
     }
 
-    public LogInfo getCurrentLoginUser() {
+    public LogInfo getLoginUser() {
         return DataBaseManager.getLogInfoDAO().getLastSavedLogInfo();
     }
 
-    public void autoLogin(DataListener<Void> listener) {
-        getLastSavedLogInfo(new DataListener<LogInfo>() {
+    public void autoLogin(DataCallback<Void> listener) {
+        getLastSavedLogInfo(new DataCallback<LogInfo>() {
             @Override
             public void onReturn(LogInfo logInfo) {
                 if (logInfo.isAutoLogin()) {

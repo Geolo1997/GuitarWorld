@@ -1,7 +1,5 @@
 package pers.geolo.guitarworld.controller.works;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +8,10 @@ import android.widget.*;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import org.greenrobot.eventbus.EventBus;
+import org.microview.core.ViewParams;
 import pers.geolo.guitarworld.R;
-import pers.geolo.guitarworld.controller.base.BaseController;
-import pers.geolo.guitarworld.entity.event.Event;
+import pers.geolo.guitarworld.controller.BaseController;
+import pers.geolo.guitarworld.controller.common.ImageDetailController;
 import pers.geolo.guitarworld.util.GlideUtils;
 import pers.geolo.guitarworld.util.WidgetUtils;
 
@@ -35,38 +33,19 @@ public class ImageListController extends BaseController {
     GridViewAdapter adapter = new GridViewAdapter();
 
     @Override
-    public Object getLayoutView() {
+    protected int getLayout() {
         return R.layout.image_list;
     }
 
-    public static ImageListController newInstance(ArrayList<String> imageUrls) {
-
-        Bundle args = new Bundle();
-        args.putSerializable(IMAGE_URLS, imageUrls);
-        ImageListController fragment = new ImageListController();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    public void onNewList(List<String> imageUrls) {
-        gridView.setAdapter(adapter);
-        this.imageUrls = imageUrls;
-    }
-
     @Override
-    public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
-        Bundle arguments = getArguments();
-        if (arguments != null) {
-            imageUrls = (List<String>) arguments.getSerializable(IMAGE_URLS);
-        } else {
-            imageUrls = new ArrayList<>();
-        }
+    public void initView(ViewParams viewParams) {
+       List<String> imageUrls = (List<String>) viewParams.get("imageUrls");
         adapter = new GridViewAdapter();
         gridView.setAdapter(adapter);
     }
 
     public void postOnclickEvent() {
-        getRootView().setOnClickListener(new View.OnClickListener() {
+        getView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                EventBus.getDefault().post(Event.Const.ON_CLICK_IMAGE_LIST_);
@@ -96,7 +75,7 @@ public class ImageListController extends BaseController {
             ViewHolder holder = null;
             if (convertView == null) {
                 //第一次加载创建View，其余复用 View
-                convertView = LayoutInflater.from(getContext()).inflate(R.layout.image_item, null);
+                convertView = LayoutInflater.from(getActivity()).inflate(R.layout.image_item, null);
                 holder = new ViewHolder(convertView);
                 // 打标签
                 convertView.setTag(holder);
@@ -149,7 +128,7 @@ public class ImageListController extends BaseController {
 //            });
             String imageUrl = imageUrls.get(position);
             holder.imageUrl = imageUrl;
-            GlideUtils.load(getContext(), imageUrl, holder.imageView);
+            GlideUtils.load(getActivity(), imageUrl, holder.imageView);
             return convertView;
         }
 
@@ -166,7 +145,7 @@ public class ImageListController extends BaseController {
 
             @OnClick(R.id.image_view)
             public void onImageViewClick() {
-                getContainerActivity().start(ImageDetailController.newInstance(imageUrl));
+//                getContainerActivity().start(ImageDetailController.newInstance(imageUrl));
             }
         }
     }

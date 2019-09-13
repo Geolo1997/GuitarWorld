@@ -9,11 +9,9 @@ import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
-import android.os.Handler;
-import android.os.Looper;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
-import pers.geolo.guitarworld.entity.DataListener;
+import pers.geolo.guitarworld.entity.DataCallback;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -151,7 +149,7 @@ public class PhotoUtils {
         return media.getFrameAtTime();
     }
 
-    public static void getViedeoThumbAsync(String path, int size, DataListener<List<Bitmap>> listener) {
+    public static void getViedeoThumbAsync(String path, int size, DataCallback<List<Bitmap>> listener) {
         ThreadUtils.runOnNewSubThread(() -> {
             List<Bitmap> bitmapList = new ArrayList<>();
             for (int i = 0; i < size; i++) {

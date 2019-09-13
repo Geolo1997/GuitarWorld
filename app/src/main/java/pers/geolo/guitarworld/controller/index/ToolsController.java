@@ -1,21 +1,18 @@
 package pers.geolo.guitarworld.controller.index;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.view.View;
-
+import org.microview.core.ViewParams;
 import pers.geolo.guitarworld.R;
-import pers.geolo.guitarworld.controller.base.BaseController;
+import pers.geolo.guitarworld.controller.BaseController;
 
 public class ToolsController extends BaseController {
 
     @Override
-    public Object getLayoutView() {
-        return R.layout.controller_tools;
+    protected int getLayout() {
+        return R.layout.tools;
     }
 
     @Override
-    public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
+    public void initView(ViewParams viewParams) {
 
     }
 }

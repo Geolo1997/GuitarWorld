@@ -7,7 +7,7 @@ import android.os.Looper;
 import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.FutureTarget;
-import pers.geolo.guitarworld.entity.DataListener;
+import pers.geolo.guitarworld.entity.DataCallback;
 
 import java.io.File;
 import java.util.concurrent.ExecutionException;
@@ -27,7 +27,7 @@ public class GlideUtils {
         Glide.with(context).load(file).into(imageView);
     }
 
-    public static void getBitmap(Context context, String url, DataListener<Bitmap> listener) {
+    public static void getBitmap(Context context, String url, DataCallback<Bitmap> listener) {
         FutureTarget<Bitmap> bitmapFutureTarget = Glide.with(context).asBitmap().load(url).submit();
         new Thread(new Runnable() {
             @Override

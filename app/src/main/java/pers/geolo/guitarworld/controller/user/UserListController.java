@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -19,7 +18,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.controller.base.BaseController;
 import pers.geolo.guitarworld.controller.base.BeanFactory;
-import pers.geolo.guitarworld.entity.DataListener;
+import pers.geolo.guitarworld.entity.DataCallback;
 import pers.geolo.guitarworld.entity.User;
 import pers.geolo.guitarworld.entity.UserRelation;
 import pers.geolo.guitarworld.model.AuthModel;
@@ -53,7 +52,7 @@ public class UserListController extends BaseController {
     private List<User> userList = new ArrayList<>();
     private HashMap<String, Object> filter = new HashMap<>();
     private Adapter adapter = new Adapter();
-    private DataListener callback = new DataListener<List<User>>() {
+    private DataCallback callback = new DataCallback<List<User>>() {
         @Override
         public void onReturn(List<User> users) {
             userList = users;
@@ -109,10 +108,10 @@ public class UserListController extends BaseController {
     }
 
     void loadRelation() {
-        String currentUsername = authModel.getCurrentLoginUser().getUsername();
+        String currentUsername = authModel.getLoginUser().getUsername();
         for (int i = 0; i < userList.size(); i++) {
             String username = userList.get(i).getUsername();
-//            UserModel.getUserRelation(currentUsername, username, new DataListener<UserRelation>() {
+//            UserModel.getUserRelation(currentUsername, username, new DataCallback<UserRelation>() {
 //                @Override
 //                public void onReturn(UserRelation userRelation) {
 //
@@ -172,11 +171,11 @@ public class UserListController extends BaseController {
         @OnClick(R.id.bt_following)
         public void onBtFollowingClicked() {
             String text = btFollowing.getText().toString();
-            UserRelation userRelation = new UserRelation(authModel.getCurrentLoginUser().getUsername(),
+            UserRelation userRelation = new UserRelation(authModel.getLoginUser().getUsername(),
                     userList.get(getAdapterPosition()).getUsername());
             if (ADD_FOLLOWING.equals(text)) { // 未关注
                 // 添加关注
-                userModel.addRelation(userRelation, new DataListener<Void>() {
+                userModel.addRelation(userRelation, new DataCallback<Void>() {
                     @Override
                     public void onReturn(Void aVoid) {
                         btFollowing.setText(FOLLOWED);
@@ -192,7 +191,7 @@ public class UserListController extends BaseController {
                 builder.setTitle("警告");
                 builder.setMessage("确定取消关注吗？");
                 builder.setPositiveButton("确定", (dialog, which) -> {
-                    userModel.removeRelation(userRelation, new DataListener<Void>() {
+                    userModel.removeRelation(userRelation, new DataCallback<Void>() {
                         @Override
                         public void onReturn(Void aVoid) {
                             btFollowing.setText(ADD_FOLLOWING);

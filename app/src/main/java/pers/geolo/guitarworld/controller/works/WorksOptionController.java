@@ -17,7 +17,7 @@ import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.controller.base.BaseController;
 import pers.geolo.guitarworld.controller.base.BeanFactory;
 import pers.geolo.guitarworld.entity.Comment;
-import pers.geolo.guitarworld.entity.DataListener;
+import pers.geolo.guitarworld.entity.DataCallback;
 import pers.geolo.guitarworld.entity.Works;
 import pers.geolo.guitarworld.entity.WorksType;
 import pers.geolo.guitarworld.entity.event.Event;
@@ -108,7 +108,7 @@ public class WorksOptionController extends BaseController {
     }
 
     private void likeWorks() {
-        worksModel.likeWorks(worksId, new DataListener<Void>() {
+        worksModel.likeWorks(worksId, new DataCallback<Void>() {
             @Override
             public void onReturn(Void aVoid) {
                 likeCount++;
@@ -124,7 +124,7 @@ public class WorksOptionController extends BaseController {
     }
 
     private void cancelLikeWorks() {
-        worksModel.cancelLikeWorks(worksId, new DataListener<Void>() {
+        worksModel.cancelLikeWorks(worksId, new DataCallback<Void>() {
             @Override
             public void onReturn(Void aVoid) {
                 likeCount--;

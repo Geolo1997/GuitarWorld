@@ -7,7 +7,7 @@ import java.io.Serializable;
  * @version 1.0
  * @date 2019/7/17
  */
-public class WorksParam implements Serializable {
+public class WorksParams implements Serializable {
 
     private long worksId;
     private String author;

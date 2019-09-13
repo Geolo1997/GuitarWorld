@@ -20,7 +20,7 @@ import pers.geolo.guitarworld.controller.base.BaseController;
 import pers.geolo.guitarworld.controller.base.BeanFactory;
 import pers.geolo.guitarworld.controller.user.ProfileController;
 import pers.geolo.guitarworld.entity.Comment;
-import pers.geolo.guitarworld.entity.DataListener;
+import pers.geolo.guitarworld.entity.DataCallback;
 import pers.geolo.guitarworld.entity.User;
 import pers.geolo.guitarworld.entity.event.Event;
 import pers.geolo.guitarworld.model.AuthModel;
@@ -79,7 +79,7 @@ public class CommentListController extends BaseController {
     }
 
     private void initCommentList() {
-        CommentModel.getCommentList(filter, new DataListener<List<Comment>>() {
+        CommentModel.getCommentList(filter, new DataCallback<List<Comment>>() {
             @Override
             public void onReturn(List<Comment> comments) {
                 commentList = comments;
@@ -115,7 +115,7 @@ public class CommentListController extends BaseController {
             viewHolder.tvAuthor.setText(comment.getAuthor());
             viewHolder.tvComment.setText(comment.getContent());
             viewHolder.tvCreateTime.setText(DateUtils.toFriendlyString(comment.getCreateTime()));
-            userModel.getPublicProfile(comment.getAuthor(), new DataListener<User>() {
+            userModel.getPublicProfile(comment.getAuthor(), new DataCallback<User>() {
                 @Override
                 public void onReturn(User user) {
                     GlideUtils.load(getContext(), user.getAvatarUrl(), viewHolder.civAvatar);
@@ -162,7 +162,7 @@ public class CommentListController extends BaseController {
 
             Comment comment = commentList.get(getAdapterPosition());
             String username = comment.getAuthor();
-            if (username.equals(authModel.getCurrentLoginUser().getUsername())) {
+            if (username.equals(authModel.getLoginUser().getUsername())) {
                 options = new String[]{"删除"};
             }
             //添加列表
@@ -174,7 +174,7 @@ public class CommentListController extends BaseController {
                             case "删除":
                                 HashMap<String, Object> filter = new HashMap<>();
                                 filter.put("id", comment.getId());
-                                CommentModel.deleteCommentList(filter, new DataListener<Void>() {
+                                CommentModel.deleteCommentList(filter, new DataCallback<Void>() {
                                     @Override
                                     public void onReturn(Void aVoid) {
                                         commentList.remove(comment);

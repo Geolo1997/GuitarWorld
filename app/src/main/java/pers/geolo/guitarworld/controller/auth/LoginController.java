@@ -5,27 +5,30 @@ import android.widget.EditText;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.OnClick;
-import org.microview.core.ViewManager;
+import org.greenrobot.eventbus.Subscribe;
+import org.microview.core.ControllerManager;
 import org.microview.core.ViewParams;
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.controller.BaseController;
 import pers.geolo.guitarworld.controller.base.BeanFactory;
-import pers.geolo.guitarworld.entity.DataListener;
+import pers.geolo.guitarworld.controller.index.MainController;
+import pers.geolo.guitarworld.entity.DataCallback;
 import pers.geolo.guitarworld.entity.LogInfo;
+import pers.geolo.guitarworld.entity.event.RegisterSuccessEvent;
 import pers.geolo.guitarworld.model.AuthModel;
 
 public class LoginController extends BaseController {
 
     @BindView(R.id.username_text)
-    EditText etUsername;
+    EditText usernameText;
     @BindView(R.id.password_text)
-    EditText etPassword;
-    @BindView(R.id.tv_loginHint)
-    TextView tvLoginHint;
-    @BindView(R.id.cb_savePassword)
-    CheckBox cbSavePassword;
-    @BindView(R.id.cb_autoLogin)
-    CheckBox cbAutoLogin;
+    EditText passwordText;
+    @BindView(R.id.login_hint_text)
+    TextView loginHintText;
+    @BindView(R.id.save_password_check)
+    CheckBox savePasswordCheck;
+    @BindView(R.id.auto_login_check)
+    CheckBox autoLoginCheck;
 
     AuthModel authModel = BeanFactory.getBean(AuthModel.class);
 
@@ -36,14 +39,10 @@ public class LoginController extends BaseController {
 
     @Override
     public void initView(ViewParams viewParams) {
-        // onBindView logInfo
-        authModel.getLastSavedLogInfo(new DataListener<LogInfo>() {
+        authModel.getLastSavedLogInfo(new DataCallback<LogInfo>() {
             @Override
             public void onReturn(LogInfo logInfo) {
-                etUsername.setText(logInfo.getUsername());
-                etPassword.setText(logInfo.getPassword());
-                cbSavePassword.setChecked(logInfo.isSavePassword());
-                cbAutoLogin.setChecked(logInfo.isAutoLogin());
+                setLogInfo(logInfo);
             }
 
             @Override
@@ -53,41 +52,43 @@ public class LoginController extends BaseController {
         });
     }
 
-    @OnClick(R.id.bt_login)
+    private void setLogInfo(LogInfo logInfo) {
+        usernameText.setText(logInfo.getUsername());
+        passwordText.setText(logInfo.getPassword());
+        savePasswordCheck.setChecked(logInfo.isSavePassword());
+        autoLoginCheck.setChecked(logInfo.isAutoLogin());
+    }
+
+    @OnClick(R.id.login_button)
     protected void login() {
-        String username = etUsername.getText().toString().trim();
-        String password = etPassword.getText().toString().trim();
-        boolean isSavePassword = cbSavePassword.isChecked();
-        boolean isAutoLogin = cbAutoLogin.isChecked();
+        String username = usernameText.getText().toString().trim();
+        String password = passwordText.getText().toString().trim();
+        boolean isSavePassword = savePasswordCheck.isChecked();
+        boolean isAutoLogin = autoLoginCheck.isChecked();
         LogInfo logInfo = new LogInfo(username, password, isSavePassword, isAutoLogin);
-        authModel.login(username, password, new DataListener<Void>() {
+        authModel.login(username, password, new DataCallback<Void>() {
             @Override
             public void onReturn(Void aVoid) {
                 authModel.saveLogInfo(logInfo);
-//                startWithPop(new MainController());
+                ControllerManager.start(new MainController());
+                ControllerManager.destroy(LoginController.this);
             }
 
             @Override
             public void onError(String message) {
-                tvLoginHint.setText(message);
+                loginHintText.setText(message);
             }
         });
     }
 
-    @OnClick(R.id.bt_register)
-    public void startRegisterActivity() {
-        ViewManager.start(new RegisterController());
+    @OnClick(R.id.register_button)
+    public void toRegister() {
+        ControllerManager.start(new RegisterController());
     }
 
-    //TODO 注册成功回调
-//    @Override
-//    public void onFragmentResult(int requestCode, int resultCode, Bundle data) {
-//        super.onFragmentResult(requestCode, resultCode, data);
-//        if (requestCode == REGISTER && resultCode == RESULT_OK) {
-//            ToastUtils.showSuccessToast(getContext(), "注册成功");
-//            usernameText.setText(data.getString("username"));
-//            passwordText.setText(data.getString("password"));
-//            login();
-//        }
-//    }
+    @Subscribe
+    public void onRegisterSuccess(RegisterSuccessEvent registerSuccessEvent) {
+        LogInfo logInfo = registerSuccessEvent.getLogInfo();
+        setLogInfo(logInfo);
+    }
 }

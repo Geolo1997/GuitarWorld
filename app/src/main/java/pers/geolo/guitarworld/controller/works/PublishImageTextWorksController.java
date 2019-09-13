@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 import butterknife.BindView;
 import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.hjq.bar.OnTitleBarListener;
@@ -16,7 +15,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.controller.base.BeanFactory;
 import pers.geolo.guitarworld.controller.base.SwipeBackController;
-import pers.geolo.guitarworld.entity.DataListener;
+import pers.geolo.guitarworld.entity.DataCallback;
 import pers.geolo.guitarworld.entity.FileListener;
 import pers.geolo.guitarworld.entity.Works;
 import pers.geolo.guitarworld.entity.WorksType;
@@ -79,13 +78,13 @@ public class PublishImageTextWorksController extends SwipeBackController {
 
     public void publish() {
         works.setImageUrls(imageUrls);
-        String username = authModel.getCurrentLoginUser().getUsername();
+        String username = authModel.getLoginUser().getUsername();
         works.setType(WorksType.IMAGE_TEXT);
         works.setAuthor(username);
         works.setCreateTime(new Date());
         works.setTitle(etTitle.getText().toString());
         works.setContent(etContent.getText().toString());
-        worksModel.publishWorks(works, new DataListener<Void>() {
+        worksModel.publishWorks(works, new DataCallback<Void>() {
             @Override
             public void onReturn(Void aVoid) {
                 ToastUtils.showSuccessToast(getContext(), "发布成功");
