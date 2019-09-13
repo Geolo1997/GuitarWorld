@@ -21,11 +21,11 @@ import java.util.HashMap;
 
 public class MineController extends BaseController {
 
-    @BindView(R.id.tv_username)
+    @BindView(R.id.username_text)
     TextView tvUsername;
-    @BindView(R.id.civ_avatar)
+    @BindView(R.id.avatar_image)
     CircleImageView civAvatar;
-    @BindView(R.id.container_profile)
+    @BindView(R.id.profile_container)
     LinearLayout profileContainer;
 
     UserModel userModel = BeanFactory.getBean(UserModel.class);
@@ -62,32 +62,32 @@ public class MineController extends BaseController {
         });
     }
 
-    @OnClick({R.id.civ_avatar, R.id.tv_username})
+    @OnClick({R.id.avatar_image, R.id.username_text})
     public void toProfileController() {
         String currentUsername = authModel.getLoginUser().getUsername();
 //        getContainerActivity().start(ProfileController.newInstance(currentUsername));
     }
 
-    @OnClick(R.id.bt_my_profile)
+    @OnClick(R.id.my_profile_layout)
     public void onBtMyProfileClicked() {
 //        getContainerActivity().start(ProfileController.newInstance(authModel.getLoginUser().getUsername()));
     }
 
-    @OnClick(R.id.bt_my_works)
+    @OnClick(R.id.my_works_layout)
     public void onBtMyWorksClicked() {
         HashMap<String, Object> filter = new HashMap<>();
         filter.put("author", authModel.getLoginUser().getUsername());
 //        getContainerActivity().start(WorksListController.newInstance(filter));
     }
 
-    @OnClick({R.id.bt_my_following, R.id.bt_my_follower})
+    @OnClick({R.id.my_following_layout, R.id.my_follower_layout})
     public void onBtMyAttentionOrMyFansClicked(View view) {
         int id = view.getId();
 //        getContainerActivity().start(FriendController.newInstance(authModel.getLoginUser().getUsername(),
 //        id == R.id.bt_my_following ? "following" : "follower"));
     }
 
-    @OnClick(R.id.bt_logout)
+    @OnClick(R.id.logout_button)
     public void onLogout() {
         authModel.logout(new DataCallback<Void>() {
             @Override

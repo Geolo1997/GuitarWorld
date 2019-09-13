@@ -136,7 +136,7 @@ public class CommentListController extends BaseController {
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.civ_avatar)
+        @BindView(R.id.avatar_image)
         CircleImageView civAvatar;
         @BindView(R.id.tv_author)
         TextView tvAuthor;
@@ -151,10 +151,10 @@ public class CommentListController extends BaseController {
             ButterKnife.bind(this, itemView);
         }
 
-        @OnClick({R.id.civ_avatar, R.id.tv_author})
+        @OnClick({R.id.avatar_image, R.id.tv_author})
         public void toProfileController() {
             String username = commentList.get(getAdapterPosition()).getAuthor();
-            getContainerActivity().start(ProfileController.newInstance(username));
+//            getContainerActivity().start(ProfileController.newInstance(username));
         }
 
         @OnLongClick(R.id.ll_comment_item)

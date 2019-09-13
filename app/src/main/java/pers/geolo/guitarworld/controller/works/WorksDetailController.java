@@ -42,7 +42,7 @@ public class WorksDetailController extends SwipeBackController {
     AuthModel authModel = BeanFactory.getBean(AuthModel.class);
     WorksModel worksModel = BeanFactory.getBean(WorksModel.class);
 
-    WorksContentController worksContentController;
+    WorksItemController worksItemController;
     CommentListController commentListController;
     WorksOptionController worksOptionController;
 
@@ -79,8 +79,8 @@ public class WorksDetailController extends SwipeBackController {
             HashMap<String, Object> filter = new HashMap<>();
             filter.put("worksId", worksId);
             // 加载WorksContentController
-//            worksContentController = WorksContentController.newInstance(worksId);
-//            loadRootFragment(R.id.works_content_layout, worksContentController);
+//            worksItemController = WorksItemController.newInstance(worksId);
+//            loadRootFragment(R.id.works_content_layout, worksItemController);
             // 加载CommentListController
             commentListController = CommentListController.newInstance(filter);
             loadRootFragment(R.id.comment_list_layout, commentListController);
@@ -111,7 +111,7 @@ public class WorksDetailController extends SwipeBackController {
     }
 
     public void initLayout() {
-//        worksContentController.onBindView(null, worksContentController.getRootView());
+//        worksItemController.onBindView(null, worksItemController.getRootView());
         commentListController.onBindView(null, commentListController.getRootView());
         worksOptionController.onBindView(null, worksOptionController.getRootView());
     }
@@ -129,13 +129,13 @@ public class WorksDetailController extends SwipeBackController {
 //    @Subscribe(threadMode = ThreadMode.MAIN)
 //    public void onSubControllerCreateFinish(Event event) {
 //        String controllerName = (String) event.get(Event.Const.CREATE_DELEGATE_FINISH.name());
-//        if (worksContentController.getClass().getName().equals(controllerName)) {
+//        if (worksItemController.getClass().getName().equals(controllerName)) {
 //            worksContentControllerCreated = true;
 //        }
 //        if (commentListController.getClass().getName().equals(controllerName)) {
 //            commentListControllerCreated = true;
 //        }
-//        if (worksContentController.getClass().getName().equals(controllerName)) {
+//        if (worksItemController.getClass().getName().equals(controllerName)) {
 //            worksContentControllerCreated = true;
 //        }
 //        if (worksContentControllerCreated && commentListControllerCreated && worksOptionControllerCreated) {

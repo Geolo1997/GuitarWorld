@@ -154,9 +154,9 @@ public class UserListController extends BaseController {
         private static final String FOLLOWED = "已关注";
         private static final String FOLLOW_EACH_OTHER = "互相关注";
 
-        @BindView(R.id.civ_avatar)
+        @BindView(R.id.avatar_image)
         CircleImageView civAvatar;
-        @BindView(R.id.tv_username)
+        @BindView(R.id.username_text)
         TextView tvUsername;
         @BindView(R.id.tv_email)
         TextView tvEmail;
@@ -213,7 +213,7 @@ public class UserListController extends BaseController {
         @OnClick(R.id.ll_user_item)
         public void onLlUserItemClicked() {
             String username = userList.get(getAdapterPosition()).getUsername();
-            getContainerActivity().start(ProfileController.newInstance(username));
+//            getContainerActivity().start(ProfileController.newInstance(username));
         }
     }
 }

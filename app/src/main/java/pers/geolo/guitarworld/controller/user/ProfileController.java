@@ -1,7 +1,5 @@
 package pers.geolo.guitarworld.controller.user;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatEditText;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,9 +10,11 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import com.hjq.bar.OnTitleBarListener;
 import com.hjq.bar.TitleBar;
+import org.microview.core.ControllerManager;
+import org.microview.core.ViewParams;
 import pers.geolo.guitarworld.R;
+import pers.geolo.guitarworld.controller.BaseController;
 import pers.geolo.guitarworld.controller.base.BeanFactory;
-import pers.geolo.guitarworld.controller.base.SwipeBackController;
 import pers.geolo.guitarworld.entity.DataCallback;
 import pers.geolo.guitarworld.entity.FileListener;
 import pers.geolo.guitarworld.entity.User;
@@ -26,28 +26,26 @@ import pers.geolo.guitarworld.util.ToastUtils;
 
 import java.io.File;
 
-public class ProfileController extends SwipeBackController {
-
-    private static final String USERNAME = "USERNAME";
+public class ProfileController extends BaseController {
 
     @BindView(R.id.title_bar)
     TitleBar titleBar;
     @BindView(R.id.edits_layout)
     ViewGroup editsLayout;
-    @BindView(R.id.tv_username)
-    TextView tvUsername;
+    @BindView(R.id.username_text)
+    TextView usernameText;
     @BindView(R.id.password_text)
-    EditText etPassword;
-    @BindView(R.id.email_text)
-    EditText etEmail;
-    @BindView(R.id.et_sex)
-    EditText etSex;
-    @BindView(R.id.et_birthday)
-    EditText etBirthday;
-    @BindView(R.id.et_hometown)
-    EditText etHometown;
-    @BindView(R.id.iv_avatar)
-    ImageView ivAvatar;
+    EditText passwordText;
+    @BindView(R.id.email_edit)
+    EditText emailEdit;
+    @BindView(R.id.sex_edit)
+    EditText sexEdit;
+    @BindView(R.id.birthday_edit)
+    EditText birthdayEdit;
+    @BindView(R.id.hometown_edit)
+    EditText hometownEdit;
+    @BindView(R.id.avatar_image)
+    ImageView avatarImage;
 
     AuthModel authModel = BeanFactory.getBean(AuthModel.class);
     UserModel userModel = BeanFactory.getBean(UserModel.class);
@@ -55,37 +53,39 @@ public class ProfileController extends SwipeBackController {
     private User user;
     private boolean isEditLayoutEnable;
 
-    public static ProfileController newInstance(String username) {
-        Bundle args = new Bundle();
-        args.putString(USERNAME, username);
-        ProfileController fragment = new ProfileController();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
-    public Object getLayoutView() {
+    protected int getLayout() {
         return R.layout.profile;
     }
 
     @Override
-    protected View getStatueBarTopView() {
-        return titleBar;
-    }
+    public void initView(ViewParams viewParams) {
+        String username = (String) viewParams.get("username");
+        userModel.getPublicProfile(username, new DataCallback<User>() {
+            @Override
+            public void onReturn(User user) {
+                ProfileController.this.user = user;
+                usernameText.setText(user.getUsername());
+                passwordText.setText(user.getPassword());
+                emailEdit.setText(user.getEmail());
+                // TODO 完整赋值
+                String avatarPath = user.getAvatarUrl();
+                if (avatarPath != null && !"".equals(avatarPath)) {
+                    GlideUtils.load(getActivity(), avatarPath, avatarImage);
+                } else {
+                    // TODO 区分性别
+                    avatarImage.setImageResource(R.drawable.male_default_avatar);
+                }
+            }
 
-    @Override
-    public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
-        if (getArguments() != null) {
-            user = new User();
-            user.setUsername(getArguments().getString(USERNAME));
-            initTitleBar();
-            initProfile();
-        }
-    }
+            @Override
+            public void onError(String message) {
 
-    private void initTitleBar() {
+            }
+        });
+        // 初始化TitleBar
         String currentUsername = authModel.getLoginUser().getUsername();
-        if (!currentUsername.equals(user.getUsername())) {
+        if (!currentUsername.equals(username)) {
             titleBar.setRightIcon(null);
         } else {
             titleBar.setRightTitle("编辑");
@@ -94,7 +94,7 @@ public class ProfileController extends SwipeBackController {
         titleBar.setOnTitleBarListener(new OnTitleBarListener() {
             @Override
             public void onLeftClick(View v) {
-                pop();
+                ControllerManager.destroy(ProfileController.this);
             }
 
             @Override
@@ -135,39 +135,13 @@ public class ProfileController extends SwipeBackController {
         }
     }
 
-    private void initProfile() {
-        userModel.getPublicProfile(user.getUsername(), new DataCallback<User>() {
-            @Override
-            public void onReturn(User user) {
-                ProfileController.this.user = user;
-                tvUsername.setText(user.getUsername());
-                etPassword.setText(user.getPassword());
-                etEmail.setText(user.getEmail());
-                // TODO 完整赋值
-                String avatarPath = user.getAvatarUrl();
-                if (avatarPath != null && !"".equals(avatarPath)) {
-                    GlideUtils.load(getContext(), avatarPath, ivAvatar);
-                } else {
-                    // TODO 区分性别
-                    ivAvatar.setImageResource(R.drawable.male_default_avatar);
-                }
-            }
-
-            @Override
-            public void onError(String message) {
-
-            }
-        });
-    }
-
-
     public void saveProfile() {
-        user.setPassword(etPassword.getText().toString().trim());
-        user.setEmail(etEmail.getText().toString().trim());
+        user.setPassword(passwordText.getText().toString().trim());
+        user.setEmail(emailEdit.getText().toString().trim());
         userModel.updateMyProfile(user, new DataCallback<Void>() {
             @Override
             public void onReturn(Void aVoid) {
-                ToastUtils.showSuccessToast(getContext(), "保存成功");
+                ToastUtils.showSuccessToast(getActivity(), "保存成功");
                 setEditsLayoutEnable(false);
                 titleBar.setRightTitle("编辑");
                 titleBar.setRightIcon(null);
@@ -175,12 +149,12 @@ public class ProfileController extends SwipeBackController {
 
             @Override
             public void onError(String message) {
-                ToastUtils.showErrorToast(getContext(), message);
+                ToastUtils.showErrorToast(getActivity(), message);
             }
         });
     }
 
-    @OnClick(R.id.iv_avatar)
+    @OnClick(R.id.avatar_image)
     public void onIvAvatarClicked() {
         String username = authModel.getLoginUser().getUsername();
         if (!username.equals(user.getUsername())) {
@@ -201,7 +175,7 @@ public class ProfileController extends SwipeBackController {
     }
 
     public void takePhoto() {
-        PhotoUtils.openCamera(getContainerActivity(), new PhotoUtils.Callback() {
+        PhotoUtils.openCamera(getActivity(), new PhotoUtils.Callback() {
             @Override
             public void onSuccess(File photo) {
                 uploadAvatar(photo);
@@ -209,13 +183,13 @@ public class ProfileController extends SwipeBackController {
 
             @Override
             public void onFailure(PhotoUtils.FailureType failureType) {
-                ToastUtils.showErrorToast(getContext(), failureType.name());
+                ToastUtils.showErrorToast(getActivity(), failureType.name());
             }
         });
     }
 
     public void selectPhoto() {
-        PhotoUtils.openAlbum(getContainerActivity(), new PhotoUtils.Callback() {
+        PhotoUtils.openAlbum(getActivity(), new PhotoUtils.Callback() {
             @Override
             public void onSuccess(File photo) {
                 uploadAvatar(photo);
@@ -238,13 +212,13 @@ public class ProfileController extends SwipeBackController {
             @Override
             public void onFinish(String s) {
                 user.setAvatarUrl(s);
-                GlideUtils.load(getContext(), s, ivAvatar);
-                ToastUtils.showSuccessToast(getContext(), "上传成功");
+                GlideUtils.load(getActivity(), s, avatarImage);
+                ToastUtils.showSuccessToast(getActivity(), "上传成功");
             }
 
             @Override
             public void onError(String message) {
-                ToastUtils.showErrorToast(getContext(), message);
+                ToastUtils.showErrorToast(getActivity(), message);
             }
         });
     }

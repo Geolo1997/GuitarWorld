@@ -21,7 +21,7 @@ public class RegisterController extends BaseController {
     EditText usernameText;
     @BindView(R.id.password_text)
     EditText passwordText;
-    @BindView(R.id.email_text)
+    @BindView(R.id.email_edit)
     EditText emailText;
     @BindView(R.id.register_hint)
     TextView registerHint;

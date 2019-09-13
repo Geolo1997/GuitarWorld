@@ -12,7 +12,7 @@ import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.controller.BaseController;
 import pers.geolo.guitarworld.controller.base.BeanFactory;
 import pers.geolo.guitarworld.controller.works.PublishWorksMenuController;
-import pers.geolo.guitarworld.controller.works.WorksContentController;
+import pers.geolo.guitarworld.controller.works.WorksItemController;
 import pers.geolo.guitarworld.entity.DataCallback;
 import pers.geolo.guitarworld.entity.Works;
 import pers.geolo.guitarworld.model.WorksModel;
@@ -46,7 +46,7 @@ public class DynamicController extends BaseController {
     public void initView(ViewParams viewParams) {
         ControllerManager.load(publishWorksMenuContainer, new PublishWorksMenuController());
         worksListView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        adapter = new MicroviewRVAdapter(WorksContentController.class, new ArrayList<>());
+        adapter = new MicroviewRVAdapter(WorksItemController.class, new ArrayList<>());
         worksListView.setAdapter(adapter);
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -80,11 +80,4 @@ public class DynamicController extends BaseController {
             }
         });
     }
-    //        // 修复嵌套滑动冲突
-//        refreshLayout.setOnChildScrollUpCallback(new SwipeRefreshLayout.OnChildScrollUpCallback() {
-//            @Override
-//            public boolean canChildScrollUp(@NonNull SwipeRefreshLayout swipeRefreshLayout, @Nullable View view) {
-//                return worksListController.getScollYDistance() > 0;
-//            }
-//        });
 }

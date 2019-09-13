@@ -28,7 +28,7 @@ import pers.geolo.guitarworld.util.GlideUtils;
  * @version 1.0
  * @date 2019/7/29
  */
-public class WorksContentController extends BaseController {
+public class WorksItemController extends BaseController {
 
     @BindView(R.id.avatar_image)
     CircleImageView avatarImage;
@@ -101,7 +101,7 @@ public class WorksContentController extends BaseController {
 
     @OnClick({R.id.avatar_image, R.id.author_text})
     public void onAvatarImageClicked() {
-//        ControllerManager.start(new ProfileController(),
-//                new ViewParams("username", works.getAuthor()));
+        ControllerManager.start(new ProfileController(),
+                new ViewParams("username", works.getAuthor()));
     }
 }
