@@ -21,7 +21,7 @@ public class FriendController extends BaseController {
     private static final String CURRENT_USERNAME = "CURRENT_USERNAME";
     private static final String FOLLOW_TAG = "FOLLOW_TAG";
 
-    @BindView(R.id.bt_following)
+    @BindView(R.id.follow_button)
     Button btFollowing;
     @BindView(R.id.bt_follower)
     Button btFollower;
@@ -114,10 +114,10 @@ public class FriendController extends BaseController {
         });
     }
 
-    @OnClick({R.id.bt_following, R.id.bt_follower, R.id.btn_black_list})
+    @OnClick({R.id.follow_button, R.id.bt_follower, R.id.btn_black_list})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.bt_following:
+            case R.id.follow_button:
                 viewPager.setCurrentItem(0);
                 break;
             case R.id.bt_follower:

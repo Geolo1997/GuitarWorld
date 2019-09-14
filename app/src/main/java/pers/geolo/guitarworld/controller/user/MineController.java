@@ -6,9 +6,12 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
+import org.microview.core.ControllerManager;
+import org.microview.core.ControllerStack;
 import org.microview.core.ViewParams;
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.controller.BaseController;
+import pers.geolo.guitarworld.controller.auth.LoginController;
 import pers.geolo.guitarworld.controller.base.BeanFactory;
 import pers.geolo.guitarworld.entity.DataCallback;
 import pers.geolo.guitarworld.entity.User;
@@ -17,14 +20,12 @@ import pers.geolo.guitarworld.model.UserModel;
 import pers.geolo.guitarworld.util.GlideUtils;
 import pers.geolo.guitarworld.util.ToastUtils;
 
-import java.util.HashMap;
-
 public class MineController extends BaseController {
 
     @BindView(R.id.username_text)
-    TextView tvUsername;
+    TextView usernameText;
     @BindView(R.id.avatar_image)
-    CircleImageView civAvatar;
+    CircleImageView avatarImage;
     @BindView(R.id.profile_container)
     LinearLayout profileContainer;
 
@@ -39,7 +40,7 @@ public class MineController extends BaseController {
     @Override
     public void initView(ViewParams viewParams) {
         String currentUsername = authModel.getLoginUser().getUsername();
-        tvUsername.setText(currentUsername);
+        usernameText.setText(currentUsername);
         String currentLoginUsername = authModel.getLoginUser().getUsername();
         userModel.getPublicProfile(currentLoginUsername, new DataCallback<User>() {
             @Override
@@ -48,10 +49,10 @@ public class MineController extends BaseController {
 
                 String avatarPath = user.getAvatarUrl();
                 if (avatarPath != null && !"".equals(avatarPath)) {
-                    GlideUtils.load(getActivity(), avatarPath, civAvatar);
+                    GlideUtils.load(getActivity(), avatarPath, avatarImage);
                 } else {
                     // TODO 区分性别
-                    civAvatar.setImageResource(R.drawable.male_default_avatar);
+                    avatarImage.setImageResource(R.drawable.male_default_avatar);
                 }
             }
 
@@ -62,22 +63,14 @@ public class MineController extends BaseController {
         });
     }
 
-    @OnClick({R.id.avatar_image, R.id.username_text})
-    public void toProfileController() {
+    @OnClick({R.id.avatar_image, R.id.username_text, R.id.my_profile_layout})
+    public void onAvatarUsernameClicked() {
         String currentUsername = authModel.getLoginUser().getUsername();
-//        getContainerActivity().start(ProfileController.newInstance(currentUsername));
-    }
-
-    @OnClick(R.id.my_profile_layout)
-    public void onBtMyProfileClicked() {
-//        getContainerActivity().start(ProfileController.newInstance(authModel.getLoginUser().getUsername()));
+        ControllerManager.start(new ProfileController(), new ViewParams("username", currentUsername));
     }
 
     @OnClick(R.id.my_works_layout)
-    public void onBtMyWorksClicked() {
-        HashMap<String, Object> filter = new HashMap<>();
-        filter.put("author", authModel.getLoginUser().getUsername());
-//        getContainerActivity().start(WorksListController.newInstance(filter));
+    public void onMyWorksClicked() {
     }
 
     @OnClick({R.id.my_following_layout, R.id.my_follower_layout})
@@ -92,7 +85,9 @@ public class MineController extends BaseController {
         authModel.logout(new DataCallback<Void>() {
             @Override
             public void onReturn(Void aVoid) {
-//                startWithPop(new LoginController());
+                ControllerManager.start(new LoginController());
+                ControllerStack stack = ControllerManager.getRootStack();
+                ControllerManager.destroy(stack.get(stack.size() - 2));
             }
 
             @Override

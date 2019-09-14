@@ -52,10 +52,10 @@ public class DynamicController extends BaseController {
             @Override
             public void onRefresh() {
                 loadWorksList();
-                refreshLayout.setRefreshing(false);
             }
         });
         loadWorksList();
+        refreshLayout.setRefreshing(true);
     }
 
     private void loadWorksList() {
@@ -72,6 +72,7 @@ public class DynamicController extends BaseController {
                         })
                         .collect(Collectors.toList());
                 adapter.updateDataList(viewParams);
+                refreshLayout.setRefreshing(false);
             }
 
             @Override

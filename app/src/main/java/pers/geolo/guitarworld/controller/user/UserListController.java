@@ -131,7 +131,7 @@ public class UserListController extends BaseController {
         @Override
         public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
             View view = LayoutInflater.from(viewGroup.getContext())
-                    .inflate(R.layout.item_users_view, viewGroup, false);
+                    .inflate(R.layout.user_item, viewGroup, false);
             return new ViewHolder(view);
         }
 
@@ -158,9 +158,9 @@ public class UserListController extends BaseController {
         CircleImageView civAvatar;
         @BindView(R.id.username_text)
         TextView tvUsername;
-        @BindView(R.id.tv_email)
+        @BindView(R.id.email_text)
         TextView tvEmail;
-        @BindView(R.id.bt_following)
+        @BindView(R.id.follow_button)
         Button btFollowing;
 
         public ViewHolder(@NonNull View itemView) {
@@ -168,7 +168,7 @@ public class UserListController extends BaseController {
             ButterKnife.bind(this, itemView);
         }
 
-        @OnClick(R.id.bt_following)
+        @OnClick(R.id.follow_button)
         public void onBtFollowingClicked() {
             String text = btFollowing.getText().toString();
             UserRelation userRelation = new UserRelation(authModel.getLoginUser().getUsername(),
@@ -210,7 +210,7 @@ public class UserListController extends BaseController {
             }
         }
 
-        @OnClick(R.id.ll_user_item)
+        @OnClick(R.id.user_item_layout)
         public void onLlUserItemClicked() {
             String username = userList.get(getAdapterPosition()).getUsername();
 //            getContainerActivity().start(ProfileController.newInstance(username));

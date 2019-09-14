@@ -85,7 +85,7 @@ public class MainController extends BaseController {
 
             @Override
             public void onRightClick(View v) {
-                // TODO 打开搜索页面
+                ControllerManager.start(new SearchResultController());
             }
         });
         // 设置返回键计时

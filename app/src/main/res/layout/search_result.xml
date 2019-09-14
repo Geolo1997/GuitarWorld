@@ -5,12 +5,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/works_list_layout"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/user_list_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-    </LinearLayout>
+    </android.support.v7.widget.RecyclerView>
 
 </LinearLayout>
