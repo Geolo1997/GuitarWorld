@@ -19,6 +19,7 @@ import pers.geolo.guitarworld.controller.BaseController;
 import pers.geolo.guitarworld.controller.user.MineController;
 import pers.geolo.guitarworld.util.ToastUtils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiConsumer;
@@ -58,7 +59,7 @@ public class MainController extends BaseController {
     @Override
     public void initView(ViewParams viewParams) {
         // 加载module
-        controllerMap = new HashMap<>();
+        controllerMap = new HashMap<>(4);
         controllerMap.put(dynamicLayout, new DynamicController());
         controllerMap.put(discoverLayout, new DiscoverController());
         controllerMap.put(toolsLayout, new ToolsController());

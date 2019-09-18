@@ -46,6 +46,7 @@ public class MusicItemController extends BaseController {
     @OnClick(R.id.music_item)
     public void onMusicItemClicked() {
         int musicId = music.getId();
-        ControllerManager.start(new MusicIndexController(), new ViewParams("musicId", musicId));
+        ControllerManager.start(new MusicIndexController(),
+                new ViewParams("musicId", musicId));
     }
 }

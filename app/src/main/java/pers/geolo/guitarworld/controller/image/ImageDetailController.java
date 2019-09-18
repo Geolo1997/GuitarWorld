@@ -1,4 +1,4 @@
-package pers.geolo.guitarworld.controller.common;
+package pers.geolo.guitarworld.controller.image;
 
 import android.view.View;
 import android.widget.ImageView;

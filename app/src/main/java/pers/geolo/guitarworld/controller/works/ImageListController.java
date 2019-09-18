@@ -11,7 +11,6 @@ import butterknife.OnClick;
 import org.microview.core.ViewParams;
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.controller.BaseController;
-import pers.geolo.guitarworld.controller.common.ImageDetailController;
 import pers.geolo.guitarworld.util.GlideUtils;
 import pers.geolo.guitarworld.util.WidgetUtils;
 

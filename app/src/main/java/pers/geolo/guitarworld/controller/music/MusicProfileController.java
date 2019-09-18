@@ -11,7 +11,7 @@ import org.microview.core.ControllerManager;
 import org.microview.core.ViewParams;
 import pers.geolo.guitarworld.R;
 import pers.geolo.guitarworld.controller.BaseController;
-import pers.geolo.guitarworld.controller.common.ImageDetailController;
+import pers.geolo.guitarworld.controller.image.ImageDetailController;
 import pers.geolo.guitarworld.entity.DataCallback;
 import pers.geolo.guitarworld.entity.Music;
 import pers.geolo.guitarworld.ui.ImageFilter;
@@ -65,7 +65,8 @@ public class MusicProfileController extends BaseController {
             @Override
             public void onClick(View v) {
                 String imageUrl = music.getImageUrl();
-                ControllerManager.start(new ImageDetailController(), new ViewParams("imageUrl", imageUrl));
+                ControllerManager.start(new ImageDetailController(),
+                        new ViewParams("imageUrl", imageUrl));
             }
         });
     }

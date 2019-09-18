@@ -81,4 +81,10 @@ public class DynamicController extends BaseController {
             }
         });
     }
+
+    @Override
+    public void destroyView() {
+        super.destroyView();
+        adapter.destroyViews();
+    }
 }

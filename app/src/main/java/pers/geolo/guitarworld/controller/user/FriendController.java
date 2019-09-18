@@ -36,7 +36,7 @@ public class FriendController extends BaseController {
 
     private Button selectedButton;
     private List<UserListController> controllers;
-    private UserListAdapter userListAdapter;
+//    private UserListAdapter userListAdapter;
 
     public static FriendController newInstance(String username, String followTag) {
         Bundle args = new Bundle();
@@ -80,8 +80,8 @@ public class FriendController extends BaseController {
 
     private void initViewPager() {
 //        userListAdapter = new UserListAdapter(getChildFragmentManager());
-        userListAdapter.setControllers(controllers);
-        viewPager.setAdapter(userListAdapter);
+//        userListAdapter.setControllers(controllers);
+//        viewPager.setAdapter(userListAdapter);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i1) {
