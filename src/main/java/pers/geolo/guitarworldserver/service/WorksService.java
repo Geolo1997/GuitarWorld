@@ -30,8 +30,6 @@ public class WorksService {
             // 获取作品点赞数
             int likeCount = likeWorksMapper.countLikeWorksByWorksId(works.getId());
             works.setLikeCount(likeCount);
-            // 设置预览图
-            works.setVideoPreviewUrl("http://192.168.1.103:8080/GuitarWorld/file?filePath=20197/31/7e5b8acd-4a12-4199-abd0-f13b2d87b276..jpg");
         }
         return worksList;
     }

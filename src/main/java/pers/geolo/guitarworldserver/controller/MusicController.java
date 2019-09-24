@@ -17,6 +17,7 @@ import pers.geolo.guitarworldserver.entity.MusicScore;
 import pers.geolo.guitarworldserver.entity.ResponseEntity;
 import pers.geolo.guitarworldserver.service.MusicService;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -36,7 +37,7 @@ public class MusicController {
 
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<List<Music>> getMusicList(MusicParam param) {
+    public ResponseEntity<List<Music>> getMusicList(MusicParam param) throws IOException {
         logger.debug("收到获取音乐列表请求");
         List<Music> musicList = musicService.getMusicList(param);
         return new ResponseEntity<>(0, musicList, null);

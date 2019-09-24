@@ -4,7 +4,7 @@
 <mapper namespace="pers.geolo.guitarworldserver.dao.WorksMapper">
 
     <select id="select" parameterType="worksParam" resultType="works">
-        SELECT id, author, create_time, title, content, video_url, type
+        SELECT *
         FROM Works
         <!--<if test="follower != null">-->
         <!--,UserRelation-->

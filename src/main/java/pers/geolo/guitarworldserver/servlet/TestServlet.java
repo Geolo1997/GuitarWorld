@@ -1,17 +1,20 @@
 package pers.geolo.guitarworldserver.servlet;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.Observable;
-import java.util.Observer;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.ws.WebServiceContext;
+import javax.swing.text.View;
+import java.applet.Applet;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.*;
+import java.util.concurrent.*;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 @WebServlet(name = "TestServlet", urlPatterns = "/test")
 public class TestServlet extends HttpServlet {
@@ -36,8 +39,19 @@ public class TestServlet extends HttpServlet {
 //        resp.setHeader("Location", site);
         resp.setHeader("Refresh", "3;url='http://www.baidu.com'");
 
-    //        Observable observable;
-    //        Observer
+        //        Observable observable;
+        //        Observer
+//        new Thread().setPriority();
+        ExecutorService service = Executors.newSingleThreadExecutor();
+        new Callable<String>() {
+            @Override
+            public String call() throws Exception {
+                return null;
+            }
+        };
+        new Thread().interrupt();
+        HashMap hashMap;
+//Thread.sleep();
     }
 
     private String getJsonRequest(HttpServletRequest request) throws IOException {
@@ -51,4 +65,46 @@ public class TestServlet extends HttpServlet {
         }
         return sb.toString();
     }
+
+    public static void main(String[] args) {
+        Runnable runnable = new Runnable() {
+
+            int count = 10;
+
+            @Override
+            public void run() {
+                while (count > 0) {
+                    System.out.println(Thread.currentThread().getName() + " " + count);
+                    count--;
+                    Thread.yield();
+                }
+            }
+        };
+        for (int i = 0; i < 10; i++) {
+            Thread thread = new Thread(runnable);
+            thread.setName("thread" + i);
+            thread.setDaemon(true);
+            thread.start();
+        }
+        System.out.println("end");
+//        Executors.newCachedThreadPool(new )
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+
+            }
+
+        }, 300);
+        ThreadLocal<String> stringThreadLocal = new ThreadLocal<>();
+        stringThreadLocal.get();
+        new Thread().isInterrupted();
+//        Thread.interrupted()
+        Future future;
+//        Executors.newFixedThreadPool();
+        new ArrayBlockingQueue<>(2);
+
+    }
+
+
+
 }

@@ -26,7 +26,7 @@ public class Config extends WebMvcConfigurerAdapter {
 
     @Override
     public void addInterceptors(InterceptorRegistry interceptorRegistry) {
-        interceptorRegistry.addInterceptor(authInterceptor).addPathPatterns("/**");
+//        interceptorRegistry.addInterceptor(authInterceptor).addPathPatterns("/**");
     }
 
     @Bean(name = "dataSource")

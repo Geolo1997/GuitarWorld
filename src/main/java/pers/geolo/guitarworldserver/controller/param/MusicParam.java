@@ -7,13 +7,22 @@ package pers.geolo.guitarworldserver.controller.param;
  */
 public class MusicParam {
 
-    private long musicId;
+    private Long musicId;
+    private String tag;
 
-    public long getMusicId() {
+    public Long getMusicId() {
         return musicId;
     }
 
-    public void setMusicId(long musicId) {
+    public void setMusicId(Long musicId) {
         this.musicId = musicId;
+    }
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
     }
 }

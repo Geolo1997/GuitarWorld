@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 
 @Controller
-@Auth(AuthType.LOGGED)
+@Auth(AuthType.ALL)
 public class FileController {
 
     Logger logger = Logger.getLogger(FileController.class);
