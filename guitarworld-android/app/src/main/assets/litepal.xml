@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<litepal>
+    <dbname value="GuitarWorld"/>
+    <version value="1"/>
+
+    <list>
+        <mapping class="pers.geolo.guitarworld.entity.LogInfo"/>
+    </list>
+</litepal>

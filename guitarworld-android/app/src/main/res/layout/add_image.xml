@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageButton
+        android:id="@+id/add_image_button"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="5dp"
+        android:background="@drawable/dotted_style"
+        android:src="@drawable/ic_add_64"/>
+
+    <ImageButton
+        android:id="@+id/close_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_alignTop="@id/add_image_button"
+        android:layout_alignEnd="@id/add_image_button"
+        android:src="@drawable/ic_close_16"
+        android:background="@color/alpha0"
+        android:visibility="gone"/>
+</RelativeLayout>

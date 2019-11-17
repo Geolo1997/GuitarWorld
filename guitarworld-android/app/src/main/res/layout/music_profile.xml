@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/bg_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="250dp"
+    android:orientation="horizontal"
+    android:paddingTop="100dp">
+
+    <ImageView
+        android:id="@+id/music_image"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginHorizontal="20dp"/>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/music_name_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="2"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:text="@string/music_name"
+            android:layout_marginBottom="10dp"/>
+
+        <TextView
+            android:id="@+id/music_author_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/music_author"
+            android:textColor="@color/white"
+            android:maxLines="1"
+            android:layout_marginBottom="5dp"/>
+
+        <TextView
+            android:id="@+id/music_profile_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="@string/music_profile"
+            android:maxLines="2"
+            android:ellipsize="end"/>
+
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/gray">
+
+    <com.hjq.bar.TitleBar
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:title="个人资料"
+        app:leftIcon="@drawable/ic_back_24"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/edits_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/avatar_image"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginVertical="15dp"/>
+
+
+            <LinearLayout
+                android:id="@+id/edit_texts_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:layout_marginBottom="1dp">
+
+                    <TextView
+                        android:text="@string/username"
+                        android:layout_height="wrap_content"
+                        android:layout_width="70dp"
+                        android:padding="10dp"
+                        android:textSize="15sp"/>
+
+                    <TextView
+                        android:id="@+id/username_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/username"
+                        android:layout_weight="1"
+                        android:padding="10dp"
+                        android:textSize="15sp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:layout_marginBottom="1dp"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:text="@string/password"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv_hint_password"
+                        android:layout_width="70dp"
+                        android:padding="10dp"
+                        android:textSize="15sp"/>
+
+                    <EditText
+                        android:id="@+id/password_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/password"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:padding="10dp"
+                        android:textSize="15sp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:layout_marginBottom="20dp">
+
+                    <TextView
+                        android:text="@string/email"
+                        android:layout_height="wrap_content"
+                        android:layout_width="70dp"
+                        android:padding="10dp"
+                        android:textSize="15sp"/>
+
+                    <EditText
+                        android:id="@+id/email_edit"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/email"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:padding="10dp"
+                        android:textSize="15sp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:layout_marginBottom="1dp">
+
+                    <TextView
+                        android:text="@string/sex"
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:textSize="15sp"/>
+
+                    <EditText
+                        android:id="@+id/sex_edit"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/sex"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:padding="10dp"
+                        android:textSize="15sp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/white"
+                    android:layout_marginBottom="1dp">
+
+                    <TextView
+                        android:text="@string/birthday"
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:textSize="15sp"/>
+
+                    <EditText
+                        android:id="@+id/birthday_edit"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/birthday"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:padding="10dp"
+                        android:textSize="15sp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/white"
+                    android:layout_marginBottom="1dp">
+
+                    <TextView
+                        android:text="@string/hometown"
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:textSize="15sp"/>
+
+                    <EditText
+                        android:id="@+id/hometown_edit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/hometown"
+                        android:background="@null"
+                        android:padding="10dp"
+                        android:textSize="15sp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/white"
+                    android:layout_marginBottom="1dp">
+
+                    <TextView
+                        android:text="@string/job"
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:textSize="15sp"/>
+
+                    <EditText
+                        android:id="@+id/et_job"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/job"
+                        android:background="@null"
+                        android:padding="10dp"
+                        android:textSize="15sp"/>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
