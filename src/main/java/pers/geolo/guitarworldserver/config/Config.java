@@ -17,8 +17,8 @@ import javax.sql.DataSource;
  * @version 1.0
  * @date 2019/8/1
  */
-@EnableWebMvc
-@Configuration
+//@EnableWebMvc
+//@Configuration
 public class Config extends WebMvcConfigurerAdapter {
 
     @Autowired

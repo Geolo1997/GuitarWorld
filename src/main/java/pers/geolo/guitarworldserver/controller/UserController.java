@@ -65,7 +65,7 @@ public class UserController {
     @ResponseBody
     public ResponseEntity<String> uploadAvatar(@SessionAttribute("username") String username,
                                                MultipartFile avatar) throws IOException {
-        logger.debug("收到更新头像请求：" + avatar.getName());
+        logger.debug("收到更新头像请求：" + avatar.getName() + " " + avatar.getOriginalFilename() + " " + avatar.getContentType());
         String path = fileService.saveFile(avatar);
         // 更新User表头像路径字段
         userService.updateAvatar(username, path);
